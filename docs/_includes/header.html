@@ -1,7 +1,7 @@
 <header class="site-header">
 
 	<div class="wrapper">
-	  <img class="menu-icon" src="/android-chrome-192x192.png" />
+	  <img style="width:36px;height:32px;" class="menu-icon" src="/android-chrome-192x192.png" />
 	  {%- assign default_paths = site.pages | map: "path" -%}
 	  {%- assign page_paths = site.header_pages | default: default_paths -%}
 	  {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
