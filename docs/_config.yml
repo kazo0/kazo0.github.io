@@ -28,16 +28,19 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: BiloganSteve
 github_username:  kazo0
-image: /icon192.png
 twitter:
   username: BiloganSteve
-  image: /icon192.png
 social:
   name: Steve Bilogan
   links:
     - https://twitter.com/BiloganSteve
     - https://www.linkedin.com/in/sbilogan
     - https://github.com/kazo0
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /icon512.png
 theme: minima
 plugins:
   - jekyll-feed
