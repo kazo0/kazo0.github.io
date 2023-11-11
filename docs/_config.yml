@@ -36,11 +36,6 @@ social:
     - https://twitter.com/BiloganSteve
     - https://www.linkedin.com/in/sbilogan
     - https://github.com/kazo0
-defaults:
-  - scope:
-      path: "_assets/images"
-    values:
-      image: true
 theme: minima
 plugins:
   - jekyll-feed
