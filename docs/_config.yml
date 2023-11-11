@@ -22,7 +22,7 @@ title: dotnet new bald
 email: steve.bilogan@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source [Uno Platform](https://platform.uno/) project. When not at his computer, he is either watching the Montreal Canadiens lose or asleep on the couch.
-baseurl: "/docs" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: BiloganSteve
 github_username:  kazo0
