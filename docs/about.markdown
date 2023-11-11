@@ -14,5 +14,5 @@ My name is Steve Bilogan, I'm a Senior Engineer and one of the core maintainers 
 You can find the source code for Minima at GitHub:
 
 
-[profile-image]: _assets/profile.png
+[profile-image]: _assets/images/profile.png
 [aa-daily-reflections]: https://github.com/kazo0/DailyReflection
