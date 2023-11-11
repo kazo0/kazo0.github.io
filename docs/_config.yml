@@ -20,17 +20,32 @@
 
 title: dotnet new bald
 email: steve.bilogan@gmail.com
+tagline: A blog about .NET, Uno Platform, and other things I find interesting.
+logo: _assets/images/profile.png
 description: >- # this means to ignore newlines until "baseurl:"
   I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at his computer, he is either watching the Montreal Canadiens lose or asleep on the couch.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: BiloganSteve
 github_username:  kazo0
-
-# Build settings
+twitter:
+  username: BiloganSteve
+social:
+  name: Steve Bilogan
+  links:
+    - https://twitter.com/BiloganSteve
+    - https://www.linkedin.com/in/sbilogan
+    - https://github.com/kazo0
+defaults:
+  - scope:
+      path: "_assets/images"
+    values:
+      image: true
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.

@@ -4,15 +4,15 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+![profile image][profile-image]{: width="100" }
+
+Hi!
+
+My name is Steve Bilogan, I'm a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. I also speak at conferences and meetups, and I develop and maintain an [AA Daily Reflections app][aa-daily-reflections] for Android and iOS.
+
 
 You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
 
 
-[jekyll-organization]: https://github.com/jekyll
+[profile-image]: _assets/profile.png
+[aa-daily-reflections]: https://github.com/kazo0/DailyReflection
