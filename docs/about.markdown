@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-![profile image][profile-image]{: width="100" }
+![profile image][profile-image]{: height="100" }
 
 Hi :wave:!
 
