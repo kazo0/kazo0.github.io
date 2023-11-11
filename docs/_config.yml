@@ -23,7 +23,7 @@ email: steve.bilogan@gmail.com
 tagline: A blog about .NET, Uno Platform, and other things I find interesting.
 logo: _assets/images/profile.png
 description: >- # this means to ignore newlines until "baseurl:"
-  I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wondering wife, Michele, and our little monster, Penny.
+  I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: BiloganSteve
