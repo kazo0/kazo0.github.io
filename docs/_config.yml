@@ -21,7 +21,8 @@
 title: dotnet new bald
 email: steve.bilogan@gmail.com
 tagline: A blog about .NET, Uno Platform, and other things I find interesting.
-logo: /icon512.png
+logo: /assets/images/profile.png
+image: /assets/images/profile.png
 description: >- # this means to ignore newlines until "baseurl:"
   I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.
 baseurl: "" # the subpath of your site, e.g. /blog
@@ -31,20 +32,21 @@ twitter_username: BiloganSteve
 github_username:  kazo0
 author:
   name: Steve Bilogan
+  twitter: BiloganSteve
   email: steve.bilogan@gmail.com
+  image: /assets/images/profile.png
+  picture: /assets/images/profile.png
+  url: https://kazo0.dev
 twitter:
   username: BiloganSteve
+  card: summary
 social:
   name: Steve Bilogan
   links:
     - https://twitter.com/BiloganSteve
     - https://www.linkedin.com/in/sbilogan
     - https://github.com/kazo0
-defaults:
-  - scope:
-      path: ""
-    values:
-      image: /icon512.png
+google-site-verification: TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U
 theme: minima
 plugins:
   - jekyll-feed
@@ -55,7 +57,11 @@ minima:
     - { platform: github, user_url: "https://github.com/kazo0", title: "kazo0" }
     - { platform: linkedin, user_url: "https://www.linkedin.com/in/sbilogan", title: "sbilogan" }
     - { platform: twitter, user_url: "https://twitter.com/BiloganSteve", title: "BiloganSteve" }
-
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/profile.png
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
