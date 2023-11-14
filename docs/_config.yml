@@ -26,8 +26,12 @@ description: >- # this means to ignore newlines until "baseurl:"
   I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
+google_analytics: G-C0L3NPFRW1
 twitter_username: BiloganSteve
 github_username:  kazo0
+author:
+  name: Steve Bilogan
+  email: steve.bilogan@gmail.com
 twitter:
   username: BiloganSteve
 social:
@@ -46,7 +50,12 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jemoji
-
+minima:
+  social_links:
+    - { platform: github,         user_url: "https://github.com/kazo0" }
+    - { platform: linkedin,       user_url: "https://www.linkedin.com/in/sbilogan" }
+    - { platform: x,              user_url: "https://x.com/BiloganSteve" }
+    - { platform: twitter,        user_url: "https://twitter.com/BiloganSteve" }
 
 # Exclude from processing.
 # The following items will not be processed, by default.
