@@ -9,3 +9,12 @@ a.site-title-theme-toggle {
 		text-decoration: none;
 	}
 }
+
+.site-title--with-image {
+	@extend .site-title;
+	margin-left: -12px;
+
+	img {
+		height: $base-line-height * $base-font-size * 2.25;
+	}
+}
