@@ -7,8 +7,11 @@ function ready(fn) {
 }
 
 ready(function(){
+  document.getElementById('theme-toggle').onclick = function() {
+    darkmode()
+  }
+
   let enabled = localStorage.getItem('dark-mode')
-  let audio = document.createElement('audio');
 
   if (enabled === null) {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
