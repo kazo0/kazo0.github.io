@@ -1,5 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.44/darkreader.js"></script>
-<script src="/js/theme_helper.js"></script>
 <header class="site-header">
 
 
@@ -10,7 +8,9 @@
 	  {%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
 	  
 	  <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
-	  <a onclick="darkmode()" class="site-title" rel="author" href="#">ads</a>
+	  <a onclick="darkmode()" class="site-title-theme-toggle">
+		 <i id="icon-dark" class="fa fa-moon"></i>
+	</a>
   
 	  {%- if titles_size > 0 -%}
 		<nav class="site-nav">
