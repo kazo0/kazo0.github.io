@@ -52,9 +52,9 @@ plugins:
   - jemoji
 minima:
   social_links:
-    - { platform: github,         user_url: "https://github.com/kazo0" }
-    - { platform: linkedin,       user_url: "https://www.linkedin.com/in/sbilogan" }
-    - { platform: twitter,        user_url: "https://twitter.com/BiloganSteve" }
+    - { platform: github, user_url: "https://github.com/kazo0", title: "kazo0" }
+    - { platform: linkedin, user_url: "https://www.linkedin.com/in/sbilogan", title: "sbilogan" }
+    - { platform: twitter, user_url: "https://twitter.com/BiloganSteve", title: "BiloganSteve" }
 
 # Exclude from processing.
 # The following items will not be processed, by default.
