@@ -16,7 +16,7 @@ Last week I had the pleasure of attending [TechBash 2023][techbash-site] at the 
 
 This was my first time working a booth at a conference and it was a lot more fun than I expected. As an introvert, I thought it was going to be horribly awkward the entire time but THANK GOD for Matthew ([@matteiomattei][matt-twitter]), our amazing marketing/sales/advocate guru. I feel like we were a good tag team, I would jump in to answer any of the technical questions or overall explanation of what Uno Platform is and then I would tap him in whenever there were questions related to adoption, history, etc.
 
-Whenever I would, inevitably, forget to mention something like the fact that were are free and open-source, Matthew would jump on it and fill in the gaps. He was dedicated to making sure every single person at that conference left with a Uno Platform t-shirt. 
+Whenever I would, inevitably, forget to mention something like the fact that we are free and open-source, Matthew would jump on it and fill in the gaps. He was dedicated to making sure every single person at that conference left with a Uno Platform t-shirt. 
 
 We also got to hang around with the other booth..."hosts"? Including Sam Basu ([@samidip][sam-twitter]) from [Progress Telerik][progress-site]! I actually know Sam from my days living in Columbus, Ohio where we used to host a user group together. It was great to see him again and I was even invited onto his livestream for a future date to talk about some of the cool new stuff in Uno Platform!
 
