@@ -69,7 +69,7 @@ All in all, a great trip :)
 
 ## Conclusion
 
-This was a long-ass blog post, so I'm not gonna drag it on any further. If you made it this far, tootles :wave:.
+This was a long-ass blog post, so I'm not gonna drag it on any further. If you made it this far, toodles :wave:.
 
 [techbash-site]: https://techbash.com/
 [kalahari-site]: https://www.kalahariresorts.com/pennsylvania/
