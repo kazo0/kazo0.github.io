@@ -6,7 +6,9 @@ permalink: /about/
 
 Hi :wave:!
 
-My name is Steve Bilogan, I'm a Senior Engineer and one of the core maintainers of the open-source [Uno Platform project][uno-platform], including [Uno Themes][uno-themes] and [Uno Toolkit][uno-toolkit]. I also speak at conferences and meetups, and I develop and maintain an [AA Daily Reflections app][aa-daily-reflections] for Android and iOS.
+My name is Steve Bilogan, I'm a Senior Engineer and one of the core maintainers of the open-source [Uno Platform project][uno-platform], including [Uno Themes][uno-themes] and [Uno Toolkit][uno-toolkit]. I also speak at conferences and meetups, and I develop and maintain an [AA Daily Reflections app][aa-daily-reflections] for Android and iOS. 
+
+When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.
 
 [uno-platform]: https://platform.uno
 [uno-themes]: https://github.com/unoplatform/Uno.Themes
