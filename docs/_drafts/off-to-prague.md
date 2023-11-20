@@ -44,13 +44,12 @@ After the conference ends on Friday, I'll be heading to Kraków, Poland for the 
 
 I'll be posting more about my trip to Prague and the conference here on my blog. Stay tuned!
 
+{% include links.md %}
+
 [update-conf-site]: https://www.updateconference.net/en
 [update-conf-uno-talk]: https://www.updateconference.net/en/2023/session/create-beautiful--net-apps-faster-with-uno-platform
 [martin-twitter]: https://twitter.com/mzikmunddev
 [dominik-twitter]: https://twitter.com/morning4coffe
-[uno-5-release]: https://platform.uno/blog/uno-platform-5-0/
-[uno-themes]: https://github.com/unoplatform/Uno.Themes
-[uno-toolkit]: https://github.com/unoplatform/Uno.Toolkit.UI
 [update-livestream]: https://now.updateconference.net/
 [uno-nonui-apis]: https://platform.uno/docs/articles/using-uno-ui.html#winrt-features-non-visual-apis
 [lokal]: https://lokal.ambi.cz/en/
