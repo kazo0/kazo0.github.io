@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Update Conference - Off To Prague!
+title: "Update Conference: Off To Prague!"
 category: conference
 #image: /assets/images/airport-update-2023.jpg
 #hero: /assets/images/airport-update-2023.jpg
 tags: [conference, update-conference, uno-platform]
 ---
 
-I'm excited to be speaking at [Update Conference 2023][update-conf-site] in Prague, Czech Republic! I'll be presenting [Create Beautiful .NET Apps Faster with Uno Platform][update-conf-uno-talk] with the legendary Martin Zikmund ([@mzikmunddev][martin-twitter]) on Thursday, November 27th at 9:00am CET. We are also going to be running a booth at the conference with fellow Uno Platform team member, Dominik Titl ([@morning4coffe][dominik-twitter]).
+I'm excited to be speaking at [Update Conference 2023][update-conf-site] in Prague, Czech Republic! I'll be presenting [Create Beautiful .NET Apps Faster with Uno Platform][update-conf-uno-talk] with the legendary Martin Zikmund ([@mzikmunddev][martin-twitter]) on Thursday, November 27th at 9am CET. We are also going to be running a booth at the conference with fellow Uno Platform team member, Dominik Titl ([@morning4coffe][dominik-twitter]).
 
 I've been working with Martin and Dominik for quite some time and I am pumped to finally meet them in person! This will be my first time in Prague and I'm looking forward to exploring the city and finding some cool places to eat.
 
@@ -42,7 +42,7 @@ After the conference ends on Friday, I'll be heading to Kraków, Poland for the 
 
 ## To Be Continued...
 
-I'll be posting more about my trip to Prague and the conference here on my blog. Stay tuned!
+I'll be posting more about my trip and the conference here on my blog. Stay tuned!
 
 {% include links.md %}
 

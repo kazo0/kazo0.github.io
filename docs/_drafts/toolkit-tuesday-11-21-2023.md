@@ -19,6 +19,14 @@ Of course, the NavigationBar is built is customizability in mind. You can overri
 
 ## PrimaryCommands and SecondaryCommands
 
-The NavigationBar also supports the `PrimaryCommands` and `SecondaryCommands` properties, which are collections of `AppBarButton` controls. `PrimaryCommands` are displayed on the right side of the NavigationBar, given there is enough space to display them. While `SecondaryCommands`, along with `PrimaryCommands` that don't fit in the bar, are placed in an "overflow" popup menu accessible from an ellipsis button at the end of the bar. The NavigationBar will automatically adjust the layout of these buttons based on the available space on the screen. On Android and iOS/Catalyst, the buttons will be displayed in the native Toolbar/NavigationBar. On all other platforms, the buttons will be displayed in a CommandBar.
+The NavigationBar also supports the `PrimaryCommands` and `SecondaryCommands` properties, which are collections of `AppBarButton` controls. `PrimaryCommands` are displayed on the right side of the NavigationBar, given there is enough space to display them. `SecondaryCommands`, along with `PrimaryCommands` that don't fit in the bar, are placed in an "overflow" popup menu accessible from an ellipsis button at the end of the bar. The NavigationBar will automatically adjust the layout of these buttons based on the available space on the screen. On Android and iOS/Catalyst, the buttons will be displayed in the native `Toolbar`/`UINavigationBar`. On all other platforms, the buttons will be displayed in a `CommandBar`.
+
+## Examples
+
+Let's see it in action and jump into some code! 
+
+### Simple NavigationBar
+
+
 
 {% include links.md %}
