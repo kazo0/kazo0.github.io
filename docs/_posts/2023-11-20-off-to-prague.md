@@ -2,8 +2,8 @@
 layout: post
 title: "Update Conference: Off To Prague!"
 category: conference
-#image: /assets/images/airport-update-2023.jpg
-#hero: /assets/images/airport-update-2023.jpg
+image: /assets/images/airport-update-2023.jpg
+hero: /assets/images/airport-update-2023.jpg
 tags: [conference, update-conference, uno-platform]
 ---
 
