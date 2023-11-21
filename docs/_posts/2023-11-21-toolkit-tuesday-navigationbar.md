@@ -7,13 +7,13 @@ hero: /assets/images/uno-toolkit-hero.png
 tags: [uno-toolkit, navigation-bar, uno-platform]
 ---
 
-Welcome to the first post in my new series, Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-platform]. I hope you find them useful too!
+Welcome to the first post in my new series, Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-repo]. I hope you find them useful too!
 
 This week we are covering the `NavigationBar` control. This control has a simple purpose with a complex and interesting implementation across the multiple platforms that Uno supports. On Android and iOS/Catalyst, the `NavigationBar` serves as a sort of proxy to the native Android `Toolbar` and iOS `UINavigationBar`. On all other platforms, its functionality and UI are driven by a customized `CommandBar`.
 
 ## Anatomy of a `NavigationBar`
 
-The XAML for the following usage of `NavigationBar` can be seen further along in the [Examples](#examples) section.
+The XAML for the following usage of `NavigationBar` can be seen further along in the [Complex Usage](#complex-usage) section.
 
 #### Android
 
@@ -52,15 +52,17 @@ The crown jewel of the `NavigationBar` is the `MainCommand` property, which auto
 
 ### `Content`
 
-The `Content` property is what is typically used to display your page title within the `NavigationBar`. The property itself is of type `object` and supports any instance of `UIElement` if you want to display rich content within the `NavigationBar`, instead of a simple `string`.
+The `Content` property is what is typically used to display your page title within the `NavigationBar`. The property itself is of type `object` and supports any instance of `UIElement` if you want to display rich content within the `NavigationBar` instead of a simple `string`.
 
 ### `PrimaryCommands` and `SecondaryCommands`
 
-The NavigationBar also supports the `PrimaryCommands` and `SecondaryCommands` properties, which are collections of `AppBarButton` controls. `PrimaryCommands` are displayed on the right side of the NavigationBar, given there is enough space to display them. `SecondaryCommands`, along with `PrimaryCommands` that don't fit in the bar, are placed in an "overflow" popup menu accessible from an ellipsis button at the end of the bar (not supported on iOS). The NavigationBar will automatically adjust the layout of these buttons based on the available space on the screen. On Android and iOS/Catalyst, the buttons will be displayed in the native `Toolbar`/`UINavigationBar`. On all other platforms, the buttons will be displayed in a `CommandBar`.
+The `NavigationBar` also supports the `PrimaryCommands` and `SecondaryCommands` properties, which are collections of `AppBarButton` controls. `PrimaryCommands` are displayed on the right side of the `NavigationBar`, given there is enough space to display them. `SecondaryCommands`, along with `PrimaryCommands` that don't fit in the bar, are placed in an "overflow" popup menu accessible from an ellipsis button at the end of the bar (not supported on iOS).
+
+The `NavigationBar` will automatically adjust the layout of these buttons based on the available space. On Android and iOS/Catalyst, the buttons will be displayed in the native `Toolbar`/`UINavigationBar`. On all other platforms, the buttons will be displayed in a `CommandBar`.
 
 ### `MainCommandMode`
 
-Of course, the NavigationBar is built is customizability in mind. You can override all of this built-in navigation logic by setting the `MainCommandMode` property to `Action` instead of the default `Back`. Using `Action` tells the NavigationBar to short-circuit the built-in navigation logic and simply execute the command that is set to the `MainCommand` property. This is useful if you want to have a hamburger menu or other navigation pattern that doesn't rely on the built-in back button.
+Of course, the `NavigationBar` is built is customizability in mind. You can override all of this built-in navigation logic by setting the `MainCommandMode` property to `Action` instead of the default `Back`. Using `Action` tells the `NavigationBar` to short-circuit the built-in navigation logic and simply execute the command that is set to the `MainCommand` property. This is useful if you want to have a hamburger menu or other navigation pattern that doesn't rely on the built-in back button.
 
 ## Examples
 
@@ -70,7 +72,7 @@ Let's see it in action and jump into some code!
 
 ![Simple NavigationBar First Page](/assets/images/navbar/simple/first-page.png)|![Simple NavigationBar Secondbun Page](/assets/images/navbar/simple/second-page.png)
 
-Here we see the most basic usage of NavigationBar, which is to just place it as the topmost element on your page and set the `Content` property to the title of the page. The NavigationBar will automatically display a back button if the page is not the root of the navigation stack. Below is the XAML for the content of both pages used in the above example:
+Here we see the most basic usage of `NavigationBar`, which is to just place it as the topmost element on your page and set the `Content` property to the title of the page. The `NavigationBar` will automatically display a back button if the page is not at the root of the navigation stack. Below is the XAML for the content of both pages used in the above example:
 
 #### First Page
 
@@ -116,13 +118,17 @@ xmlns:utu="using:Uno.Toolkit.UI"
 </Grid>
 ```
 
-Not much to it! Most of the heavy lifting is done for you by the underlying implementation so you don't have to worry about when to hide/show the back button. On top of that, the back button actually works out of the box! You don't even need to hook the button to any click handler or command. The `NavigationBar` will fire any custom `ICommand` that may be set on the `MainCommand` but will also take care of the actual navigation for you!
+Not much to it!
+
+Most of the heavy lifting is done for you by the underlying implementation so you don't have to worry about when to hide/show the back button. On top of that, the back button actually works out of the box! You don't even need to hook the button to any click handler or command. The `NavigationBar` will fire any custom `ICommand` that may be set on the `MainCommand` but will also take care of the actual navigation for you!
+
+![GIF of navigation on iOS](/assets/images/navbar/simple/nav-small.gif)
 
 ### `MainCommand` Customization
 
 If you're like me, you may also think that the native iOS behavior of keeping the previous page's title as the back button text is stupid and ugly.
 
-Let's fix that by removing the back button text altogether. The `NavigationBar` on our `SecondPage` should look something like this:
+Let's fix that by removing the back button text altogether. The `NavigationBar` on our `SecondPage` should now look something like this:
 
 ```xml
 <utu:NavigationBar Content="Second Page">
@@ -156,9 +162,30 @@ Let's get spicy and change that icon to something more interesting :hot_pepper:
 
 Perfection :ok_hand:
 
+Now what about our first page? Looking at it, we aren't displaying anything for the `MainCommand`. This is to be expected since we are at the root of the navigation stack and the `MainCommandMode` is still set to its default value of `MainCommandMode.Back`.
+
+What if we had a hamburger menu or some other navigation pattern that didn't rely on the built-in back button? We can easily change the `MainCommandMode` to `Action` and set our own logic to handle the interaction with the `MainCommand`, either through a command or a click handler.
+
+The XAML for our new `NavigationBar` on the first page would look something like this:
+
+```xml
+<utu:NavigationBar Content="First Page"
+                   MainCommandMode="Action">
+    <utu:NavigationBar.MainCommand>
+        <AppBarButton Click="Burger_Click">
+            <AppBarButton.Icon>
+                <BitmapIcon UriSource="ms-appx:///NavBarApp/Assets/Icons/burger.png" />
+            </AppBarButton.Icon>
+        </AppBarButton>
+    </utu:NavigationBar.MainCommand>
+</utu:NavigationBar>
+```
+
+![Android NavigationBar on first page with burger menu icon](/assets/images/navbar/custom-main/navbar-burger.png)
+
 ### Complex Usage
 
-Now we can take a look at how to create the `NavigationBar` that we saw earlier on in the [Anatomy of a `NavigationBar`](#anatomy-of-a-navigationbar) section.
+Now we can take a look at how to create the `NavigationBar` that we saw earlier in the [Anatomy of a `NavigationBar`](#anatomy-of-a-navigationbar) section.
 
 Let's jump to Android for this portion just because iOS doesn't support `SecondaryCommands` and we want to see that nice overflow menu available on all other platforms.
 
@@ -166,6 +193,7 @@ In the following XAML we are adding `PrimaryCommands` and `SecondaryCommands` to
 
 ```xml
 <utu:NavigationBar Content="Second Page">
+    <!-- MainCommand -->
     <utu:NavigationBar.MainCommand>
         <AppBarButton Content="">
             <AppBarButton.Icon>
@@ -173,6 +201,8 @@ In the following XAML we are adding `PrimaryCommands` and `SecondaryCommands` to
             </AppBarButton.Icon>
         </AppBarButton>
     </utu:NavigationBar.MainCommand>
+
+    <!-- PrimaryCommands -->
     <utu:NavigationBar.PrimaryCommands>
         <AppBarButton Command="{Binding HelpCommand}">
             <AppBarButton.Icon>
@@ -185,6 +215,8 @@ In the following XAML we are adding `PrimaryCommands` and `SecondaryCommands` to
             </AppBarButton.Icon>
         </AppBarButton>
     </utu:NavigationBar.PrimaryCommands>
+
+    <!-- SecondaryCommands -->
     <utu:NavigationBar.SecondaryCommands>
         <AppBarButton Content="Share" Command="{Binding ShareCommand}">
             <AppBarButton.Icon>
