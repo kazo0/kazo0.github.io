@@ -2,3 +2,7 @@
 [uno-themes]: https://github.com/unoplatform/Uno.Themes
 [uno-toolkit]: https://github.com/unoplatform/Uno.Toolkit.UI
 [uno-repo]: https://github.com/unoplatform/uno
+[uno-figma]: https://platform.uno/unofigma/
+[uno-extensions]: https://github.com/unoplatform/uno.extensions
+[uno-mvux]: https://platform.uno/docs/articles/external/uno.extensions/doc/Overview/Mvux/Overview.html
+[csharp-markup]: https://platform.uno/c-markup/
