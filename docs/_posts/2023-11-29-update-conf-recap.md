@@ -46,6 +46,8 @@ The three of us ran the Uno Platform booth for the full two days of the conferen
 
 ## The Talk
 
+![Martin and I on stage](/assets/images/update-conf-2023/update-conf-talk.jpg)
+
 The Uno Platform talk that Martin and I gave was one of the very first talks on the first day of the conference. Which worked out perfectly because I was able to enjoy the rest of the conference without having to feel nervous or worried. I treated this talk as just another learning experience since I was speaking alongside Martin, who is a seasoned veteran and an amazing speaker. I was able to witness firsthand how he prepares and delivers his material. I have already ~~stolen~~ incorporated some of his demos/material into my own Uno talks.
 
 The talk went really well, I definitely rushed through my part as usual but I still think it was an overall improvement from [TechBash]({% post_url 2023-11-14-techbash-recap %}). I tried to utilize the feedback I got last time and force myself to pause as much as I could. To help that along, I brought a drink up to the podium with the intention of taking a sip every now and then to sprinkle in some pauses. I don't think I took a single sip. The moment I started to speak I totally forgot about it and raced through my slides and demos. You can probably see the top of the Coke bottle on the podium in the recording, just sitting there, so lonely and unused. Although unsuccessful in my attempt to slow things down, the intention was there. I think I need to practice taking breaks during my dry runs as well, that'll probably make it feel more natural to do when I'm on stage.
@@ -54,10 +56,9 @@ I was curious how well it would go having two speakers on stage together. I thin
 
 ```xml
 <StackPanel>
-    <TextBlock
-        HorizontalAlignment="Center"
-        FontSize="30"
-        Text="{Binding Path=Value, ElementName=mySlider}" />
+    <TextBlock HorizontalAlignment="Center"
+               FontSize="30"
+               Text="{Binding Path=Value, ElementName=mySlider}" />
     <Slider x:Name="mySlider" />
 </StackPanel>
 ```
@@ -85,9 +86,9 @@ It was a lot of ground to cover but this time around we gave brief overviews on 
 
 As a sponsor for the conference, Uno Platform had a booth in the main hall for both conference days. Who knew that sitting at a table for 8 hours straight talking about the same thing over and over could be so exhausting :sweat_smile:. I actually had a blast running the booth with Martin and Dominik.
 
-During the down times, I got to know both of them much better compared to the quick Teams interactions we usually have whenever our timezones overlap. I got the impression that Martin is similar to myself in that we both need recovery time after so much social interaction. Dominik, on the other hand, is a social butterfly and a total pro at networking. Given his experience presenting at conferences for both Uno Platform and Microsoft, I shouldn't be surprised. Often he would snap Martin and I out of our trance and point us to someone that was hovering around the booth and get us to engage with them. He was definitely the captain of the booth. Oh, and did I mention that he is just about to graduate from HIGH SCHOOL!? He is touring around with Uno and Microsoft, speaking at conferences, contributing very important work to Uno, all while studying for his final year. This guy can multitask.
+During the down times, I got to know both of them much better compared to the quick Teams interactions we usually have whenever our time zones overlap. I got the impression that Martin is similar to myself in that we both need recovery time after so much social interaction. Dominik, on the other hand, is a social butterfly. Given his experience presenting at conferences for both Uno Platform and Microsoft, I shouldn't be surprised. Often, he would snap Martin and me out of our trance and point us to someone who was hovering around the booth and get us to engage with them. He was definitely the captain of the booth. Oh, and did I mention that he is just about to graduate from HIGH SCHOOL!? He is touring around with Uno and Microsoft, speaking at conferences, and contributing very important work to Uno, all while studying for his final year. This guy can multitask.
 
-I also got to meet some really interesting people that came over to the booth to learn about Uno Platform. Including some very interested companies/groups whose information we handed over to the marketing/sales team as potential leads. Fingers crossed :crossed_fingers:! We even got to speak to one very excited individual that had written [his own article about Uno Platform][billson-article] years ago and was totally pumped to see us.
+I also got to meet some really interesting people who came over to the booth to learn about Uno Platform. Including some very interested companies/groups whose information we handed over to the marketing/sales team as potential leads. Fingers crossed :crossed_fingers:! We even got to speak to one very excited individual who had written his own article about Uno Platform][billson-article] years ago and was totally pumped to see us.
 
 ## The Trip
 
