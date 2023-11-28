@@ -141,9 +141,9 @@ Let's take a look at how we could use a `TabBar` as a means of changing the main
 
 Nothing fancy and we don't see anything at this point. 
 
-Notice that I have set the name of each child `Grid` of `pageContainer` to the same value as the `Tag` property for each `TabBarItem`. These will come in handy in the next step where we will jump over to the code behind to sync the `TabBar` selection to the visibility of the corresponding `Grid`.
+Notice that I have set the name of each child `Grid` of `pageContainer` to the same value as the `Tag` property for each `TabBarItem`. These will come in handy in the next step where we will jump over to the code-behind to sync the `TabBar` selection to the visibility of the corresponding `Grid`.
 
-Our code behind for our page should now look something like this:
+Our code-behind for our page should now look something like this:
 
 ```csharp
 using Uno.Toolkit.UI;
@@ -189,11 +189,11 @@ We should now be seeing something like this:
 
 It works!
 
-But, wouldn't it be nice to be able to have some sort of helper logic that would do most of this heavy lifting for us? How about something the could automatically sync the `TabBar` selection to the `SelectedIndex` of anything that inherits for `Selector`, such as `ItemsControl` or even `FlipView`?
+But, wouldn't it be nice to be able to have some sort of helper logic that would do most of this heavy lifting for us? How about something the could automatically sync the `TabBar` selection to the `SelectedIndex` of anything that inherits from `Selector`, such as `ListView` or even `FlipView`?
 
 **WELL, HAVE I GOT NEWS FOR YOU!**
 
-We can reset our code behind to look like this:
+We can reset our code-behind to look like this:
 
 ```csharp
 namespace TabBarApp;
