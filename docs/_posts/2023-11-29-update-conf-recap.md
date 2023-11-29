@@ -64,7 +64,7 @@ Update Conference Prague is the biggest .NET developer conference in Czechia. It
 
 The conference hall was lined with booths from various sponsors, including Uno Platform! There was a chill-out room with games, comfy seats, and a coffee bar for attendees to relax in between sessions. There was also a quiet room to get some work done and a special speaker room to relax and prepare for your talk. And the food! THE FOOD! There was a constant flow of delicious snacks, sandwiches, and drinks throughout the day.
 
-I also had the pleasure of meeting my fellow Uno Platform teammates, Martin Zikmund ([@mzikmunddev][martin-twitter]) and Dominik Titl ([@morning4coffe][dominik-twitter]), in person for the very first time. Both of them being for Czechia, they showed me a great time and introduced me to their favourite Czech food and drink.
+I also had the pleasure of meeting my fellow Uno Platform teammates, Martin Zikmund ([@mzikmunddev][martin-twitter]) and Dominik Titl ([@morning4coffe][dominik-twitter]), in person for the very first time. Both of them being from Czechia, they showed me a great time and introduced me to their favourite Czech food and drink.
 
 ![Dominik, Me, and Martin at Update Conf](/assets/images//update-conf-2023/update-conf-2023-uno-team.jpeg)
 
