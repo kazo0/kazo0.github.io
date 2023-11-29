@@ -1,9 +1,8 @@
 ---
-layout: post
 title: "Toolkit Tuesdays: NavigationBar"
 category: toolkit-tuesday
-image: /assets/images/uno-toolkit-hero.png
-hero: /assets/images/uno-toolkit-hero.png
+header:
+  teaser: /assets/images/uno-toolkit-hero.png
 tags: [uno-toolkit, navigation-bar, uno-platform]
 ---
 

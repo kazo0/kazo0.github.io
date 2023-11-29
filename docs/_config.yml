@@ -20,23 +20,38 @@
 
 title: dotnet new bald
 email: steve.bilogan@gmail.com
-tagline: A blog about .NET, Uno Platform, and other things I find interesting.
-logo: /assets/images/profile.png
-image: /assets/images/profile.png
+subtitle: A blog about .NET, Uno Platform, and other things I find interesting.
+og_image: /assets/images/profile.png
+teaser: /assets/images/profile.png
+repository: kazo0/kazo0.github.io
 description: >- # this means to ignore newlines until "baseurl:"
   I'm Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I'm either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://kazo0.dev" # the base hostname & protocol for your site, e.g. http://example.com
-google_analytics: G-C0L3NPFRW1
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "G-C0L3NPFRW1"
 twitter_username: BiloganSteve
 github_username:  kazo0
+name: Steve Bilogan
 author:
   name: Steve Bilogan
-  twitter: BiloganSteve
-  email: steve.bilogan@gmail.com
-  image: /assets/images/profile.png
-  picture: /assets/images/profile.png
-  url: https://kazo0.dev
+  avatar: /assets/images/profile.png
+  location: Kingston, Ontario
+  links:
+    - label: "kazo0"
+      icon: "fa-brands fa-fw fa-square-github"
+      url: "https://github.com/kazo0"
+    - label: "@BiloganSteve"
+      icon: "fa-brands fa-fw fa-square-x-twitter"
+      url: "https://twitter.com/BiloganSteve"
+    - label: "sbilogan"
+      icon: "fa-brands fa-fw fa-inverse fa-linkedin"
+      url: "https://www.linkedin.com/in/sbilogan"
+    - label: "Sessionize"
+      icon: "fa-solid fa-fw fa-microphone-lines"
+      url: "https://sessionize.com/steve-bilogan/"
 twitter:
   username: BiloganSteve
   card: summary_large_image
@@ -46,25 +61,37 @@ social:
     - https://twitter.com/BiloganSteve
     - https://www.linkedin.com/in/sbilogan
     - https://github.com/kazo0
-google-site-verification: TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U
+google_site_verification: TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U
 github: [metadata]
+author_profile: true
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jemoji
   - jekyll-sitemap
-minima:
-  skin: classic
-  social_links:
-    - { platform: github, user_url: "https://github.com/kazo0", title: "kazo0" }
-    - { platform: linkedin, user_url: "https://www.linkedin.com/in/sbilogan", title: "sbilogan" }
-    - { platform: twitter, user_url: "https://twitter.com/BiloganSteve", title: "BiloganSteve" }
-    - { platform: sessionize, user_url: "https://sessionize.com/steve-bilogan/", title: "Sessionize" }
+  - jekyll-include-cache
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "dirt"
+locale: "en-US"
+search: true
+head_scripts:
+  - https://kit.fontawesome.com/7635bcfdad.js
 defaults:
   - scope:
       path: ""
     values:
       image: /assets/images/profile.png
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      read_time: true
+      show_date: true
+      author_profile: true
+      related: true
+      toc: true
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to

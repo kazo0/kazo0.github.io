@@ -1,31 +1,38 @@
 ---
-layout: post
 title: "Update Conference Recap"
 category: conference
-image: /assets/images/update-conf-2023/update-conf-2023-hero.jpg
-hero: /assets/images/update-conf-2023/update-conf-2023-hero.jpg
+header:
+  teaser: /assets/images/update-conf-2023/update-conf-2023-hero.jpg
 tags: [conference, update-conference, uno-platform]
-carousels:
-  - images: 
-    - image: /assets/images/update-conf-2023/update-conf-2023-hall.jpg
-    - image: /assets/images/update-conf-2023/update-conf-2023-hall2.jpg
-    - image: /assets/images/update-conf-2023/update-conf-2023-speaker-gift.jpg
-  - images: 
-    - image: /assets/images/update-conf-2023/prague-astro-clock.jpeg
-    - image: /assets/images/update-conf-2023/prague-cathedral.jpeg
-    - image: /assets/images/update-conf-2023/prague-tower.jpeg
-    - image: /assets/images/update-conf-2023/prague-museum.jpeg
-    - image: /assets/images/update-conf-2023/prague-trip-photo1.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo2.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo5.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo6.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo9.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo11.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo12.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo13.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo14.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo15.jpg
-    - image: /assets/images/update-conf-2023/prague-trip-photo16.jpg
+gallery:
+  - image_path: /assets/images/update-conf-2023/update-conf-2023-hall.jpg
+    alt: "Update Conference Hall"
+    title: "Update Conference Hall"
+  - image_path: /assets/images/update-conf-2023/update-conf-2023-hall2.jpg
+    alt: "Update Conference Hall alternate view"
+    title: "Update Conference Hall"
+  - image_path: /assets/images/update-conf-2023/update-conf-2023-speaker-room.jpg
+    alt: "Speaker Room"
+    title: "Speaker Room"
+  - image_path: /assets/images/update-conf-2023/update-conf-2023-speaker-gift.jpg
+    alt: "placeholder image 3"
+    title: "Speaker Gift"
+gallery2:
+  - image_path: /assets/images/update-conf-2023/prague-astro-clock.jpeg
+  - image_path: /assets/images/update-conf-2023/prague-cathedral.jpeg
+  - image_path: /assets/images/update-conf-2023/prague-tower.jpeg
+  - image_path: /assets/images/update-conf-2023/prague-museum.jpeg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo1.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo2.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo5.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo6.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo9.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo11.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo12.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo13.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo14.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo15.jpg
+  - image_path: /assets/images/update-conf-2023/prague-trip-photo16.jpg
 ---
 
 I am currently sitting in the Schiphol Airport in Amsterdam waiting for my connecting flight back to Toronto after attending [Update Conference 2023][update-conf-site] in Prague, Czechia. This trip was full of firsts for me: first time in Prague, first time at Update Conference, first time speaking in Europe, and my first time meeting some of my Uno Platform teammates in person. It was an amazing experience and I still can't believe this was something I was able to do. I had a lot of fun and I am completely exhausted, so I figured I should write a recap instead of sleeping :upside_down_face:.
@@ -34,7 +41,7 @@ I am currently sitting in the Schiphol Airport in Amsterdam waiting for my conne
 
 Update Conference Prague is the biggest .NET developer conference in Czechia. It's a two-day conference that has over 40 technical sessions led by experts from all around the world. The conference itself is, by far, the most well-put-together conference I've ever attended. The organizers did an AMAZING job and the conference hall was beautiful.
 
-{% include carousel.html height="50" unit="%" number="1" %}
+{% include gallery layout="half" %}
 
 The conference hall was lined with booths from various sponsors, including Uno Platform! There was a chill-out room with games, comfy seats, and a coffee bar for attendees to relax in between sessions. There was also a quiet room to get some work done and a special speaker room to relax and prepare for your talk. And the food! THE FOOD! There was a constant flow of delicious snacks, sandwiches, and drinks throughout the day.
 
@@ -96,9 +103,10 @@ This was my first time in Prague and I absolutely loved it. I spent a day and a 
 
 Instead of talking more about the leisure part of the trip, I'll just end this here and throw up a bunch of photos of the sights and the food. Enjoy!
 
-*NOTE: I'm not going to be posting any photos from Auschwitz*
+**NOTE:** I'm not going to be posting any photos from Auschwitz
+{: .notice--info}
 
-{% include carousel.html height="100" unit="%" number="2" %}
+{% include gallery id="gallery2" %}
 
 [update-now-portal]: https://now.updateconference.net/
 [update-conf-site]: https://www.updateconference.net/en
