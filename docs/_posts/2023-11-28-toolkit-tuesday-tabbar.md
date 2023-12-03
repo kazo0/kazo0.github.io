@@ -3,6 +3,7 @@ title: "Toolkit Tuesdays: TabBar"
 category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
+  image: /assets/images/uno-toolkit-hero.png
 tags: [uno-toolkit, tabbar, uno-platform]
 ---
 
