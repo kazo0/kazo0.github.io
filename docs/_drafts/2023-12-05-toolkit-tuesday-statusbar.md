@@ -1,49 +1,49 @@
 ---
-title: "Toolkit Tuesdays: NavigationBar"
+title: "Toolkit Tuesdays: StatusBar"
 category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
-tags: [uno-toolkit, toolkit, navigationbar, navigation-bar, uno-platform, uno, unoplatform]
+tags: [uno-toolkit, toolkit, statusbar, uno-platform, uno, unoplatform]
 ---
 
-Welcome to the first post in my new series, Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-repo]. I hope you find them useful too!
+Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-repo]. I hope you find them useful too!
 
-This week we are covering the `NavigationBar` control. This control has a simple purpose with a complex and interesting implementation across the multiple platforms that Uno supports. On Android and iOS/Catalyst, the `NavigationBar` serves as a sort of proxy to the native Android `Toolbar` and iOS `UINavigationBar`. On all other platforms, its functionality and UI are driven by a customized `CommandBar`.
+This week we are covering the `StatusBar` Extensions. This is a set of extensions that allow you to easily customize the `StatusBar` on Android and iOS/Catalyst. The `StatusBar` is the bar at the top of your screen that displays the time, battery level, and other system information.
 
-## Anatomy of a `NavigationBar`
+## Anatomy of a `StatusBar`
 
 The XAML for the following usage of `NavigationBar` can be seen further along in the [Complex Usage](#complex-usage) section.
 
 #### Android
 
 <figure>
-    <img src="/assets/images/navbar/android-anatomy.png" alt="Android NavigationBar Anatomy" style="margin-bottom:10px;"/>
-    <img src="/assets/images/navbar/android-anatomy-2.png" alt="Android NavigationBar Anatomy 2" />
+    <img src="/assets/images/tabbar/tab-bar-anatomy.png" alt="TabBar Anatomy"/>
     <figcaption>
         <ol>
-            <li>Main Command</li>
-            <li>Content</li>
-            <li>Primary Commands</li>
-            <li>Overflow button for Secondary Commands</li>
-            <li>Secondary Commands</li>
+            <li>TabBarItem</li>
+            <li>TabBarItem Icon</li>
+            <li>TabBarItem Content</li>
+            <li>Custom Selection Indicator Content</li>
         </ol>
     </figcaption>
 </figure>
+
 
 
 #### iOS
 
 <figure>
-    <img src="/assets/images/navbar/ios-anatomy.png" alt="iOS NavigationBar Anatomy"/>
+    <img src="/assets/images/tabbar/tab-bar-anatomy.png" alt="TabBar Anatomy"/>
     <figcaption>
         <ol>
-            <li>Main Command</li>
-            <li>Content</li>
-            <li>Primary Commands</li>
+            <li>TabBarItem</li>
+            <li>TabBarItem Icon</li>
+            <li>TabBarItem Content</li>
+            <li>Custom Selection Indicator Content</li>
         </ol>
     </figcaption>
-    <em>SecondaryCommands are not supported on iOS</em>
 </figure>
+
 
 ### `MainCommand`
 

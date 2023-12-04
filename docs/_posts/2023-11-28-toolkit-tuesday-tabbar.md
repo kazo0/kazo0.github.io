@@ -3,8 +3,7 @@ title: "Toolkit Tuesdays: TabBar"
 category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
-  image: /assets/images/uno-toolkit-hero.png
-tags: [uno-toolkit, tabbar, uno-platform]
+tags: [uno-toolkit, toolkit, tabbar, tab-bar, uno-platform, uno, unoplatform]
 ---
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-repo]. I hope you find them useful too!
