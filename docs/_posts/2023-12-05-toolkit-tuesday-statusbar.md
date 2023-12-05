@@ -8,11 +8,9 @@ tags: [uno-toolkit, toolkit, statusbar, uno-platform, uno, unoplatform]
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][uno-toolkit] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-repo]. I hope you find them useful too!
 
-This week we are covering the `StatusBar` Extensions. This is a set of extensions that allow you to easily customize the `StatusBar` on Android and iOS/Catalyst. The `StatusBar` is the bar at the top of your screen that displays the time, battery level, and other system information.
+This week we are covering the `StatusBar` Extensions. This is a set of [attached properties][attached-docs] that allow you to easily customize the `StatusBar` on Android and iOS/Catalyst. The `StatusBar` is the bar at the top of your screen that displays the time, battery level, and other system information.
 
 ## Anatomy of a `StatusBar`
-
-Below is a screenshot of the status bar from the Android system, colored to highlight the different areas of the bar.
 
 <figure>
     <img src="/assets/images/statusbar/statusbar-anatomy-android.png" alt="Android StatusBar Anatomy"/>
@@ -32,11 +30,11 @@ Below is a screenshot of the status bar from the Android system, colored to high
 
 ### `Foreground`
 
-The `Foreground` attached property does accept normal values like a usual `Brush`-based property. The difference here is that the `Foreground` property is of type `StatusBarForegroundTheme` and supports the following values:
+The `Foreground` attached property doesn't accept normal values like a usual `Brush`-based property. The difference here is that the `Foreground` property is of type `StatusBarForegroundTheme` and supports the following values:
 
 Value|Description
 -|-
-`None`|Leave the foreground in the last set color, and dispose any event registered by the extension associated to the current page
+`None`|Leaves the foreground in the last set color, and dispose any event registered by the extension associated to the current page
 `Light`|The foreground will take a light/white color
 `Dark`|The foreground will take a dark/black color
 `Auto`|The foreground will adjust according to the current theme: light/white in the dark mode, and dark/black in the light mode
@@ -133,6 +131,17 @@ First, let's define some new brushes in our `AppResources.xaml` that change valu
 </ResourceDictionary.ThemeDictionaries>
 ```
 
+And use that new brush as the background for our status bar:
+
+```diff
+...
+      xmlns:utu="using:Uno.Toolkit.UI"
+      utu:StatusBar.Foreground="Light"
+-     utu:StatusBar.Background="{StaticResource UnoPurpleBrush}"
++     utu:StatusBar.Background="{ThemeResource MyStatusBarBackground}"
+...
+```
+
 Light|Dark
 :-:|:-:
 ![StatusBar with BlanchedAlmond background and Light foreground](/assets/images/statusbar/statusbar-almond-light.png)|![StatusBar with SaddleBrown background and Light foreground](/assets/images/statusbar/statusbar-brown-dark.png)
@@ -144,7 +153,7 @@ Hmm, having a `utu:StatusBar.Background` of `Light` doesn't look good anymore, e
       xmlns:utu="using:Uno.Toolkit.UI"
 -     utu:StatusBar.Foreground="Light"
 +     utu:StatusBar.Foreground="Auto"
-      utu:StatusBar.Background="{StaticResource UnoPurpleBrush}"
+      utu:StatusBar.Background="{ThemeResource MyStatusBarBackground}"
 ...
 ```
 
@@ -182,7 +191,7 @@ This doesn't seem to work very well with the `Auto` foreground. Let's try settin
       xmlns:utu="using:Uno.Toolkit.UI"
 -     utu:StatusBar.Foreground="Auto"
 +     utu:StatusBar.Foreground="AutoInverse"
-      utu:StatusBar.Background="{StaticResource UnoPurpleBrush}"
+      utu:StatusBar.Background="{ThemeResource MyStatusBarBackground}"
 ...
 ```
 
@@ -205,4 +214,5 @@ I encourage you to consult the full documentation for `StatusBar` using the link
 
 [statusbar-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/StatusBar-extensions.html
 [uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
+[attached-docs]: https://learn.microsoft.com/en-us/windows/uwp/xaml-platform/custom-attached-properties
 {% include links.md %}
