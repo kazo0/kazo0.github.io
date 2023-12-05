@@ -3,6 +3,7 @@ title: "Toolkit Tuesdays: NavigationBar"
 category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
+  og_image: /assets/images/uno-toolkit-hero.png
 tags: [uno-toolkit, toolkit, navigationbar, navigation-bar, uno-platform, uno, unoplatform]
 ---
 

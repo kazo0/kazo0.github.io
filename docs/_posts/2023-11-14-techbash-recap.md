@@ -3,6 +3,7 @@ title: TechBash Recap
 category: conference
 header:
   teaser: /assets/images/lanyard-techbash-2023.jpg
+  og_image: /assets/images/lanyard-techbash-2023.jpg
 tags: [conference, techbash, uno-platform]
 ---
 

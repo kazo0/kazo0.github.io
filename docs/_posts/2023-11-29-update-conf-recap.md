@@ -3,6 +3,7 @@ title: "Update Conference Recap"
 category: conference
 header:
   teaser: /assets/images/update-conf-2023/update-conf-2023-hero.jpg
+  og_image: /assets/images/update-conf-2023/update-conf-2023-hero.jpg
 tags: [conference, update-conference, uno-platform]
 conference_gallery:
   - image_path: /assets/images/update-conf-2023/update-conf-2023-hall.jpg

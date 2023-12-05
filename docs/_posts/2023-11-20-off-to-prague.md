@@ -3,6 +3,7 @@ title: "Update Conference: Off To Prague!"
 category: conference
 header:
   teaser: /assets/images/airport-update-2023.jpg
+  og_image: /assets/images/airport-update-2023.jpg
 tags: [conference, update-conference, uno-platform]
 ---
 
