@@ -22,6 +22,7 @@ title: dotnet new bald
 email: steve.bilogan@gmail.com
 subtitle: A blog about .NET, Uno Platform, and other things I find interesting.
 og_image: /assets/images/profile.png
+image: /assets/images/profile.png
 teaser: /assets/images/profile.png
 repository: kazo0/kazo0.github.io
 description: >- # this means to ignore newlines until "baseurl:"
