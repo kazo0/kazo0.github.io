@@ -9,7 +9,7 @@ tags: [uno-toolkit, toolkit, safearea, uno-platform, uno, unoplatform]
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!
 
-This is a special 
+This is a special Holiday edition of Toolkit Tuesdays as it is part of the [.NET Advent Calendar][net-advent] series!
 
 This week we are covering the `SafeArea` component. `SafeArea` comes packaged as both a specialized control and as a set of attached properties. The purpose of `SafeArea` is to ensure that your content is never obscured by certain system UI elements or hardware display cutouts.
 
@@ -48,7 +48,7 @@ The above example depicts the difference in layout when using `SafeArea` on iOS 
 
 `SafeArea` is built on top of Uno Platform's cross-platform implementation of the [`ApplicationView.VisibleBounds` API from WinUI][visible-bounds-winui]. This API returns the bounds within the app window that are not occluded by any system UI or display cutouts. `SafeArea` compares the `VisibleBounds` to the bounds of the specified control and calculates the insets needed to ensure that the control is not obscured.
 
-By default, `SafeArea` will attempt to apply the caluclated insets to the `Padding` of the specified control. This behavior can be changed by setting the `Mode` property to `InsetMode.Margin` instead. Additionally, through the `Insets` property, you are able to specify which sides of the `SafeArea` should be taken into consideration when calculating the insets.
+By default, `SafeArea` will attempt to apply the calculated insets to the `Padding` of the specified control. This behavior can be changed by setting the `Mode` property to `InsetMode.Margin` instead. Additionally, through the `Insets` property, you can specify which sides of the `SafeArea` should be taken into consideration when calculating the insets.
 
 ## Properties
 
@@ -137,7 +137,7 @@ Let's start with the example XAML that was used for the [Anatomy section](#anato
 </Page>
 ```
 
-Notice that blue `Grid` containing the "Top Area" `TextBlock` is beneath the status bar text and is being obscured by the Dynamic Island area of the iPhone 15:
+Notice the blue `Grid` containing the "Top Area" `TextBlock` is beneath the status bar text and is being obscured by the Dynamic Island area of the iPhone 15:
 
 ![Unsafe Top](/assets/images/safearea/safearea-unsafe-top.png)
 
@@ -158,7 +158,7 @@ Now we see that the "Top Area" `TextBlock` is no longer being obscured and is vi
 
 ![Safe Top](/assets/images/safearea/safearea-safe-top.png)
 
-We also see that the "Bottom Area" `TextBlock` is no longer being obscured and is visible above the Home Indicator:
+We also see that the "Bottom Area" `TextBlock` is no longer obscured and is visible above the Home Indicator:
 
 ![Safe Bottom](/assets/images/safearea/safearea-safe-bottom.png)
 
@@ -166,7 +166,7 @@ Much better!
 
 We can see that the `SafeArea` is doing its job and properly applying a `Padding` to the purple `Grid` so that any content inside of the `Grid` will be "inset" from the "unsafe" areas of the screen.
 
-What happpens if we were to set the `SafeArea.Mode` to `InsetMode.Margin` instead?
+What happens if we were to set the `SafeArea.Mode` to `InsetMode.Margin` instead?
 
 ```diff
 ...
@@ -182,7 +182,7 @@ Top|Bottom
 
 :open_mouth: Holy Yellow Batman! What happened there?
 
-Well, the `SafeArea` is still doing its job but now its applying a `Margin` to the purple `Grid` instead of a `Padding`. This means that the purple `Grid` is now being pushed down and up by the `SafeArea` insets. If you look back at the original XAML for the `Page`, you'll see that we had set a `Background` of `Yellow` on the `Page`. This is why we see the yellow background of the `Page` showing through.
+Well, the `SafeArea` is still doing its job but now it's applying a `Margin` to the purple `Grid` instead of a `Padding`. This means that the purple `Grid` is now being pushed down and up by the `SafeArea` insets. If you look back at the original XAML for the `Page`, you'll see that we had set a `Background` of `Yellow` on the `Page`. This is why we see the yellow background of the `Page` showing through.
 
 I'm not a huge fan of this look, nor do I like the look of the previous `Padding` approach. I think it looks better when the content is allowed to "bleed" into the unsafe areas and is flush with the top and bottom of the screen. Let's try something else.
 
@@ -224,7 +224,7 @@ Top|Bottom
 
 Looking good!
 
-Now we have both the top and the bottom `Grid` areas being inset from the usafe areas using their `Padding`. This allows for the background of each `Grid` to show through and gives the appearance that the container is bleeding into the unsafe areas while still ensuring that the actual content is not obscured.
+Now we have both the top and the bottom `Grid` areas being inset from the unsafe areas using their `Padding`. This allows for the background of each `Grid` to show through and gives the appearance that the container is bleeding into the unsafe areas while still ensuring that the actual content is not obscured.
 
 So that's it, right? We'll always be able to see our content no matter what, right?...
 
@@ -268,7 +268,7 @@ Our bottom content is now being obscured by the keyboard. This may not be a huge
 
 ### SoftInput Example
 
-The `SafeArea.Insets` property has a special `InsetMask` value called `SoftInput`. This value is used to ensure that the specified area will adapt to any sort of soft-input panel that may appear, such as the on-screen keyboard on touch devices. Let's try it out!
+The `SafeArea.Insets` property has a special `InsetMask` value called `SoftInput`. This value is used to ensure that the specified area will adapt to any sort of soft input panel that may appear, such as the on-screen keyboard on touch devices. Let's try it out!
 
 ```diff
  <Grid Background="Purple">
@@ -307,6 +307,14 @@ In fact, if you look closely, you'll notice that the entire area beneath the key
 
 ## Conclusion
 
+Notice how I didn't include my face in the example screenshots this time? :stuck_out_tongue_winking_eye:
+
+Let's add one here, just for good measure:
+
+![Me](/assets/images/profile.png){: .align-center .width-half}
+
+I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about `SafeArea` so I hope you will continue to explore it on your own.
+
 I encourage you to consult the full documentation for `SafeArea` using the links below. I also want to welcome you to contribute to making `SafeArea` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
 
 ## Further Reading
@@ -320,4 +328,5 @@ I encourage you to consult the full documentation for `SafeArea` using the links
 [attached-docs]: https://learn.microsoft.com/en-us/windows/uwp/xaml-platform/custom-attached-properties
 [safearea-sample-gh]: https://github.com/kazo0/SafeAreaApp
 [safearea-docs-softinput]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html?tabs=none#using-insetmasksoftinput-for-on-screen-keyboards
+[net-advent]: https://dotnet.christmas/
 {% include links.md %}
