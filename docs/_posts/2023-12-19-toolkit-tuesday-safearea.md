@@ -324,7 +324,7 @@ I encourage you to consult the full documentation for `SafeArea` using the links
 - [SafeArea Docs][safearea-docs]
 - [Uno Toolkit Docs][uno-toolkit-docs]
 
-[safearea-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/StatusBar-extensions.html
+[safearea-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html
 [uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
 [visible-bounds-winui]: https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.applicationview.visiblebounds
 [attached-docs]: https://learn.microsoft.com/en-us/windows/uwp/xaml-platform/custom-attached-properties
