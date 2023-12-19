@@ -6,3 +6,5 @@
 [uno-extensions]: https://github.com/unoplatform/uno.extensions
 [uno-mvux]: https://platform.uno/docs/articles/external/uno.extensions/doc/Overview/Mvux/Overview.html
 [csharp-markup]: https://platform.uno/c-markup/
+[uno-homepage]: https://platform.uno/posts/uno
+[toolkit-homepage]: https://platform.uno/posts/toolkit
