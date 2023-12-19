@@ -313,6 +313,8 @@ Let's add one here, just for good measure:
 
 ![Me](/assets/images/profile.png){: .align-center .width-half}
 
+If you want to take a look at the full source code for the examples above, you can find it on this [GitHub repo][safearea-sample-gh].
+
 I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about `SafeArea` so I hope you will continue to explore it on your own.
 
 I encourage you to consult the full documentation for `SafeArea` using the links below. I also want to welcome you to contribute to making `SafeArea` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
