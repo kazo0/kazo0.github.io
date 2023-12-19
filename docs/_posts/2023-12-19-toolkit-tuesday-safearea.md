@@ -86,7 +86,7 @@ The `Insets` property determines which sides of the `SafeArea` should be conside
 |`VisibleBounds` = `Left`, `Top`, `Right`, `Bottom`|
 |`All` = `VisibleBounds`, `SoftInput`|
 
-`SoftInput` is used to ensure that the specified area will adapt to any sort of soft-input panel that may appear, such as the on-screen keyboard on touch devices. More on this later.
+`SoftInput` is used to ensure that the specified area will adapt to any sort of soft-input panel that may appear, such as the on-screen keyboard on touch devices. More on this [later](#softinput-example).
 {: .notice--info}
 
 ### Mode
