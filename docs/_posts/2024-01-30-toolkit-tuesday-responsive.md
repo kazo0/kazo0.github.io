@@ -4,7 +4,7 @@ category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
   og_image: /assets/images/uno-toolkit-hero.png
-tags: [uno-toolkit, toolkit, responsive, uno-platform, uno, unoplatform]
+tags: [uno-toolkit, toolkit, responsive, responsiveview, responsive-extensions, uno-platform, uno, unoplatform]
 ---
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!
