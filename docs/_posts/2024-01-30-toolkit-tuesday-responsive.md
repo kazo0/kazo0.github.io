@@ -9,7 +9,7 @@ tags: [uno-toolkit, toolkit, responsive, responsiveview, responsive-extensions, 
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!
 
-This week we are covering the brand-new `Responsive` components that are part of the [5.1 Uno Toolkit release][toolkit-5-1-release]. The `Responsive` components encompass two new additions to the Uno Toolkit library: a new [`ResponsiveView` control](#responsiveview) and a new [`Responsive` markup extension](#responsive-markup-extension).
+This week we are covering the brand-new `Responsive` components that are part of the [5.1 Uno Toolkit release][5-1-release]. The `Responsive` components encompass two new additions to the Uno Toolkit library: a new [`ResponsiveView` control](#responsiveview) and a new [`Responsive` markup extension](#responsive-markup-extension).
 
 ## ResponsiveView
 
@@ -276,12 +276,12 @@ I encourage you to consult the full documentation for `ResponsiveView` and the `
 - [Responsive Markup Extension Docs][responsiveextension-docs]
 - [Uno Toolkit Docs][uno-toolkit-docs]
 
-[responsiveview-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ResponsiveView.html
-[responsiveextension-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/responsive-extension.html
-[toolkit-5-1-release]: https://github.com/unoplatform/uno.toolkit.ui/releases/tag/untagged-90fae703af23260605eb
+[responsiveview-docs]: https://aka.platform.uno/toolkit-responsiveview
+[responsiveextension-docs]: https://aka.platform.uno/toolkit-responsivemarkup
+[5-1-release]: https://aka.platform.uno/blog-5-1
 [winui-adaptive-trigger]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.adaptivetrigger
 [winui-visual-state]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.visualstate
 [responsive-sample-gh]: https://github.com/kazo0/ResponsiveApp
-[responsive-view-layout-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ResponsiveView.html#responsivelayout
-[responsive-view-layout-logic-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ResponsiveView.html#resolution-logics
+[responsive-view-layout-docs]: https://aka.platform.uno/toolkit-responsiveview#responsivelayout
+[responsive-view-layout-logic-docs]: https://aka.platform.uno/toolkit-responsiveview#resolution-logics
 {% include links.md %}
