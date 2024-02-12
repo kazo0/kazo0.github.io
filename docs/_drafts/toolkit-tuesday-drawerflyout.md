@@ -15,7 +15,13 @@ This week we are covering the `DrawerFlyoutPresenter`, a lightweight way to crea
 
 ### As a Navigation Drawer
 
+#### Android
 
+![](/assets/images/drawerflyout/android-nav-drawer.gif)
+
+#### WASM
+
+![](/assets/images/drawerflyout/wasm-nav-drawer.gif)
 
 ### As a Bottom Sheet
 
