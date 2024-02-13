@@ -408,203 +408,162 @@ Here's what we are looking to build by the end of this section (both Android and
 
 ![WASM Bottom Sheet](/assets/images/drawerflyout/wasm-sheet.gif)
 
-![ResponsiveView Resizing](/assets/images/responsive/responsiveView_resize.gif)
+Since we just went through the whole process of transforming a `Flyout` into a navigation drawer, we can use the same process to transform it into a bottom sheet. First things first, let's create a new custom flyout called `BottomSheetFlyout`:
 
-You can see here how each template is applied as the screen width changes. But, what if we don't define a template for a certain screen width? Let's remove the `NarrowTemplate` and `WideTemplate` from the above example and see what happens:
+`BottomSheetFlyout.xaml`:
+
+```xml
+<Flyout x:Class="DrawerApp.BottomSheetFlyout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:DrawerApp"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:um="using:Uno.Material"
+        xmlns:utu="using:Uno.Toolkit.UI"
+        Placement="Full"
+        FlyoutPresenterStyle="{StaticResource BottomDrawerFlyoutPresenterStyle}">
+
+    <Grid RowSpacing="12"
+          Margin="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Margin="22"
+                Height="4"
+                Width="32"
+                Background="{ThemeResource OnSurfaceVariantBrush}"
+                CornerRadius="2"
+                HorizontalAlignment="Center" />
+        <Button Grid.Row="1"
+                Content="Share"
+                Style="{StaticResource TextButtonStyle}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch">
+            <um:ControlExtensions.Icon>
+                <SymbolIcon Symbol="Share" />
+            </um:ControlExtensions.Icon>
+        </Button>
+        <Button Grid.Row="2"
+                Content="Get link"
+                Style="{StaticResource TextButtonStyle}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch">
+            <um:ControlExtensions.Icon>
+                <SymbolIcon Symbol="Link" />
+            </um:ControlExtensions.Icon>
+        </Button>
+        <Button Grid.Row="3"
+                Content="Edit name"
+                Style="{StaticResource TextButtonStyle}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch">
+            <um:ControlExtensions.Icon>
+                <SymbolIcon Symbol="Edit" />
+            </um:ControlExtensions.Icon>
+        </Button>
+    </Grid>
+</Flyout>
+```
+
+Now, we can add a `Button` to our `MainPage.xaml` that will open the `BottomSheetFlyout`:
 
 ```diff
-  <utu:ResponsiveView>
-      <utu:ResponsiveView.NarrowestTemplate>
-          <DataTemplate>
-              <Grid Background="Red">
-                  <TextBlock TextWrapping="WrapWholeWords"
-                            Text="Narrowest Template"
-                            FontSize="32" />
-              </Grid>
-          </DataTemplate>
-      </utu:ResponsiveView.NarrowestTemplate>
--        <utu:ResponsiveView.NarrowTemplate>
--            <DataTemplate>
--                <Grid Background="Green">
--                    <TextBlock Text="Narrow Template"
--                               FontSize="32" />
--                </Grid>
--            </DataTemplate>
--        </utu:ResponsiveView.NarrowTemplate>
-      <utu:ResponsiveView.NormalTemplate>
-          <DataTemplate>
-              <Grid Background="Blue">
-                  <TextBlock Text="Normal Template"
-                            FontSize="32" />
-              </Grid>
-          </DataTemplate>
-      </utu:ResponsiveView.NormalTemplate>
--        <utu:ResponsiveView.WideTemplate>
--            <DataTemplate>
--                <Grid Background="Purple">
--                    <TextBlock Text="Wide Template"
--                               FontSize="32" />
--                </Grid>
--            </DataTemplate>
--        </utu:ResponsiveView.WideTemplate>
-      <utu:ResponsiveView.WidestTemplate>
-          <DataTemplate>
-              <Grid Background="Orange">
-                  <TextBlock Text="Widest Template"
-                            FontSize="32" />
-              </Grid>
-          </DataTemplate>
-      </utu:ResponsiveView.WidestTemplate>
-  </utu:ResponsiveView>
+ <Page x:Class="DrawerApp.MainPage"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="using:DrawerApp"
+       xmlns:utu="using:Uno.Toolkit.UI"
+       xmlns:um="using:Uno.Material"
+       Background="{ThemeResource BackgroundBrush}">
+     <Grid>
+         <Grid.RowDefinitions>
+             <RowDefinition Height="Auto" />
+             <RowDefinition Height="*" />
+         </Grid.RowDefinitions>
+         <utu:NavigationBar Content="First Page"
+                            MainCommandMode="Action">
+             <utu:NavigationBar.MainCommand>
+                 <AppBarButton>
+                     <AppBarButton.Icon>
+                         <BitmapIcon UriSource="ms-appx:///DrawerApp/Assets/Icons/burger.png" />
+                     </AppBarButton.Icon>
+                     <AppBarButton.Flyout>
+                         <local:NavFlyout />
+                     </AppBarButton.Flyout>
+                 </AppBarButton>
+             </utu:NavigationBar.MainCommand>
+         </utu:NavigationBar>
+ 
++        <Button Grid.Row="1"
++                HorizontalAlignment="Center"
++                VerticalAlignment="Center"
++                Content="Open Sheet">
++            <Button.Flyout>
++                <local:BottomSheetFlyout />
++            </Button.Flyout>
++        </Button>
+     </Grid>
+ </Page>
 ```
 
-![ResponsiveView Resizing without Narrow or Wide Templates](/assets/images/responsive/responsiveView_resize2.gif)
+![Android page with BottomSheetFlyout](/assets/images/drawerflyout/android-sheet-step-1.png){: .width-half}
 
-Notice now how we stay in certain templates for longer as the screen width changes. This is because the `ResponsiveView` control will always pick the smallest defined template that satisfies the width requirements. Since we removed the `WideTemplate` and `NarrowTemplate`, the `ResponsiveView` control will default to the `NormalTemplate` and the `NarrowestTemplate` for the `Wide` and `Narrow` screen widths, respectively.
-
-More information on the template resolution logic can be found in the [official documentation][responsive-view-layout-logic-docs]
-{: .notice--info}
-
-## Responsive Markup Extension
-
-The `Responsive` markup extension is a new markup extension that is used to help build responsive layouts. It is similar to the `ResponsiveView` control in that it shares the resolution logic for the current window width. However, it is different in that it is not a container control and it does not require the definition of multiple templates. Instead, it enables finer-grained control over the value of a single property on a control based on the current window width.
-
-### Properties
-
-| Property    | Type               | Description                                                |
-|-------------|--------------------|------------------------------------------------------------|
-| `Narrowest` | `object`           | Value to be used when the screen size is at its narrowest. |
-| `Narrow`    | `object`           | Value to be used when the screen size is narrow.           |
-| `Normal`    | `object`           | Value to be used when the screen size is normal.           |
-| `Wide`      | `object`           | Value to be used when the screen size is wide.             |
-| `Widest`    | `object`           | Value to be used when the screen size is at its widest.    |
-| `Layout`    | `ResponsiveLayout` | Overrides the screen size thresholds/breakpoints.          |
-
-The `ResponsiveLayout` property is used to override the default screen size threshold/breakpoints. We will cover this in more detail [later](#responsivelayout).
-{: .notice--info}
-
-### Usage
-
-Let's take the [previous example](#usage) using `ReponsiveView` and convert it to use the `Responsive` markup extension instead:
+Almost there, but if we look at the [bottom sheet guidance from Material Design][m3-bottom-sheet], we can see the the sheet should have some rounded corners and shouldn't open up too high. We can achieve this by creating a custom `Style` for the `FlyoutPresenter` that is based on the `BottomDrawerFlyoutPresenterStyle`. In our `AppResources.xaml`, we can add the following:
 
 ```xml
-<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:ResponsiveApp"
-      xmlns:utu="using:Uno.Toolkit.UI"
-      x:Class="ResponsiveApp.MainPage"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid Background="{utu:Responsive Narrowest=Red, Narrow=Green, Normal=Blue, Wide=Purple, Widest=Orange}">
-            <TextBlock TextWrapping="WrapWholeWords"
-                       Text="{utu:Responsive Narrowest='Narrowest', Narrow='Narrow', Normal='Normal', Wide='Wide', Widest='Widest'}"
-                       FontSize="32" />
-    </Grid>
-</Page>
+<Style x:Key="BottomSheetFlyoutPresenterStyle"
+       TargetType="FlyoutPresenter"
+       BasedOn="{StaticResource BottomDrawerFlyoutPresenterStyle}">
+    <Setter Property="CornerRadius" Value="20,20,0,0" />
+    <Setter Property="utu:DrawerFlyoutPresenter.DrawerLength" Value="0.33*" />
+</Style>
 ```
 
-![Responsive Markup Extension Resizing](/assets/images/responsive/responsiveMarkup_resize.gif)
+Then, we set the `FlyoutPresenterStyle` on our `BottomSheetFlyout` accordingly:
 
-Much simpler, right? The `Responsive` markup extension is a great way to quickly adapt a single property value based on the current window width. It is also a great way to quickly prototype a responsive layout without having to define multiple templates.
-
-Now, what about if we wanted to customize the threshold values for the screen sizes? You'll notice that for both `ResponsiveView` and the `Responsive` markup extension, we have a property available to us of type `ResponsiveLayout`. This property allows us to override the default screen size threshold/breakpoints in multiple ways.
-
-## ResponsiveLayout
-
-The `ResponsiveView` control has a property called `ResponsiveLayout` and the `Responsive` markup extension has a property called `Layout`. These properties are of type `ResponsiveLayout` and have the following default values:
-
-### Properties
-
-| Property    | Type     | Description            |
-|-------------|----------|------------------------|
-| `Narrowest` | `double` | Default value is 150.  |
-| `Narrow`    | `double` | Default value is 300.  |
-| `Normal`    | `double` | Default value is 600.  |
-| `Wide`      | `double` | Default value is 800.  |
-| `Widest`    | `double` | Default value is 1080. |
-
-The default `ResponsiveLayout` can be overridden from different locations. In the following order of precedence:
-
-1. From the `ResponsiveLayout`/`Layout` property
-2. In the property owner's parent `.Resources` with `x:Key="DefaultResponsiveLayout"`, or the property owner's ancestor's `.Resources`
-3. In `Application.Resources` with `x:Key="DefaultResponsiveLayout"`
-
-For more information on the `ResponsiveLayout` properties, check out the [official documentation][responsive-view-layout-docs].
-{: .notice--info}
-
-#### Examples
-
-Let's take the following `ResponsiveLayout` instance defined in our `Application.Resources`:
-
-```xml
-<utu:ResponsiveLayout x:Key="CustomLayout" Narrowest="0" Narrow="0" Normal="0" Wide="100" Widest="1200" />
+```diff
+ <Flyout x:Class="DrawerApp.BottomSheetFlyout"
+         ...
+-        FlyoutPresenterStyle="{StaticResource BottomDrawerFlyoutPresenterStyle}">
++        FlyoutPresenterStyle="{StaticResource BottomSheetFlyoutPresenterStyle}">
+     ...
+ </Flyout>
 ```
 
-This ridiculous example will cause the responsive resolution logic to stay in `Wide` mode for most configurations until the screen width is at least 1200 pixels wide. Let's see what that looks like:
+![Android page with custom BottomSheetFlyoutPresenterStyle](/assets/images/drawerflyout/android-sheet-step-2.png){: .width-half}
 
-![ResponsiveView Resizing with Custom ResponsiveLayout](/assets/images/responsive/responsiveView_resize3.gif)
-
-The way you could achieve this would look different depending on whether you are using `ResponsiveView` or the `Responsive` markup extension. Let's take a look at both examples:
-
-##### ResponsiveView
-
-```xml
-<utu:ResponsiveView ResponsiveLayout="{StaticResource CustomLayout}">
-
-    ...
-
-</utu:ResponsiveView>
-```
-
-##### Responsive Markup Extension
-
-```xml
-<Grid Background="{utu:Responsive Layout={StaticResource CustomLayout}, Narrowest=Red, Narrow=Green, Normal=Blue, Wide=Purple, Widest=Orange}">
-        <TextBlock TextWrapping="WrapWholeWords"
-                    Text="{utu:Responsive Layout={StaticResource CustomLayout}, Narrowest='Narrowest', Narrow='Narrow', Normal='Normal', Wide='Wide', Widest='Widest'}"
-                    FontSize="32" />
-</Grid>
-```
-
-Another approach would be to override the default `ResponsiveLayout` resource using the resource key `DefaultResponsiveLayout`. The beauty of this technique is that you can scope the resource to a specific control, the current page, or the entire application. Let's take a look at an example:
-
-```xml
-<Page ...>
-    <Page.Resources>
-         <utu:ResponsiveLayout x:Key="DefaultResponsiveLayout"
-                          Narrow="400"
-                          Wide="800" />
-    </Page.Resources>
-    <utu:ResponsiveView>
-
-        ...
-
-    </utu:ResponsiveView>
-</Page>
-```
+And there we go! We were able to customize the `CornerRadius` as well as ensure that the sheet only takes up 33% of the screen height.
 
 ## Conclusion
 
-If you want to take a look at the full source code for the examples above, you can find it on this [GitHub repo][responsive-sample-gh].
+In this article, we covered how to use the `DrawerFlyoutPresenter` to create a navigation drawer and a bottom sheet experience. We also learned how to use the pre-built styles and how to create custom styles to further customize the experience.
 
-I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about `Responsive` so I hope you will continue to explore it on your own.
+The Uno Toolkit also provides a standalone control called `DrawerControl` that shares much of the same logic with the `DrawerFlyoutPresenter`. The `DrawerControl` is a `ContentControl` that can be used to create a drawer-like experience without the need for a `Flyout`. It is a container with two views: one view for the main content, and another view that can be revealed with a swipe gesture. Be sure to check out the docs in the links below.
 
-I encourage you to consult the full documentation for `ResponsiveView` and the `Responsive` markup extension using the links below. I also want to welcome you to contribute to making `Responsive` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
+If you want to take a look at the full source code for the examples above, you can find it on this [GitHub repo][drawer-sample-gh].
+
+I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about the `DrawerFlyoutPresenter` so I hope you will continue to explore it on your own.
+
+I encourage you to consult the full documentation for the `DrawerFlyoutPresenter` markup extension using the links below. I also want to welcome you to contribute to making `DrawerFlyoutPresenter` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
 
 ## Further Reading
 
-- [ResponsiveView Docs][responsiveview-docs]
-- [Responsive Markup Extension Docs][responsiveextension-docs]
+- [DrawerFlyoutPresenter Docs][drawerflyoutpresenter-docs]
+- [DrawerControl Docs][drawercontrol-docs]
 - [Uno Toolkit Docs][uno-toolkit-docs]
 
-[responsiveview-docs]: https://aka.platform.uno/toolkit-responsiveview
-[responsiveextension-docs]: https://aka.platform.uno/toolkit-responsivemarkup
+[drawerflyoutpresenter-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/DrawerFlyoutPresenter.html
+[drawercontrol-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/DrawerControl.html
 [m3-drawer-guidelines]: https://m3.material.io/components/navigation-drawer/guidelines
 [m3-bottom-sheet]: https://m3.material.io/components/bottom-sheets/overview
 [m3-side-sheet]: https://m3.material.io/components/side-sheets/overview
 [winui-flyoutpresenterstyle]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.flyout.flyoutpresenterstyle?
 [winui-flyout]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.flyout
 [winui-flyoutpresenter]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.flyoutpresenter
-[responsive-sample-gh]: https://github.com/kazo0/ResponsiveApp
-[responsive-view-layout-docs]: https://aka.platform.uno/toolkit-responsiveview#responsivelayout
-[responsive-view-layout-logic-docs]: https://aka.platform.uno/toolkit-responsiveview#resolution-logics
+[drawer-sample-gh]: https://github.com/kazo0/DrawerApp
 {% include links.md %}
