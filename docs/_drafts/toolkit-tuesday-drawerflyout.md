@@ -118,7 +118,7 @@ So, let's build that Navigation Drawer experience that was shown earlier on in t
 
 ### Navigation Drawer
 
-We can use the `DrawerFlyoutPresenter` to build a navigation drawer experience. Complete is gesture support, light dismiss, and integration with other Uno Toolkit controls.
+We can use the `DrawerFlyoutPresenter` to build a navigation drawer experience. Complete with gesture support, light dismiss, and integration with other Uno Toolkit controls.
 
 Here's what we are looking to build by the end of this section (both Android and WASM are shown):
 
@@ -215,6 +215,198 @@ Let's now use one of the [pre-built styles that we covered earlier](#styles) and
 Now when we press on the `MainCommand`, we should have a `Flyout` open from the left side of the screen. We can also drag the `Flyout` to close it:
 
 ![Android page with LeftDrawerFlyoutPresenterStyle](/assets/images/drawerflyout/android-drawer-step-3.gif){: .width-half}
+
+Starting to look good!
+
+Next up, let's extract the `Flyout` into a separate XAML file to clean up our `MainPage.xaml`:
+
+`NavFlyout.xaml`:
+
+```xml
+<Flyout x:Class="DrawerApp.NavFlyout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:DrawerApp"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Placement="Full"
+        FlyoutPresenterStyle="{StaticResource LeftDrawerFlyoutPresenterStyle}">
+
+    <Grid Background="{ThemeResource SurfaceBrush}">
+        <TextBlock Text="Hello World!"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+    </Grid>
+</Flyout>
+```
+
+`MainPage.xaml`:
+
+```diff
+ <Page x:Class="DrawerApp.MainPage"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="using:DrawerApp"
+       xmlns:utu="using:Uno.Toolkit.UI"
+       xmlns:um="using:Uno.Material"
+       Background="{ThemeResource BackgroundBrush}">
+     <Grid>
+         <Grid.RowDefinitions>
+             <RowDefinition Height="Auto" />
+             <RowDefinition Height="*" />
+         </Grid.RowDefinitions>
+         <utu:NavigationBar Content="First Page"
+                            MainCommandMode="Action">
+             <utu:NavigationBar.MainCommand>
+                 <AppBarButton>
+                     <AppBarButton.Icon>
+                         <BitmapIcon UriSource="ms-appx:///DrawerApp/Assets/Icons/burger.png" />
+                     </AppBarButton.Icon>
+                     <AppBarButton.Flyout>
+-                       <Flyout Placement="Full"
+-                               FlyoutPresenterStyle="{StaticResource LeftDrawerFlyoutPresenterStyle}">
+-                           <Grid Background="{ThemeResource SurfaceBrush}">
+-                               <TextBlock Text="Hello World!"
+-                                          HorizontalAlignment="Center"
+-                                          VerticalAlignment="Center" />
+-                           </Grid>
+-                       </Flyout>
++                        <local:NavFlyout />
+                     </AppBarButton.Flyout>
+                 </AppBarButton>
+             </utu:NavigationBar.MainCommand>
+         </utu:NavigationBar>
+     </Grid>
+ </Page>
+```
+
+Let's pause and take a look at what this looks like on another platform, maybe one with a different screen size like browser:
+
+![WASM page with LeftDrawerFlyoutPresenterStyle](/assets/images/drawerflyout/wasm-drawer-step-4.png)
+
+You'll notice that the navigation drawer is much wider in this case. This is because the `DrawerLength` is set to `0.66*` by default. This means that the drawer will take up 66% of the screen width.
+
+Next, let's add some nice navigation-like content to our `NavFlyout`:
+
+```diff
+ <Flyout x:Class="DrawerApp.NavFlyout"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:local="using:DrawerApp"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
++        xmlns:um="using:Uno.Material"
++        xmlns:utu="using:Uno.Toolkit.UI"
+         mc:Ignorable="d"
+         Placement="Full"
+         FlyoutPresenterStyle="{StaticResource LeftDrawerFlyoutPresenterStyle}">
+ 
+-    <Grid Background="{ThemeResource SurfaceBrush}">
+-        <TextBlock Text="Hello World!"
+-                   HorizontalAlignment="Center"
+-                   VerticalAlignment="Center" />
+-    </Grid>
++    <Grid RowSpacing="12"
++          Margin="20,0">
++        <Grid.RowDefinitions>
++            <RowDefinition Height="Auto" />
++            <RowDefinition Height="Auto" />
++            <RowDefinition Height="Auto" />
++            <RowDefinition Height="Auto" />
++        </Grid.RowDefinitions>
++
++        <Image HorizontalAlignment="Center"
++               Height="150"
++               Width="150"
++               Source="ms-appx:///DrawerApp/Assets/Icons/unologo.png"
++               Margin="0,16" />
++
++        <Button Grid.Row="1"
++                FontSize="24"
++                Content="Notifications"
++                Style="{StaticResource TextButtonStyle}"
++                HorizontalContentAlignment="Left"
++                HorizontalAlignment="Stretch">
++            <um:ControlExtensions.Icon>
++                <FontIcon FontWeight="Bold"
++                          FontSize="24"
++                          Glyph="&#xea8f;" />
++            </um:ControlExtensions.Icon>
++        </Button>
++        <utu:Divider Grid.Row="2" />
++        <Button Grid.Row="3"
++                Content="Help"
++                FontSize="24"
++                Style="{StaticResource TextButtonStyle}"
++                HorizontalContentAlignment="Left"
++                HorizontalAlignment="Stretch">
++            <um:ControlExtensions.Icon>
++                <FontIcon FontWeight="Bold"
++                          FontSize="24"
++                          Glyph="&#xE897;" />
++            </um:ControlExtensions.Icon>
++        </Button>
++    </Grid>
+ </Flyout>
+```
+
+![Android page with LeftDrawerFlyoutPresenterStyle and content](/assets/images/drawerflyout/android-drawer-step-5.png){: .width-half}
+
+Almost there! 
+
+Only difference left are the rounded corners and the shadow. We can add these by creating a custom `Style` for the `FlyoutPresenter` that is based on the `LeftDrawerFlyoutPresenterStyle`. In our `AppResources.xaml`, we can add the following:
+
+```xml
+<Style x:Key="NavFlyoutPresenterStyle"
+       TargetType="FlyoutPresenter"
+       BasedOn="{StaticResource LeftDrawerFlyoutPresenterStyle}">
+    <Setter Property="CornerRadius" Value="0,20,20,0" />
+</Style>
+```
+
+Then, we set the `FlyoutPresenterStyle` on our `Flyout` accordingly:
+
+```diff
+ <Flyout x:Class="DrawerApp.NavFlyout"
+         ...
+-        FlyoutPresenterStyle="{StaticResource LeftDrawerFlyoutPresenterStyle}">
++        FlyoutPresenterStyle="{StaticResource NavFlyoutPresenterStyle}">
+         ...
+ </Flyout>
+```
+
+![Android page with custom NavFlyoutPresenterStyle](/assets/images/drawerflyout/android-drawer-step-6.png){: .width-half}
+
+And there we go! We have a nice navigation drawer experience that is consistent across platforms:
+
+![Android Nav Flyout](/assets/images/drawerflyout/android-nav-drawer.gif){: .width-half}
+
+![WASM Nav Flyout](/assets/images/drawerflyout/wasm-nav-drawer-final.gif)
+
+We can even get spicy and use some of the `DrawerFlyoutPresenter` attached properties to customize the experience further. For example, we can set the `DrawerLength` to `0.9*` to make the drawer take up 90% of the screen width and use a ridiculous `LightDismissOverlayBackground`:
+
+```diff
+ <Style x:Key="NavFlyoutPresenterStyle"
+        TargetType="FlyoutPresenter"
+        BasedOn="{StaticResource LeftDrawerFlyoutPresenterStyle}">
+     <Setter Property="CornerRadius" Value="0,20,20,0" />
++    <Setter Property="utu:DrawerFlyoutPresenter.DrawerLength" Value="0.9*" />
++    <Setter Property="utu:DrawerFlyoutPresenter.LightDismissOverlayBackground" Value="Red" />
+ </Style>
+```
+
+![Android page with Red NavFlyoutPresenterStyle](/assets/images/drawerflyout/android-nav-drawer-red.gif){: .width-half}
+
+Now that we know how to build a beautiful navigation drawer, we can apply these skills to build a [bottom sheet][m3-bottom-sheet] experience!
+
+### Bottom Sheet
+
+Here's what we are looking to build by the end of this section (both Android and WASM are shown):
+
+![Android Bottom Sheet](/assets/images/drawerflyout/android-sheet.gif){: .width-half}
+
+![WASM Bottom Sheet](/assets/images/drawerflyout/wasm-sheet.gif)
 
 ![ResponsiveView Resizing](/assets/images/responsive/responsiveView_resize.gif)
 
