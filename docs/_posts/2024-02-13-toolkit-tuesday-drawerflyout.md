@@ -4,12 +4,12 @@ category: toolkit-tuesday
 header:
   teaser: /assets/images/uno-toolkit-hero.png
   og_image: /assets/images/uno-toolkit-hero.png
-tags: [uno-toolkit, toolkit, drawerflyout, drawer, drawerflyoutpresenter, uno-platform, uno, unoplatform]
+tags: [uno-toolkit, toolkit, drawerflyout, drawer, drawerflyoutpresenter, sheet, bottomsheet, uno-platform, uno, unoplatform]
 ---
 
 Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we've created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!
 
-This week we are covering the `DrawerFlyoutPresenter`, a lightweight way to create a [drawer-like experience][m3-drawer-guidelines] in your applications using [Flyouts][winui-flyout]. It can also be utilized for other experiences such as a [bottom sheet][m3-bottom-sheet] or a [side sheet][m3-side-sheet]. In this article, we will cover both the "navigation drawer" and "bottom sheet" use cases.
+This week we are covering the `DrawerFlyoutPresenter`, a lightweight way to create a [drawer-like experience][m3-drawer-guidelines] in your applications using [Flyouts][winui-flyout]. It can also be utilized for other experiences such as a [bottom sheet][m3-bottom-sheet] or a [side sheet][m3-side-sheet]. In this article we will cover both the "navigation drawer" and "bottom sheet" use cases.
 
 The `DrawerFlyoutPresenter` is a special `ContentPresenter` to be used in the template of a [`FlyoutPresenter`][winui-flyoutpresenter] to enable gesture support.
 
@@ -17,7 +17,7 @@ The `DrawerFlyoutPresenter` is a special `ContentPresenter` to be used in the te
 
 ### Android
 
-![Android Nav Flyout Anatomy](/assets/images/drawerflyout/android-nav-anatomy.png){: .align-center .width-half}
+![Android Nav Flyout Anatomy](/assets/images/drawerflyout/android-nav-anatomy.png){: .width-half}
 
 ### WASM
 
@@ -41,7 +41,7 @@ All properties can be used both as a dependency property or as an attached prope
 
 ## Styles
 
-The Uno Toolkit provides a set of pre-built styles that can be used as the `FlyoutPresenterStyle` of a `Flyout` to create a `DrawerFlyoutPresenter` experience. These styles are:
+The Uno Toolkit provides a set of pre-built styles that can be used as the `FlyoutPresenterStyle` of a `Flyout` to create a drawer-like experience. These styles are:
 
 - `LeftDrawerFlyoutPresenterStyle` (OpenDirection=Right)
 - `TopDrawerFlyoutPresenterStyle` (OpenDirection=Down)
@@ -185,6 +185,8 @@ Now, we can have the `MainCommand` open a `Flyout` with `Placement="Full"` when 
 Setting the `Placement` to `Full` is required to ensure the `Flyout` takes up the entire screen. This is important because the `DrawerFlyoutPresenter` will be anchored to the edge of the screen and will not behave properly if the `Flyout` is not taking up the entire screen.
 {: .notice--warning}
 
+Now here is what the `Flyout` looks like once we press on the `MainCommand`:
+
 ![Android page with full Flyout](/assets/images/drawerflyout/android-drawer-step-2.png){: .width-half}
 
 Let's now use one of the [pre-built styles that we covered earlier](#styles) and set the `FlyoutPresenterStyle` to `LeftDrawerFlyoutPresenterStyle`:
@@ -281,7 +283,7 @@ Next up, let's extract the `Flyout` into a separate XAML file to clean up our `M
  </Page>
 ```
 
-Let's pause and take a look at what this looks like on another platform, maybe one with a different screen size like browser:
+Let's pause and take a look at what this looks like on another platform, maybe one with a different screen size like the browser:
 
 ![WASM page with LeftDrawerFlyoutPresenterStyle](/assets/images/drawerflyout/wasm-drawer-step-4.png)
 
@@ -353,9 +355,9 @@ Next, let's add some nice navigation-like content to our `NavFlyout`:
 
 ![Android page with LeftDrawerFlyoutPresenterStyle and content](/assets/images/drawerflyout/android-drawer-step-5.png){: .width-half}
 
-Almost there! 
+Almost there!
 
-Only difference left are the rounded corners and the shadow. We can add these by creating a custom `Style` for the `FlyoutPresenter` that is based on the `LeftDrawerFlyoutPresenterStyle`. In our `AppResources.xaml`, we can add the following:
+Only differences left are the rounded corners. We can add these by creating a custom `Style` for the `FlyoutPresenter` that is based on the `LeftDrawerFlyoutPresenterStyle`. In our `AppResources.xaml`, we can add the following:
 
 ```xml
 <Style x:Key="NavFlyoutPresenterStyle"
@@ -549,7 +551,7 @@ If you want to take a look at the full source code for the examples above, you c
 
 I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about the `DrawerFlyoutPresenter` so I hope you will continue to explore it on your own.
 
-I encourage you to consult the full documentation for the `DrawerFlyoutPresenter` markup extension using the links below. I also want to welcome you to contribute to making `DrawerFlyoutPresenter` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
+I encourage you to consult the full documentation for the `DrawerFlyoutPresenter` using the links below. I also want to welcome you to contribute to making `DrawerFlyoutPresenter` even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the [Uno Toolkit GitHub repo][uno-toolkit]!
 
 ## Further Reading
 
