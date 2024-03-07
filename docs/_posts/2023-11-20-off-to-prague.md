@@ -21,7 +21,7 @@ The talk will be recorded and you can also follow along live at [now.updateconfe
 
 I'll be arriving in Prague on Tuesday, November 21st and I am planning to cram in as much of the city as I can between work and the conference. I have a few must-sees and must-eats on my list:
 
-#### Sights
+### Sights
 
 - [The Astronomical Clock][astro-clock]
 - [The Klementinum Astronomical Tower and Baroque Library][klementinum]
@@ -31,7 +31,7 @@ I'll be arriving in Prague on Tuesday, November 21st and I am planning to cram i
 - [Prague Castle][prague-castle]
 - [National Technical Museum][tech-museum]
 
-#### Eats
+### Eats
 
 - [Breakfast at Café Savoy][cafe-savoy]
 - [Lunch at Lokál][lokal]
