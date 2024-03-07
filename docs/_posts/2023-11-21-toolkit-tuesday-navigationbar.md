@@ -15,7 +15,7 @@ This week we are covering the `NavigationBar` control. This control has a simple
 
 The XAML for the following usage of `NavigationBar` can be seen further along in the [Complex Usage](#complex-usage) section.
 
-#### Android
+### Android
 
 <figure>
     <img src="/assets/images/navbar/android-anatomy.png" alt="Android NavigationBar Anatomy" style="margin-bottom:10px;"/>
@@ -31,8 +31,7 @@ The XAML for the following usage of `NavigationBar` can be seen further along in
     </figcaption>
 </figure>
 
-
-#### iOS
+### iOS
 
 <figure>
     <img src="/assets/images/navbar/ios-anatomy.png" alt="iOS NavigationBar Anatomy"/>
