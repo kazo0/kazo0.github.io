@@ -13,6 +13,8 @@ This week we are covering the `DrawerFlyoutPresenter`, a lightweight way to crea
 
 The `DrawerFlyoutPresenter` is a special `ContentPresenter` to be used in the template of a [`FlyoutPresenter`][winui-flyoutpresenter] to enable gesture support.
 
+{% include video id="JWTZxnVsd_A" provider="youtube" %}
+
 ## Anatomy of a `DrawerFlyoutPresenter`
 
 ### Android

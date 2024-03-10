@@ -11,6 +11,8 @@ Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highligh
 
 This week we are covering the `StatusBar` Extensions. This is a set of [attached properties][attached-docs] that allow you to easily customize the `StatusBar` on Android and iOS/Catalyst. The `StatusBar` is the bar at the top of your screen that displays the time, battery level, and other system information.
 
+{% include video id="Mef71b6978s" provider="youtube" %}
+
 ## Anatomy of a `StatusBar`
 
 <figure>
