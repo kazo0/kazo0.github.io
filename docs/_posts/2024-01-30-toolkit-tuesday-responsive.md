@@ -11,6 +11,8 @@ Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highligh
 
 This week we are covering the brand-new `Responsive` components that are part of the [5.1 Uno Toolkit release][5-1-release]. The `Responsive` components encompass two new additions to the Uno Toolkit library: a new [`ResponsiveView` control](#responsiveview) and a new [`Responsive` markup extension](#responsive-markup-extension).
 
+{% include video id="VgpC79ErNRI" provider="youtube" %}
+
 ## ResponsiveView
 
 The `ResponsiveView` control is a new control that is used to help build responsive layouts. It is a container control that can be used to define different layouts for different screen sizes. It is similar to how [`VisualStateManager.AdaptiveTrigger`][winui-adaptive-trigger] allows you to define breakpoints for different screen sizes, but it is much more powerful and flexible without needing to rely on [VisualStates][winui-visual-state].

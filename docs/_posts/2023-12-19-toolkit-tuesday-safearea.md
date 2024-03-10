@@ -13,6 +13,8 @@ This is a special Holiday edition of Toolkit Tuesdays as it is part of the [.NET
 
 This week we are covering the `SafeArea` component. `SafeArea` comes packaged as both a specialized control and as a set of attached properties. The purpose of `SafeArea` is to ensure that your content is never obscured by certain system UI elements or hardware display cutouts.
 
+{% include video id="H-HkMzYCiOM" provider="youtube" %}
+
 ## Anatomy of `SafeArea`
 
 iOS|Android

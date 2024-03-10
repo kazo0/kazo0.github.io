@@ -11,6 +11,8 @@ Welcome to the first post in my new series, Toolkit Tuesdays! In this series, I'
 
 This week we are covering the `NavigationBar` control. This control has a simple purpose with a complex and interesting implementation across the multiple platforms that Uno supports. On Android and iOS/Catalyst, the `NavigationBar` serves as a sort of proxy to the native Android `Toolbar` and iOS `UINavigationBar`. On all other platforms, its functionality and UI are driven by a customized `CommandBar`.
 
+{% include video id="4-Q0hy2BnMI" provider="youtube" %}
+
 ## Anatomy of a `NavigationBar`
 
 The XAML for the following usage of `NavigationBar` can be seen further along in the [Complex Usage](#complex-usage) section.
