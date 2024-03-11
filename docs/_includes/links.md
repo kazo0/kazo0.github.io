@@ -8,4 +8,4 @@
 [csharp-markup]: https://platform.uno/c-markup/
 [uno-homepage]: https://platform.uno/posts/uno
 [toolkit-homepage]: https://platform.uno/posts/toolkit
-[uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
+[uno-toolkit-docs]: https://aka.platform.uno/uno-toolkit
