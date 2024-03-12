@@ -39,7 +39,7 @@ To be clear, the `ExtendedSplashScreen` does not enable customization of the ini
 
 ## Getting to know `ILoadable`
 
-The `ExtendedSplashScreen` control is actually derived from another public control in the Uno Toolkit library called `LoadingView`. This control is a specialized `ContentControl` that exposes a `Source` property of type `ILoadable`. The `ILoadable` interface is a simple interface that has an `IsExecuting` property and an `IsExecutingChanged` event. The `ExtendedSplashScreen` control uses this interface to determine when to dismiss the loading content and display the app content.
+The `ExtendedSplashScreen` control is actually derived from another public control in the Uno Toolkit library called [`LoadingView`][uno-loadingview]. This control is a specialized `ContentControl` that exposes a `Source` property of type `ILoadable`. The `ILoadable` interface is a simple interface that has an `IsExecuting` property and an `IsExecutingChanged` event. The `ExtendedSplashScreen` control uses this interface to determine when to dismiss the loading content and display the app content.
 
 `LoadingView` itself is a very useful control that can be used to display any content while its `ILoadable` source is executing. This is the provider for our _Loading Content_ layer that we discussed earlier in the [Anatomy section](#anatomy-of-extendedsplashscreen). Make sure to check out the [official documentation][loadingview-docs] for more information on `LoadingView` and `ILoadable`.
 
@@ -267,6 +267,7 @@ I encourage you to consult the full documentation for the `ExtendedSplashScreen`
 ## Further Reading
 
 - [ExtendedSplashScreen Docs][extsplashscreen-docs]
+- [LoadingView Docs][uno-loadingview]
 - [Uno Toolkit Docs][uno-toolkit-docs]
 
 [extsplashscreen-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ExtendedSplashScreen.html
@@ -275,4 +276,5 @@ I encourage you to consult the full documentation for the `ExtendedSplashScreen`
 [uno-dotnet-new]: https://aka.platform.uno/dotnet-new-templates
 [uno-resizetizer]: https://platform.uno/docs/articles/external/uno.resizetizer/doc/using-uno-resizetizer.html
 [splash-sample-gh]: https://github.com/kazo0/ExtendedSplashApp
+[uno-loadingview]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html
 {% include links.md %}
