@@ -270,6 +270,14 @@ I encourage you to consult the full documentation for the `ExtendedSplashScreen`
 * [LoadingView Docs][loadingview-docs]
 * [Uno Toolkit Docs][uno-toolkit-docs]
 
+## Pending Work
+
+Keep an eye out for some nice PRs to merge for `ExtendedSplashScreen` soon as well:
+
+* https://github.com/unoplatform/uno.toolkit.ui/pull/1071
+* https://github.com/unoplatform/uno.toolkit.ui/pull/1062
+* https://github.com/unoplatform/uno.toolkit.ui/pull/1060
+
 [extsplashscreen-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ExtendedSplashScreen.html
 [uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
 [loadingview-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html
