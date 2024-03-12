@@ -73,45 +73,45 @@ Now, enough about customizing the splash screen, we're focusing on EXTENDING it!
              xmlns:utu="using:Uno.Toolkit.UI"
              mc:Ignorable="d">
 
- <utu:ExtendedSplashScreen x:Name="Splash"
-                           HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch"
-                           HorizontalContentAlignment="Stretch"
-                           VerticalContentAlignment="Stretch">
+    <utu:ExtendedSplashScreen x:Name="Splash"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch">
 
-  <!-- Loading Content "layer" -->
-  <utu:ExtendedSplashScreen.LoadingContentTemplate>
-   <DataTemplate>
-    <Grid>
-     <Grid.RowDefinitions>
-      <RowDefinition Height="2*" />
-      <RowDefinition />
-     </Grid.RowDefinitions>
+        <!-- Loading Content "layer" -->
+        <utu:ExtendedSplashScreen.LoadingContentTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-     <ProgressRing IsActive="True"
-                   Grid.Row="1"
-                   Background="Transparent"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Height="75"
-                   Width="75" />
+                    <ProgressRing IsActive="True"
+                                  Grid.Row="1"
+                                  Background="Transparent"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Height="75"
+                                  Width="75" />
 
-     <TextBlock Text="My Branding Text Here!"
-                Grid.Row="1"
-                Margin="16"
-                FontSize="16"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Center" />
-    </Grid>
-   </DataTemplate>
-  </utu:ExtendedSplashScreen.LoadingContentTemplate>
+                    <TextBlock Text="My Branding Text Here!"
+                               Grid.Row="1"
+                               Margin="16"
+                               FontSize="16"
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+        </utu:ExtendedSplashScreen.LoadingContentTemplate>
 
-  <!-- App Content "layer" -->
-  <utu:ExtendedSplashScreen.Content>
-   <Frame x:Name="ShellFrame" />
-  </utu:ExtendedSplashScreen.Content>
+        <!-- App Content "layer" -->
+        <utu:ExtendedSplashScreen.Content>
+            <Frame x:Name="ShellFrame" />
+        </utu:ExtendedSplashScreen.Content>
 
- </utu:ExtendedSplashScreen>
+    </utu:ExtendedSplashScreen>
 </UserControl>
 ```
 
@@ -128,23 +128,23 @@ Let's take a look at the code-behind for the `Shell`:
 ```csharp
 public sealed partial class Shell : UserControl
 {
-  public Frame RootFrame => ShellFrame;
+    public Frame RootFrame => ShellFrame;
 
-  private MyLoadableSource _loadable = new();
-  
-  public Shell()
-  {
-    this.InitializeComponent();
-  
-    Splash.Source = _loadable;
-  
-    Loaded += OnLoaded;
-  }
-  
-  private async void OnLoaded(object sender, RoutedEventArgs e)
-  {
-    await _loadable.Execute();
-  }
+    private MyLoadableSource _loadable = new();
+
+    public Shell()
+    {
+        this.InitializeComponent();
+
+        Splash.Source = _loadable;
+
+        Loaded += OnLoaded;
+    }
+
+    private async void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        await _loadable.Execute();
+    }
 }
 ```
 
@@ -155,34 +155,34 @@ Here is my `ILoadable` implementation:
 ```csharp
 public class MyLoadableSource : ILoadable
 {
-  public event EventHandler? IsExecutingChanged;
- 
-  private bool _isExecuting;
-  public bool IsExecuting
-  {
-   get => _isExecuting;
-   set
-   {
-    if (_isExecuting != value)
+    public event EventHandler? IsExecutingChanged;
+
+    private bool _isExecuting;
+    public bool IsExecuting
     {
-      _isExecuting = value;
-      IsExecutingChanged?.Invoke(this, new());
+        get => _isExecuting;
+        set
+        {
+            if (_isExecuting != value)
+            {
+                _isExecuting = value;
+                IsExecutingChanged?.Invoke(this, new());
+            }
+        }
     }
-   }
-  }
  
-  public async Task Execute()
-  {
-   try
-   {
-     IsExecuting = true;
-     await Task.Delay(5000);
-   }
-   finally
-   {
-     IsExecuting = false;
-   }
-  }
+    public async Task Execute()
+    {
+        try
+        {
+            IsExecuting = true;
+            await Task.Delay(5000);
+        }
+        finally
+        {
+            IsExecuting = false;
+        }
+    }
 }
 ```
 
@@ -211,27 +211,27 @@ Finally, let's make some edits to the `App.cs` bootstrapping code to use our new
 -    if (MainWindow.Content is not Frame rootFrame)
 +    if (MainWindow.Content is not Shell shell)
      {
--         // Create a Frame to act as the navigation context and navigate to the first page
--         rootFrame = new Frame();
-+         shell = new Shell();
+-        // Create a Frame to act as the navigation context and navigate to the first page
+-        rootFrame = new Frame();
++        shell = new Shell();
  
--         // Place the frame in the current Window
--         MainWindow.Content = rootFrame;
-+         MainWindow.Content = shell;
+-        // Place the frame in the current Window
+-        MainWindow.Content = rootFrame;
++        MainWindow.Content = shell;
  
 -        rootFrame.NavigationFailed += OnNavigationFailed;
 +        shell.RootFrame.NavigationFailed += OnNavigationFailed;
      }
  
--     if (rootFrame.Content == null)
-+     if (shell.RootFrame.Content == null)
-      {
-          // When the navigation stack isn't restored navigate to the first page,
-          // configuring the new page by passing required information as a navigation
-          // parameter
--         rootFrame.Navigate(typeof(MainPage), args.Arguments);
-+         shell.RootFrame.Navigate(typeof(MainPage), args.Arguments);
-      }
+-    if (rootFrame.Content == null)
++    if (shell.RootFrame.Content == null)
+     {
+         // When the navigation stack isn't restored navigate to the first page,
+         // configuring the new page by passing required information as a navigation
+         // parameter
+-        rootFrame.Navigate(typeof(MainPage), args.Arguments);
++        shell.RootFrame.Navigate(typeof(MainPage), args.Arguments);
+     }
  
      // Ensure the current window is active
      MainWindow.Activate();
