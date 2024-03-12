@@ -73,38 +73,32 @@ Now, enough about customizing the splash screen, we're focusing on EXTENDING it!
              xmlns:utu="using:Uno.Toolkit.UI"
              mc:Ignorable="d">
 
-    <utu:ExtendedSplashScreen x:Name="Splash"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              HorizontalContentAlignment="Stretch"
-                              VerticalContentAlignment="Stretch">
+    <utu:ExtendedSplashScreen x:Name="Splash">
 
         <!-- Loading Content "layer" -->
-        <utu:ExtendedSplashScreen.LoadingContentTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+        <utu:ExtendedSplashScreen.LoadingContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                    <ProgressRing IsActive="True"
-                                  Grid.Row="1"
-                                  Background="Transparent"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"
-                                  Height="75"
-                                  Width="75" />
+                <ProgressRing IsActive="True"
+                              Grid.Row="1"
+                              Background="Transparent"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Height="75"
+                              Width="75" />
 
-                    <TextBlock Text="My Branding Text Here!"
-                               Grid.Row="1"
-                               Margin="16"
-                               FontSize="16"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-        </utu:ExtendedSplashScreen.LoadingContentTemplate>
+                <TextBlock Text="My Branding Text Here!"
+                           Grid.Row="1"
+                           Margin="16"
+                           FontSize="16"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center" />
+            </Grid>
+        </utu:ExtendedSplashScreen.LoadingContent>
 
         <!-- App Content "layer" -->
         <utu:ExtendedSplashScreen.Content>
@@ -115,9 +109,9 @@ Now, enough about customizing the splash screen, we're focusing on EXTENDING it!
 </UserControl>
 ```
 
-A lot going on here, so let's break it down. We have a `UserControl` that contains the `ExtendedSplashScreen` control. The `ExtendedSplashScreen` control has two properties set: `LoadingContentTemplate` and `Content`.
+A lot going on here, so let's break it down. We have a `UserControl` that contains the `ExtendedSplashScreen` control. The `ExtendedSplashScreen` control has two properties set: `LoadingContent` and `Content`.
 
-* The `LoadingContentTemplate` contains what we were referring to as the _Loading Content_ layer earlier. This is where we can add a `ProgressRing` and any other custom content that will be overlayed on top of the splash screen content. Notice that there is no Uno logo image here, this is because that is part of the native splash screen content displayed underneath. This is why our first row of the `Grid` is "unused" and simply takes up the top two-thirds of the screen (`2*`).
+* The `LoadingContent` contains what we were referring to as the _Loading Content_ layer earlier. This is where we can add a `ProgressRing` and any other custom content that will be overlayed on top of the splash screen content. Notice that there is no Uno logo image here, this is because that is part of the native splash screen content displayed underneath. This is why our first row of the `Grid` is "unused" and simply takes up the top two-thirds of the screen (`2*`).
 
 * The `Content` property is where we set the actual content of our app. In this case, we are using a `Frame` control to host our `MainPage`. This is why we called the `UserControl` `Shell`. We are using it as a sort of "shell" to host the content of our app.
 
