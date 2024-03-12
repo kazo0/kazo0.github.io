@@ -266,9 +266,9 @@ I encourage you to consult the full documentation for the `ExtendedSplashScreen`
 
 ## Further Reading
 
-- [ExtendedSplashScreen Docs][extsplashscreen-docs]
-- [LoadingView Docs][uno-loadingview]
-- [Uno Toolkit Docs][uno-toolkit-docs]
+* [ExtendedSplashScreen Docs][extsplashscreen-docs]
+* [LoadingView Docs][uno-loadingview]
+* [Uno Toolkit Docs][uno-toolkit-docs]
 
 [extsplashscreen-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ExtendedSplashScreen.html
 [uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
