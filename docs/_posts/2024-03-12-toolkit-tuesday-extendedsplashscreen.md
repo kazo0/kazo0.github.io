@@ -14,6 +14,8 @@ This week we are covering the `ExtendedSplashScreen` control. This control can b
 As always, these components require some extra setup since they are part of the Uno Toolkit library. You can refer to the [Getting Started documentation][uno-toolkit-docs] to get everything set up and ready to go.
 {: .notice--info}
 
+{% include video id="jMI4E2e9gYE" provider="youtube" %}
+
 ## Anatomy of `ExtendedSplashScreen`
 
 The `ExtendedSplashScreen` is basically a presenter for three separate layers:
