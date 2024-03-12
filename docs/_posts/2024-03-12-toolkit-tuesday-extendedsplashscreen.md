@@ -57,7 +57,7 @@ If we were to launch this app right now, we would see this:
 
 ![Android blank Uno app startup](/assets/images/extsplash/android-blank-splash.gif){: .width-half}
 
-This is the default native splash screen that is displayed while the app is loading. It's a simple white screen with the Uno Platform logo in the center. Those assets are generated for you by the [Uno Resizetizer][uno-resizetizer] tooling. If you wanted to customize the native splash screen, you could do so by replacing the assets in the `Splash` folder of the `ExtendedSplash.Shared.csproj`.
+This is the default native splash screen that is displayed while the app is loading. It's a simple white screen with the Uno Platform logo in the center. Those assets are generated for you by the [Uno Resizetizer][uno-resizetizer] tooling. If you wanted to customize the native splash screen, you could do so by replacing the assets in the `Splash` folder of the `ExtendedSplashApp.Shared.csproj`.
 
 Now, enough about customizing the splash screen, we're focusing on EXTENDING it! Let's add an `ExtendedSplashScreen` control to our app. We'll start by adding a new `UserControl` to our app and call it `Shell`. I'll explain why in a moment.
 
