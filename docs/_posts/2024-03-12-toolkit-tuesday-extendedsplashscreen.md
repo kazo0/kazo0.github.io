@@ -45,7 +45,7 @@ The `ExtendedSplashScreen` control is actually derived from another public contr
 
 ## Usage
 
-Let's take a look at how we can use the `ExtendedSplashScreen` control in our app. We'll start with a brand new Uno Platform app and add the `ExtendedSplashScreen` control to it. First step is to use the [`dotnet new` commands][uno-dotnet-new] to create a new Uno Platform app:
+Let's take a look at how we can use the `ExtendedSplashScreen` control in our app. We'll start with a brand new Uno Platform app and add the `ExtendedSplashScreen` control to it. The first step is to use the [`dotnet new` commands][uno-dotnet-new] to create a new Uno Platform app:
 
 ```bash
 dotnet new unoapp -toolkit -o ExtendedSplashApp
