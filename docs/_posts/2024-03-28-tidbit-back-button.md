@@ -9,6 +9,8 @@ tags: [uno-tidbits, uno-tidbit, tidbit, backbutton, back-button, uno-platform, u
 
 Welcome to the first edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how to handle the system back button in your Uno Platform app.
 
+{% include video id="YhO-z7WOYhI" provider="youtube" %}
+
 ## Platform Specifics
 
 The platforms we are going to focus on today are Android and WASM. These platforms are the most common to have a system back button that is used to navigate backward in the app. On Android, the back button can be either a physical or software button on the device, while on WASM, it is a software button in the browser.
