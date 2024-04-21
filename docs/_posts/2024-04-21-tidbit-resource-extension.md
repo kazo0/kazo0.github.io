@@ -79,6 +79,6 @@ Special thanks to Fons Sonnemans for the [original inspiration][fons-article] fo
 [ms-lightweight-styling]: https://learn.microsoft.com/en-us/windows/apps/design/style/xaml-styles#lightweight-styling
 [resource-ext-toolkit]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/resource-extensions.html
 [uno-toolkit-repo]: https://github.com/unoplatform/uno.toolkit.ui
-[res-ext-gh]: https://github.com/kazo0/ResourcesExtensionApp
+[res-ext-gh]: https://github.com/kazo0/ResourceExtensionsApp
 [uno-material-gh]: https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Material
 [fons-article]: https://www.reflectionit.nl/blog/2021/xaml-lightweight-styling-done-right
