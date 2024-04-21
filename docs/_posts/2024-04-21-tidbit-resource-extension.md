@@ -31,7 +31,7 @@ Luckily for you, I am also greedy and I have a solution for you!
 
 Ideally, we would be able to package up any resource overrides as part of a custom `Style`. Unfortunately, the `Resources` property of a `FrameworkElement` is not a `DependencyProperty` and, therefore, cannot be set using a `Style.Setter`.
 
-This is where the [Uno Toolkit][uno-toolkit-repo] comes in! Within the Uno Toolkit, there is a [`ResourceExtension`][resource-ext-toolkit] class that provides a `Resources` Attached Property that forwards the provided `ResourceDictionary` to the `FrameworkElement.Resources` but comes with all of that `DependencyProperty` goodness. This allows you to package up your resource overrides into a `ResourceDictionary` and use it within a `Setter` of a `Style`.
+This is where the [Uno Toolkit][uno-toolkit-repo] comes in! Within the Uno Toolkit, there is a [`ResourceExtensions`][resource-ext-toolkit] class that provides a `Resources` Attached Property that forwards the provided `ResourceDictionary` to the `FrameworkElement.Resources` but comes with all of that `DependencyProperty` goodness. This allows you to package up your resource overrides into a `ResourceDictionary` and use it within a `Setter` of a `Style`.
 
 ## Example
 
@@ -70,7 +70,7 @@ A completely customized button without needing to re-template the control!
 
 That's it! We now have the ability to package up our resource overrides into a `Style` and apply them anywhere we want.
 
-You can check out a working example of this in the [ResourcesExtensionApp repository][res-ext-gh] on GitHub.
+You can check out a working example of this in the [ResourceExtensionsApp repository][res-ext-gh] on GitHub.
 
 Catch you in the next one :wave:
 
