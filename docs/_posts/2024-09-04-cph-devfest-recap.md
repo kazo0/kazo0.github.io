@@ -101,7 +101,7 @@ As another way to speed things up and avoid having to type every line of code li
 
 I think the talk went well, there were a few people that came up with some questions. One person wanted more details on how the [Uno Platform Figma Plugin][figma-plugin] was being used to show a live preview of the app as well as extract the generated UI code. Another person actually asked me about the DemoSnippets extension that I was using, they thought it was pretty interesting.
 
-I did a slightly better job at incorporating pauses and water breaks into the talk. It was also helpful to use the time it took to build and launch the app at several intervals to take a break and let people absorb what I had just shown. I still need to work on my pacing and not rush through the content. I still find myself running out of breath during the first few minutes of the talk, need to remember to breathe in between sentences :).
+I did a slightly better job at incorporating pauses and water breaks into the talk. It was also helpful to use the time it took to build and launch the app at several intervals to take a break and let people absorb what I had just shown. I still need to work on my pacing and not rush through the content. I still find myself running out of breath during the first few minutes of the talk, need to remember to breathe in between sentences :sweat_smile:.
 
 ## The Trip
 
