@@ -33,40 +33,40 @@ conference_gallery:
 trip_gallery:
   - image_path: /assets/images/cphdevfest-2024/copenhagen-1.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-1.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 1"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-2.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-2.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 2"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-3.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-3.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 3"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-4.jpg  
     url: /assets/images/cphdevfest-2024/copenhagen-4.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 4"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-5.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-5.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 5"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-6.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-6.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 6"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-7.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-7.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 7"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-8.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-8.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 8"
+    title: "Copenhagen Photos"
   - image_path: /assets/images/cphdevfest-2024/copenhagen-9.jpg
     url: /assets/images/cphdevfest-2024/copenhagen-9.jpg
-    alt: "DevFest Downing Sessions"
-    title: "Me at Heather Downing's session"
+    alt: "Copenhagen City Photo 9"
+    title: "Copenhagen Photos"
 ---
 
 We are back with another conference recap! This time, I had the pleasure of attending [NDC Copenhagen DevFest 2024][cph-devfest-site] in Copenhagen, Denmark. This was my first time attending an NDC event and I was very excited to see what it was all about. I was also looking forward to visiting Copenhagen for the first time. I had heard so many great things about the city and I was eager to explore it.
@@ -77,11 +77,11 @@ The Copenhagen Developers Festival is run by [NDC Conferences][ndc-site] and is 
 
 {% include gallery id="conference_gallery" %}
 
-The conference hall was lined with booths from various sponsors, no Uno Platform this time ;). There was a spot to play Super Smash Brothers on the N64, although we all know the Melee for the GameCube is the superior version. There were little mobile "barista stations" where you could get some nice espresso. They even had a booth setup for ad-hoc demos where you could just hook up your machine and show off your project to anyone who was interested. I thought that was a really cool idea.
+The conference hall was lined with booths from various sponsors, no Uno Platform this time :wink:. There was a spot to play Super Smash Bros. on the N64, although we all know that Melee for the GameCube is the superior version. There were little mobile "barista stations" where you could get some nice espresso. They even had a booth setup for ad-hoc demos where you could just hook up your machine and show off your project to anyone who was interested. I thought that was a really cool idea.
 
 I didn't have the responsibility of running any sort of Uno Platform booth so I was free to attend sessions and wander around. I was able to catch a few talks but these were the two that stood out to me the most:
 
-I attended a talk by [Heather Downing][downing-twitter] on ["Mobile App Architecture"][downing-talk] which was really insightful. Heather broke down the pros and cons of native mobile development versus cross-platform versus hybrid/web solutions. I was curious if I would see an Uno Platform mention during the presentation but she mostly focused on MAUI/XF and React Native. Heather walked us through different scenarios where the native approach may be best and others where xplat may be the better option. She also shared some stories from the trenches surrounding an _UNNAMED .NET CROSS-PLATFORM FRAMEWORK_ that she had worked with in the past ;). Specifcally, her battles working with two runtimes at the same time, the .NET CLR and the JVM. As an engineer that works on a .NET cross platform framework, I could definitely relate to some of the pain points she was describing. `ObjectDisposedException` anyone?
+I attended a talk by [Heather Downing][downing-twitter] on ["Mobile App Architecture"][downing-talk] which was really insightful. Heather broke down the pros and cons of native mobile development versus cross-platform versus hybrid/web solutions. I was curious if I would see an Uno Platform mention during the presentation but she mostly focused on MAUI/XF and React Native. Heather walked us through different scenarios where the native approach may be best and others where xplat may be the better option. She also shared some stories from the trenches surrounding an _UNNAMED .NET CROSS-PLATFORM FRAMEWORK_ that she had worked with in the past :wink:. Specifcally, her battles working with two runtimes at the same time, the .NET CLR and the JVM. As an engineer that works on a .NET cross platform framework, I could definitely relate to some of the pain points she was describing. `ObjectDisposedException` anyone?
 
 I also attended a talk by [Nico Vermeir][vermeir-twitter] on ["Porting Doom to MAUI"][nico-talk] which was also very interesting. Nico introduced us to the [open-source WPF port of Doom][doom-wpf]. That was the starting point for his MAUI port. The major change needed was based around the fact that MAUI does not have a `WriteableBitmap` class like WPF does. Nico had to come up with a way to render the game to a [`SkiaSharp`][skia-sharp] `SkCanvasView` instead with an `SkBitmap`. He also had to deal with the fact that MAUI has a different API for queueing up work on the UI thread. Nico was able to get the game running on MAUI with a few tweaks and it was really cool to see it in action. Since there is also SkiaSharp support for all platforms that Uno targets, we should be able to get a nice port of Doom running on Uno as well. Which means introducing Doom to WASM and Linux! I am thinking of reaching out to Nico and getting an Uno Platform version included in the repo.
 
