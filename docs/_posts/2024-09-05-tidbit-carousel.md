@@ -148,7 +148,7 @@ Running this on the macOS Desktop target currently looks like this:
 
 ### Making it Responsive
 
-To make this look better on larger screens, we can use the [Responsive markup extensions from Uno Toolkit][responsive-markup-extensions]. We have previously covered this in a [Toolkit Tuesday post]({% post_url 2024-01-30-toolkit-tuesday-responsive %}). We can use the `Responsive` markup extension to change the layout of our `FlipView` items based on the screen width.
+To make this look better on larger screens, we can use the [Responsive markup extensions from Uno Toolkit][responsive-markup-extensions]. We have previously covered this in a [Toolkit Tuesday post]({% post_url 2024-01-30-toolkit-tuesday-responsive %}). We can use the `Responsive` markup extension to change the layout of our `FlipView` items based on the window width.
 
 Here's what an example of this might look like:
 
