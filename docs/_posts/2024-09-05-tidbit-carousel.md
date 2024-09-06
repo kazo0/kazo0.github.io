@@ -113,7 +113,7 @@ Now we have this nice `PipsPager` at the bottom of our page:
 
 ### Connecting The Dots
 
-Unfortunately, the `PipsPager` doesn't actually do anything yet. We need to wire it up to the `FlipView` so that it updates as the user swipes through the items. Luckily, the Uno Toolkit actually provides some nice helpers for this. We can use the `SelectorExtensions` to easily bind the `PipsPager` to any type of `Selector`. Since `FlipView` is a `Selector`, we can use this to bind the `PipsPager` to the `FlipView` and synchronize the `NumberOfPages` property and the `SelectedIndex` property.
+Unfortunately, the `PipsPager` doesn't actually do anything yet. We need to wire it up to the `FlipView` so that it updates as the user swipes through the items. Luckily, the Uno Toolkit actually provides some nice helpers for this. We can use the [`SelectorExtensions`][selector-extensions] to easily bind the `PipsPager` to any type of `Selector`. Since `FlipView` is a `Selector`, we can use this to bind the `PipsPager` to the `FlipView` and synchronize the `NumberOfPages` property and the `SelectedIndex` property.
 
 On our `Selector`, we can do the following:
 
@@ -263,4 +263,5 @@ Catch you in the next one :wave:
 [uno-toolkit-repo]: https://github.com/unoplatform/uno.toolkit.ui
 [carousel-gh]: https://github.com/kazo0/CarouselApp
 [responsive-markup-extensions]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html 
+[selector-extensions]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html
 [ms-flipview-doc]: https://learn.microsoft.com/en-us/windows/apps/design/controls/flipview#adding-a-context-indicator
