@@ -21,7 +21,7 @@ Uno Platform allows you to target all desktop platforms in a cross-platform way 
 - Linux, the new X11 backend is used when X11 is available, otherwise the Linux Framebuffer backend is used,
 - macOS, the new AppKit backend with Metal is used
 
-Now, back to packaging. While it's nice to be able to build and deploy your app to all these platforms, it'd even better to be able to package it up into a distributable installer that users can easily install on their machines. This is where the new packaging features come in. You can now utilize `dotnet publish` to generate packages for either:
+Now, back to packaging. While it's nice to be able to build and deploy your app to all these platforms, it'd be even better to be able to package it up into a distributable installer that users can easily install on their machines. This is where the new packaging features come in. You can now utilize `dotnet publish` to generate packages for either:
 
 - Windows (ClickOnce),
 - Linux (Snap),
