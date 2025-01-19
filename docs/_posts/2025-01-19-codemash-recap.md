@@ -55,7 +55,9 @@ We were also able to flag down [Alvin Ashcraft][alvin-site] and get him to sit w
 
 During my second talk on Friday afternoon, I saw a few familiar faces in the crowd. Including [Matt Eland][eland-site], who I first met at a couple of user groups when I was living in Columbus. Matt is an author, Microsoft MVP, and a self-proclaimed "Professional Wizard". It was good to catch up after the talk and he introduced me to his colleague [Sam Gomez][gomez-twitter]. They are both part of the team that runs the [Stir Trek conference][stir-trek] in Columbus, Ohio. They actually encouraged me to submit to speak there as well as see if perhaps Uno Platform could sponsor and have a presence at the conference! I really liked attending Stir Trek when I was in Columbus and it'd be fun to go back one day.
 
-Overall, it was a great conference. I'm happy I was able to speak and feel motivated to keep submitting to conferences. Although, last year I bit off more than I could chew and completely burned myself out from all of the travel. I'll need to find a good balance this year and not overcommit myself. I'm looking forward to the next conference and the next opportunity to speak.
+## The End
+
+Overall, it was a great conference. I'm happy I was able to speak and feel motivated to keep submitting to conferences. Although, last year I bit off more than I could chew and completely burned myself out from all of the travel. I'll need to find a good balance this year and not overcommit myself. I'm looking forward to the next conference, which will be [ConFoo][confoo-site] in my hometown of Montreal. I'll be speaking about [building a .NET YouTube player using Uno Platform][confoo-talk] . I'm thinking of making some small tweaks so we could actually showcase some of Hot Design while we are building the app live.
 
 Catch you in the next one :wave:
 
@@ -76,4 +78,6 @@ Catch you in the next one :wave:
 [randolph-blog]: https://nicksnettravels.builttoroam.com/
 [laban-twitter]: https://x.com/jlaban
 [kalahari-site]: https://www.kalahariresorts.com/ohio/
+[confoo-talk]: https://confoo.ca/en/2025/session/let-s-build-a-net-youtube-player-for-all-platforms
+[confoo-site]: https://confoo.ca/en/2025
 {% include links.md %}
