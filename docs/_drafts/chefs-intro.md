@@ -44,9 +44,11 @@ As the [official docs][docs-chefs] states: Uno Chefs is a modern, responsive, an
 
 On top of that, the Chefs app is built against the new Unified Skia Rendering Engine from Uno 6.0. Which means that the app is rendered using SkiaSharp for **Every.** **Single.** **Platform.**
 
+Let's dive in and take a tour of the app. I'm going to cover one or two pages per article, depending on the complexity of the page(s). We'll take a look at the general structure of the pages and work our way up from there. Starting from the XAML all the way through the MVUX presentation layer, the Business layer, and finally the Client layer.
+
 ## Anatomy of the Welcome Page
 
-Let's dive in and take a tour of the app. Upon launching the app, you should find yourself on the Welcome Page. This page presents you with a carousel-like experience to demonstrate how you can build a first-launch onboarding experience that you see in many apps today.
+Upon launching the app, you should find yourself on the Welcome Page. This page presents you with a carousel-like experience to demonstrate how you can build a first-launch onboarding experience that you see in many apps today.
 
 ### Wide Layout
 
@@ -54,25 +56,30 @@ Let's dive in and take a tour of the app. Upon launching the app, you should fin
     <a href="/assets/images/chefs-intro/welcome-wide.png"><img src="/assets/images/chefs-intro/welcome-wide.png" alt="Welcome Page Anatomy"/></a>
     <figcaption>
         <ol>
-            <li>TabBarItem</li>
-            <li>TabBarItem Icon</li>
-            <li>TabBarItem Content</li>
-            <li>Custom Selection Indicator Content</li>
+            <li>Hero Image FlipView</li>
+            <li>WelcomeView FlipView</li>
+            <li>PipsPager</li>
+            <li>Navigation Buttons</li>
         </ol>
     </figcaption>
 </figure>
 
-## Narrow Layout
+### Narrow Layout
+
 <figure>
-    <a href="/assets/images/chefs-intro/welcome-narrow.png"><img src="/assets/images/chefs-intro/welcome-narrow.png" alt="Welcome Page Anatomy"/></a>
+    <a href="/assets/images/chefs-intro/welcome-narrow.png"><img class="align-center width-half" src="/assets/images/chefs-intro/welcome-narrow.png" alt="Welcome Page Anatomy"/></a>
     <figcaption>
         <ol>
-            <li>TabBarItem</li>
-            <li>TabBarItem Icon</li>
-            <li>TabBarItem Content</li>
-            <li>Custom Selection Indicator Content</li>
+            <li>WelcomeView FlipView</li>
+            <li>PipsPager</li>
+            <li>Navigation Buttons</li>
         </ol>
     </figcaption>
+</figure>
+
+<a href="/assets/images/chefs-intro/welcome-responsive.gif">
+  <img class="align-center" src="/assets/images/chefs-intro/welcome-responsive.gif" alt="Welcome Page Anatomy"/>
+</a>
 
 [release-webinar]: https://www.youtube.com/live/xV8kIfqhuuA?si=hW4IyliKjTpJr82C
 [release-blog]: https://platform.uno/blog/uno-platform-studio-6-0/
@@ -81,5 +88,4 @@ Let's dive in and take a tour of the app. Upon launching the app, you should fin
 [yt-tech-bites]: https://www.youtube.com/playlist?list=PLl_OlDcUya9rP_fDcFrHWV3DuP7KhQKRA
 [docs-recipe-book]: https://aka.platform.uno/chefs-recipebooks
 [docs-chefs]: https://aka.platform.uno/chefs-sampleapp
-
 {% include links.md %}
