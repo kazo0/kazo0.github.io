@@ -45,100 +45,187 @@ The `ControlExtensions` Attached Properties must be properly referenced inside o
 
 We are also using the `InputExtensions` set of Attached Properties from Uno Toolkit in order to facilitate keyboard navigation support for tabbing through the input controls and invoking the Login command on Enter key press. Once again, we have an Uno Tech Bite specifically on this topic :)
 
-{% include video id="y7h9cAsDvfs" provider="youtube" %}
+{% include video id="ehQYrTtircY" provider="youtube" %}
 
 ## The XAML
 
-Let's dive into the XAML for the Welcome Page and see how it's all wired up. As mentioned above, we have two `FlipView` controls. The first one contains the hero images that are displayed in the wide layout:
+We can take a look now at the XAML for the Login Page. I extracted a snippet of the most relevant parts, but you can find the full XAML in the [Uno Chefs repository][gh-chefs-login].
 
 ```xml
-<FlipView IsEnabled="False"
-          Visibility="{utu:Responsive Normal=Collapsed, Wide=Visible}"
-          utu:AutoLayout.PrimaryAlignment="Stretch"
-          SelectedIndex="{Binding Pages.CurrentIndex}">
-  <FlipView.Items>
-    <!-- First Splash image -->
-    <Image Source="ms-appx:///Assets/Welcome/Wide/first_splash_screen.jpg"
-           Stretch="UniformToFill" />
+<utu:AutoLayout Spacing="32"
+                MaxWidth="500"
+                PrimaryAxisAlignment="Center"
+                Padding="32">
+    <Image utu:AutoLayout.CounterAlignment="Center"
+            Width="160"
+            Height="90"
+            Source="{ThemeResource ChefsLogoWithIcon}"
+            Stretch="Uniform" />
+    <utu:AutoLayout Spacing="16"
+                    PrimaryAxisAlignment="Center">
+        <TextBox PlaceholderText="Username"
+                  x:Name="LoginUsername"
+                  AutomationProperties.AutomationId="LoginUsername"
+                  Style="{StaticResource ChefsPrimaryTextBoxStyle}"
+                  utu:InputExtensions.ReturnType="Next"
+                  utu:InputExtensions.AutoFocusNextElement="{Binding ElementName=LoginPassword}"
+                  IsSpellCheckEnabled="False"
+                  Text="{Binding UserCredentials.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ut:ControlExtensions.Icon>
+                <PathIcon Data="{StaticResource Icon_Person_Outline}" />
+            </ut:ControlExtensions.Icon>
+        </TextBox>
+        <PasswordBox x:Name="LoginPassword"
+                      AutomationProperties.AutomationId="LoginPassword"
+                      utu:InputExtensions.ReturnType="Done"
+                      utu:CommandExtensions.Command="{Binding Login}"
+                      Password="{Binding UserCredentials.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      PlaceholderText="Password"
+                      Style="{StaticResource OutlinedPasswordBoxStyle}"
+                      BorderBrush="{ThemeResource OutlineVariantBrush}">
+            <ut:ControlExtensions.Icon>
+                <PathIcon Data="{StaticResource Icon_Lock}" />
+            </ut:ControlExtensions.Icon>
+        </PasswordBox>
+        <utu:AutoLayout Spacing="24"
+                        Orientation="Horizontal"
+                        CounterAxisAlignment="Center"
+                        Justify="SpaceBetween"
+                        PrimaryAxisAlignment="Stretch">
+            <CheckBox Content="Remember me"
+                      utu:AutoLayout.PrimaryAlignment="Auto"
+                      IsChecked="{Binding UserCredentials.SaveCredentials, Mode=TwoWay}" />
+            <Button Content="Forgot password?"
+                    Style="{StaticResource TextButtonStyle}" />
+        </utu:AutoLayout>
+        <Button Content="Login"
+                x:Name="LoginButton"
+                AutomationProperties.AutomationId="LoginButton"
+                Style="{StaticResource ChefsPrimaryButtonStyle}"
+                Command="{Binding Login}" />
+    </utu:AutoLayout>
 
-    <!-- Second Splash image -->
-    <Image Source="ms-appx:///Assets/Welcome/Wide/second_splash_screen.jpg"
-           Stretch="UniformToFill" />
+    <utu:Divider Style="{StaticResource DividerStyle}" />
 
-    <!-- Third Splash image -->
-    <Image Source="ms-appx:///Assets/Welcome/Wide/third_splash_screen.jpg"
-           Stretch="UniformToFill" />
-  </FlipView.Items>
-</FlipView>
+    <utu:AutoLayout Spacing="8"
+                    PrimaryAxisAlignment="Center">
+        <Button Content="Sign in with Apple"
+                Command="{Binding LoginWithApple}"
+                Style="{StaticResource ChefsTonalButtonStyle}">
+            <ut:ControlExtensions.Icon>
+                <FontIcon Style="{StaticResource FontAwesomeBrandsFontIconStyle}"
+                          Glyph="{StaticResource Icon_Apple_Brand}"
+                          FontSize="18"
+                          Foreground="{ThemeResource OnSurfaceBrush}" />
+            </ut:ControlExtensions.Icon>
+        </Button>
+        <Button Content="Sign in with Google"
+                Command="{Binding LoginWithGoogle}"
+                Style="{StaticResource ChefsTonalButtonStyle}">
+            <ut:ControlExtensions.Icon>
+                <FontIcon Style="{StaticResource FontAwesomeBrandsFontIconStyle}"
+                          Glyph="{StaticResource Icon_Google_Brand}"
+                          FontSize="18"
+                          Foreground="{ThemeResource OnSurfaceBrush}" />
+            </ut:ControlExtensions.Icon>
+        </Button>
+    </utu:AutoLayout>
+    <utu:AutoLayout PrimaryAxisAlignment="Center"
+                    CounterAxisAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="4">
+        <TextBlock Text="Not a member?"
+                    Foreground="{ThemeResource OnSurfaceBrush}"
+                    Style="{StaticResource LabelLarge}" />
+        <Button Content="Register Now"
+                uen:Navigation.Request="-/Register"
+                Style="{StaticResource TextButtonStyle}" />
+    </utu:AutoLayout>
+</utu:AutoLayout>
 ```
 
-Take note of the `Visibility` property on the `FlipView`. We only want this `FlipView` to be visible when the window is wide enough.
-
-Our second `FlipView` contains three instances of a small `UserControl` called [`WelcomeView`][welcomeview-xaml]. This `FlipView` is actually always visible. It serves as the main content to the right of the hero image in the wide layout, and as the main content in the narrow (normal) layout.
+First thing we want to look at are the `ControlExtensions.Icon` usages. In the snippet above, check out lines 20-22 and 32-34. This is where we are setting the leading icons for the `TextBox` and `PasswordBox` controls. We are using the `PathIcon` to define the icon shape, which is a vector graphic that scales nicely across different screen sizes and resolutions.
 
 ```xml
-<FlipView x:Name="flipView"
-          utu:AutoLayout.PrimaryAlignment="Stretch"
-          Background="Transparent"
-          utu:SelectorExtensions.PipsPager="{Binding ElementName=pipsPager}"
-          SelectedIndex="{Binding Pages.CurrentIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-  <FlipView.Items>
-    <ctrl:WelcomeView ImageUrl="ms-appx:///Assets/Welcome/first_splash_screen.png"
-                      Title="Welcome to your App!"
-                      VerticalContentAlignment="Bottom"
-                      Description="Embark on a delightful coding journey as you discover, create, and share awesome script tailored to your app and project preferences." />
-    <ctrl:WelcomeView ImageUrl="ms-appx:///Assets/Welcome/second_splash_screen.png"
-                      VerticalContentAlignment="Bottom"
-                      Title="Explore Thousands of Recipes"
-                      Description="Find your next culinary adventure or last minute lunch from our vast collection of diverse and mouth-watering recipes." />
-    <ctrl:WelcomeView ImageUrl="ms-appx:///Assets/Welcome/third_splash_screen.png"
-                      Title="Personalize Your Recipe Journey"
-                      VerticalContentAlignment="Bottom"
-                      Description="Create your own recipe collections, cookbooks, follow other foodies, and share your creations with the Chefs community." />
-  </FlipView.Items>
-</FlipView>
+<!-- Username Icon -->
+<ut:ControlExtensions.Icon>
+    <PathIcon Data="{StaticResource Icon_Person_Outline}" />
+</ut:ControlExtensions.Icon>
+
+<!-- Password Icon -->
+<ut:ControlExtensions.Icon>
+    <PathIcon Data="{StaticResource Icon_Lock}" />
+</ut:ControlExtensions.Icon>
 ```
 
-You may have noticed an extra property set on this `FlipView`. The [`SelectorExtensions.PipsPager`][selector-ext-docs] attached property from Uno Toolkit allows you to connect anything deriving from `Selector` (which is the case for `FlipView`) and keep its `SelectedIndex` in sync with a `PipsPager`.
-
-The last pieces of the puzzle are the navigation buttons. We are using the [`FlipViewExtensions`][flipview-ext-docs] from Uno Toolkit to accomplish this. Given the following XAML, we can move the `FlipView` to the next or previous item, if possible:
+Next, we have the `InputExtensions` Attached Properties. This is where we are defining the keyboard navigation behavior. There are actually two properties we are using here: `ReturnType` and `AutoFocusNextElement`.
 
 ```xml
-<!-- Some code has been omitted for brevity -->
-
-<Button Content="Previous"
-        utu:FlipViewExtensions.Previous="{Binding ElementName=flipView}">
-
-<Button Content="Next"
-        utu:FlipViewExtensions.Next="{Binding ElementName=flipView}"/>
+<TextBox ...
+         utu:InputExtensions.ReturnType="Next"
+         utu:InputExtensions.AutoFocusNextElement="{Binding ElementName=LoginPassword}" />
+<PasswordBox x:Name="LoginPassword"
+             ...
+             utu:InputExtensions.ReturnType="Done" />
 ```
 
-Putting it all together, we now have multiple ways to navigate through the `FlipView` items. The user can swipe left or right, click the navigation buttons, or use the `PipsPager` to jump to a specific item.
+The `ReturnType` property is set to `Next` for the `TextBox`. Which means that when the software keyboard is displayed while the Username `TextBox` is focused, the Next button will be shown in the spot for the Return key. For the `PasswordBox`, we set the `ReturnType` to `Done`, which should show a Done button instead.
 
-<a href="/assets/images/chefs-intro/welcome-mobile.gif">
-  <img class="align-center width-half" src="/assets/images/chefs-intro/welcome-mobile.gif" alt="Welcome Page Flip"/>
-</a>
+The `AutoFocusNextElement` property is set to the `LoginPassword` element. Which means that when the Next button or the Tab key is pressed, the focus will automatically move to the `PasswordBox`.
 
-Only thing left now is to properly show/hide the Next and Previous buttons depending on the current index of the `FlipView`.
+Finally, we have the `CommandExtensions.Command` Attached Property on the `PasswordBox`. This is where we are binding the `Login` command to the `PasswordBox`. This means that when the Done button is pressed on the software keyboard, it will invoke the `Login` command and it will auto-dismiss the software keyboard.
+
+```xml
+<PasswordBox ...
+             utu:CommandExtensions.Command="{Binding Login}" />
+```
+
+Take note in the video below of the Return key changing from Next to Done as we navigate between the two input controls. As well as the Login successfully occurring when the Done button is pressed on the software keyboard.
+
+<video class="align-center width-half" autoplay loop controls>
+  <source src="/assets/images/chefs-login/ios-login.mp4" type="video/mp4" />
+</video>
 
 ## The MVUX Model
 
-We could probably achieve this logic in the XAML itself, maybe using something like a Converter. But this way is more fun. Let's take a look at the entirety of our `WelcomeModel`:
+Next, let's take a look at the MVUX model for the Login Page. The Login Page is a bit more complex than the Welcome Page, so we have a few more properties and commands to look at.
 
 ```csharp
-public partial record WelcomeModel()
+public partial record LoginModel(IDispatcher Dispatcher, INavigator Navigator, IAuthenticationService Authentication)
 {
-  public IState<IntIterator> Pages => State<IntIterator>.Value(this, () => new IntIterator(Enumerable.Range(0, 3).ToImmutableList()));
+    public IState<Credentials> UserCredentials => State<Credentials>.Value(this, () => new Credentials());
+
+    public ICommand Login => Command.Create(b => b.Given(UserCredentials).When(CanLogin).Then(DoLogin));
+
+    private bool CanLogin(Credentials userCredentials)
+    {
+        return userCredentials is not null &&
+               !string.IsNullOrWhiteSpace(userCredentials.Username) &&
+               !string.IsNullOrWhiteSpace(userCredentials.Password);
+    }
+
+    private async ValueTask DoLogin(Credentials userCredentials, CancellationToken ct)
+    {
+        await Authentication.LoginAsync(Dispatcher, new Dictionary<string, string> { { "Username", userCredentials.Username! }, { "Password", userCredentials.Password! } });
+        await NavigateToMain(ct);
+    }
+
+    ...
+
+    private async ValueTask NavigateToMain(CancellationToken ct)
+        => await Navigator.NavigateViewModelAsync<MainModel>(this, qualifier: Qualifiers.ClearBackStack, cancellation: ct);
 }
 ```
 
-That's it?!?
+### `UserCredentials` State
 
-Yes, that's it! We are using MVUX as a presentation framework. MVUX is part of the Uno Extensions family and is designed around the notion of exposing immutable and observable streams data that are compatible with Data Binding. I highly recommend you check out the [MVUX documentation][mvux-docs] for more details on how it works.
+First thing's first, we have the `UserCredentials` property. This is a simple `Credentials` object that holds the Username and Password values. We are using an `IState<Credentials>` here instead of an `IFeed<Credentials>` since we want to be able to update the observable property as the user types in the input fields and react to the changes accordingly.
 
-The [`IntIterator`][int-iterator] is a simple immutable `record` defined in Chefs that keeps track of the current index within a list of items. In this case, we are using it to keep track of the current index of the `FlipView` items. The `Enumerable.Range(0, 3)` creates a list of integers from 0 to 2, which corresponds to the three items in our `FlipView`.
+### Login Command
 
-We are exposing the `IntIterator` as an `IState`, an observable stream of data that can also store state. Meaning the `IState` can be updated from the View via two-way bindings. This allows us to two-way bind the `SelectedIndex` of the `FlipView` to the `Pages.CurrentIndex`, which is the current index of the `IntIterator`. You can see where we are doing this [here][welcome-pages-binding]. We are also observing the `CanMoveNext` and `CanMovePrevious` properties of the `IntIterator` to determine whether we should show or hide the [Next and Previous buttons][nav-buttons-xaml].
+The `Login` command is defined using the `Command.Create` builder method from MVUX. This allows us to build an `ICommand` in a fluent way. We cover this in the Command Builder Chefs Recipe Book article [here][recipe-book-command-builder]. You'll notice the `When(CanLogin)` method that will properly write up the `CanExecute` logic for the `ICommand`. This will ensure that the Login button is only enabled when both the Username and Password fields are not empty, or whatever validation logic you want to implement.
+
+### `IAuthenticationService` Usage
 
 ## Next Steps
 
@@ -146,19 +233,8 @@ In the next article, we will move forward past the Welcome Page and dive into th
 
 Hope you learned something and I'll catch you in the next one :wave:
 
-[release-webinar]: https://www.youtube.com/live/xV8kIfqhuuA?si=hW4IyliKjTpJr82C
-[release-blog]: https://platform.uno/blog/uno-platform-studio-6-0/
-[nick-blog]: https://nicksnettravelswp.builttoroam.com/uno-platform-6-0/
 [gh-chefs]: https://github.com/unoplatform/uno.chefs
-[yt-tech-bites]: https://www.youtube.com/playlist?list=PLl_OlDcUya9rP_fDcFrHWV3DuP7KhQKRA
-[docs-recipe-book]: https://aka.platform.uno/chefs-recipebooks
-[docs-chefs]: https://aka.platform.uno/chefs-sampleapp
-[welcomeview-xaml]: https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/Controls/WelcomeView.xaml
-[selector-ext-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html
-[flipview-ext-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/FlipView-extensions.html
-[mvux-docs]: https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Mvux/Overview.html
-[int-iterator]: https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Business/Models/Iterator.cs#L29-L36
-[welcome-pages-binding]: https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/WelcomePage.xaml#L50
-[nav-buttons-xaml]: https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/WelcomePage.xaml#L85-L98
 [controlextensions-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/themes-control-extensions.html
+[gh-chefs-login]: https://github.com/unoplatform/uno.chefs/blob/31a9e7621260f69d1b8d9ae845635d9424c45689/Chefs/Views/LoginPage.xaml
+[recipe-book-command-builder]: https://platform.uno/docs/articles/external/uno.chefs/doc/extensions/CommandBuilder.html
 {% include links.md %}
