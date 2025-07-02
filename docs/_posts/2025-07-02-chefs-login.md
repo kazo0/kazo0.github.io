@@ -43,9 +43,11 @@ The `ControlExtensions` Attached Properties must be properly referenced inside o
 
 ### Keyboard Navigation
 
-We are also using the `InputExtensions` set of Attached Properties from Uno Toolkit in order to facilitate keyboard navigation support for tabbing through the input controls and invoking the Login command on Enter key press. Once again, we have an Uno Tech Bite specifically on this topic :)
+We are also using the `InputExtensions` set of Attached Properties from Uno Toolkit in order to facilitate keyboard navigation support for tabbing through the input controls and invoking the Login command on Enter key press. Once again, we have a couple of Uno Tech Bite videos specifically on this topic :)
 
 {% include video id="ehQYrTtircY" provider="youtube" %}
+
+{% include video id="j0MWpLja3u4" provider="youtube" %}
 
 ## The XAML
 
@@ -227,14 +229,71 @@ The `Login` command is defined using the `Command.Create` builder method from MV
 
 ### `IAuthenticationService` Usage
 
+We can see that the `DoLogin` method is where we are using the injected `IAuthenticationService` to handle the authentication logic. If you search the solution for something implementing the `IAuthenticationService` interface, you'll find that it is not implemented in Chefs. Instead, it is registered by the `UseAuthentication` extension method as part of the `IHostBuilder` in the `App.xaml` code-behind logic. This is all made available to us through the [Uno Extensions Authentication][auth-docs] package.
+
+Here is the relevant code snippet from the `App` code-behind:
+
+```csharp
+...
+
+.Configure(host => host
+    .UseAuthentication(auth =>
+        auth.AddCustom(
+            custom =>
+            {
+                custom.Login(async (sp, dispatcher, credentials, cancellationToken) => await ProcessCredentials(credentials));
+            },
+            name: "CustomAuth")
+    )
+
+...
+
+private async ValueTask<IDictionary<string, string>?> ProcessCredentials(IDictionary<string, string> credentials)
+{
+    // Check for username to simulate credential processing
+    if (!(credentials?.TryGetValue("Username", out var username) ??
+            false && !string.IsNullOrEmpty(username)))
+    {
+        return null;
+    }
+
+    // Simulate successful authentication by creating a dummy token dictionary
+    var tokenDictionary = new Dictionary<string, string>
+    {
+        { TokenCacheExtensions.AccessTokenKey, "SampleToken" },
+        { TokenCacheExtensions.RefreshTokenKey, "RefreshToken" },
+        { "Expiry", DateTime.Now.AddMinutes(5).ToString("g") } // Set token expiry
+    };
+
+    return tokenDictionary;
+}
+```
+
+In our case, we are simulating a successful login as long as the Username is not empty. We are achieving this by using the `AddCustom` method on the `IAuthenticationBuilder` to register a `CustomAuthenticationProvider`. The `CustomAuthenticationProvider` provides a basic implementation of the `IAuthenticationProvider` that requires callback methods to be defined for performing login, refresh, and logout actions.
+This is where you would typically implement your own authentication logic, such as calling an API to validate the credentials. You can easily swap this out with something like `.AddMsal` or `AddOidc`.
+
+Now, when we call the `LoginAsync` method on the `IAuthenticationService` inside of the `LoginModel`, it will automatically call into the `ProcessCredentials` method to handle the auth request.
+
 ## Next Steps
 
-In the next article, we will move forward past the Welcome Page and dive into the Login Page and beyond. In the meantime, I encourage you to check out the [Uno Chefs GitHub repository][gh-chefs] and explore the code for yourself. There are a lot of interesting patterns and techniques used throughout the app that you can learn from.
+In the next article, we'll get into the real meat of the application and explore the Home Page. In the meantime, I encourage you to check out the [Uno Chefs Recipe Book][recipe-book-overview] and the [Uno Chefs GitHub repository][gh-chefs] and explore the code for yourself. There are a lot of interesting patterns and techniques used throughout the app that you can learn from.
 
 Hope you learned something and I'll catch you in the next one :wave:
+
+## Additional Resources
+
+- [Uno Chefs GitHub Repository][gh-chefs]
+- [InputExtensions Focus Recipe Book][recipe-book-input-focus]
+- [InputExtensions Return Type Recipe Book][recipe-book-input-returntype]
+- [CommandExtensions Recipe Book][recipe-book-command-extensions]
 
 [gh-chefs]: https://github.com/unoplatform/uno.chefs
 [controlextensions-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/themes-control-extensions.html
 [gh-chefs-login]: https://github.com/unoplatform/uno.chefs/blob/31a9e7621260f69d1b8d9ae845635d9424c45689/Chefs/Views/LoginPage.xaml
 [recipe-book-command-builder]: https://platform.uno/docs/articles/external/uno.chefs/doc/extensions/CommandBuilder.html
+[auth-docs]: https://platform.uno/docs/articles/external/uno.extensions/doc/Overview/Authentication/AuthenticationOverview.html
+[recipe-book-input-focus]: https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.Focus.html
+[recipe-book-input-returntype]: https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.ReturnType.html
+[recipe-book-command-extensions]: https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/CommandExtensions.html
+[recipe-book-overview]: https://platform.uno/docs/articles/external/uno.chefs/doc/RecipeBooksOverview.html
 {% include links.md %}
