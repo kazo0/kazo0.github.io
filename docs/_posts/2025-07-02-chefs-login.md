@@ -22,6 +22,7 @@ We don't need to separate the anatomy based on our wide/narrow layouts. This is 
             <li>Username TextBox</li>
             <li>Password PasswordBox</li>
             <li>Login Button</li>
+            <li>Divider</li>
             <li>Social Login Buttons</li>
             <li>Registration Text Button</li>
         </ol>
