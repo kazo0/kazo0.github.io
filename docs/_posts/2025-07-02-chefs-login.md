@@ -7,7 +7,7 @@ header:
 tags: [uno, unochefs, uno.chefs, uno-chefs, chefs, hot-design, uno-platform]
 ---
 
-Let's continue our walkthrough of [Uno Chefs][gh-chefs], our new flagship reference implementation when it comes to building cross-platform apps. This time, we'll be covering the Login/Register Pages. These are the next pages after navigating from the Welcome Page, which we covered [last time]({% post_url 2025-05-25-chefs-intro %}).
+Let's continue our walkthrough of [Uno Chefs][gh-chefs], our new flagship reference implementation when it comes to building cross-platform apps. This time, we'll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered [last time]({% post_url 2025-05-25-chefs-intro %}).
 
 ## Anatomy of the Login Page
 
@@ -146,7 +146,9 @@ We can take a look now at the XAML for the Login Page. I extracted a snippet of 
 </utu:AutoLayout>
 ```
 
-First thing we want to look at are the `ControlExtensions.Icon` usages. In the snippet above, check out lines 20-22 and 32-34. This is where we are setting the leading icons for the `TextBox` and `PasswordBox` controls. We are using the `PathIcon` to define the icon shape, which is a vector graphic that scales nicely across different screen sizes and resolutions.
+### `ControlExtensions`
+
+First thing we want to look at are the `ControlExtensions.Icon` usages. In the snippet above, check out lines 20-22 and 32-34. This is where we are setting the leading icons for the `TextBox` and `PasswordBox` controls. We are using a [`PathIcon`][ms-pathicon] to define the icon shape, which is a vector graphic that scales nicely across different screen sizes and resolutions.
 
 ```xml
 <!-- Username Icon -->
@@ -159,6 +161,8 @@ First thing we want to look at are the `ControlExtensions.Icon` usages. In the s
     <PathIcon Data="{StaticResource Icon_Lock}" />
 </ut:ControlExtensions.Icon>
 ```
+
+### `InputExtensions`
 
 Next, we have the `InputExtensions` Attached Properties. This is where we are defining the keyboard navigation behavior. There are actually two properties we are using here: `ReturnType` and `AutoFocusNextElement`.
 
@@ -173,14 +177,18 @@ Next, we have the `InputExtensions` Attached Properties. This is where we are de
 
 The `ReturnType` property is set to `Next` for the `TextBox`. Which means that when the software keyboard is displayed while the Username `TextBox` is focused, the Next button will be shown in the spot for the Return key. For the `PasswordBox`, we set the `ReturnType` to `Done`, which should show a Done button instead.
 
-The `AutoFocusNextElement` property is set to the `LoginPassword` element. Which means that when the Next button or the Tab key is pressed, the focus will automatically move to the `PasswordBox`.
+The `AutoFocusNextElement` property is set to the `LoginPassword` element. Which means that when the Next button or the Tab key is pressed, the focus will automatically move from the `TextBox` to the `PasswordBox`.
 
-Finally, we have the `CommandExtensions.Command` Attached Property on the `PasswordBox`. This is where we are binding the `Login` command to the `PasswordBox`. This means that when the Done button is pressed on the software keyboard, it will invoke the `Login` command and it will auto-dismiss the software keyboard.
+### `CommandExtensions`
+
+Finally, we have the `CommandExtensions.Command` Attached Property on the `PasswordBox`. This is where we are binding the `Login` command to the `PasswordBox`. This means that when the Done button or the Enter key is pressed, it will invoke the `Login` command and will auto-dismiss the software keyboard.
 
 ```xml
 <PasswordBox ...
              utu:CommandExtensions.Command="{Binding Login}" />
 ```
+
+### Putting it all together
 
 Take note in the video below of the Return key changing from Next to Done as we navigate between the two input controls. As well as the Login successfully occurring when the Done button is pressed on the software keyboard.
 
@@ -225,7 +233,7 @@ First thing's first, we have the `UserCredentials` property. This is a simple `C
 
 ### Login Command
 
-The `Login` command is defined using the `Command.Create` builder method from MVUX. This allows us to build an `ICommand` in a fluent way. We cover this in the Command Builder Chefs Recipe Book article [here][recipe-book-command-builder]. You'll notice the `When(CanLogin)` method that will properly write up the `CanExecute` logic for the `ICommand`. This will ensure that the Login button is only enabled when both the Username and Password fields are not empty, or whatever validation logic you want to implement.
+The `Login` command is defined using the `Command.Create` builder method from MVUX. This allows us to build an `ICommand` in a fluent way. We cover this in the [Command Builder Chefs Recipe Book article][recipe-book-command-builder]. You'll notice the `When(CanLogin)` method that will properly wire up the `CanExecute` logic for the `ICommand`. This will ensure that the Login button is only enabled when both the Username and Password fields are not empty, or whatever validation logic you want to implement.
 
 ### `IAuthenticationService` Usage
 
@@ -269,7 +277,7 @@ private async ValueTask<IDictionary<string, string>?> ProcessCredentials(IDictio
 }
 ```
 
-In our case, we are simulating a successful login as long as the Username is not empty. We are achieving this by using the `AddCustom` method on the `IAuthenticationBuilder` to register a `CustomAuthenticationProvider`. The `CustomAuthenticationProvider` provides a basic implementation of the `IAuthenticationProvider` that requires callback methods to be defined for performing login, refresh, and logout actions.
+In our case, we are simulating a successful login as long as the Username is not empty. We are achieving this by using the `AddCustom` method on the `IAuthenticationBuilder` to register the `CustomAuthenticationProvider` coming from Uno Extensions. The `CustomAuthenticationProvider` provides a basic implementation of the `IAuthenticationProvider` that requires callback methods to be defined for performing login, refresh, and logout actions.
 This is where you would typically implement your own authentication logic, such as calling an API to validate the credentials. You can easily swap this out with something like `.AddMsal` or `AddOidc`.
 
 Now, when we call the `LoginAsync` method on the `IAuthenticationService` inside of the `LoginModel`, it will automatically call into the `ProcessCredentials` method to handle the auth request.
@@ -296,4 +304,5 @@ Hope you learned something and I'll catch you in the next one :wave:
 [recipe-book-input-returntype]: https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.ReturnType.html
 [recipe-book-command-extensions]: https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/CommandExtensions.html
 [recipe-book-overview]: https://platform.uno/docs/articles/external/uno.chefs/doc/RecipeBooksOverview.html
+[ms-pathicon]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.pathicon?view=windows-app-sdk-1.6
 {% include links.md %}
