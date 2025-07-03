@@ -193,7 +193,7 @@ Finally, we have the `CommandExtensions.Command` Attached Property on the `Passw
 
 Take note in the video below of the Return key changing from Next to Done as we navigate between the two input controls. As well as the Login successfully occurring when the Done button is pressed on the software keyboard.
 
-<video class="align-center width-half" autoplay loop controls>
+<video class="align-center width-half" autoplay muted loop controls>
   <source src="/assets/images/chefs-login/ios-login.mp4" type="video/mp4" />
 </video>
 
