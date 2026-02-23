@@ -1,5 +1,5 @@
 ---
-title: "Adding Agent Skills To Your Uno Platform AI Tool Belt"
+title: "Agent Skills + Uno Platform"
 category: uno-general
 header:
   teaser: /assets/images/skills-intro/tool-hero.png
@@ -7,7 +7,7 @@ header:
 tags: [Agents, AI, MCP, skills, uno-platform, uno, unoplatform]
 ---
 
-Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as Jerome's[jerome-social] presentation from this past .NET Conf:
+Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as [Jerome's][jerome-social] presentation from this past .NET Conf:
 
 {% include video id="g4A_3ZCwwWg" provider="youtube" %}
 
@@ -15,20 +15,23 @@ As well as some great articles the team has been publishing on the blog, includi
 
 ## The Problem
 
-The tooling ecosystem for Uno Platform is evolving rapidly and offers two very important tools for agentic development: The Uno MCP and the Uno App MCP. For a good breakdown of these tools and how to use them, check out the [Uno MCP vs App MCP blog post][uno-mcp-blog]. While these are quite powerful on their own, you may find that your agents aren't always reliably using them for every scenario. Take the Uno MCP for example, it basically provides the agent with a way of accessing the entire [Uno documentation][uno-docs] as a knowledge base. This is great, however, this means that that MCP's capabilities are exposed to the agent in a very broad and general way. The agent may not always "know" that the Uno MCP tools such as `uno_platform_search_docs` are capable of answering specific questions. For example, if the agent is trying to implement something like [Selection with MVUX][mvux-selection], it may not reliably search the relevant docs as nothing is really telling the agent "Hey! MVUX related questions can be answered by searching the Uno docs with the Uno MCP tool `uno_platform_search_docs`!".
+The tooling ecosystem for Uno Platform is evolving rapidly and offers two very important tools for agentic development: The Uno MCP and the Uno App MCP. For a good breakdown of these tools and how to use them, check out the [Uno MCP vs App MCP blog post][uno-mcp-blog].
+
+While these are quite powerful on their own, you may find that your agents aren't always reliably using them for every scenario. Take the Uno MCP for example, it basically provides the agent with a way of accessing the entire [Uno documentation][uno-docs] as a knowledge base. This is great, however, this means that the MCP's capabilities are exposed to the agent in a very broad and general way. The agent may not always "know" that the Uno MCP tools, such as `uno_platform_docs_search`, are capable of answering specific questions.
+
+For example, if the agent is trying to implement something like [Selection with MVUX][mvux-selection], it may not reliably search the relevant docs as nothing is really telling the agent "Hey! MVUX related questions can be answered by searching the Uno docs with the Uno MCP tool `uno_platform_docs_search`!".
 
 ## The Solution: Agent Skills
 
-Agent Skills are what bridges this gap between the agent and its available tool calls. A good analogy from the [Uno Skills blog post][uno-skills-blog] define the MCP tools as the ingredients and Agent Skills as the recipes. I like to think of skills as the glue that binds the agent to the MCP tools.
+Agent Skills are what bridges this gap between the agent and its available tool calls. A good analogy from the [Uno Skills blog post][uno-skills-blog] defines the MCP tools as the ingredients and Agent Skills as the recipes. I like to think of skills as the glue that binds the agent to the MCP tools.
 
-Let's circle back to the example of implementing selection with MVUX. A skill can expose to the agent that it knows about MVUX selection and can instruct the agent to search and fetch specific documentation surrounding that topic. Now, the very broad-reaching Uno MCP has been limited to a small set of relevant information for the task at hand.
+Let's circle back to the example of implementing selection with MVUX. A skill can expose to the agent that it knows about MVUX selection and can instruct the agent to search and fetch specific documentation surrounding that topic. With that, the very broad-reaching Uno MCP has now been limited in scope to a small set of relevant information for the task at hand.
 
 ## Creating An Agent Skill
 
 As a first attempt at creating a skill for MVUX selection, I instructed the agent itself to use the Uno MCP to gather all information on MVUX selection and create a skill out of that.
 
-The initial skill looked something like this:
-
+I have uploaded the [initially generated skill][initial-skill-md] to this [mvux-selection-skill][mvux-selection-skill-gh] repo.
 
 This will indeed work to guide the agent towards a proper implementation. But, as you can see, this skill file is simply a copy-paste of the Uno documentation on MVUX selection. This is not ideal for a few reasons:
 
@@ -36,7 +39,7 @@ This will indeed work to guide the agent towards a proper implementation. But, a
 2. Instead of instructing the agent on how to use the Uno MCP tools, it is basically doing the job of the Uno MCP itself by providing the agent with all the relevant information upfront.
 3. This skill is not very maintainable, as any updates to the Uno documentation on MVUX selection would require manually updating this skill file as well.
 
-Re-prompting the agent to refactor this into a lightweight skill that utilizes the Uno MCP tools provided the following result:
+Re-prompting the agent to refactor this into a lightweight skill that utilizes the Uno MCP tools provided the [following result][refactored-skill-md].
 
 This is a much cleaner, more maintainable, and more efficient skill. Now the question is, how well does this work in practice? Does it really make a difference in the agent's ability to implement MVUX selection?
 
@@ -50,7 +53,9 @@ dotnet new unoapp -preset recommended -o MVUXSelectionApp
 
 We start with a two page application. We have a `MainPage` and a `SecondPage` backed by MVUX models. The `MainPage` simply has a `TextBox` and a `Button` to navigate to the `SecondPage` while passing along the text from the `TextBox`. The `SecondPage` has a `TextBlock` that displays the text passed from the `MainPage`.
 
-### `MainPage.xaml`:
+### Initial Code
+
+#### `MainPage.xaml`
 
 ```xml
 <Page x:Class="MVUXSelectionApp.Presentation.MainPage"
@@ -84,7 +89,7 @@ We start with a two page application. We have a `MainPage` and a `SecondPage` ba
 </Page>
 ```
 
-### `MainModel.cs`
+#### `MainModel.cs`
 
 ```csharp
 public partial record MainModel
@@ -114,9 +119,9 @@ With this app loaded up, and without the MVUX selection skill, we can give an ag
 
 > Instead of a TextBox on the MainPage, I want to display a simple list of names ("Kunal", "Vatsa", "Matthew", "Skander", "Rafael", "Ramez") and it should support single selection that will pass that name to the Second Page when GoToSecond is fired
 
-The result:
+### Modified Code without MVUX Selection Skill
 
-### `MainPage.xaml`
+#### `MainPage.xaml`
 
 ```diff
  <Page x:Class="MVUXSelectionApp.Presentation.MainPage"
@@ -156,7 +161,7 @@ The result:
  </Page>
 ```
 
-### `MainModel.cs`
+#### `MainModel.cs`
 
 ```diff
  public partial record MainModel
@@ -189,9 +194,7 @@ The result:
 
 Here's a look at the agent running through this process:
 
-<video class="align-center width-100" autoplay muted loop controls>
-  <source src="/assets/images/skills-intro/noskillagent.mp4" type="video/mp4" />
-</video>
+{% include video id="12HyT23vYuNGaLIYL0To9-Wp6ZfrPmYF5" provider="google-drive" %}
 
 As it stands from this snapshot in time, the current code does not compile
 
@@ -199,15 +202,13 @@ As it stands from this snapshot in time, the current code does not compile
 - The signature of the `ListFeed.Async` method is also incorrect, it only needs a single parameter of type `AsyncFunc<...>`
 - The new `IState<string> SelectedName` property is not being properly bound to the `IListFeed<string> Names`
 
-Note that the code pasted above is the initial generation from the agent without the MVUX selection skill. While not completely correct, it did eventually iterate on it, fixing the build failures and eventually got to a working solution.
+Note that the code pasted above is the initial generation from the agent without the MVUX selection skill. While not completely correct, it did eventually iterate on itself, fixing the build failures and eventually got to a working solution.
 
 Now, let's try this again with the same prompt, but this time with the skill included at `.claude/skills/mvux-selection/SKILL.md`.
 
 Here's a run of the agent with the MVUX selection skill:
 
-<video class="align-center width-100" autoplay muted loop controls>
-  <source src="/assets/images/skills-intro/withskill.mp4" type="video/mp4" />
-</video>
+{% include video id="1G-R8y6EBGGcvQNnt1Za0Po7D61Zmapes" provider="google-drive" %}
 
 You may have noticed that I added a little bit of extra instruction to the prompt:
 
@@ -215,9 +216,11 @@ You may have noticed that I added a little bit of extra instruction to the promp
 
 You can see by the end of the video, the agent starts up the app, selects a name from the `ListView`, and verifies that the correct name is displayed on the `SecondPage`. This was all done autonomously by the agent using the Uno App MCP.
 
+### Modified Code with MVUX Selection Skill
+
 Here are the diffs of what the agent was able to generate with the MVUX selection skill:
 
-## `MainPage.xaml`
+#### `MainPage.xaml`
 
 ```diff
  <Page x:Class="MVUXSelectionApp.Presentation.MainPage"
@@ -255,7 +258,7 @@ Here are the diffs of what the agent was able to generate with the MVUX selectio
  </Page>
 ```
 
-### `MainModel.cs`
+#### `MainModel.cs`
 
 ```diff
  public partial record MainModel
@@ -311,3 +314,6 @@ Catch you in the next one :wave:
 [uno-skills-blog]: https://platform.uno/blog/contextual-ai-mcptools-vs-skills/
 [iselectioninfo-msdocs]: https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.data.iselectioninfo?view=windows-app-sdk-1.8
 [uno-discord]: https://platform.uno/discord
+[initial-skill-md]: https://github.com/kazo0/mvux-selection-skill/blob/4e6b805c4d4842a94af61745e6477eb38c5d5050/initial-mvux-selection.md
+[refactored-skill-md]: https://github.com/kazo0/mvux-selection-skill/blob/4e6b805c4d4842a94af61745e6477eb38c5d5050/improved-mvux-selection.md
+[mvux-selection-skill-gh]: https://github.com/kazo0/mvux-selection-skill
