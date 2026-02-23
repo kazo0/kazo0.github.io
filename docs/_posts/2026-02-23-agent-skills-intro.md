@@ -19,7 +19,7 @@ The tooling ecosystem for Uno Platform is evolving rapidly and offers two very i
 
 While these are quite powerful on their own, you may find that your agents aren't always reliably using them for every scenario. Take the Uno MCP for example, it basically provides the agent with a way of accessing the entire [Uno documentation][uno-docs] as a knowledge base. This is great, however, this means that the MCP's capabilities are exposed to the agent in a very broad and general way. The agent may not always "know" that the Uno MCP tools, such as `uno_platform_docs_search`, are capable of answering specific questions.
 
-For example, if the agent is trying to implement something like [Selection with MVUX][mvux-selection], it may not reliably search the relevant docs as nothing is really telling the agent "Hey! MVUX related questions can be answered by searching the Uno docs with the Uno MCP tool `uno_platform_docs_search`!".
+For example, if the agent is trying to implement something like [Selection with MVUX][mvux-selection], it may not reliably search the relevant docs as nothing is really telling the agent "Hey! MVUX related questions can be answered by searching the Uno docs with the Uno MCP tool `uno_platform_docs_search`!"
 
 ## The Solution: Agent Skills
 
