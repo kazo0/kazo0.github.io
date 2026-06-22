@@ -161,7 +161,7 @@ Yes, that's it! We are using MVUX as a presentation framework. MVUX is part of t
 
 The [`IntIterator`][int-iterator] is a simple immutable `record` defined in Chefs that keeps track of the current index within a list of items. In this case, we are using it to keep track of the current index of the `FlipView` items. The `Enumerable.Range(0, 3)` creates a list of integers from 0 to 2, which corresponds to the three items in our `FlipView`.
 
-We are exposing the `IntIterator` as an `IState`, an observable stream of data that can also store state. Meaning the `IState` can be updated from the View via two-way bindings. This allows us to two-way bind the `SelectedIndex` of the `FlipView` to the `Pages.CurrentIndex`, which is the current index of the `IntIterator`. You can see where we are doing this [here][welcome-pages-binding]. We are also observing the `CanMoveNext` and `CanMovePrevious` properties of the `IntIterator` to determine whether we should show or hide the [Next and Previous buttons][nav-buttons-xaml].
+We are exposing the `IntIterator` as an `IState`, an observable stream of data that can also store state. Meaning the `IState` can be updated from the View via two-way bindings. This allows us to two-way bind the `SelectedIndex` of the `FlipView` to the `Pages.CurrentIndex`, which is the current index of the `IntIterator`. You can see [where we are doing this][welcome-pages-binding]. We are also observing the `CanMoveNext` and `CanMovePrevious` properties of the `IntIterator` to determine whether we should show or hide the [Next and Previous buttons][nav-buttons-xaml].
 
 ## Next Steps
 

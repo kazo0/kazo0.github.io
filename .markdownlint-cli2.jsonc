@@ -1,0 +1,16 @@
+{
+  // Single source of truth for markdownlint across the repo (CLI + VS Code extension).
+  "config": {
+    "MD013": false, // line length
+    "MD033": false, // inline HTML
+    "MD052": false, // reference links: shortcut syntax used
+    "MD024": { "siblings_only": true } // repeated subsection headings under different parents
+  },
+  "globs": ["**/*.md"],
+  "ignores": [
+    "**/node_modules/**",
+    "docs/_site/**",
+    "docs/vendor/**",
+    "docs/_includes/links.md" // Jekyll include fragment; reference defs are resolved cross-file
+  ]
+}

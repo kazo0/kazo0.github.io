@@ -40,7 +40,7 @@ I'll be arriving in Prague on Tuesday, November 21st and I am planning to cram i
 
 After the conference ends on Friday, I'll be heading to Kraków, Poland for the weekend. I'm excited to eat the food of my childhood at places like [Starka][starka] and [Miód Malina][miod-malina]. I'll be taking a day trip to [Auschwitz and Birkenau][auschwitz-birkenau] on Sunday, something that will be very heavy but I feel is important to experience.
 
-## To Be Continued...
+## To Be Continued
 
 I'll be posting more about my trip and the conference here on my blog. Stay tuned!
 

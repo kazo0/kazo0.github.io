@@ -16,7 +16,7 @@ Last week I had the pleasure of attending [TechBash 2023][techbash-site] at the 
 
 This was my first time working a booth at a conference and it was a lot more fun than I expected. As an introvert, I thought it was going to be horribly awkward the entire time but THANK GOD for Matthew ([@matteiomattei][matt-twitter]), our amazing marketing/sales/advocate guru. I feel like we were a good tag team, I would jump in to answer any of the technical questions or overall explanation of what Uno Platform is and then I would tap him in whenever there were questions related to adoption, history, etc.
 
-Whenever I would, inevitably, forget to mention something like the fact that we are free and open-source, Matthew would jump on it and fill in the gaps. He was dedicated to making sure every single person at that conference left with a Uno Platform t-shirt. 
+Whenever I would, inevitably, forget to mention something like the fact that we are free and open-source, Matthew would jump on it and fill in the gaps. He was dedicated to making sure every single person at that conference left with a Uno Platform t-shirt.
 
 We also got to hang around with the other booth..."hosts"? Including Sam Basu ([@samidip][sam-twitter]) from [Progress Telerik][progress-site]! I actually know Sam from my days living in Columbus, Ohio where we used to host a user group together. It was great to see him again and I was even invited onto his livestream for a future date to talk about some of the cool new stuff in Uno Platform!
 
@@ -41,7 +41,7 @@ I really need to work on how to slow the pace of my talk down. I think I get so 
 
 Networking is my kryptonite, I suck at it. What I usually do at conferences is hermit up in my room and work/rewatch old episodes of Parks and Recreation. This time, however, I made a conscious effort to get out there and meet people. Basically, I was forced to socialize at least somewhat by the fact that Matthew and Andres were there with me and it's not like I was going to avoid them and eat meals by myself, although that does sound like something I would do.
 
-The first night, I hopped on the TechBash Slack and asked what people were planning for the evening and the Uno Platform team ended up hanging out with a bunch of other speakers at [Barkely Creek Brewery][barley-creek-site]. We are now known as "The Canadians" to many of the speakers and it was a really good time. We talked about all kinds of things, not just tech, things like Taylor Swift, how Americans pronounce the word "gyro", hockey, etc. 
+The first night, I hopped on the TechBash Slack and asked what people were planning for the evening and the Uno Platform team ended up hanging out with a bunch of other speakers at [Barkely Creek Brewery][barley-creek-site]. We are now known as "The Canadians" to many of the speakers and it was a really good time. We talked about all kinds of things, not just tech, things like Taylor Swift, how Americans pronounce the word "gyro", hockey, etc.
 
 The next day, I got to eat lunch at the same table as Kathleen Dollard ([@KathleenDollard][kd-twitter]), Program Manager at Microsoft for C# and the .NET CLI! :no_mouth: What an experience! Absolutely one of the smartest and coolest people I've ever met. Kathleen is such an interesting person and she could honestly talk to you on any subject for HOURS without stopping. She seemed genuinely happy to talk to me and was so pleased when I told her I was still in the early stages of my speaking career. She gave me some amazing advice and really encouraged me to keep at it. The most important thing she told me was to pace myself. "Pause!" she said, "Pause and let people think about what you just said. Pause and let them catch up. Have a glass of water to drink from, you can even just fake drink from it, just force yourself to take pauses." KD is the GOAT :goat:
 
@@ -53,17 +53,17 @@ The following night was Game Night where I got to spend some time with Joe Guada
 
 CAN'T GO TO SCRANTON WITHOUT VISITING THE OFFICE MURAL! :heart_eyes: :heart_eyes: :heart_eyes:
 
-The conference took place 30 minutes away from Scranton, PA so I couldn't resist visiting classic locations from *The Office* such as: 
+The conference took place 30 minutes away from Scranton, PA so I couldn't resist visiting classic locations from *The Office* such as:
 
 ### The Penn Paper Tower
 
 ![Penn Paper Tower](/assets/images/penn-paper.jpg)
 
-### Boscov's at the Steamtown Mall 
+### Boscov's at the Steamtown Mall
+
 #### *Close your mouth, sweetie. You look like a trout.* :joy:
 
 ![Boscov's](/assets/images/boscovs.jpg)
-
 
 All in all, a great trip :)
 

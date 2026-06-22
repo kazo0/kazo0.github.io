@@ -139,7 +139,7 @@ Let's take a look at how we could use a `TabBar` as a means of changing the main
 
 ![Initial simple TabBar page setup](/assets/images/tabbar/tabbar-simple-step1.png)
 
-Nothing fancy and we don't see anything at this point. 
+Nothing fancy and we don't see anything at this point.
 
 Notice that I have set the name of each child `Grid` of `pageContainer` to the same value as the `Tag` property for each `TabBarItem`. These will come in handy in the next step where we will jump over to the code-behind to sync the `TabBar` selection to the visibility of the corresponding `Grid`.
 

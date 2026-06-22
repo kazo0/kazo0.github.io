@@ -136,7 +136,7 @@ We should now have a fully functional carousel experience with a `PipsPager` at 
 
 ![Swiping through carousel on iOS](/assets/images/carousel/ios-carousel-swipe.gif){: .align-center}
 
-Before we wrap up, let's make sure this also looks good for other platforms. Especially desktop/web targets where we have a lot more screen real estate. 
+Before we wrap up, let's make sure this also looks good for other platforms. Especially desktop/web targets where we have a lot more screen real estate.
 
 Running this on the macOS Desktop target currently looks like this:
 
@@ -262,6 +262,6 @@ Catch you in the next one :wave:
 
 [uno-toolkit-repo]: https://github.com/unoplatform/uno.toolkit.ui
 [carousel-gh]: https://github.com/kazo0/CarouselApp
-[responsive-markup-extensions]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html 
+[responsive-markup-extensions]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html
 [selector-extensions]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html
 [ms-flipview-doc]: https://learn.microsoft.com/en-us/windows/apps/design/controls/flipview#adding-a-context-indicator

@@ -190,7 +190,7 @@ Now we can take a look at how to create the `NavigationBar` that we saw earlier 
 
 Let's jump to Android for this portion just because iOS doesn't support `SecondaryCommands` and we want to see that nice overflow menu available on all other platforms.
 
-In the following XAML we are adding `PrimaryCommands` and `SecondaryCommands` to the `NavigationBar` 
+In the following XAML we are adding `PrimaryCommands` and `SecondaryCommands` to the `NavigationBar`
 
 ```xml
 <utu:NavigationBar Content="Second Page">
@@ -237,8 +237,6 @@ It's important to note here that we are using `BitmapIcon` as our `Icon` on the 
 ## Conclusion
 
 I'm sure you're sick of seeing my dumb smiling face staring into your soul with every screenshot so I will wrap this up and point you to some resources for more information.
-
-
 
 One final note, although we featured the `NavigationBar` being used mostly on iOS and Android, it is also fully supported on all other Uno platforms.
 

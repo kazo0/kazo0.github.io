@@ -60,9 +60,20 @@ Reusable link references are defined in `_includes/links.md`. Include them in po
 - **`_layouts/single.html`** — Extends the theme's default single layout (adds hero image rendering before content).
 - **`_data/navigation.yml`** — Site navigation links.
 
-### Markdown Linting
+### Linting & Commits
 
-`.markdownlint.json` disables: MD033 (inline HTML), MD013 (line length), MD052 (reference link definitions). Grammarly is configured in `.vscode/settings.json` for markdown files.
+This repo enforces **markdownlint** and **Conventional Commits** via git hooks (husky) and GitHub Actions (`.github/workflows/lint.yml`). The Node tooling lives at the repo root, separate from the Jekyll/Ruby toolchain under `docs/`.
+
+```bash
+npm install         # run once: installs tooling and activates the git hooks
+npm run lint:md     # lint all markdown
+npm run lint:md:fix # auto-fix markdown issues
+```
+
+- **markdownlint** config: `.markdownlint-cli2.jsonc` (root, single source of truth). Disables MD013 (line length), MD033 (inline HTML), MD052 (reference links); sets MD024 to `siblings_only`. `docs/_includes/links.md` is ignored because its reference definitions resolve cross-file (see [Shared Links](#shared-links)).
+- **Commits** must follow [Conventional Commits](https://www.conventionalcommits.org/) (config: `commitlint.config.js`; subject case is unrestricted). The `commit-msg` hook validates messages locally; CI re-checks PR commits.
+- The `pre-commit` hook runs markdownlint (with `--fix`) on staged markdown via lint-staged.
+- Grammarly is configured in `.vscode/settings.json` for markdown files.
 
 ### Embeds
 
@@ -76,7 +87,7 @@ Jekyll shortcodes for media:
 
 Callout boxes use Minimal Mistakes notice classes appended after a paragraph:
 
-```
+```markdown
 
 Some warning text.
 {: .notice--warning}

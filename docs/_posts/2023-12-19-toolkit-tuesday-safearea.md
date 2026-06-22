@@ -17,9 +17,9 @@ This week we are covering the `SafeArea` component. `SafeArea` comes packaged as
 
 ## Anatomy of `SafeArea`
 
-iOS|Android
-:-:|:-:
-![](/assets/images/safearea/safearea-ios.gif)|![](/assets/images/safearea/safearea-android.gif)
+| iOS | Android |
+| :-: | :-: |
+| ![SafeArea on iOS](/assets/images/safearea/safearea-ios.gif) | ![SafeArea on Android](/assets/images/safearea/safearea-android.gif) |
 
 The above example depicts the difference in layout when using `SafeArea` on iOS and Android for the following XAML:
 
@@ -178,9 +178,9 @@ What happens if we were to set the `SafeArea.Mode` to `InsetMode.Margin` instead
 ...
 ```
 
-Top|Bottom
-:-:|:-:
-![Top SafeArea with Margin](/assets/images/safearea/safearea-safe-margin-top.png)|![Bottom SafeArea with Margin](/assets/images/safearea/safearea-safe-margin-bottom.png)
+| Top | Bottom |
+| :-: | :-: |
+| ![Top SafeArea with Margin](/assets/images/safearea/safearea-safe-margin-top.png) | ![Bottom SafeArea with Margin](/assets/images/safearea/safearea-safe-margin-bottom.png) |
 
 :open_mouth: Holy Yellow Batman! What happened there?
 
@@ -220,9 +220,9 @@ We are going to remove the `SafeArea` attached property setters from the main pu
 1. The `SafeArea.Insets` attached property is now set to `Top` for the "Top Area" `Grid` and `Bottom` for the "Bottom Area" `Grid`
 2. The `SafeArea.Mode` attached property is not set on either `Grid`, so it defaults to `Padding`.
 
-Top|Bottom
-:-:|:-:
-![Top SafeArea Grid](/assets/images/safearea/safearea-safe-grid-top.png)|![Bottom SafeArea Grid](/assets/images/safearea/safearea-safe-grid-bottom.png)
+| Top | Bottom |
+| :-: | :-: |
+| ![Top SafeArea Grid](/assets/images/safearea/safearea-safe-grid-top.png) | ![Bottom SafeArea Grid](/assets/images/safearea/safearea-safe-grid-bottom.png) |
 
 Looking good!
 
@@ -329,7 +329,6 @@ I encourage you to consult the full documentation for `SafeArea` using the links
 [safearea-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html
 [uno-toolkit-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/getting-started.html
 [visible-bounds-winui]: https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.applicationview.visiblebounds
-[attached-docs]: https://learn.microsoft.com/en-us/windows/uwp/xaml-platform/custom-attached-properties
 [safearea-sample-gh]: https://github.com/kazo0/SafeAreaApp
 [safearea-docs-softinput]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html?tabs=none#using-insetmasksoftinput-for-on-screen-keyboards
 [net-advent]: https://dotnet.christmas/

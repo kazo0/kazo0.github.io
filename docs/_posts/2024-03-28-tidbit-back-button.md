@@ -74,7 +74,7 @@ public sealed partial class SecondPage : Page
     {
 #if !WINDOWS
         SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
-#endif	
+#endif 
     }
 
     private void OnBackRequested(object? sender, BackRequestedEventArgs e)

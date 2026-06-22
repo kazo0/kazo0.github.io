@@ -1,0 +1,21 @@
+{
+  "name": "kazo0-github-io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tooling for the kazo0.dev Jekyll blog: markdownlint + Conventional Commits enforcement",
+  "scripts": {
+    "lint:md": "markdownlint-cli2",
+    "lint:md:fix": "markdownlint-cli2 --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.md": "markdownlint-cli2 --fix"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "markdownlint-cli2": "^0.22.1"
+  }
+}
