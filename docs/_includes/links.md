@@ -9,3 +9,5 @@
 [uno-homepage]: https://platform.uno/posts/uno
 [toolkit-homepage]: https://platform.uno/posts/toolkit
 [uno-toolkit-docs]: https://aka.platform.uno/uno-toolkit
+[uno-65-release]: https://platform.uno/blog/uno-platform-6-5/
+[textbox-docs]: https://platform.uno/docs/articles/controls/TextBox.html
