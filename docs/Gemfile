@@ -35,3 +35,8 @@ gem 'jekyll-seo-tag'
 gem 'jemoji'
 gem "webrick", "~> 1.8"
 gem 'jekyll-sitemap'
+
+# Ruby 3.4 dropped these from the default gems; Jekyll 3.9.x still requires them.
+gem "csv"
+gem "base64"
+gem "bigdecimal"
