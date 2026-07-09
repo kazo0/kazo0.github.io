@@ -39,4 +39,8 @@ jobs:
           MODE: deploy
           DEST_DIR: ""
           SOURCE_DIR: _site
-        run: bash .github/scripts/gh-pages-deploy.sh
+        run: |
+          # jekyll-build-pages (Docker action) writes _site as root; reclaim it
+          # so cp preserves runner ownership on the gh-pages copy.
+          sudo chown -R "$(id -u):$(id -g)" _site
+          bash .github/scripts/gh-pages-deploy.sh

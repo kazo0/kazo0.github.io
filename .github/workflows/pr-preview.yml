@@ -41,6 +41,9 @@ jobs:
         env:
           PR: ${{ github.event.number }}
         run: |
+          # jekyll-build-pages is a Docker action and writes _site as root;
+          # reclaim it so this non-root step can edit the files in place.
+          sudo chown -R "$(id -u):$(id -g)" _site
           # Rewrite root-absolute asset paths (e.g. images referenced as
           # /assets/... in post markdown) so they resolve under the preview.
           # Theme assets are already prefixed via baseurl, so they don't match.
