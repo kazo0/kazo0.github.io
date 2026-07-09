@@ -1,0 +1,1232 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Toolkit Tuesdays: SafeArea - dotnet new bald</title>
+<meta name="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Toolkit Tuesdays: SafeArea">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-28/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html">
+
+
+  <meta property="og:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-28/assets/images/uno-toolkit-hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Toolkit Tuesdays: SafeArea">
+  <meta name="twitter:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-28/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-28/assets/images/uno-toolkit-hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2023-12-19T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-28/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-28/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-28/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-28/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-28/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-28/">
+        <img src="/previews/pr-28/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-28/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Toolkit Tuesdays: SafeArea">
+    <meta itemprop="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+    <meta itemprop="datePublished" content="2023-12-19T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-28/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html" class="u-url" itemprop="url">Toolkit Tuesdays: SafeArea
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-12-19T00:00:00+00:00">December 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#anatomy-of-safearea">Anatomy of SafeArea</a></li>
+<li>
+<a href="#properties">Properties</a><ul>
+<li><a href="#insets">Insets</a></li>
+<li><a href="#mode">Mode</a></li>
+</ul>
+</li>
+<li>
+<a href="#examples">Examples</a><ul><li><a href="#softinput-example">SoftInput Example</a></li></ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/previews/pr-28/assets/images/uno-toolkit-hero.png" class="hero-image">
+        <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+
+<p>This is a special Holiday edition of Toolkit Tuesdays as it is part of the <a href="https://dotnet.christmas/">.NET Advent Calendar</a> series!</p>
+
+<p>This week we are covering the <code class="language-plaintext highlighter-rouge">SafeArea</code> component. <code class="language-plaintext highlighter-rouge">SafeArea</code> comes packaged as both a specialized control and as a set of attached properties. The purpose of <code class="language-plaintext highlighter-rouge">SafeArea</code> is to ensure that your content is never obscured by certain system UI elements or hardware display cutouts.</p>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/H-HkMzYCiOM" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<h2 id="anatomy-of-safearea">Anatomy of <code class="language-plaintext highlighter-rouge">SafeArea</code>
+</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">iOS</th>
+      <th style="text-align: center">Android</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-ios.gif" alt="SafeArea on iOS"></td>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-android.gif" alt="SafeArea on Android"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The above example depicts the difference in layout when using <code class="language-plaintext highlighter-rouge">SafeArea</code> on iOS and Android for the following XAML:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- SafeArea Usage: --&gt;</span>
+<span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Purple"</span>
+      <span class="na">utu:SafeArea.Insets=</span><span class="s">"Top,Bottom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Grid</span> <span class="na">VerticalAlignment=</span><span class="s">"Top"</span>
+            <span class="na">Background=</span><span class="s">"Blue"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Top Area"</span>
+                    <span class="na">FontSize=</span><span class="s">"30"</span>
+                    <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                    <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Grid&gt;</span>
+    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Hello, world!"</span>
+                <span class="na">FontSize=</span><span class="s">"30"</span>
+                <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Grid</span> <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
+          <span class="na">Background=</span><span class="s">"Blue"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Bottom Area"</span>
+                    <span class="na">FontSize=</span><span class="s">"30"</span>
+                    <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                    <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Grid&gt;</span>
+<span class="nt">&lt;/Grid&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">SafeArea</code> is built on top of Uno Platform’s cross-platform implementation of the <a href="https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.applicationview.visiblebounds"><code class="language-plaintext highlighter-rouge">ApplicationView.VisibleBounds</code> API from WinUI</a>. This API returns the bounds within the app window that are not occluded by any system UI or display cutouts. <code class="language-plaintext highlighter-rouge">SafeArea</code> compares the <code class="language-plaintext highlighter-rouge">VisibleBounds</code> to the bounds of the specified control and calculates the insets needed to ensure that the control is not obscured.</p>
+
+<p>By default, <code class="language-plaintext highlighter-rouge">SafeArea</code> will attempt to apply the calculated insets to the <code class="language-plaintext highlighter-rouge">Padding</code> of the specified control. This behavior can be changed by setting the <code class="language-plaintext highlighter-rouge">Mode</code> property to <code class="language-plaintext highlighter-rouge">InsetMode.Margin</code> instead. Additionally, through the <code class="language-plaintext highlighter-rouge">Insets</code> property, you can specify which sides of the <code class="language-plaintext highlighter-rouge">SafeArea</code> should be taken into consideration when calculating the insets.</p>
+
+<h2 id="properties">Properties</h2>
+
+<div class="notice--primary">
+  <p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">SafeArea</code> can be used as a control or as a set of attached properties on another <code class="language-plaintext highlighter-rouge">FrameworkElement</code>, much like the <code class="language-plaintext highlighter-rouge">ScrollViewer</code>:</p>
+
+  <div class="language-xml highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre>xmlns:utu="using:Uno.Toolkit.UI"
+
+<span class="c">&lt;!-- as attached property on another FrameworkElement --&gt;</span>
+<span class="nt">&lt;Grid</span> <span class="na">utu:SafeArea.Insets=</span><span class="s">"Left,Top,Right,Bottom"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Content --&gt;</span>
+<span class="nt">&lt;/Grid&gt;</span>
+
+<span class="c">&lt;!-- or, as a control --&gt;</span>
+<span class="nt">&lt;utu:SafeArea</span> <span class="na">Insets=</span><span class="s">"Left,Top,Right,Bottom"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Content --&gt;</span>
+<span class="nt">&lt;/utu:SafeArea&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div>  </div>
+
+</div>
+
+<h3 id="insets">Insets</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Insets</code> property determines which sides of the <code class="language-plaintext highlighter-rouge">SafeArea</code> should be considered when calculating the insets. The default value is <code class="language-plaintext highlighter-rouge">InsetMask.None</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">None</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Left</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Top</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Right</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Bottom</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SoftInput</code></td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">VisibleBounds</code> = <code class="language-plaintext highlighter-rouge">Left</code>, <code class="language-plaintext highlighter-rouge">Top</code>, <code class="language-plaintext highlighter-rouge">Right</code>, <code class="language-plaintext highlighter-rouge">Bottom</code>
+</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">All</code> = <code class="language-plaintext highlighter-rouge">VisibleBounds</code>, <code class="language-plaintext highlighter-rouge">SoftInput</code>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="notice--info"><code class="language-plaintext highlighter-rouge">SoftInput</code> is used to ensure that the specified area will adapt to any sort of soft-input panel that may appear, such as the on-screen keyboard on touch devices. More on this <a href="#softinput-example">later</a>.</p>
+
+<h3 id="mode">Mode</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Mode</code> property is used by the <code class="language-plaintext highlighter-rouge">SafeArea</code> to determine how the insets should be applied to a control that is in an “unsafe” area. The default value is <code class="language-plaintext highlighter-rouge">InsetMode.Padding</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Padding</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Margin</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="examples">Examples</h2>
+
+<p>Let’s see it in action and jump into some code!</p>
+
+<p class="notice--warning"><strong>Note:</strong> I’ll be using iOS for my example screenshots going forward, but the same concepts apply to Android. This is mostly to make my life easier and not have to take screenshots on multiple devices. Also, the <code class="language-plaintext highlighter-rouge">SafeArea</code> is most useful on iOS because of the notch and the home indicator. Android tends to prevent your content from flowing beneath the system UI by default. This behaviour can be altered by using the <a href="https://developer.android.com/reference/android/R.attr#windowTranslucentStatus">windowTranslucentStatus</a> and <a href="https://developer.android.com/reference/android/R.attr#windowTranslucentNavigation">windowTranslucentNavigation</a> system flags.</p>
+
+<p>Let’s start with the example XAML that was used for the <a href="#anatomy-of-safearea">Anatomy section</a> above:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Page</span> <span class="na">x:Class=</span><span class="s">"SafeAreaApp.MainPage"</span>
+      <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span>
+      <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+      <span class="na">xmlns:local=</span><span class="s">"using:SafeAreaApp"</span>
+      <span class="na">xmlns:utu=</span><span class="s">"using:Uno.Toolkit.UI"</span>
+      <span class="na">Background=</span><span class="s">"Yellow"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Purple"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Grid</span> <span class="na">VerticalAlignment=</span><span class="s">"Top"</span>
+              <span class="na">Background=</span><span class="s">"Blue"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Top Area"</span>
+                       <span class="na">FontSize=</span><span class="s">"30"</span>
+                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Hello, world!"</span>
+                   <span class="na">FontSize=</span><span class="s">"30"</span>
+                   <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                   <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Grid</span> <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
+              <span class="na">Background=</span><span class="s">"Blue"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Bottom Area"</span>
+                       <span class="na">FontSize=</span><span class="s">"30"</span>
+                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid&gt;</span>
+    <span class="nt">&lt;/Grid&gt;</span>
+<span class="nt">&lt;/Page&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Notice the blue <code class="language-plaintext highlighter-rouge">Grid</code> containing the “Top Area” <code class="language-plaintext highlighter-rouge">TextBlock</code> is beneath the status bar text and is being obscured by the Dynamic Island area of the iPhone 15:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-unsafe-top.png" alt="Unsafe Top"></p>
+
+<p>As well as the blue <code class="language-plaintext highlighter-rouge">Grid</code> containing the “Bottom Area” <code class="language-plaintext highlighter-rouge">TextBlock</code> being obscured by the Home Indicator:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-unsafe-bottom.png" alt="Unsafe Bottom"></p>
+
+<p>As a first pass to avoid this issue, let’s try setting the <code class="language-plaintext highlighter-rouge">SafeArea.Insets</code> attached property on the main purple <code class="language-plaintext highlighter-rouge">Grid</code> to <code class="language-plaintext highlighter-rouge">Top,Bottom</code>:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="err">...</span>
+&lt;Grid Background="Purple"
+<span class="gi">+     utu:SafeArea.Insets="Top,Bottom"&gt;
+</span><span class="err">...</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Now we see that the “Top Area” <code class="language-plaintext highlighter-rouge">TextBlock</code> is no longer being obscured and is visible beneath the status bar:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-safe-top.png" alt="Safe Top"></p>
+
+<p>We also see that the “Bottom Area” <code class="language-plaintext highlighter-rouge">TextBlock</code> is no longer obscured and is visible above the Home Indicator:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-safe-bottom.png" alt="Safe Bottom"></p>
+
+<p>Much better!</p>
+
+<p>We can see that the <code class="language-plaintext highlighter-rouge">SafeArea</code> is doing its job and properly applying a <code class="language-plaintext highlighter-rouge">Padding</code> to the purple <code class="language-plaintext highlighter-rouge">Grid</code> so that any content inside of the <code class="language-plaintext highlighter-rouge">Grid</code> will be “inset” from the “unsafe” areas of the screen.</p>
+
+<p>What happens if we were to set the <code class="language-plaintext highlighter-rouge">SafeArea.Mode</code> to <code class="language-plaintext highlighter-rouge">InsetMode.Margin</code> instead?</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="err">...</span>
+&lt;Grid Background="Purple"
+<span class="gi">+     utu:SafeArea.Mode="Margin"
+</span>      utu:SafeArea.Insets="Top,Bottom"&gt;
+<span class="err">...</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Top</th>
+      <th style="text-align: center">Bottom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-safe-margin-top.png" alt="Top SafeArea with Margin"></td>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-safe-margin-bottom.png" alt="Bottom SafeArea with Margin"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img class="emoji" title=":open_mouth:" alt=":open_mouth:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62e.png" height="20" width="20"> Holy Yellow Batman! What happened there?</p>
+
+<p>Well, the <code class="language-plaintext highlighter-rouge">SafeArea</code> is still doing its job but now it’s applying a <code class="language-plaintext highlighter-rouge">Margin</code> to the purple <code class="language-plaintext highlighter-rouge">Grid</code> instead of a <code class="language-plaintext highlighter-rouge">Padding</code>. This means that the purple <code class="language-plaintext highlighter-rouge">Grid</code> is now being pushed down and up by the <code class="language-plaintext highlighter-rouge">SafeArea</code> insets. If you look back at the original XAML for the <code class="language-plaintext highlighter-rouge">Page</code>, you’ll see that we had set a <code class="language-plaintext highlighter-rouge">Background</code> of <code class="language-plaintext highlighter-rouge">Yellow</code> on the <code class="language-plaintext highlighter-rouge">Page</code>. This is why we see the yellow background of the <code class="language-plaintext highlighter-rouge">Page</code> showing through.</p>
+
+<p>I’m not a huge fan of this look, nor do I like the look of the previous <code class="language-plaintext highlighter-rouge">Padding</code> approach. I think it looks better when the content is allowed to “bleed” into the unsafe areas and is flush with the top and bottom of the screen. Let’s try something else.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td>
+<td class="rouge-code"><pre><span class="gi">+ &lt;Grid Background="Purple"&gt;
+</span><span class="gd">-       utu:SafeArea.Mode="Margin"
+-       utu:SafeArea.Insets="Top,Bottom"&gt;
+</span>    &lt;Grid VerticalAlignment="Top"
+<span class="gi">+         utu:SafeArea.Insets="Top"
+</span>          Background="Blue"&gt;
+        &lt;TextBlock Text="Top Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+    &lt;TextBlock Text="Hello, world!"
+               FontSize="30"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center" /&gt;
+    &lt;Grid VerticalAlignment="Bottom"
+<span class="gi">+         utu:SafeArea.Insets="Bottom"
+</span>          Background="Blue"&gt;
+        &lt;TextBlock Text="Bottom Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+ &lt;/Grid&gt;
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>We are going to remove the <code class="language-plaintext highlighter-rouge">SafeArea</code> attached property setters from the main purple <code class="language-plaintext highlighter-rouge">Grid</code> and instead apply them to the “Top Area” and “Bottom Area” <code class="language-plaintext highlighter-rouge">Grid</code>s. Notice two things here:</p>
+
+<ol>
+  <li>The <code class="language-plaintext highlighter-rouge">SafeArea.Insets</code> attached property is now set to <code class="language-plaintext highlighter-rouge">Top</code> for the “Top Area” <code class="language-plaintext highlighter-rouge">Grid</code> and <code class="language-plaintext highlighter-rouge">Bottom</code> for the “Bottom Area” <code class="language-plaintext highlighter-rouge">Grid</code>
+</li>
+  <li>The <code class="language-plaintext highlighter-rouge">SafeArea.Mode</code> attached property is not set on either <code class="language-plaintext highlighter-rouge">Grid</code>, so it defaults to <code class="language-plaintext highlighter-rouge">Padding</code>.</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Top</th>
+      <th style="text-align: center">Bottom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-safe-grid-top.png" alt="Top SafeArea Grid"></td>
+      <td style="text-align: center"><img src="/previews/pr-28/assets/images/safearea/safearea-safe-grid-bottom.png" alt="Bottom SafeArea Grid"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Looking good!</p>
+
+<p>Now we have both the top and the bottom <code class="language-plaintext highlighter-rouge">Grid</code> areas being inset from the unsafe areas using their <code class="language-plaintext highlighter-rouge">Padding</code>. This allows for the background of each <code class="language-plaintext highlighter-rouge">Grid</code> to show through and gives the appearance that the container is bleeding into the unsafe areas while still ensuring that the actual content is not obscured.</p>
+
+<p>So that’s it, right? We’ll always be able to see our content no matter what, right?…</p>
+
+<p>RIGHT?!?!</p>
+
+<p>Let’s make a small tweak to our UI and see what happens:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td>
+<td class="rouge-code"><pre><span class="gd">&lt;Grid Background="Purple"&gt;
+</span>    &lt;Grid VerticalAlignment="Top"
+          utu:SafeArea.Insets="Top"
+          Background="Blue"&gt;
+        &lt;TextBlock Text="Top Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+<span class="gd">-   &lt;TextBlock Text="Hello, world!"
+</span><span class="gi">+   &lt;TextBox PlaceholderText="Hello, world!"
+</span>             FontSize="30"
+             VerticalAlignment="Center"
+             HorizontalAlignment="Center" /&gt;
+    &lt;Grid VerticalAlignment="Bottom"
+          utu:SafeArea.Insets="Bottom"
+          Background="Blue"&gt;
+        &lt;TextBlock Text="Bottom Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+ &lt;/Grid&gt;
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Let’s see what happens now if we were to focus on this new <code class="language-plaintext highlighter-rouge">TextBox</code> and toggle the keyboard:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-kb-unsafe.gif" alt="SafeArea with keyboard opening" class="align-center"></p>
+
+<p>Uh oh!</p>
+
+<p>Our bottom content is now being obscured by the keyboard. This may not be a huge deal in this example, but it could be a big deal in your app. You may have content that you would like to be visible at all times, such as a “Send” button or a “Cancel” button. Let’s see what we can do about this.</p>
+
+<h3 id="softinput-example">SoftInput Example</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">SafeArea.Insets</code> property has a special <code class="language-plaintext highlighter-rouge">InsetMask</code> value called <code class="language-plaintext highlighter-rouge">SoftInput</code>. This value is used to ensure that the specified area will adapt to any sort of soft input panel that may appear, such as the on-screen keyboard on touch devices. Let’s try it out!</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td>
+<td class="rouge-code"><pre> &lt;Grid Background="Purple"&gt;
+    &lt;Grid VerticalAlignment="Top"
+          utu:SafeArea.Insets="Top"
+          Background="Blue"&gt;
+        &lt;TextBlock Text="Top Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+    &lt;TextBox PlaceholderText="Hello, world!"
+             FontSize="30"
+             VerticalAlignment="Center"
+             HorizontalAlignment="Center" /&gt;
+    &lt;Grid VerticalAlignment="Bottom"
+<span class="gd">-         utu:SafeArea.Insets="Bottom"
+</span><span class="gi">+         utu:SafeArea.Insets="Bottom,SoftInput"
+</span>          Background="Blue"&gt;
+        &lt;TextBlock Text="Bottom Area"
+                   FontSize="30"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" /&gt;
+    &lt;/Grid&gt;
+ &lt;/Grid&gt;
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Now, when we focus on the <code class="language-plaintext highlighter-rouge">TextBox</code> and toggle the keyboard, we see that the bottom content is no longer being obscured:</p>
+
+<p><img src="/previews/pr-28/assets/images/safearea/safearea-kb-safe.gif" alt="SafeArea with keyboard opening using SoftInput" class="align-center"></p>
+
+<p>In fact, if you look closely, you’ll notice that the entire area beneath the keyboard panel has become blue. This is because the <code class="language-plaintext highlighter-rouge">SafeArea</code> is now applying a <code class="language-plaintext highlighter-rouge">Padding</code> to the bottom <code class="language-plaintext highlighter-rouge">Grid</code> that is equal to the height of the keyboard panel. This ensures that the bottom content will always be visible. <code class="language-plaintext highlighter-rouge">SafeArea</code> basically treats the keyboard area as “unsafe” for any control that has the <code class="language-plaintext highlighter-rouge">InsetMask.SoftInput</code> applied.</p>
+
+<p class="notice--warning"><strong>Warning:</strong> The usage of <code class="language-plaintext highlighter-rouge">SoftInput</code> is a more advanced use case and comes with some caveats. Using <code class="language-plaintext highlighter-rouge">SoftInput</code> should usually be paired with the usage of a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>. More information can be found in the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html?tabs=none#using-insetmasksoftinput-for-on-screen-keyboards">official SafeArea documentation</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Notice how I didn’t include my face in the example screenshots this time? <img class="emoji" title=":stuck_out_tongue_winking_eye:" alt=":stuck_out_tongue_winking_eye:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f61c.png" height="20" width="20"></p>
+
+<p>Let’s add one here, just for good measure:</p>
+
+<p><img src="/previews/pr-28/assets/images/profile.png" alt="Me" class="align-center width-half"></p>
+
+<p>If you want to take a look at the full source code for the examples above, you can find it on this <a href="https://github.com/kazo0/SafeAreaApp">GitHub repo</a>.</p>
+
+<p>I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about <code class="language-plaintext highlighter-rouge">SafeArea</code> so I hope you will continue to explore it on your own.</p>
+
+<p>I encourage you to consult the full documentation for <code class="language-plaintext highlighter-rouge">SafeArea</code> using the links below. I also want to welcome you to contribute to making <code class="language-plaintext highlighter-rouge">SafeArea</code> even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a>!</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SafeArea.html">SafeArea Docs</a></li>
+  <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2023-12-19T00:00:00+00:00">December 19, 2023</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-28/toolkit-tuesday/2023/12/05/toolkit-tuesday-statusbar.html" class="pagination--pager" title="Toolkit Tuesdays: StatusBar">Previous</a>
+    
+    
+      <a href="/previews/pr-28/toolkit-tuesday/2024/01/30/toolkit-tuesday-responsive.html" class="pagination--pager" title="Toolkit Tuesdays: Responsive">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/mvp-summit/badge-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/conference/2025/03/29/summit-recap.html" rel="permalink">MVP Summit 2025 Recap
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-29T00:00:00+00:00">March 29, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Flying back from Seattle right now after a really fun week attending the Microsoft MVP Summit for the very first time. It was a whirlwind of sessions, networ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-28/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-28/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-28/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-28/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-28/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

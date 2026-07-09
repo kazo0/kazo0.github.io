@@ -1,0 +1,1106 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Uno Tidbit: Building a Carousel Experience - dotnet new bald</title>
+<meta name="description" content="Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Uno Tidbit: Building a Carousel Experience">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-28/uno-tidbit/2024/09/05/tidbit-carousel.html">
+
+
+  <meta property="og:description" content="Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-28/assets/images/tidbit-hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Uno Tidbit: Building a Carousel Experience">
+  <meta name="twitter:description" content="Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-28/uno-tidbit/2024/09/05/tidbit-carousel.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-28/assets/images/tidbit-hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2024-09-05T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-28/uno-tidbit/2024/09/05/tidbit-carousel.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-28/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-28/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-28/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-28/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-28/">
+        <img src="/previews/pr-28/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-28/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Uno Tidbit: Building a Carousel Experience">
+    <meta itemprop="description" content="Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.">
+    <meta itemprop="datePublished" content="2024-09-05T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-28/uno-tidbit/2024/09/05/tidbit-carousel.html" class="u-url" itemprop="url">Uno Tidbit: Building a Carousel Experience
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-09-05T00:00:00+00:00">September 5, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-problem">The Problem</a></li>
+<li><a href="#the-solution">The Solution</a></li>
+<li>
+<a href="#the-code">The Code</a><ul>
+<li><a href="#connecting-the-dots">Connecting The Dots</a></li>
+<li><a href="#making-it-responsive">Making it Responsive</a></li>
+</ul>
+</li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/previews/pr-28/assets/images/tidbit-hero.png" class="hero-image">
+        <p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Need a nice onboarding experience for your app? Perhaps an initial set of tutorial pages that the user can swipe through on the first run? Or maybe you just want to show off some images in a nice, responsive carousel. You could build this from scratch, but that’s a lot of work for something that’s been done a million times before.</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>This is actually quite simple to achieve, and even Microsoft has <a href="https://learn.microsoft.com/en-us/windows/apps/design/controls/flipview#adding-a-context-indicator">some documentation</a> on how to do this with the <code class="language-plaintext highlighter-rouge">FlipView</code> control and a <code class="language-plaintext highlighter-rouge">PipsPager</code>. The <code class="language-plaintext highlighter-rouge">FlipView</code> control is a great way to display a collection of items that the user can flip through. While that guidance is good, there are a couple of neat tricks you can do to make this experience even better.</p>
+
+<h2 id="the-code">The Code</h2>
+
+<p>Let’s start with a basic <code class="language-plaintext highlighter-rouge">FlipView</code> with some hardcoded items:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;FlipView&gt;</span>
+    <span class="nt">&lt;FlipView.Items&gt;</span>
+        <span class="nt">&lt;Grid&gt;</span>
+            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+
+            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Tomato"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 1"</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+
+            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                       <span class="na">Margin=</span><span class="s">"20"</span>
+                       <span class="na">Text=</span><span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at imperdiet lorem, ut vehicula tellus. Duis faucibus   vehicula erat, a ullamcorper diam placerat eget."</span>
+                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;Grid&gt;</span>
+            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+
+            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"CornflowerBlue"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 2"</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+
+            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                       <span class="na">Margin=</span><span class="s">"20"</span>
+                       <span class="na">Text=</span><span class="s">"Curabitur blandit leo in libero mollis posuere. Suspendisse luctus magna erat, et dapibus velit fringilla vel. Vivamus porttitor   sodales ante, sit amet condimentum enim facilisis vitae."</span>
+                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;Grid&gt;</span>
+            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+
+            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Goldenrod"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 3"</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+
+            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                       <span class="na">Margin=</span><span class="s">"20"</span>
+                       <span class="na">Text=</span><span class="s">"Nam bibendum a justo eu luctus. Aliquam sagittis risus non consequat aliquam. Donec mattis ante sit amet dui interdum, et   condimentum metus viverra."</span>
+                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid&gt;</span>
+    <span class="nt">&lt;/FlipView.Items&gt;</span>
+<span class="nt">&lt;/FlipView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>With this, we should have a nice swipeable carousel with some basic content</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/ios-carousel-simple.gif" alt="FlipView on iOS in action" class="align-center"></p>
+
+<p>Now, what we can do here is introduce the <code class="language-plaintext highlighter-rouge">PipsPager</code> to our page that will eventually work as a context indicator for the <code class="language-plaintext highlighter-rouge">FlipView</code>. This will show the user how many items are in the <code class="language-plaintext highlighter-rouge">FlipView</code> and which one they are currently on. I think it makes sense to have this at the bottom of the page, so let’s wrap our <code class="language-plaintext highlighter-rouge">FlipView</code> in a <code class="language-plaintext highlighter-rouge">Grid</code> and overlay the <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Grid</span> <span class="na">utu:SafeArea.Insets=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;FlipView&gt;</span>
+        ...
+    <span class="nt">&lt;/FlipView&gt;</span>
+    <span class="nt">&lt;PipsPager</span> <span class="na">x:Name=</span><span class="s">"pipsPager"</span>
+               <span class="na">Margin=</span><span class="s">"0,0,0,10"</span>
+               <span class="na">NumberOfPages=</span><span class="s">"3"</span>
+               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+               <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
+               <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Grid&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Notice that I have added <code class="language-plaintext highlighter-rouge">utu:SafeArea.Insets="Bottom"</code> to the <code class="language-plaintext highlighter-rouge">Grid</code>. This is something coming from the <a href="https://github.com/unoplatform/uno.toolkit.ui">Uno Toolkit</a> that we have <a href="/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html">previously covered</a>.</p>
+
+<p>Now we have this nice <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of our page:</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/pipspager.png" alt="PipsPager" class="align-center"></p>
+
+<h3 id="connecting-the-dots">Connecting The Dots</h3>
+
+<p>Unfortunately, the <code class="language-plaintext highlighter-rouge">PipsPager</code> doesn’t actually do anything yet. We need to wire it up to the <code class="language-plaintext highlighter-rouge">FlipView</code> so that it updates as the user swipes through the items. Luckily, the Uno Toolkit actually provides some nice helpers for this. We can use the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html"><code class="language-plaintext highlighter-rouge">SelectorExtensions</code></a> to easily bind the <code class="language-plaintext highlighter-rouge">PipsPager</code> to any type of <code class="language-plaintext highlighter-rouge">Selector</code>. Since <code class="language-plaintext highlighter-rouge">FlipView</code> is a <code class="language-plaintext highlighter-rouge">Selector</code>, we can use this to bind the <code class="language-plaintext highlighter-rouge">PipsPager</code> to the <code class="language-plaintext highlighter-rouge">FlipView</code> and synchronize the <code class="language-plaintext highlighter-rouge">NumberOfPages</code> property and the <code class="language-plaintext highlighter-rouge">SelectedIndex</code> property.</p>
+
+<p>On our <code class="language-plaintext highlighter-rouge">Selector</code>, we can do the following:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td>
+<td class="rouge-code"><pre> &lt;Grid utu:SafeArea.Insets="Bottom"&gt;
+<span class="gd">-    &lt;FlipView&gt;
+</span><span class="gi">+    &lt;FlipView utu:SelectorExtensions.PipsPager="{Binding ElementName=pipsPager}"&gt;
+</span>         ...
+     &lt;/FlipView&gt;
+     &lt;PipsPager x:Name="pipsPager"
+                Margin="0,0,0,10"
+<span class="gd">-               NumberOfPages="3"
+</span>                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal"/&gt;
+ &lt;/Grid&gt;
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>We should now have a fully functional carousel experience with a <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of the page. You should be able to swipe through the items or tap on one of the “pips” to navigate to that item.</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/ios-carousel-swipe.gif" alt="Swiping through carousel on iOS" class="align-center"></p>
+
+<p>Before we wrap up, let’s make sure this also looks good for other platforms. Especially desktop/web targets where we have a lot more screen real estate.</p>
+
+<p>Running this on the macOS Desktop target currently looks like this:</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/desktop-carousel-ugly.png" alt="Ugly Desktop Carousel" class="align-center"></p>
+
+<p>…</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/side-eye.jpg" alt="Side eye meme"></p>
+
+<h3 id="making-it-responsive">Making it Responsive</h3>
+
+<p>To make this look better on larger screens, we can use the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html">Responsive markup extensions from Uno Toolkit</a>. We have previously covered this in a <a href="/toolkit-tuesday/2024/01/30/toolkit-tuesday-responsive.html">Toolkit Tuesday post</a>. We can use the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension to change the layout of our <code class="language-plaintext highlighter-rouge">FlipView</code> items based on the window width.</p>
+
+<p>Here’s what an example of this might look like:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Grid</span> <span class="na">utu:SafeArea.Insets=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;FlipView</span> <span class="na">utu:SelectorExtensions.PipsPager=</span><span class="s">"{Binding ElementName=pipsPager}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;FlipView.Items&gt;</span>
+            <span class="nt">&lt;Grid&gt;</span>
+                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
+
+                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Tomato"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 1"</span>
+                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid&gt;</span>
+
+                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
+                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
+                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                           <span class="na">Margin=</span><span class="s">"20"</span>
+                           <span class="na">Text=</span><span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at imperdiet lorem, ut vehicula tellus. Duis faucibus vehicula erat, a ullamcorper diam placerat eget."</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+            <span class="nt">&lt;Grid&gt;</span>
+                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
+
+                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"CornflowerBlue"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 2"</span>
+                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid&gt;</span>
+
+                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
+                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
+                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                           <span class="na">Margin=</span><span class="s">"20"</span>
+                           <span class="na">Text=</span><span class="s">"Curabitur blandit leo in libero mollis posuere. Suspendisse luctus magna erat, et dapibus velit fringilla vel. Vivamus porttitor sodales ante, sit amet condimentum enim facilisis vitae."</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+            <span class="nt">&lt;Grid&gt;</span>
+                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
+
+                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Goldenrod"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 3"</span>
+                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid&gt;</span>
+
+                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
+                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
+                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
+                           <span class="na">Margin=</span><span class="s">"20"</span>
+                           <span class="na">Text=</span><span class="s">"Nam bibendum a justo eu luctus. Aliquam sagittis risus non consequat aliquam. Donec mattis ante sit amet dui interdum, et condimentum metus viverra."</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;/FlipView.Items&gt;</span>
+    <span class="nt">&lt;/FlipView&gt;</span>
+
+    <span class="nt">&lt;PipsPager</span> <span class="na">x:Name=</span><span class="s">"pipsPager"</span>
+               <span class="na">Margin=</span><span class="s">"0,0,0,10"</span>
+               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+               <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
+               <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/Grid&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Here we are using some extra <code class="language-plaintext highlighter-rouge">Grid</code>s and the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension to fiddle with the rows and columns. Now we should have more of a horizontal layout on wider screens and a vertical layout on narrower screens. So, if we were to re-run this on the macOS Desktop target, we should be able to transition between both layouts:</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/desktop-resize.gif" alt="Resizing the Desktop window" class="align-center"></p>
+
+<p>For non-touch platforms, you can flip through the views by using the built-in navigation buttons on the <code class="language-plaintext highlighter-rouge">FlipView</code>:</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/desktop-arrows.gif" alt="Navigate FlipView with arrow buttons" class="align-center"></p>
+
+<p>Or, by clicking on the individual pips:</p>
+
+<p><img src="/previews/pr-28/assets/images/carousel/desktop-pips.gif" alt="Navigate FlipView with pips" class="align-center"></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That’s it! We now have a fancy carousel experience that works on all platforms and screen sizes.</p>
+
+<p>You can check out a working example of this in the <a href="https://github.com/kazo0/CarouselApp">CarouselApp repository</a> on GitHub.</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-09-05T00:00:00+00:00">September 5, 2024</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-28/conference/2024/09/04/cph-devfest-recap.html" class="pagination--pager" title="NDC Copenhagen DevFest 2024 Recap">Previous</a>
+    
+    
+      <a href="/previews/pr-28/uno-general/2024/11/02/packaging.html" class="pagination--pager" title="Packaging an Uno Platform app">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-28/assets/images/mvp-summit/badge-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-28/conference/2025/03/29/summit-recap.html" rel="permalink">MVP Summit 2025 Recap
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-29T00:00:00+00:00">March 29, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Flying back from Seattle right now after a really fun week attending the Microsoft MVP Summit for the very first time. It was a whirlwind of sessions, networ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-28/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-28/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-28/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-28/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-28/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
