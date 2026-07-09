@@ -1,0 +1,112 @@
+name: PR preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write # push the built preview to gh-pages
+  pull-requests: write # leave the sticky preview-link comment
+
+# Newest commit on a PR wins; older in-flight preview builds are cancelled.
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure preview build
+        env:
+          PR: ${{ github.event.number }}
+        run: |
+          # Serve theme assets and internal links under the preview sub-path.
+          sed -i "s|^baseurl:.*|baseurl: \"/previews/pr-${PR}\"|" docs/_config.yml
+          # Keep preview page views out of the production analytics property.
+          sed -i 's|^  provider: "google-gtag"|  provider: false|' docs/_config.yml
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+          token: ${{ github.token }}
+
+      - name: Post-process preview output
+        env:
+          PR: ${{ github.event.number }}
+        run: |
+          # Rewrite root-absolute asset paths (e.g. images referenced as
+          # /assets/... in post markdown) so they resolve under the preview.
+          # Theme assets are already prefixed via baseurl, so they don't match.
+          find _site -name '*.html' -exec \
+            sed -i "s|=\"/assets/|=\"/previews/pr-${PR}/assets/|g" {} +
+          # The apex domain belongs to production only.
+          rm -f _site/CNAME
+
+      - name: Publish preview to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MODE: deploy
+          DEST_DIR: previews/pr-${{ github.event.number }}
+          SOURCE_DIR: _site
+        run: bash .github/scripts/gh-pages-deploy.sh
+
+      - name: Comment preview link
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.issue.number;
+            const url = `https://kazo0.dev/previews/pr-${pr}/`;
+            const marker = '<!-- pr-preview -->';
+            const body = [
+              marker,
+              '### 🔎 Preview deployed',
+              '',
+              `**${url}**`,
+              '',
+              `Built from ${context.sha.substring(0, 7)}. Updates on every push; removed when the PR closes.`,
+            ].join('\n');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: pr, per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: pr, body });
+            }
+
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove preview from gh-pages
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MODE: remove
+          DEST_DIR: previews/pr-${{ github.event.number }}
+        run: bash .github/scripts/gh-pages-deploy.sh
+
+      - name: Update comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.issue.number;
+            const marker = '<!-- pr-preview -->';
+            const body = `${marker}\n### 🧹 Preview removed\n\nThe preview site for this PR has been torn down.`;
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: pr, per_page: 100,
+            });
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            }

@@ -1,0 +1,42 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy.yml"
+      - ".github/scripts/gh-pages-deploy.sh"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Let an in-flight production deploy finish rather than cancelling it.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Official GitHub action: builds with the pinned github-pages gem
+      # environment (same as the legacy Pages worker), so no Ruby/bundle setup.
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+          token: ${{ github.token }}
+
+      - name: Publish to gh-pages (production root)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MODE: deploy
+          DEST_DIR: ""
+          SOURCE_DIR: _site
+        run: bash .github/scripts/gh-pages-deploy.sh
