@@ -10,6 +10,23 @@ All Jekyll source lives under `docs/`. Run all commands from there.
 
 ## Commands
 
+### Running locally
+
+The fastest way to get the site up — from anywhere in the repo. `bin/serve` installs any
+missing gems (only when needed), then serves with live reload at <http://localhost:4000>.
+Extra flags pass straight through to `jekyll serve`.
+
+```bash
+bin/serve                 # published posts, live reload
+bin/serve --drafts        # also serve work-in-progress posts in _drafts/
+bin/serve --port 5000     # any jekyll serve flag passes through
+
+npm run serve             # equivalent, via npm
+npm run serve:drafts
+```
+
+### Manual (from `docs/`)
+
 ```bash
 # Serve locally with live reload
 cd docs && bundle exec jekyll serve
