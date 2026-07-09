@@ -4,6 +4,8 @@
   "private": true,
   "description": "Tooling for the kazo0.dev Jekyll blog: markdownlint + Conventional Commits enforcement",
   "scripts": {
+    "serve": "bin/serve",
+    "serve:drafts": "bin/serve --drafts",
     "lint:md": "markdownlint-cli2",
     "lint:md:fix": "markdownlint-cli2 --fix",
     "prepare": "husky"
