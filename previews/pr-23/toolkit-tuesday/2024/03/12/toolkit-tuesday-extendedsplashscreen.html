@@ -1,0 +1,1082 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Toolkit Tuesdays: ExtendedSplashScreen - dotnet new bald</title>
+<meta name="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Toolkit Tuesdays: ExtendedSplashScreen">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">
+
+
+  <meta property="og:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-23/assets/images/uno-toolkit-hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Toolkit Tuesdays: ExtendedSplashScreen">
+  <meta name="twitter:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-23/assets/images/uno-toolkit-hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2024-03-12T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-23/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-23/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-23/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/previews/pr-23/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-23/">
+        <img src="/previews/pr-23/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-23/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Toolkit Tuesdays: ExtendedSplashScreen">
+    <meta itemprop="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+    <meta itemprop="datePublished" content="2024-03-12T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html" class="u-url" itemprop="url">Toolkit Tuesdays: ExtendedSplashScreen
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2024-03-12T00:00:00+00:00">March 12, 2024</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#anatomy-of-extendedsplashscreen">Anatomy of ExtendedSplashScreen</a><ul><li><a href="#android">Android</a></li><li><a href="#wasm">WASM</a></li></ul></li><li><a href="#getting-to-know-iloadable">Getting to know ILoadable</a></li><li><a href="#usage">Usage</a><ul><li><a href="#android-1">Android</a></li><li><a href="#wasm-1">WASM</a></li><li><a href="#windows">Windows</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#further-reading">Further Reading</a></li><li><a href="#pending-work">Pending Work</a></li></ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/previews/pr-23/assets/images/uno-toolkit-hero.png" class="hero-image" />
+        <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+
+<p>This week we are covering the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control. This control can be used to prolong the display of the native platform’s splash screen while your app continues to load. Not only that, it also enables you to overlay the extended splash screen with custom content such as a <code class="language-plaintext highlighter-rouge">ProgressRing</code> and/or custom branding. This is a great way to provide a more seamless experience to your users while your app is loading.</p>
+
+<p class="notice--info">As always, these components require some extra setup since they are part of the Uno Toolkit library. You can refer to the <a href="https://aka.platform.uno/uno-toolkit">Getting Started documentation</a> to get everything set up and ready to go.</p>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/jMI4E2e9gYE" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<p>c</p>
+
+<h2 id="anatomy-of-extendedsplashscreen">Anatomy of <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code></h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> is basically a presenter for three separate layers:</p>
+
+<ol>
+  <li><strong>App Content</strong>: This would be the actual content of your app that you want to display after the app has loaded and the splash screen is finally dismissed. This is what we set as the <code class="language-plaintext highlighter-rouge">Content</code> property of the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control. This layer is hidden while the app is loading.</li>
+  <li><strong>Native Splash Screen Content</strong>: On top of the <em>App Content</em> layer is the native splash screen content. This is the spot where the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control is doing most of its heavy lifting. The control will build an image representation of the native splash screen, either through native APIs or by extracting information from the app manifest. Once the image is built, it is displayed on top of the <em>App Content</em> layer as long as we are still in a “loading” state.</li>
+  <li><strong>Loading Content</strong>: This is an optional layer that can be displayed on top of the <em>Native Splash Screen Content</em> layer. This is where you can add a <code class="language-plaintext highlighter-rouge">ProgressRing</code> or any other custom branding that you would like to display while the app is loading. Both this and the <em>Native Splash Screen Content</em> layers are dismissed once the app has finished loading and the <em>App Content</em> layer is displayed.</li>
+</ol>
+
+<p>You can imagine the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> as a sort of “shell” control that wraps your app content and sandwiches the native splash screen content between the loading content and the app content.</p>
+
+<p>In the example GIFs below, you can see that the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control is displaying a <code class="language-plaintext highlighter-rouge">ProgressRing</code> and some branding text on top of the native splash screen content while the app is loading. Once the app has finished loading, the loading content is dismissed and the app content is displayed.</p>
+
+<h3 id="android">Android</h3>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/android-splash.gif" alt="Android Extended Splashscreen" class="width-half" /></p>
+
+<h3 id="wasm">WASM</h3>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/wasm-splash.gif" alt="WASM Extended Splashscreen" /></p>
+
+<p class="notice--warning">To be clear, the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> does not enable customization of the initial native splash screen. It simply allows you to prolong the display of the native splash screen while your app continues to load. During this prolonged display, you can overlay the native splash screen with custom content.</p>
+
+<h2 id="getting-to-know-iloadable">Getting to know <code class="language-plaintext highlighter-rouge">ILoadable</code></h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control is actually derived from another public control in the Uno Toolkit library called <code class="language-plaintext highlighter-rouge">LoadingView</code>. This control is a specialized <code class="language-plaintext highlighter-rouge">ContentControl</code> that exposes a <code class="language-plaintext highlighter-rouge">Source</code> property of type <code class="language-plaintext highlighter-rouge">ILoadable</code>. The <code class="language-plaintext highlighter-rouge">ILoadable</code> interface is a simple interface that has an <code class="language-plaintext highlighter-rouge">IsExecuting</code> property and an <code class="language-plaintext highlighter-rouge">IsExecutingChanged</code> event. The <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control uses this interface to determine when to dismiss the loading content and display the app content.</p>
+
+<p><code class="language-plaintext highlighter-rouge">LoadingView</code> itself is a very useful control that can be used to display any content while its <code class="language-plaintext highlighter-rouge">ILoadable</code> source is executing. This is the provider for our <em>Loading Content</em> layer that we discussed earlier in the <a href="#anatomy-of-extendedsplashscreen">Anatomy section</a>. Make sure to check out the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html">official documentation</a> for more information on <code class="language-plaintext highlighter-rouge">LoadingView</code> and <code class="language-plaintext highlighter-rouge">ILoadable</code>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Let’s take a look at how we can use the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control in our app. We’ll start with a brand new Uno Platform app and add the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control to it. The first step is to use the <a href="https://aka.platform.uno/dotnet-new-templates"><code class="language-plaintext highlighter-rouge">dotnet new</code> commands</a> to create a new Uno Platform app:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-toolkit</span> <span class="nt">-o</span> ExtendedSplashApp
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This will give us a brand new application with the Uno Toolkit library already installed.</p>
+
+<p>If we were to launch this app right now, we would see this:</p>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/android-blank-splash.gif" alt="Android blank Uno app startup" class="width-half" /></p>
+
+<p>This is the default native splash screen that is displayed while the app is loading. It’s a simple white screen with the Uno Platform logo in the center. Those assets are generated for you by the <a href="https://platform.uno/docs/articles/external/uno.resizetizer/doc/using-uno-resizetizer.html">Uno Resizetizer</a> tooling. If you wanted to customize the native splash screen, you could do so by replacing the assets in the <code class="language-plaintext highlighter-rouge">Splash</code> folder of the <code class="language-plaintext highlighter-rouge">ExtendedSplashApp.Shared.csproj</code>.</p>
+
+<p>Now, enough about customizing the splash screen, we’re focusing on EXTENDING it! Let’s add an <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control to our app. We’ll start by adding a new <code class="language-plaintext highlighter-rouge">UserControl</code> to our app and call it <code class="language-plaintext highlighter-rouge">Shell</code>. I’ll explain why in a moment.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Shell.xaml</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;UserControl</span> <span class="na">x:Class=</span><span class="s">"ExtendedSplashApp.Shell"</span>
+             <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span>
+             <span class="na">xmlns:x=</span><span class="s">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+             <span class="na">xmlns:local=</span><span class="s">"using:ExtendedSplashApp"</span>
+             <span class="na">xmlns:d=</span><span class="s">"http://schemas.microsoft.com/expression/blend/2008"</span>
+             <span class="na">xmlns:mc=</span><span class="s">"http://schemas.openxmlformats.org/markup-compatibility/2006"</span>
+             <span class="na">xmlns:utu=</span><span class="s">"using:Uno.Toolkit.UI"</span>
+             <span class="na">mc:Ignorable=</span><span class="s">"d"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;utu:ExtendedSplashScreen</span> <span class="na">x:Name=</span><span class="s">"Splash"</span><span class="nt">&gt;</span>
+
+        <span class="c">&lt;!-- Loading Content "layer" --&gt;</span>
+        <span class="nt">&lt;utu:ExtendedSplashScreen.LoadingContent&gt;</span>
+            <span class="nt">&lt;Grid&gt;</span>
+                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"2*"</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;RowDefinition</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+
+                <span class="nt">&lt;ProgressRing</span> <span class="na">IsActive=</span><span class="s">"True"</span>
+                              <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                              <span class="na">Background=</span><span class="s">"Transparent"</span>
+                              <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                              <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+                              <span class="na">Height=</span><span class="s">"75"</span>
+                              <span class="na">Width=</span><span class="s">"75"</span> <span class="nt">/&gt;</span>
+
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"My Branding Text Here!"</span>
+                           <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                           <span class="na">Margin=</span><span class="s">"16"</span>
+                           <span class="na">FontSize=</span><span class="s">"16"</span>
+                           <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
+                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Grid&gt;</span>
+        <span class="nt">&lt;/utu:ExtendedSplashScreen.LoadingContent&gt;</span>
+
+        <span class="c">&lt;!-- App Content "layer" --&gt;</span>
+        <span class="nt">&lt;utu:ExtendedSplashScreen.Content&gt;</span>
+            <span class="nt">&lt;Frame</span> <span class="na">x:Name=</span><span class="s">"ShellFrame"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/utu:ExtendedSplashScreen.Content&gt;</span>
+
+    <span class="nt">&lt;/utu:ExtendedSplashScreen&gt;</span>
+<span class="nt">&lt;/UserControl&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>A lot going on here, so let’s break it down. We have a <code class="language-plaintext highlighter-rouge">UserControl</code> that contains the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control. The <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control has two properties set: <code class="language-plaintext highlighter-rouge">LoadingContent</code> and <code class="language-plaintext highlighter-rouge">Content</code>.</p>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">LoadingContent</code> contains what we were referring to as the <em>Loading Content</em> layer earlier. This is where we can add a <code class="language-plaintext highlighter-rouge">ProgressRing</code> and any other custom content that will be overlayed on top of the splash screen content. Notice that there is no Uno logo image here, this is because that is part of the native splash screen content displayed underneath. This is why our first row of the <code class="language-plaintext highlighter-rouge">Grid</code> is “unused” and simply takes up the top two-thirds of the screen (<code class="language-plaintext highlighter-rouge">2*</code>).</p>
+  </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">Content</code> property is where we set the actual content of our app. In this case, we are using a <code class="language-plaintext highlighter-rouge">Frame</code> control to host our <code class="language-plaintext highlighter-rouge">MainPage</code>. This is why we called the <code class="language-plaintext highlighter-rouge">UserControl</code> <code class="language-plaintext highlighter-rouge">Shell</code>. We are using it as a sort of “shell” to host the content of our app.</p>
+  </li>
+</ul>
+
+<p>Let’s take a look at the code-behind for the <code class="language-plaintext highlighter-rouge">Shell</code>:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Shell.xaml.cs</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Shell</span> <span class="p">:</span> <span class="n">UserControl</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Frame</span> <span class="n">RootFrame</span> <span class="p">=&gt;</span> <span class="n">ShellFrame</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="n">MyLoadableSource</span> <span class="n">_loadable</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+
+    <span class="k">public</span> <span class="nf">Shell</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nf">InitializeComponent</span><span class="p">();</span>
+
+        <span class="n">Splash</span><span class="p">.</span><span class="n">Source</span> <span class="p">=</span> <span class="n">_loadable</span><span class="p">;</span>
+
+        <span class="n">Loaded</span> <span class="p">+=</span> <span class="n">OnLoaded</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">async</span> <span class="k">void</span> <span class="nf">OnLoaded</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="n">_loadable</span><span class="p">.</span><span class="nf">Execute</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Here we are publicly exposing the <code class="language-plaintext highlighter-rouge">Frame</code> as a property called <code class="language-plaintext highlighter-rouge">RootFrame</code>, which we will eventually use to navigate to our <code class="language-plaintext highlighter-rouge">MainPage</code> from the <code class="language-plaintext highlighter-rouge">App.cs</code>. We are also setting the <code class="language-plaintext highlighter-rouge">Source</code> property of the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> to a new instance of a custom <code class="language-plaintext highlighter-rouge">ILoadable</code> implementation called <code class="language-plaintext highlighter-rouge">MyLoadableSource</code>. This is a simple class that implements the <code class="language-plaintext highlighter-rouge">ILoadable</code> interface and has a <code class="language-plaintext highlighter-rouge">Task</code> that simulates some loading time.</p>
+
+<p>Here is my <code class="language-plaintext highlighter-rouge">ILoadable</code> implementation:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">MyLoadableSource</span> <span class="p">:</span> <span class="n">ILoadable</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">event</span> <span class="n">EventHandler</span><span class="p">?</span> <span class="n">IsExecutingChanged</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="kt">bool</span> <span class="n">_isExecuting</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsExecuting</span>
+    <span class="p">{</span>
+        <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">_isExecuting</span><span class="p">;</span>
+        <span class="k">set</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">_isExecuting</span> <span class="p">!=</span> <span class="k">value</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">_isExecuting</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+                <span class="n">IsExecutingChanged</span><span class="p">?.</span><span class="nf">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="k">new</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">Execute</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="n">IsExecuting</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+            <span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Delay</span><span class="p">(</span><span class="m">5000</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">finally</span>
+        <span class="p">{</span>
+            <span class="n">IsExecuting</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This would be what you would use to notify the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> to show/hide itself. Perhaps you would be firing off a command on your initial View Model or loading some data from a service. Either way, as long as you can connect that logic to some implementation of <code class="language-plaintext highlighter-rouge">ILoadable</code>, you can use it with the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code>.</p>
+
+<p>Finally, let’s make some edits to the <code class="language-plaintext highlighter-rouge">App.cs</code> bootstrapping code to use our new <code class="language-plaintext highlighter-rouge">Shell</code> control:</p>
+
+<p><code class="language-plaintext highlighter-rouge">App.cs</code>:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="rouge-code"><pre> protected override void OnLaunched(LaunchActivatedEventArgs args)
+ {
+ #if NET6_0_OR_GREATER &amp;&amp; WINDOWS &amp;&amp; !HAS_UNO
+     MainWindow = new Window();
+ #else
+     MainWindow = Microsoft.UI.Xaml.Window.Current;
+ #endif
+ 
+ #if DEBUG
+     MainWindow.EnableHotReload();
+ #endif
+ 
+ 
+     // Do not repeat app initialization when the Window already has content,
+     // just ensure that the window is active
+<span class="gd">-    if (MainWindow.Content is not Frame rootFrame)
+</span><span class="gi">+    if (MainWindow.Content is not Shell shell)
+</span>     {
+<span class="gd">-        // Create a Frame to act as the navigation context and navigate to the first page
+-        rootFrame = new Frame();
+</span><span class="gi">+        shell = new Shell();
+</span> 
+<span class="gd">-        // Place the frame in the current Window
+-        MainWindow.Content = rootFrame;
+</span><span class="gi">+        MainWindow.Content = shell;
+</span> 
+<span class="gd">-        rootFrame.NavigationFailed += OnNavigationFailed;
+</span><span class="gi">+        shell.RootFrame.NavigationFailed += OnNavigationFailed;
+</span>     }
+ 
+<span class="gd">-    if (rootFrame.Content == null)
+</span><span class="gi">+    if (shell.RootFrame.Content == null)
+</span>     {
+         // When the navigation stack isn't restored navigate to the first page,
+         // configuring the new page by passing required information as a navigation
+         // parameter
+<span class="gd">-        rootFrame.Navigate(typeof(MainPage), args.Arguments);
+</span><span class="gi">+        shell.RootFrame.Navigate(typeof(MainPage), args.Arguments);
+</span>     }
+ 
+     // Ensure the current window is active
+     MainWindow.Activate();
+ }
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Here we are making the <code class="language-plaintext highlighter-rouge">Shell</code> the main content of the application and navigating to the <code class="language-plaintext highlighter-rouge">MainPage</code> from the <code class="language-plaintext highlighter-rouge">Shell</code>’s <code class="language-plaintext highlighter-rouge">RootFrame</code>. This way, once the app has finished loading, the <code class="language-plaintext highlighter-rouge">MainPage</code> will already be displayed.</p>
+
+<p>Now, if we were to run the app, we would see the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control in action:</p>
+
+<h3 id="android-1">Android</h3>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/android-splash.gif" alt="Android Extended Splashscreen" class="width-half" /></p>
+
+<h3 id="wasm-1">WASM</h3>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/wasm-splash.gif" alt="WASM Extended Splashscreen" /></p>
+
+<h3 id="windows">Windows</h3>
+
+<p><img src="/previews/pr-23/assets/images/extsplash/windows-splash.gif" alt="Windows Extended Splashscreen" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>In this article, we covered how to use the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> control along with the <code class="language-plaintext highlighter-rouge">ILoadable</code> interface to prolong the display of the native platform’s splash screen while your app continues to load. We also learned how to overlay the extended splash screen with custom content such as a <code class="language-plaintext highlighter-rouge">ProgressRing</code> and/or custom branding. This is a great way to provide a more seamless experience to your users while your app is loading.</p>
+
+<p>If you want to take a look at the full source code for the examples above, you can find it on this <a href="https://github.com/kazo0/ExtendedSplashApp">GitHub repo</a>.</p>
+
+<p>I hope you enjoyed this edition of Toolkit Tuesdays! There is even more to learn about the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> so I hope you will continue to explore it on your own.</p>
+
+<p>I encourage you to consult the full documentation for the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> using the links below. I also want to welcome you to contribute to making <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> and <code class="language-plaintext highlighter-rouge">LoadingView</code> even better! Whether you have discovered some bugs, want to make improvements, or want to enhance the documentation, please jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a>!</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ExtendedSplashScreen.html">ExtendedSplashScreen Docs</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html">LoadingView Docs</a></li>
+  <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+</ul>
+
+<h2 id="pending-work">Pending Work</h2>
+
+<p>Keep an eye out for some nice PRs to merge for <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> soon as well:</p>
+
+<ul>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1060">feat(ExtendedSplashScreen): add android 12 splashscreen support</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1062">docs: Update ExtendedSplashScreen documentation</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1071">fix: wasm splashscreen support</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2024-03-12T00:00:00+00:00">March 12, 2024</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-23/toolkit-tuesday/2024/02/13/toolkit-tuesday-drawerflyout.html" class="pagination--pager" title="Toolkit Tuesdays: DrawerFlyoutPresenter">Previous</a>
+    
+    
+      <a href="/previews/pr-23/uno-tidbit/2024/03/28/tidbit-back-button.html" class="pagination--pager" title="Uno Tidbit: Handling the System Back Button">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/agent-runtime-verification/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html" rel="permalink">Teaching Your Agent to See: Runtime Verification with the Uno App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-07-09T00:00:00+00:00">July 9, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-23/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-23/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-23/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,776 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Teaching Your Agent to See: Runtime Verification with the Uno App MCP - dotnet new bald</title>
+<meta name="description" content="In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Teaching Your Agent to See: Runtime Verification with the Uno App MCP">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html">
+
+
+  <meta property="og:description" content="In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-23/assets/images/agent-runtime-verification/hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Teaching Your Agent to See: Runtime Verification with the Uno App MCP">
+  <meta name="twitter:description" content="In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-23/assets/images/agent-runtime-verification/hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-07-09T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-23/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-23/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-23/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-23/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-23/">
+        <img src="/previews/pr-23/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-23/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Teaching Your Agent to See: Runtime Verification with the Uno App MCP">
+    <meta itemprop="description" content="In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:">
+    <meta itemprop="datePublished" content="2026-07-09T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html" class="u-url" itemprop="url">Teaching Your Agent to See: Runtime Verification with the Uno App MCP
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-07-09T00:00:00+00:00">July 9, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-problem">The Problem</a></li>
+<li><a href="#the-two-mcps">The Two MCPs</a></li>
+<li><a href="#what-the-app-mcp-can-actually-do">What the App MCP Can Actually Do</a></li>
+<li><a href="#closing-the-loop">Closing the Loop</a></li>
+<li><a href="#getting-set-up">Getting Set Up</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/previews/pr-23/assets/images/agent-runtime-verification/hero.png" class="hero-image">
+        <p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">last post</a>, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:</p>
+
+<blockquote>
+  <p>Run the desktop target afterward and confirm the expected behaviour</p>
+</blockquote>
+
+<p>And the agent just… did it. It launched the app, clicked a name in a <code class="language-plaintext highlighter-rouge">ListView</code>, navigated to the next page, and checked that the right name had come along for the ride. No hand-holding from me. That whole “go run it and make sure it actually works” step was powered by the Uno App MCP, and I think it’s worth slowing down and giving it the attention it deserves.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Here’s something every AI coding assistant loves to tell you: “The code compiles!” Great. But if you’ve been writing software for more than about a week, you know that compiling and working are two very different things.</p>
+
+<p>Code that builds perfectly can still bind to the wrong property, navigate to the wrong page, or render a button halfway off the screen. When an agent can only read your source, it’s essentially reasoning in the dark. It writes some XAML, sees a green build, and declares victory. Then you hit F5 and the <code class="language-plaintext highlighter-rouge">ListView</code> is empty.</p>
+
+<p>The agent has no eyes and no hands. It can’t run the app, look at it, or poke at it the way you and I do a hundred times a day. So it guesses. And when I’m handing off work to an agent, “it should probably work” isn’t the confidence level I’m after.</p>
+
+<h2 id="the-two-mcps">The Two MCPs</h2>
+
+<p>Before we get into the fun part, a quick refresher, because the Uno MCP and the App MCP are easy to mix up. If you want the deep dive, the team wrote a great <a href="https://platform.uno/blog/uno-mcp-vs-app-mcp/">dedicated post</a> on exactly this.</p>
+
+<ol>
+  <li>The <strong>Uno MCP</strong> is about <em>knowledge</em>. It gives the agent the entire <a href="https://platform.uno/docs/articles/intro.html">Uno documentation</a> as a searchable knowledge base through tools like <code class="language-plaintext highlighter-rouge">uno_platform_docs_search</code>. This is what shapes what the agent proposes in the first place.</li>
+  <li>The <strong>App MCP</strong> is about <em>runtime</em>. It runs locally and lets the agent reach into your actual running app. The <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">docs</a> describe it perfectly: these tools give “eyes” and “hands” to agents so they can validate the assumptions behind the changes they just made.</li>
+</ol>
+
+<p>I used a cooking analogy last time, so let me keep it going: if the Uno MCP is the pantry of ingredients and Agent Skills are the recipes, then the App MCP is the agent finally walking over to the stove, tasting the dish, and fixing the seasoning before it ever reaches your plate.</p>
+
+<h2 id="what-the-app-mcp-can-actually-do">What the App MCP Can Actually Do</h2>
+
+<p>This is where it clicked for me. The App MCP isn’t just snapping a screenshot and squinting at it. It’s a proper toolbox for driving a live Uno app, and it works across Windows, WebAssembly, macOS, iOS, Android, and Linux.</p>
+
+<p>Here’s what ships under the Community license:</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_get_runtime_info</code>: general info about the running app (PID, OS, platform, and so on)</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_get_screenshot</code>: a screenshot of the app as it looks <em>right now</em>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_pointer_click</code>: click at an X,Y coordinate</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_key_press</code>: press individual keys, optionally with modifiers</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_type_text</code>: type longer strings into a control</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_visualtree_snapshot</code>: a textual dump of the live visual tree</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_element_peer_default_action</code>: run the default automation peer action on an element</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_close</code>: close the running app</li>
+</ul>
+
+<p>And a couple more come with the Pro license:</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_element_peer_action</code>: invoke a <em>specific</em> automation peer action</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>: read a textual representation of the <code class="language-plaintext highlighter-rouge">DataContext</code> on a <code class="language-plaintext highlighter-rouge">FrameworkElement</code>
+</li>
+</ul>
+
+<p>That last one is the one I keep thinking about. Being able to read an element’s <code class="language-plaintext highlighter-rouge">DataContext</code> means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed cleanly. Anyone who’s lost an afternoon to a silent binding failure knows exactly why that’s a big deal.</p>
+
+<h2 id="closing-the-loop">Closing the Loop</h2>
+
+<p>Put these together and a really satisfying loop falls out of it:</p>
+
+<ol>
+  <li>The agent leans on the <strong>Uno MCP</strong> to research the right approach and proposes a change.</li>
+  <li>That change gets applied and built.</li>
+  <li>The agent launches the app and uses the <strong>App MCP</strong> to check its own work: walk the visual tree to confirm an element is there, click it, type into it, screenshot the result, and read back the state.</li>
+</ol>
+
+<p>The key shift is that the agent stops reasoning about static code in a vacuum. It’s checking against the <em>running application</em> now, which is exactly what you do when you hit F5 and start clicking around.</p>
+
+<p>Back to that MVUX selection example from last time: once the agent wired up the <code class="language-plaintext highlighter-rouge">ListView</code> and the model, it didn’t just trust the build. It grabbed a visual tree snapshot to make sure the list was actually populated, clicked an item, navigated to the second page, and screenshotted it to confirm the selected name made the trip. And that’s the real payoff, because when something <em>is</em> off, that same loop is what lets the agent notice and fix it instead of handing me code that only looks finished.</p>
+
+<h2 id="getting-set-up">Getting Set Up</h2>
+
+<p>The good news: there isn’t much ceremony here. The App MCP is part of the Uno tooling, and if you’ve been following the recommended agentic setup, you might already have it wired up. Since it’s a local runtime service, the one thing to remember is that your app has to actually be running for the agent to attach to it.</p>
+
+<p>A few notes from my own tinkering:</p>
+
+<ul>
+  <li>The App MCP is <strong>local</strong>. It talks to a running instance of your app on your machine, not some hosted service.</li>
+  <li>It spans all of Uno’s targets, so you can point it at your desktop target for quick iteration and trust that the behavior carries over to the rest.</li>
+  <li>If you’re in Visual Studio and the App MCP indicator goes red, don’t panic like I did. The fix is usually just to reload it: click the three dots and hit <strong>Reload</strong>. I spent way too long on that before spotting the note in the <a href="https://platform.uno/docs/articles/common-issues-ai-agents.html">docs</a>.</li>
+</ul>
+
+<p>For the full reference, the <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">Uno MCPs documentation</a> and the <a href="https://platform.uno/docs/articles/explore-your-app-ai-agents.html">Explore Your App with AI Agents</a> guide both go deeper than I can fit here.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The more I use it, the more I’m convinced that the real value of an agent isn’t how fast it writes code, it’s how well it can check its own work. A tight feedback loop is what separates an agent that produces plausible-looking code from one that produces code that actually runs the way you asked.</p>
+
+<p>Giving your agent eyes and hands through the App MCP is a genuine step in that direction. It’s the difference between “I wrote the XAML you asked for” and “I wrote it, ran it, clicked the button, and confirmed the right page showed up.” I know which of those two I’d rather have on my team.</p>
+
+<p>Pair the App MCP with a solid set of <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills</a> and the Uno MCP, and you’ve got an agent that researches, implements, and verifies. I’d love to hear how others are folding runtime verification into their own workflows, so if you’ve built something neat with the App MCP, come share it over on the <a href="https://platform.uno/discord">Uno Discord</a>!</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-07-09T00:00:00+00:00">July 9, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" class="pagination--pager" title="Agent Skills + Uno Platform">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/previews/pr-23/assets/images/mvp-summit/badge-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/conference/2025/03/29/summit-recap.html" rel="permalink">MVP Summit 2025 Recap
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-03-29T00:00:00+00:00">March 29, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Flying back from Seattle right now after a really fun week attending the Microsoft MVP Summit for the very first time. It was a whirlwind of sessions, networ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-23/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-23/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-23/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
