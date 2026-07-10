@@ -11,6 +11,26 @@ Let's continue our walkthrough of [Uno Chefs][gh-chefs], our flagship reference 
 
 There's a lot going on here, so I want to split it into two parts. First, the app shell that wraps the whole logged-in experience. Then, the Home content itself and the MVUX that feeds it.
 
+## Anatomy of the Home Page
+
+Before we dig in, here's the whole thing at a glance. This is the wide, desktop-sized layout, which fits everything onto a single screen:
+
+<figure>
+    <a href="/assets/images/chefs-home/home-anatomy.png"><img src="/assets/images/chefs-home/home-anatomy.png" alt="Home Page anatomy"/></a>
+    <figcaption>
+        <ol>
+            <li>Vertical TabBar (the app shell's side navigation)</li>
+            <li>NavigationBar with the logo, profile, and notifications</li>
+            <li>Trending Now</li>
+            <li>Categories</li>
+            <li>Recently Added</li>
+            <li>Popular Contributors</li>
+        </ol>
+    </figcaption>
+</figure>
+
+Numbers 1 and 2 are the shell. Numbers 3 through 6 are the Home content. Let's take them in that order.
+
 ## One Landing, Two Pages
 
 Here's something that tripped me up the first time I read through the code. When the `LoginModel` finishes authenticating, it navigates to `MainModel`, not `HomeModel`. And if you go looking for `MainModel`, you'll find this:
@@ -126,6 +146,8 @@ The `FeedView` is one of the main ways to consume feeds and states in MVUX. As t
 
 Inside the data template, `{Binding Data}` gives us the actual list, and an `ItemsRepeater` with a horizontal `StackLayout` lays the recipe cards out side by side inside a horizontal `ScrollViewer`. That's the whole carousel. The cards themselves are Toolkit `CardContentControl`s, and the whole page leans on `AutoLayout` for spacing, which is a pattern you'll recognize if you followed along with the Login Page.
 
+![The Trending Now carousel rendered from the FeedView](/assets/images/chefs-home/home-trending.png){: .align-center}
+
 ### Keeping Favorites in Sync
 
 Now back to that `IListState<Recipe>` for Trending Now. Why is it a state when the others are feeds?
@@ -154,6 +176,10 @@ The `ToggleButton` inside the card template is worth a quick look, because bindi
 ```
 
 The item's `DataContext` is a single `Recipe`, but the `FavoriteRecipe` command lives on the `HomeModel`. The `AncestorBinding` markup extension from Uno Toolkit walks up the visual tree to the `FeedView` and binds to its `DataContext.FavoriteRecipe`, passing the current recipe as the parameter. No naming elements, no relative-source gymnastics.
+
+You can see the two states of that toggle right on the Trending Now cards. An outline heart for a recipe that isn't favorited, and a filled pink one for a recipe that is:
+
+![Two recipe cards showing an unfavorited outline heart and a favorited filled heart](/assets/images/chefs-home/home-favorite-card.png){: .align-center}
 
 ## Navigating Out
 
