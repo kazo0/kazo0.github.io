@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          7 minute read
+          8 minute read
         
       </span>
     
@@ -331,6 +331,7 @@
               <header><h4 class="nav__title">
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
+<li><a href="#anatomy-of-the-home-page">Anatomy of the Home Page</a></li>
 <li><a href="#one-landing-two-pages">One Landing, Two Pages</a></li>
 <li><a href="#the-app-shell-and-responsive-navigation">The App Shell and Responsive Navigation</a></li>
 <li>
@@ -351,6 +352,26 @@
         <p>Let’s continue our walkthrough of <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs</a>, our flagship reference app for building cross-platform apps with Uno. Last time we covered the <a href="/uno-general/2025/07/02/chefs-login.html">Login Page</a>, and I promised that this time we’d get into the real meat of the application: the Home Page. This is the screen you land on right after a successful login, and it’s where Chefs really starts to show off.</p>
 
 <p>There’s a lot going on here, so I want to split it into two parts. First, the app shell that wraps the whole logged-in experience. Then, the Home content itself and the MVUX that feeds it.</p>
+
+<h2 id="anatomy-of-the-home-page">Anatomy of the Home Page</h2>
+
+<p>Before we dig in, here’s the whole thing at a glance. This is the wide, desktop-sized layout, which fits everything onto a single screen:</p>
+
+<figure>
+    <a href="/previews/pr-27/assets/images/chefs-home/home-anatomy.png"><img src="/previews/pr-27/assets/images/chefs-home/home-anatomy.png" alt="Home Page anatomy"></a>
+    <figcaption>
+        <ol>
+            <li>Vertical TabBar (the app shell's side navigation)</li>
+            <li>NavigationBar with the logo, profile, and notifications</li>
+            <li>Trending Now</li>
+            <li>Categories</li>
+            <li>Recently Added</li>
+            <li>Popular Contributors</li>
+        </ol>
+    </figcaption>
+</figure>
+
+<p>Numbers 1 and 2 are the shell. Numbers 3 through 6 are the Home content. Let’s take them in that order.</p>
 
 <h2 id="one-landing-two-pages">One Landing, Two Pages</h2>
 
@@ -539,6 +560,8 @@
 
 <p>Inside the data template, <code class="language-plaintext highlighter-rouge">{Binding Data}</code> gives us the actual list, and an <code class="language-plaintext highlighter-rouge">ItemsRepeater</code> with a horizontal <code class="language-plaintext highlighter-rouge">StackLayout</code> lays the recipe cards out side by side inside a horizontal <code class="language-plaintext highlighter-rouge">ScrollViewer</code>. That’s the whole carousel. The cards themselves are Toolkit <code class="language-plaintext highlighter-rouge">CardContentControl</code>s, and the whole page leans on <code class="language-plaintext highlighter-rouge">AutoLayout</code> for spacing, which is a pattern you’ll recognize if you followed along with the Login Page.</p>
 
+<p><img src="/previews/pr-27/assets/images/chefs-home/home-trending.png" alt="The Trending Now carousel rendered from the FeedView" class="align-center"></p>
+
 <h3 id="keeping-favorites-in-sync">Keeping Favorites in Sync</h3>
 
 <p>Now back to that <code class="language-plaintext highlighter-rouge">IListState&lt;Recipe&gt;</code> for Trending Now. Why is it a state when the others are feeds?</p>
@@ -578,6 +601,10 @@
 </tr></tbody></table></code></pre></div></div>
 
 <p>The item’s <code class="language-plaintext highlighter-rouge">DataContext</code> is a single <code class="language-plaintext highlighter-rouge">Recipe</code>, but the <code class="language-plaintext highlighter-rouge">FavoriteRecipe</code> command lives on the <code class="language-plaintext highlighter-rouge">HomeModel</code>. The <code class="language-plaintext highlighter-rouge">AncestorBinding</code> markup extension from Uno Toolkit walks up the visual tree to the <code class="language-plaintext highlighter-rouge">FeedView</code> and binds to its <code class="language-plaintext highlighter-rouge">DataContext.FavoriteRecipe</code>, passing the current recipe as the parameter. No naming elements, no relative-source gymnastics.</p>
+
+<p>You can see the two states of that toggle right on the Trending Now cards. An outline heart for a recipe that isn’t favorited, and a filled pink one for a recipe that is:</p>
+
+<p><img src="/previews/pr-27/assets/images/chefs-home/home-favorite-card.png" alt="Two recipe cards showing an unfavorited outline heart and a favorited filled heart" class="align-center"></p>
 
 <h2 id="navigating-out">Navigating Out</h2>
 
