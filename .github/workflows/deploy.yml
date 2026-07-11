@@ -43,4 +43,5 @@ jobs:
           # jekyll-build-pages (Docker action) writes _site as root; reclaim it
           # so cp preserves runner ownership on the gh-pages copy.
           sudo chown -R "$(id -u):$(id -g)" _site
+          cp docs/CNAME _site/CNAME        # re-pin kazo0.dev on every production deploy
           bash .github/scripts/gh-pages-deploy.sh
