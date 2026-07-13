@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-27/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-27/" rel="alternate" type="text/html" /><updated>2026-07-13T14:48:03+00:00</updated><id>https://kazo0.dev/previews/pr-27/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Chefs Walkthrough - Home Page</title><link href="https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home.html" rel="alternate" type="text/html" title="Uno Chefs Walkthrough - Home Page" /><published>2026-07-09T00:00:00+00:00</published><updated>2026-07-09T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home</id><content type="html" xml:base="https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home.html"><![CDATA[<p>Let’s continue our walkthrough of <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs</a>, our flagship reference app for building cross-platform apps with Uno. Last time we covered the <a href="/uno-general/2025/07/02/chefs-login.html">Login Page</a>, and I promised that this time we’d get into the real meat of the application: the Home Page. This is the screen you land on right after a successful login, and it’s where Chefs really starts to show off.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-27/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-27/" rel="alternate" type="text/html" /><updated>2026-07-13T15:04:00+00:00</updated><id>https://kazo0.dev/previews/pr-27/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Chefs Walkthrough - Home Page</title><link href="https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home.html" rel="alternate" type="text/html" title="Uno Chefs Walkthrough - Home Page" /><published>2026-07-09T00:00:00+00:00</published><updated>2026-07-09T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home</id><content type="html" xml:base="https://kazo0.dev/previews/pr-27/uno-general/2026/07/09/chefs-home.html"><![CDATA[<p>Let’s continue our walkthrough of <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs</a>, our flagship reference app for building cross-platform apps with Uno. Last time we covered the <a href="/uno-general/2025/07/02/chefs-login.html">Login Page</a>, and I promised that this time we’d get into the real meat of the application: the Home Page. This is the screen you land on right after a successful login, and it’s where Chefs really starts to show off.</p>
 
 <p>There’s a lot going on here, so I want to split it into two parts. First, the app shell that wraps the whole logged-in experience. Then, the Home content itself and the MVUX that feeds it.</p>
 
@@ -104,7 +104,7 @@
 
 <p>Here’s the exact same shell running side by side, with the navigation boxed in pink so you can see where it lands in each layout:</p>
 
-<p><img src="/assets/images/chefs-home/home-responsive.png" alt="The same Home shell in wide and narrow layouts, with the side rail and bottom bar highlighted" class="align-center" /></p>
+<p><a href="/assets/images/chefs-home/home-responsive.png"><img class="align-center" src="/assets/images/chefs-home/home-responsive.png" alt="The same Home shell in wide and narrow layouts, with the side rail and bottom bar highlighted" /></a></p>
 
 <h2 id="the-home-content">The Home Content</h2>
 
@@ -198,7 +198,7 @@
 
 <p>Inside the data template, <code class="language-plaintext highlighter-rouge">{Binding Data}</code> gives us the actual list, and an <code class="language-plaintext highlighter-rouge">ItemsRepeater</code> with a horizontal <code class="language-plaintext highlighter-rouge">StackLayout</code> lays the recipe cards out side by side inside a horizontal <code class="language-plaintext highlighter-rouge">ScrollViewer</code>. That’s the whole carousel. The cards themselves are Toolkit <code class="language-plaintext highlighter-rouge">CardContentControl</code>s, and the whole page leans on <code class="language-plaintext highlighter-rouge">AutoLayout</code> for spacing, which is a pattern you’ll recognize if you followed along with the Login Page.</p>
 
-<p><img src="/assets/images/chefs-home/home-trending.png" alt="The Trending Now carousel rendered from the FeedView" class="align-center" /></p>
+<p><a href="/assets/images/chefs-home/home-trending.png"><img class="align-center" src="/assets/images/chefs-home/home-trending.png" alt="The Trending Now carousel rendered from the FeedView" /></a></p>
 
 <h3 id="keeping-favorites-in-sync">Keeping Favorites in Sync</h3>
 
@@ -236,7 +236,7 @@
 
 <p>You can see the two states of that toggle right on the Trending Now cards. An outline heart for a recipe that isn’t favorited, and a filled pink one for a recipe that is:</p>
 
-<p><img src="/assets/images/chefs-home/home-favorite-card.png" alt="Two recipe cards showing an unfavorited outline heart and a favorited filled heart" class="align-center" /></p>
+<p><a href="/assets/images/chefs-home/home-favorite-card.png"><img class="align-center" src="/assets/images/chefs-home/home-favorite-card.png" alt="Two recipe cards showing an unfavorited outline heart and a favorited filled heart" /></a></p>
 
 <h2 id="navigating-out">Navigating Out</h2>
 
