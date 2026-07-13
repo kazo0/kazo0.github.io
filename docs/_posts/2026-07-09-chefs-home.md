@@ -87,6 +87,10 @@ Visibility="{utu:Responsive Normal=Visible, Wide=Collapsed}"
 
 Chefs actually declares TWO tab bars. A horizontal one pinned to the bottom of the screen for narrow layouts like phones, and a vertical one docked to the side for wide layouts like desktop and tablet. The `Responsive` markup extension flips between them based on the window width, so you get a bottom bar on your phone and a proper side rail on a big screen without a single line of code-behind. We dug into the `Responsive` extension in [its own Toolkit Tuesday]({% post_url 2024-01-30-toolkit-tuesday-responsive %}) if you want the full story.
 
+Here's the exact same shell running side by side, with the navigation boxed in pink so you can see where it lands in each layout:
+
+![The same Home shell in wide and narrow layouts, with the side rail and bottom bar highlighted](/assets/images/chefs-home/home-responsive.png){: .align-center}
+
 ## The Home Content
 
 With the shell out of the way, let's get to the page everyone actually sees. The Home Page is a vertically scrolling list of horizontal carousels: Trending Now, Categories, Recently Added, and Popular Contributors. Each one is its own independently loaded strip of cards.
