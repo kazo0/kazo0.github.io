@@ -89,7 +89,7 @@ Chefs actually declares TWO tab bars. A horizontal one pinned to the bottom of t
 
 Here's the exact same shell running side by side, with the navigation boxed in pink so you can see where it lands in each layout:
 
-![The same Home shell in wide and narrow layouts, with the side rail and bottom bar highlighted](/assets/images/chefs-home/home-responsive.png){: .align-center}
+<a href="/assets/images/chefs-home/home-responsive.png"><img class="align-center" src="/assets/images/chefs-home/home-responsive.png" alt="The same Home shell in wide and narrow layouts, with the side rail and bottom bar highlighted"/></a>
 
 ## The Home Content
 
@@ -150,7 +150,7 @@ The `FeedView` is one of the main ways to consume feeds and states in MVUX. As t
 
 Inside the data template, `{Binding Data}` gives us the actual list, and an `ItemsRepeater` with a horizontal `StackLayout` lays the recipe cards out side by side inside a horizontal `ScrollViewer`. That's the whole carousel. The cards themselves are Toolkit `CardContentControl`s, and the whole page leans on `AutoLayout` for spacing, which is a pattern you'll recognize if you followed along with the Login Page.
 
-![The Trending Now carousel rendered from the FeedView](/assets/images/chefs-home/home-trending.png){: .align-center}
+<a href="/assets/images/chefs-home/home-trending.png"><img class="align-center" src="/assets/images/chefs-home/home-trending.png" alt="The Trending Now carousel rendered from the FeedView"/></a>
 
 ### Keeping Favorites in Sync
 
@@ -183,7 +183,7 @@ The item's `DataContext` is a single `Recipe`, but the `FavoriteRecipe` command 
 
 You can see the two states of that toggle right on the Trending Now cards. An outline heart for a recipe that isn't favorited, and a filled pink one for a recipe that is:
 
-![Two recipe cards showing an unfavorited outline heart and a favorited filled heart](/assets/images/chefs-home/home-favorite-card.png){: .align-center}
+<a href="/assets/images/chefs-home/home-favorite-card.png"><img class="align-center" src="/assets/images/chefs-home/home-favorite-card.png" alt="Two recipe cards showing an unfavorited outline heart and a favorited filled heart"/></a>
 
 ## Navigating Out
 
