@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-33/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-33/" rel="alternate" type="text/html" /><updated>2026-08-11T16:23:10+00:00</updated><id>https://kazo0.dev/previews/pr-33/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Apps Inside Uno Apps: Hosting Every Theme Sample With AssemblyLoadContext</title><link href="https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app.html" rel="alternate" type="text/html" title="Uno Apps Inside Uno Apps: Hosting Every Theme Sample With AssemblyLoadContext" /><published>2026-08-11T00:00:00+00:00</published><updated>2026-08-11T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app</id><content type="html" xml:base="https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app.html"><![CDATA[<p>I posted a fun little experiment the other day and it got more of a reaction than I expected, so I want to follow it up with the real story of how it works. Here’s <a href="https://x.com/BiloganSteve/status/2087173345322152018">the tweet</a>:</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-33/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-33/" rel="alternate" type="text/html" /><updated>2026-08-14T03:20:02+00:00</updated><id>https://kazo0.dev/previews/pr-33/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Apps Inside of Uno Apps</title><link href="https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app.html" rel="alternate" type="text/html" title="Uno Apps Inside of Uno Apps" /><published>2026-08-11T00:00:00+00:00</published><updated>2026-08-11T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app</id><content type="html" xml:base="https://kazo0.dev/previews/pr-33/uno-general/2026/08/11/alc-super-themes-app.html"><![CDATA[<p>I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s <a href="https://x.com/BiloganSteve/status/2087173345322152018">the tweet</a>:</p>
 
 <blockquote>
   <p>Running your @UnoPlatform apps inside of your @UnoPlatform apps ;)</p>
@@ -8,31 +8,50 @@
 
 <p>And here’s the thing actually running. One app, and I’m picking which whole other app renders inside it, live:</p>
 
-<video class="align-center" autoplay="" muted="" loop="" controls="" playsinline="" poster="/assets/images/alc-super-themes/hero.png">
-  <source src="/assets/images/alc-super-themes/super-themes-demo.mp4" type="video/mp4" />
-</video>
-
-<p>Let’s get into what’s going on here, because it’s one of the more genuinely fun things I’ve built in a while, and it leans on a piece of .NET that most of us never touch directly.</p>
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-33/assets/images/alc-super-themes/super-themes-demo-poster.png">
+    <source src="/previews/pr-33/assets/images/alc-super-themes/super-themes-demo.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-33/assets/images/alc-super-themes/super-themes-demo.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <h2 id="what-even-is-this">What Even Is This</h2>
 
-<p>The Uno.Themes repo ships three sample apps, one per design system: Material, Cupertino, and Simple. Today, testing them means launching a different sample head for each one. I wanted a single app where I could tap a button and load any of them, then unload it and load the next one.</p>
+<p>The <a href="https://github.com/unoplatform/Uno.Themes">Uno.Themes repo</a> contains three sample apps, one per design system: Material, Simple, and Cupertino (out of support). I wanted a single app where I could tap a button and load any of them, then unload it and load the next one. The catch is that these aren’t little user controls I’m swapping in. Each one is a complete, independent Uno application, with its own <code class="language-plaintext highlighter-rouge">App</code> class, its own resources, its own theme library, its own everything. What you’re watching in that video is one Uno app hosting another entire Uno app, swapping between three of them, with a <i>clean</i><sup>*</sup> teardown in between.</p>
 
-<p>The catch is that these aren’t little user controls I’m swapping in. Each one is a complete, independent Uno application, with its own <code class="language-plaintext highlighter-rouge">App</code> class, its own resources, its own theme library, its own everything. What you’re watching in that video is one Uno app hosting another entire Uno app in the same process, swapping between three of them, with a clean teardown in between. I called it the SUPER THEMES APP because I was enjoying myself.</p>
+<h2 id="but-like-why">But Like, Why?</h2>
+
+<blockquote>
+  <p>Is this just some flashy demoware?</p>
+</blockquote>
+
+<p>No! I have reasons; and they are threefold:</p>
+
+<ol>
+  <li>
+    <p>This is the underlying plumbing the powers <a href="https://platform.uno/studio/">Uno Platform Studio</a>, more on that <a href="#standing-on-uno-studios-shoulders">later</a></p>
+  </li>
+  <li>
+    <p>Today, testing each Themes app means launching a different sample head for each one. It means packaging each one separately. It means deploying to three separate slots in the dev environment via the CI. It means a larger, more complex setup locally and on the CI. It’s also a way to test the themes in a single staging slot for every pull request, instead of three separate ones.</p>
+  </li>
+  <li>
+    <p>It’s also a single entry point for automated runtime tests that need to run against all three themes. Imagine having a single “runner” app that is capable of being provided a set of automated runtime test cases, and then running them against the live app to be tested. That’s the payoff.</p>
+  </li>
+</ol>
 
 <p><a href="/assets/images/alc-super-themes/themes-running.png"><img class="align-center" src="/assets/images/alc-super-themes/themes-running.png" alt="The wrapper app hosting the Material, Cupertino, and Simple theme samples one at a time, each showing an 'is running' status" /></a></p>
 
 <h2 id="a-quick-word-on-assemblyloadcontext">A Quick Word on AssemblyLoadContext</h2>
 
-<p>The piece of .NET that makes this possible is <a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.loader.assemblyloadcontext"><code class="language-plaintext highlighter-rouge">AssemblyLoadContext</code></a>, or ALC. If you’ve never had a reason to reach for it, here’s the two-minute version.</p>
+<p>The piece of .NET that makes this possible is <a href="https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext"><code class="language-plaintext highlighter-rouge">AssemblyLoadContext</code></a>, or ALC. If you’ve never had a reason to reach for it, here’s the two-minute version.</p>
 
-<p>Normally every assembly your app loads goes into one big shared bucket, the default load context. ALC lets you create additional, isolated buckets. Two different contexts can each load an assembly with the same name, even different versions of it, and the runtime treats them as genuinely separate. It’s the foundation that real plugin systems are built on.</p>
+<p>Normally every assembly your app loads goes into one big shared bucket, the default load context. ALC lets you create additional, isolated buckets. Two different contexts can each load an assembly with the same name, even different versions of it, and the runtime treats them as genuinely separate. Worth being precise about “isolated” though, because it isn’t a sandbox. There’s no binary isolation between contexts, they’re only isolated by not finding each other by name.</p>
 
-<p>The other half, and the half I actually cared about, is that a load context can be marked <a href="https://learn.microsoft.com/en-us/dotnet/standard/assembly/unloadability">collectible</a>. A collectible context can be unloaded, and once nothing is referencing anything inside it, the garbage collector reclaims all of it: the assemblies, the types, the whole works. That’s the property that lets me load a guest app, run it, and then get all of that memory back before I load the next one. In theory, anyway. Getting from “in theory” to “actually collected” is most of the story below.</p>
+<p>And things get weird when you start sharing types across contexts.</p>
 
 <h2 id="standing-on-uno-studios-shoulders">Standing on Uno Studio’s Shoulders</h2>
 
-<p>I did not invent the hard part here. The <a href="https://platform.uno/uno-platform-studio/">Uno Platform Studio</a> tooling, and <a href="https://platform.uno/docs/articles/studio/Hot%20Design/hot-design-overview.html">Hot Design</a> in particular, already hosts your live, running app so it can turn it into a designer. That plumbing is exactly this: loading and running an app inside another process’s world. The Uno 6.7-dev runtime exposes the pieces that make it work as public API, and I just wired them together for a much simpler purpose.</p>
+<p>I did not invent the hard part here. The <a href="https://platform.uno/studio/">Uno Platform Studio</a> tooling, and <a href="https://platform.uno/docs/articles/studio/Hot%20Design/hot-design-overview.html">Hot Design</a> in particular, already hosts your live, running app so it can turn it into a designer. That plumbing is exactly this: loading and running an app inside another process’s world. The Uno 6.7-dev runtime exposes the pieces that make it work as public API, and I just wired them together for a much simpler purpose.</p>
 
 <p>There are really only three moving parts, and the nicest surprise was that the main path needs zero reflection into Uno internals:</p>
 
@@ -82,9 +101,9 @@
 
 <h2 id="two-tiny-changes-to-each-guest">Two Tiny Changes to Each Guest</h2>
 
-<p>The part I’m happiest about is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.</p>
+<p>The coolest part is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.</p>
 
-<p>First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context:</p>
+<p>First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context. Basically, this is how we can ensure that the guest’s static resources don’t leak into the host’s world, and vice versa. Add this to the guest’s csproj:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoEnableAlcAppSupport&gt;</span>true<span class="nt">&lt;/UnoEnableAlcAppSupport&gt;</span>
@@ -104,29 +123,88 @@
 
 <p>That’s still correct when the app runs standalone, because the first <code class="language-plaintext highlighter-rouge">new Window()</code> maps to the main window anyway. So the sample heads stay completely standalone. They gained the ability to be hosted without giving up the ability to run on their own.</p>
 
-<h2 id="where-it-got-interesting">Where It Got Interesting</h2>
-
-<p>If the story ended there it would be a suspiciously clean blog post. It did not end there, and honestly the problems were the best part. A few of my favorites.</p>
-
-<h3 id="the-factory-that-refused-to-let-go">The factory that refused to let go</h3>
-
-<p>My first instinct for creating the guest was a tidy generic helper, something like <code class="language-plaintext highlighter-rouge">App(() =&gt; new TApp())</code>. It worked, and then the ALC would never unload. It turns out a <code class="language-plaintext highlighter-rouge">Func&lt;TApp&gt;</code> creates a shared-generic dictionary entry that pins the collectible context’s loader, so the very thing I was using to start the guest was quietly holding it hostage forever. The fix was to build the factory as a non-generic <code class="language-plaintext highlighter-rouge">Func&lt;Application&gt;</code> with a compiled expression, so nothing generic ever touches the guest’s type. That one cost me an afternoon.</p>
-
-<h3 id="win32-boots-differently-than-x11">Win32 boots differently than X11</h3>
-
-<p>On my Linux X11 setup, a guest’s run loop blocks for the guest’s lifetime, which is what my loader expected. On Win32 there’s a single process-wide message loop, so the guest’s nested <code class="language-plaintext highlighter-rouge">Run()</code> just schedules its startup and returns immediately. My loader read that instant return as “the guest exited before it showed anything” and tore it down mid-boot. Now only a run loop that actually faults counts as a boot failure.</p>
-
-<h3 id="trimming-ate-the-bridge">Trimming ate the bridge</h3>
-
-<p>The WASM build was the nastiest. Guests are loaded by reflection, so the trimmer can’t see them, and it stripped type-forwarders out of the framework facade assemblies because as far as it could tell nothing used them. Every guest then died the moment it called <code class="language-plaintext highlighter-rouge">GetTypes()</code>, looking for a type that no longer had a forwarding entry. The fix was to publish this one hosting app untrimmed. It’s the single ugliest tradeoff in the whole thing, because untrimmed the WASM payload balloons to around 116 MB. The regular theme heads still trim normally. Only this hosting head pays the tax.</p>
-
-<h2 id="does-it-actually-clean-up">Does It Actually Clean Up</h2>
+<h2 id="guest-overstaying-their-welcome">Guest overstaying their welcome</h2>
 
 <p>This was the question I most wanted to answer, because a memory leak per theme switch would make the whole thing a toy.</p>
 
 <p>On desktop under X11, I ran a Release soak test that loads, switches, unloads, and reloads across all three guests for sixteen cycles. The previous guest’s load context was collected fifteen out of fifteen times, and the managed heap stayed flat at around 32 MB the whole way through. On the managed side, this genuinely works. The collectible ALC does its job and the memory comes back. After a couple of rounds of internal architecture review, that check is now wired into CI as a hosting smoke test: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.</p>
 
-<p>I’ll be honest about the parts that don’t clean up, though, because this is running on a 6.7-dev build and it shows. There’s a native leak: each guest window create and destroy cycle leaks its native GL context on X11, even though the managed side is fully reclaimed. There are also a few spots where I had to reach in with reflection and manually sweep some of Uno’s internal caches on unload, because the current dev runtime doesn’t fully clear them itself. Each of those sweeps is now written up as a specific upstream Uno issue, so they’re tracked deficiencies with a shelf life rather than mystery hacks, and each one deletes itself the day its fix ships. And by design, this hosts exactly one guest at a time. It started as a “wouldn’t it be funny” experiment, it’s had a real hardening pass since, but it still rides on a preview runtime and I want to be upfront about that.</p>
+<h3 id="the-teardown-dance">The teardown dance</h3>
+
+<p>Getting to fifteen out of fifteen took more than calling <code class="language-plaintext highlighter-rouge">Unload()</code>. Unloading is cooperative, so it only finishes once nothing outside the context still points at anything inside it, and the awkward part is that guest finalizers keep running <em>during</em> the unload and can put things back after you’ve cleaned up. The <a href="https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L459-L480">sequence I landed on</a> is:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1">// 7. Drop every session reference before unloading so the collectible ALC can go.</span>
+<span class="kt">var</span> <span class="n">alc</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Alc</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">GuestApp</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">ExecutionTask</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">ExecutionThread</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="n">alc</span><span class="p">.</span><span class="n">Dispose</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="n">_lastUnloadedAlc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WeakReference</span><span class="p">&lt;</span><span class="n">GuestAssemblyLoadContext</span><span class="p">&gt;(</span><span class="n">alc</span><span class="p">);</span>
+
+<span class="n">GC</span><span class="p">.</span><span class="nf">Collect</span><span class="p">();</span>
+<span class="k">await</span> <span class="nf">DrainFinalizersAsync</span><span class="p">().</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="k">await</span> <span class="nf">RunOnUIThreadAsync</span><span class="p">(</span><span class="n">SweepNonDefaultAlcCaches</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+
+<span class="n">GC</span><span class="p">.</span><span class="nf">Collect</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Drop the references, unload, let the finalizers drain, and only then sweep. Sweeping before the finalizers finish just means they refill the caches behind you.</p>
+
+<h3 id="the-sweeps">The sweeps</h3>
+
+<p>That <code class="language-plaintext highlighter-rouge">SweepNonDefaultAlcCaches</code> call is the honest ugly part. It’s three reflection-based pokes at Uno internals, deliberately parked in <a href="https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs">one file</a> so they’re easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target:</p>
+
+<ul>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L19-L21">Re-running Uno’s own cache sweep</a>.</strong> <code class="language-plaintext highlighter-rouge">ExitAlcApplication()</code> already clears the per-ALC static caches, but guest <code class="language-plaintext highlighter-rouge">DependencyObject</code> finalizers run afterwards and can re-populate them. I invoke <code class="language-plaintext highlighter-rouge">Application.CleanupNonDefaultAlcCaches</code> a second time once the finalizers have drained. (<a href="https://github.com/unoplatform/uno/issues/24075">uno#24075</a>)</li>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L23-L35">Clearing <code class="language-plaintext highlighter-rouge">DependencyProperty._getPropertyCache</code></a>.</strong> This one took a heap dump to find. That cache memoizes <code class="language-plaintext highlighter-rouge">(targetType, "ns:Owner.Property")</code> lookups, and a guest style targeting an attached property on a framework element caches a <em>default-ALC</em> key with a <em>guest-ALC</em> value. Uno’s per-key sweep only checks the key, so the entry survives and roots the guest’s <code class="language-plaintext highlighter-rouge">LoaderAllocator</code> forever. (<a href="https://github.com/unoplatform/uno/issues/24073">uno#24073</a>)</li>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L100-L158">Pruning <code class="language-plaintext highlighter-rouge">SystemNavigationManager</code> handlers</a>.</strong> The samples’ <code class="language-plaintext highlighter-rouge">Shell</code> subscribes to the process-wide <code class="language-plaintext highlighter-rouge">BackRequested</code> and nothing unsubscribes it on teardown, so the stale handler roots the guest’s entire visual tree (<a href="https://github.com/unoplatform/uno/issues/24074">uno#24074</a>). The fix is to walk the invocation list and drop anything whose origin lives in a collectible context:</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">originAssembly</span> <span class="p">=</span> <span class="n">handler</span><span class="p">.</span><span class="n">Target</span><span class="p">?.</span><span class="nf">GetType</span><span class="p">().</span><span class="n">Assembly</span> <span class="p">??</span> <span class="n">handler</span><span class="p">.</span><span class="n">Method</span><span class="p">.</span><span class="n">Module</span><span class="p">.</span><span class="n">Assembly</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">targetAlc</span> <span class="p">=</span> <span class="n">AssemblyLoadContext</span><span class="p">.</span><span class="nf">GetLoadContext</span><span class="p">(</span><span class="n">originAssembly</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">targetAlc</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">targetAlc</span> <span class="p">!=</span> <span class="n">AssemblyLoadContext</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pruned</span> <span class="p">=</span> <span class="n">Delegate</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">pruned</span><span class="p">,</span> <span class="n">handler</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>None of this is exotic, it’s the direct cost of sharing <code class="language-plaintext highlighter-rouge">Uno.UI</code> from the default context. Every shared assembly is non-collectible code that can hold a reference into the guest, and one static still pointing at a guest object roots the whole load context. The sweeps aren’t really a workaround bolted on the side, they’re the counterpart to sharing anything at all.</p>
+
+<h3 id="the-parts-that-dont-clean-up">The parts that don’t clean up</h3>
+
+<p>I’ll be honest about those too, because this is running on a 6.7-dev build and it shows. There’s a native leak: each guest window create and destroy cycle leaks its native GL context on X11, somewhere around 12 to 15 MB a cycle, even though the managed side is fully reclaimed (<a href="https://github.com/unoplatform/uno/issues/24076">uno#24076</a>). Every one of these is now filed upstream with a repro and a suggested fix, so they’re tracked deficiencies with a shelf life rather than mystery hacks, and each sweep deletes itself the day its fix ships. And by design, this hosts exactly one guest at a time. It started as a “wouldn’t it be funny” experiment, it’s had a real hardening pass since, but it still rides on a preview runtime and I want to be upfront about that.</p>
+
+<hr />
+<p>The direction that matters</p>
+
+<p>Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory.</p>
+
+<p>With one exception the docs call out explicitly: strong GC handles block unload “from both inside and outside.” A GCHandle.Alloc made by guest code, pointing at a guest object, prevents its own context from unloading — because a GC handle is a root regardless of who created it.</p>
+
+<p>Where this bites your app specifically</p>
+
+<h2 id="your-shared-vs-isolated-split-is-also-your-leak-surface-every-assembly-shared-from-default-is-non-collectible-code-that-might-hold-a-guest-reference-the-highest-risk-vector-is-statics-in-the-shared-unoui--anything-like-applicationcurrent-or-a-resource-dictionary-cache-still-pointing-at-the-guests-app-instance-after-teardown-roots-the-entire-context-thats-precisely-what-your-reflection-based-cache-sweeping-at-132-is-doing-and-framing-it-that-way-makes-it-read-less-like-a-hack-and-more-like-the-mandatory-counterpart-to-sharing-unoui-at-all">Your shared-vs-isolated split is also your leak surface. Every assembly shared from Default is non-collectible code that might hold a guest reference. The highest-risk vector is statics in the shared Uno.UI — anything like Application.Current, or a resource-dictionary cache, still pointing at the guest’s App instance after teardown roots the entire context. That’s precisely what your reflection-based cache sweeping at :132 is doing, and framing it that way makes it read less like a hack and more like the mandatory counterpart to sharing Uno.UI at all.</h2>
 
 <h2 id="why-bother">Why Bother</h2>
 
@@ -142,7 +220,9 @@
 
 <p>If you go try something like this yourself, do it on a 6.7 build and expect to get friendly with load contexts. And if you build something sillier than a SUPER THEMES APP, please come show me in the <a href="https://platform.uno/discord">Uno Discord</a>.</p>
 
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="assemblyloadcontext" /><category term="alc" /><category term="hot-design" /><category term="themes" /><category term="skia" /><category term="wasm" /><summary type="html"><![CDATA[I posted a fun little experiment the other day and it got more of a reaction than I expected, so I want to follow it up with the real story of how it works. Here’s the tweet:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-33/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-33/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Agent Skills + Uno Platform</title><link href="https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro.html" rel="alternate" type="text/html" title="Agent Skills + Uno Platform" /><published>2026-02-23T00:00:00+00:00</published><updated>2026-02-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro</id><content type="html" xml:base="https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro.html"><![CDATA[<p>Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as <a href="https://github.com/jeromelaban">Jerome’s</a> presentation from this past .NET Conf:</p>
+<p>Catch you in the next one :wave:</p>
+
+<p><i>*</i> We are still hunting down some leaks, we’ve made good progress but memory management is hard ok? Give us a break.</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="assemblyloadcontext" /><category term="alc" /><category term="hot-design" /><category term="themes" /><category term="skia" /><category term="wasm" /><summary type="html"><![CDATA[I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-33/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-33/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Agent Skills + Uno Platform</title><link href="https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro.html" rel="alternate" type="text/html" title="Agent Skills + Uno Platform" /><published>2026-02-23T00:00:00+00:00</published><updated>2026-02-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro</id><content type="html" xml:base="https://kazo0.dev/previews/pr-33/uno-general/2026/02/23/agent-skills-intro.html"><![CDATA[<p>Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as <a href="https://github.com/jeromelaban">Jerome’s</a> presentation from this past .NET Conf:</p>
 
 <!-- Courtesy of embedresponsively.com -->
 
