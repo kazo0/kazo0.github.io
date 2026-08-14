@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-34/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-34/" rel="alternate" type="text/html" /><updated>2026-08-14T14:56:51+00:00</updated><id>https://kazo0.dev/previews/pr-34/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">MSAL Auth in Uno Platform, With and Without Uno.Extensions</title><link href="https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="MSAL Auth in Uno Platform, With and Without Uno.Extensions" /><published>2026-08-14T00:00:00+00:00</published><updated>2026-08-14T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth.html"><![CDATA[<p>Authentication is one of those things every real app needs and almost nobody enjoys wiring up. Sign in with a Microsoft or work account, get a token, call an API, keep the token fresh, sign out. On a single platform it’s a known quantity. Across Android, iOS, WebAssembly, and desktop from one codebase, it gets a little more interesting, because each of those platforms has its own idea of how a browser-based sign-in redirect comes back into your app.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-34/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-34/" rel="alternate" type="text/html" /><updated>2026-08-14T17:23:11+00:00</updated><id>https://kazo0.dev/previews/pr-34/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">MSAL Auth in Uno Platform, With and Without Uno.Extensions</title><link href="https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="MSAL Auth in Uno Platform, With and Without Uno.Extensions" /><published>2026-08-14T00:00:00+00:00</published><updated>2026-08-14T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth.html"><![CDATA[<p>Authentication is one of those things every real app needs and almost nobody enjoys wiring up. Sign in with a Microsoft or work account, get a token, call an API, keep the token fresh, sign out. On a single platform it’s a known quantity. Across Android, iOS, WebAssembly, and desktop from one codebase, it gets a little more interesting, because each of those platforms has its own idea of how a browser-based sign-in redirect comes back into your app.</p>
 
 <p>The good news is that MSAL, Microsoft’s Authentication Library, works great with Uno Platform, and there are two solid ways to do it. You can drive MSAL.NET yourself, or you can let <code class="language-plaintext highlighter-rouge">Uno.Extensions.Authentication.MSAL</code> do most of the driving for you. I built a sample app for each so I could compare them honestly, and this post walks through both.</p>
 
@@ -15,9 +15,9 @@
 
 <ol>
   <li>Register a new application under <strong>App registrations</strong>.</li>
-  <li>Copy the <strong>Application (client) ID</strong>. That’s the one value you have to paste into the sample.</li>
-  <li>Under <strong>Authentication</strong>, turn on <strong>Allow public client flows</strong>. A mobile or desktop app can’t keep a secret, so it signs in as a public client. Skip this and you get a confusing <code class="language-plaintext highlighter-rouge">unauthorized_client</code> error.</li>
-  <li>Add the <strong>Microsoft Graph</strong> delegated permission <strong><code class="language-plaintext highlighter-rouge">User.Read</code></strong>, which is what both samples use to fetch the signed-in user.</li>
+  <li>Copy the <strong>Application (client) ID</strong>. That’s the one value you have to paste into the samples.</li>
+  <li>Under <strong>Authentication</strong>, turn on <strong>Allow public client flows</strong>. A mobile or desktop app can’t keep a secret, so it has to be treated as a public client. Entra mostly figures that out from the platform type of the redirect URI in each request; this toggle is the fallback for flows that don’t send one. It’s still worth flipping: if you ever see the token endpoint demand a <code class="language-plaintext highlighter-rouge">client_secret</code> from your secret-less app (<code class="language-plaintext highlighter-rouge">invalid_client</code>, error code <code class="language-plaintext highlighter-rouge">AADSTS7000218</code>), a redirect URI registered under the wrong platform — or this toggle — is the culprit.</li>
+  <li>Add the <strong>Microsoft Graph</strong> delegated permission <strong><code class="language-plaintext highlighter-rouge">User.Read</code></strong>. Both samples request it as their token scope, and the manual one uses it to pull the signed-in user’s profile from Graph.</li>
   <li>Register <strong>one redirect URI per platform</strong>. This is the part people trip on.</li>
 </ol>
 
@@ -70,12 +70,16 @@
 3
 4
 5
+6
 </pre></td><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">app</span> <span class="p">=</span> <span class="n">PublicClientApplicationBuilder</span>
     <span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">MsalConfig</span><span class="p">.</span><span class="n">ClientId</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">WithAuthority</span><span class="p">(</span><span class="n">AzureCloudInstance</span><span class="p">.</span><span class="n">AzurePublic</span><span class="p">,</span> <span class="n">MsalConfig</span><span class="p">.</span><span class="n">Tenant</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">WithRedirectUri</span><span class="p">(</span><span class="n">PlatformSupport</span><span class="p">.</span><span class="n">RedirectUri</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">WithUnoHelpers</span><span class="p">()</span>
     <span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That <code class="language-plaintext highlighter-rouge">WithUnoHelpers()</code> call is the bridge <code class="language-plaintext highlighter-rouge">Uno.WinUI.MSAL</code> provides: on Android and iOS it hands MSAL the current activity or view controller to launch the sign-in browser from. It has a twin on the interactive request below, which is what wires up the popup flow on WebAssembly. (The sample on <code class="language-plaintext highlighter-rouge">master</code> currently spells the builder half out with a per-platform <code class="language-plaintext highlighter-rouge">#if</code> block instead — a temporary workaround for a bug we’ll get to in the gotchas.)</p>
 
 <p>Then you write the token flow. The pattern you want is cache-first: try to get a token silently, and only pop a browser if that fails. MSAL signals “I need the user” by throwing a specific exception, which you treat as normal control flow rather than an error:</p>
 
@@ -149,7 +153,7 @@
 <span class="p">}</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>On <strong>iOS</strong> the story is similar but different in shape. You need a custom app delegate that hands the callback URL to MSAL, you need to declare your URL scheme in <code class="language-plaintext highlighter-rouge">Info.plist</code>, and you need a keychain access group in your entitlements or MSAL won’t even build its client:</p>
+<p>On <strong>iOS</strong> the story is similar but different in shape. You need a custom app delegate that hands the callback URL to MSAL, you need to declare your URL scheme in <code class="language-plaintext highlighter-rouge">Info.plist</code>, and you need a keychain access group in your entitlements, or MSAL throws before you ever get to a sign-in screen:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -169,7 +173,7 @@
 
 <p>Now the same app, built on <code class="language-plaintext highlighter-rouge">Uno.Extensions.Authentication.MSAL</code>. The pitch is simple: instead of constructing and calling MSAL yourself, you register it with the app host once, and then you talk to a small framework interface.</p>
 
-<p>It starts with a single UnoFeature, <code class="language-plaintext highlighter-rouge">AuthenticationMsal</code>, which brings in the whole authentication pipeline. Your client id, tenant, and scopes move out of code and into <code class="language-plaintext highlighter-rouge">appsettings.json</code>:</p>
+<p>It starts with the <code class="language-plaintext highlighter-rouge">AuthenticationMsal</code> UnoFeature, which brings in the whole authentication pipeline. Your client id, tenant, and scopes move out of code and into <code class="language-plaintext highlighter-rouge">appsettings.json</code>:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -198,7 +202,7 @@
     <span class="p">.</span><span class="nf">Configure</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">host</span>
         <span class="p">.</span><span class="nf">UseConfiguration</span><span class="p">(</span><span class="n">config</span> <span class="p">=&gt;</span> <span class="n">config</span><span class="p">.</span><span class="n">EmbeddedSource</span><span class="p">&lt;</span><span class="n">App</span><span class="p">&gt;())</span>
         <span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">(</span><span class="n">auth</span> <span class="p">=&gt;</span> <span class="n">auth</span>
-            <span class="p">.</span><span class="nf">AddMsal</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">msal</span> <span class="p">=&gt;</span> <span class="n">msal</span><span class="p">.</span><span class="nf">Builder</span><span class="p">(</span><span class="n">ConfigurePlatformRedirect</span><span class="p">))));</span>
+            <span class="p">.</span><span class="nf">AddMsal</span><span class="p">(</span><span class="n">window</span><span class="p">)));</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">AddMsal</code> reads your client id and scopes from that <code class="language-plaintext highlighter-rouge">Msal</code> configuration section by convention, so you don’t repeat them in code. From there, your app talks to <code class="language-plaintext highlighter-rouge">IAuthenticationService</code>, injected from DI, and it never touches an MSAL type. The whole sign-in surface becomes four calls:</p>
@@ -225,37 +229,23 @@
 
 <p>Here’s where I want to be straight with you, because it would be easy to oversell this. The Extensions package takes the MSAL flow off your plate. It does not take the operating system’s redirect plumbing off your plate.</p>
 
-<p>You still write the Android <code class="language-plaintext highlighter-rouge">BrowserTabActivity</code> and the <code class="language-plaintext highlighter-rouge">OnActivityResult</code> forward. You still write the iOS <code class="language-plaintext highlighter-rouge">OpenUrl</code> app delegate. On WebAssembly you still point the return URI at your callback page. All of those still call MSAL.NET’s <code class="language-plaintext highlighter-rouge">AuthenticationContinuationHelper</code> directly, exactly like the manual sample does. The one piece that stays in code on the MSAL builder is the per-platform redirect URI:</p>
+<p>You still write the Android <code class="language-plaintext highlighter-rouge">BrowserTabActivity</code> and the <code class="language-plaintext highlighter-rouge">OnActivityResult</code> forward. You still write the iOS <code class="language-plaintext highlighter-rouge">OpenUrl</code> app delegate. Those pieces call MSAL.NET’s <code class="language-plaintext highlighter-rouge">AuthenticationContinuationHelper</code> directly, exactly like the manual sample does. Android even drags your client id back into C# whether you like it or not: the intent filter’s <code class="language-plaintext highlighter-rouge">DataScheme</code> has to be a compile-time constant, so <code class="language-plaintext highlighter-rouge">msal&lt;ClientId&gt;</code> lives in a <code class="language-plaintext highlighter-rouge">const</code> no matter how much of your setup is configuration.</p>
+
+<p>The redirect URIs themselves, though, are about to stop being your problem. Until very recently, the one piece that stayed in code on the MSAL builder was a per-platform <code class="language-plaintext highlighter-rouge">#if</code> block handing MSAL the right redirect URI for each head — and to add insult, the provider silently overwrote whatever you set on WebAssembly. With <a href="https://github.com/unoplatform/uno.extensions/pull/3139">uno.extensions#3139</a> — in review as I write this, and what the sample is written against — the provider derives the platform convention for you: <code class="language-plaintext highlighter-rouge">msal{ClientId}://auth</code> on Android, <code class="language-plaintext highlighter-rouge">msauth.{BundleId}://auth</code> on iOS, the <code class="language-plaintext highlighter-rouge">WebAuthenticationBroker</code> callback URI on WebAssembly, and MSAL’s own <code class="language-plaintext highlighter-rouge">http://localhost</code> default on desktop. Anything you set explicitly still wins: a <code class="language-plaintext highlighter-rouge">RedirectUri</code> in the <code class="language-plaintext highlighter-rouge">Msal</code> config section beats the platform default, a <code class="language-plaintext highlighter-rouge">Builder(...)</code> callback beats both, and <code class="language-plaintext highlighter-rouge">"UseDefaultPlatformRedirectUri": false</code> opts out entirely. The same PR also surfaces per-request interactive options — the <code class="language-plaintext highlighter-rouge">WithPrompt(Prompt.SelectAccount)</code> sort of thing from the manual version — through a new <code class="language-plaintext highlighter-rouge">InteractiveBuilder(...)</code>.</p>
+
+<p>The one redirect override the sample keeps is on WebAssembly, where it points the broker’s return URI (default path: <code class="language-plaintext highlighter-rouge">/authentication-callback</code>) at the same callback page the manual sample registers, so both samples can share one app registration:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">ConfigurePlatformRedirect</span><span class="p">(</span><span class="n">PublicClientApplicationBuilder</span> <span class="n">builder</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="cp">#if ANDROID
-</span>    <span class="n">builder</span><span class="p">.</span><span class="nf">WithRedirectUri</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">MsalConfig</span><span class="p">.</span><span class="n">AndroidRedirectScheme</span><span class="p">}</span><span class="s">://auth"</span><span class="p">);</span>
-<span class="cp">#elif IOS
-</span>    <span class="n">builder</span><span class="p">.</span><span class="nf">WithRedirectUri</span><span class="p">(</span><span class="n">MsalConfig</span><span class="p">.</span><span class="n">IosRedirectUri</span><span class="p">);</span>
-<span class="cp">#else
-</span>    <span class="k">if</span> <span class="p">(!</span><span class="n">PlatformHelper</span><span class="p">.</span><span class="n">IsWebAssembly</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">builder</span><span class="p">.</span><span class="nf">WithRedirectUri</span><span class="p">(</span><span class="n">MsalConfig</span><span class="p">.</span><span class="n">DesktopRedirectUri</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="cp">#endif
-</span><span class="p">}</span>
+</pre></td><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">origin</span> <span class="p">=</span> <span class="n">WebAuthenticationBroker</span><span class="p">.</span><span class="nf">GetCurrentApplicationCallbackUri</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">GetLeftPart</span><span class="p">(</span><span class="n">UriPartial</span><span class="p">.</span><span class="n">Authority</span><span class="p">);</span>
+<span class="n">Uno</span><span class="p">.</span><span class="n">WinRTFeatureConfiguration</span><span class="p">.</span><span class="n">WebAuthenticationBroker</span><span class="p">.</span><span class="n">DefaultReturnUri</span> <span class="p">=</span>
+    <span class="k">new</span> <span class="nf">Uri</span><span class="p">(</span><span class="s">$"</span><span class="p">{</span><span class="n">origin</span><span class="p">}</span><span class="s">/authentication/login-callback.htm"</span><span class="p">);</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>So the Extensions package is not “zero platform code.” It’s “none of the MSAL boilerplate, and the same native redirect glue you’d have written anyway.” Desktop is close to free either way, and the mobile heads are where both approaches still ask something of you.</p>
+<p>So the Extensions package is not “zero platform code.” It’s “none of the MSAL boilerplate, and less redirect glue than you used to write.” Desktop is close to free either way, and the mobile heads are where both approaches still ask something of you.</p>
 
 <h2 id="so-what-actually-moves">So What Actually Moves</h2>
 
@@ -263,7 +253,7 @@
 
 <p>The Extensions version deletes the provider construction, the silent-then-interactive token dance, the sign-out account cleanup, and the token cache handling. That’s the bulk of the fiddly, easy-to-get-subtly-wrong code, and it’s the part I’m happiest to hand off. It moves your client id, tenant, and scopes into configuration, and it hands you <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> and <code class="language-plaintext highlighter-rouge">ITokenCache</code> through dependency injection.</p>
 
-<p>What stays with you in both versions is the Azure app registration, the per-platform redirect URIs, and the native redirect-capture wiring for Android and iOS. That’s not a framework limitation so much as the reality of how mobile sign-in redirects work.</p>
+<p>What stays with you in both versions is the Azure app registration, one registered redirect URI per platform, and the native redirect-capture wiring for Android and iOS. That’s not a framework limitation so much as the reality of how mobile sign-in redirects work.</p>
 
 <p>I touched on the Uno.Extensions authentication stack briefly in my <a href="/uno-general/2025/07/02/chefs-login.html">Uno Chefs login walkthrough</a>, where the Chefs app uses a custom provider. MSAL is just another provider in that same pipeline, which is a nice thing about the design: the shape of your app code doesn’t change based on who’s actually issuing the tokens.</p>
 
@@ -271,9 +261,11 @@
 
 <p>Regardless of which path you pick, a few things are worth knowing before you lose an afternoon to them.</p>
 
-<p>WebAssembly is the fussiest head. Interactive sign-in in the browser depends on the redirect and the renderer in ways that have been moving recently, so if you’re on WASM, read the sample’s setup notes and check which Uno version you’re on rather than assuming it just works. The silent path and Graph calls are fine, it’s the first interactive sign-in that’s delicate.</p>
+<p>The big one is renderer-shaped. Under the Skia renderer — the default for new Uno apps since 6.0 — Uno’s build tooling shipped a no-op flavor of the <code class="language-plaintext highlighter-rouge">Uno.WinUI.MSAL</code> helpers to the Android, iOS, and WebAssembly heads. <code class="language-plaintext highlighter-rouge">WithUnoHelpers()</code> compiled and silently did nothing: Android and iOS interactive sign-in failed because MSAL never got its parent activity, and on WebAssembly the sign-in popup never opened at all. No redirect URI or Entra setting fixes that one. It was tracked as <a href="https://github.com/unoplatform/uno/issues/20601">uno#20601</a> and fixed by <a href="https://github.com/unoplatform/uno/pull/24055">uno#24055</a>, merged August 13th, 2026 — the fix is build-time only, needs no app changes, and ships with Uno 6.8 (it’s on the <code class="language-plaintext highlighter-rouge">6.8.0-dev</code> feed today). Until you’re on the fixed bits, the manual sample carries a temporary <code class="language-plaintext highlighter-rouge">#if</code> workaround that passes the parent activity and view controller explicitly, and WebAssembly interactive sign-in under Skia simply doesn’t happen. Once you’re past it, the workaround deletes down to that one <code class="language-plaintext highlighter-rouge">WithUnoHelpers()</code> line.</p>
 
-<p>On iOS, that keychain access group is not optional. Leave it out and MSAL throws before you ever see a screen. And if you change it, you need a clean iOS rebuild, because the native link caches it.</p>
+<p>Still on WebAssembly: the browser token cache is in-memory only, so a page refresh means signing in again. That’s the current state of MSAL token storage in the browser, not a bug in your app.</p>
+
+<p>On iOS, that keychain access group is not optional. Leave it out and MSAL throws before you ever see a screen — as early as <code class="language-plaintext highlighter-rouge">Build()</code> if the entitlements aren’t applied to the build at all. And if you change it, you need a clean iOS rebuild, because the native link caches it.</p>
 
 <p>Finally, the redirect URI you register has to match the one your app sends, character for character. This is the single most common reason sign-in fails, which is exactly why both samples print their computed redirect URI on screen. Copy from there. Both samples ship with a placeholder client id and a <code class="language-plaintext highlighter-rouge">MSAL-SETUP.md</code> that walks the whole registration, so you can run them first and fill in the real value once you see what they expect. For the framework-level details, the <a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Authentication/HowTo-MsalAuthentication.html">Uno.Extensions MSAL how-to</a> is the reference.</p>
 
@@ -287,7 +279,7 @@
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>Cross-platform auth has a reputation for being miserable, and MSAL on Uno mostly puts that reputation to rest. The manual route gives you every knob and asks you to wire up the platform plumbing yourself. The Uno.Extensions route hands the MSAL flow to the framework and lets you talk to a tidy <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> instead, while still leaving the native redirect bits in your hands. Both are real, both are shipping in the samples repo, and now there’s a working example of each to start from.</p>
+<p>Cross-platform auth has a reputation for being miserable, and MSAL on Uno mostly puts that reputation to rest. The manual route gives you every knob and asks you to wire up the platform plumbing yourself. The Uno.Extensions route hands the MSAL flow to the framework and lets you talk to a tidy <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> instead, while still leaving the native redirect bits in your hands. Both are real — the manual sample is merged in the samples repo, and the Uno.Extensions one is an open PR riding the new bits — so there’s a working example of each to start from.</p>
 
 <p>Go poke at the <a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalDemo">manual sample</a> and the <a href="https://github.com/unoplatform/Uno.Samples/pull/944">Uno.Extensions sample</a>, and if you get stuck on a redirect URI, know that you’re in very good company. Come find me in the <a href="https://platform.uno/discord">Uno Discord</a> if you do.</p>
 
