@@ -1,5 +1,5 @@
 ---
-title: "Uno Apps Inside Uno Apps: Hosting Every Theme Sample With AssemblyLoadContext"
+title: "Uno Apps Inside of Uno Apps"
 category: uno-general
 header:
   teaser: /assets/images/alc-super-themes/hero.png
@@ -7,7 +7,7 @@ header:
 tags: [uno-platform, uno, assemblyloadcontext, alc, hot-design, themes, skia, wasm]
 ---
 
-I posted a fun little experiment the other day and it got more of a reaction than I expected, so I want to follow it up with the real story of how it works. Here's [the tweet][tweet]:
+I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here's [the tweet][tweet]:
 
 > Running your @UnoPlatform apps inside of your @UnoPlatform apps ;)
 >
@@ -15,17 +15,25 @@ I posted a fun little experiment the other day and it got more of a reaction tha
 
 And here's the thing actually running. One app, and I'm picking which whole other app renders inside it, live:
 
-<video class="align-center" autoplay muted loop controls playsinline poster="/assets/images/alc-super-themes/hero.png">
-  <source src="/assets/images/alc-super-themes/super-themes-demo.mp4" type="video/mp4" />
-</video>
-
-Let's get into what's going on here, because it's one of the more genuinely fun things I've built in a while, and it leans on a piece of .NET that most of us never touch directly.
+{% include local-video.html
+     src="/assets/images/alc-super-themes/super-themes-demo.mp4"
+     poster="/assets/images/alc-super-themes/super-themes-demo-poster.png" %}
 
 ## What Even Is This
 
-The Uno.Themes repo ships three sample apps, one per design system: Material, Cupertino, and Simple. Today, testing them means launching a different sample head for each one. I wanted a single app where I could tap a button and load any of them, then unload it and load the next one.
+The [Uno.Themes repo][uno-themes] contains three sample apps, one per design system: Material, Simple, and Cupertino (out of support). I wanted a single app where I could tap a button and load any of them, then unload it and load the next one. The catch is that these aren't little user controls I'm swapping in. Each one is a complete, independent Uno application, with its own `App` class, its own resources, its own theme library, its own everything. What you're watching in that video is one Uno app hosting another entire Uno app, swapping between three of them, with a <i>clean</i><sup>*</sup> teardown in between.
 
-The catch is that these aren't little user controls I'm swapping in. Each one is a complete, independent Uno application, with its own `App` class, its own resources, its own theme library, its own everything. What you're watching in that video is one Uno app hosting another entire Uno app in the same process, swapping between three of them, with a clean teardown in between. I called it the SUPER THEMES APP because I was enjoying myself.
+## But Like, Why?
+
+ > Is this just some flashy demoware?
+
+ No! I have reasons; and they are threefold:
+
+ 1. This is the underlying plumbing the powers [Uno Platform Studio][uno-studio], more on that [later](#standing-on-uno-studios-shoulders)
+
+ 2. Today, testing each Themes app means launching a different sample head for each one. It means packaging each one separately. It means deploying to three separate slots in the dev environment via the CI. It means a larger, more complex setup locally and on the CI. It's also a way to test the themes in a single staging slot for every pull request, instead of three separate ones.
+
+ 3. It's also a single entry point for automated runtime tests that need to run against all three themes. Imagine having a single "runner" app that is capable of being provided a set of automated runtime test cases, and then running them against the live app to be tested. That's the payoff.
 
 <a href="/assets/images/alc-super-themes/themes-running.png"><img class="align-center" src="/assets/images/alc-super-themes/themes-running.png" alt="The wrapper app hosting the Material, Cupertino, and Simple theme samples one at a time, each showing an 'is running' status"/></a>
 
@@ -33,9 +41,9 @@ The catch is that these aren't little user controls I'm swapping in. Each one is
 
 The piece of .NET that makes this possible is [`AssemblyLoadContext`][alc-docs], or ALC. If you've never had a reason to reach for it, here's the two-minute version.
 
-Normally every assembly your app loads goes into one big shared bucket, the default load context. ALC lets you create additional, isolated buckets. Two different contexts can each load an assembly with the same name, even different versions of it, and the runtime treats them as genuinely separate. It's the foundation that real plugin systems are built on.
+Normally every assembly your app loads goes into one big shared bucket, the default load context. ALC lets you create additional, isolated buckets. Two different contexts can each load an assembly with the same name, even different versions of it, and the runtime treats them as genuinely separate. Worth being precise about "isolated" though, because it isn't a sandbox. There's no binary isolation between contexts, they're only isolated by not finding each other by name.
 
-The other half, and the half I actually cared about, is that a load context can be marked [collectible][alc-unloadable]. A collectible context can be unloaded, and once nothing is referencing anything inside it, the garbage collector reclaims all of it: the assemblies, the types, the whole works. That's the property that lets me load a guest app, run it, and then get all of that memory back before I load the next one. In theory, anyway. Getting from "in theory" to "actually collected" is most of the story below.
+And things get weird when you start sharing types across contexts.
 
 ## Standing on Uno Studio's Shoulders
 
@@ -77,9 +85,9 @@ From there the guest constructs its `App`, sets up its window, and Uno quietly r
 
 ## Two Tiny Changes to Each Guest
 
-The part I'm happiest about is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.
+The coolest part is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.
 
-First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context:
+First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context. Basically, this is how we can ensure that the guest's static resources don't leak into the host's world, and vice versa. Add this to the guest's csproj:
 
 ```xml
 <UnoEnableAlcAppSupport>true</UnoEnableAlcAppSupport>
@@ -99,29 +107,70 @@ MainWindow = new Microsoft.UI.Xaml.Window();
 
 That's still correct when the app runs standalone, because the first `new Window()` maps to the main window anyway. So the sample heads stay completely standalone. They gained the ability to be hosted without giving up the ability to run on their own.
 
-## Where It Got Interesting
-
-If the story ended there it would be a suspiciously clean blog post. It did not end there, and honestly the problems were the best part. A few of my favorites.
-
-### The factory that refused to let go
-
-My first instinct for creating the guest was a tidy generic helper, something like `App(() => new TApp())`. It worked, and then the ALC would never unload. It turns out a `Func<TApp>` creates a shared-generic dictionary entry that pins the collectible context's loader, so the very thing I was using to start the guest was quietly holding it hostage forever. The fix was to build the factory as a non-generic `Func<Application>` with a compiled expression, so nothing generic ever touches the guest's type. That one cost me an afternoon.
-
-### Win32 boots differently than X11
-
-On my Linux X11 setup, a guest's run loop blocks for the guest's lifetime, which is what my loader expected. On Win32 there's a single process-wide message loop, so the guest's nested `Run()` just schedules its startup and returns immediately. My loader read that instant return as "the guest exited before it showed anything" and tore it down mid-boot. Now only a run loop that actually faults counts as a boot failure.
-
-### Trimming ate the bridge
-
-The WASM build was the nastiest. Guests are loaded by reflection, so the trimmer can't see them, and it stripped type-forwarders out of the framework facade assemblies because as far as it could tell nothing used them. Every guest then died the moment it called `GetTypes()`, looking for a type that no longer had a forwarding entry. The fix was to publish this one hosting app untrimmed. It's the single ugliest tradeoff in the whole thing, because untrimmed the WASM payload balloons to around 116 MB. The regular theme heads still trim normally. Only this hosting head pays the tax.
-
-## Does It Actually Clean Up
+## Guest overstaying their welcome
 
 This was the question I most wanted to answer, because a memory leak per theme switch would make the whole thing a toy.
 
 On desktop under X11, I ran a Release soak test that loads, switches, unloads, and reloads across all three guests for sixteen cycles. The previous guest's load context was collected fifteen out of fifteen times, and the managed heap stayed flat at around 32 MB the whole way through. On the managed side, this genuinely works. The collectible ALC does its job and the memory comes back. After a couple of rounds of internal architecture review, that check is now wired into CI as a hosting smoke test: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.
 
-I'll be honest about the parts that don't clean up, though, because this is running on a 6.7-dev build and it shows. There's a native leak: each guest window create and destroy cycle leaks its native GL context on X11, even though the managed side is fully reclaimed. There are also a few spots where I had to reach in with reflection and manually sweep some of Uno's internal caches on unload, because the current dev runtime doesn't fully clear them itself. Each of those sweeps is now written up as a specific upstream Uno issue, so they're tracked deficiencies with a shelf life rather than mystery hacks, and each one deletes itself the day its fix ships. And by design, this hosts exactly one guest at a time. It started as a "wouldn't it be funny" experiment, it's had a real hardening pass since, but it still rides on a preview runtime and I want to be upfront about that.
+### The teardown dance
+
+Getting to fifteen out of fifteen took more than calling `Unload()`. Unloading is cooperative, so it only finishes once nothing outside the context still points at anything inside it, and the awkward part is that guest finalizers keep running *during* the unload and can put things back after you've cleaned up. The [sequence I landed on][teardown] is:
+
+```csharp
+// 7. Drop every session reference before unloading so the collectible ALC can go.
+var alc = session.Alc;
+session.GuestApp = null;
+session.ExecutionTask = null;
+session.ExecutionThread = null;
+
+await Task.Run(alc.Dispose).ConfigureAwait(false);
+_lastUnloadedAlc = new WeakReference<GuestAssemblyLoadContext>(alc);
+
+GC.Collect();
+await DrainFinalizersAsync().ConfigureAwait(false);
+await RunOnUIThreadAsync(SweepNonDefaultAlcCaches).ConfigureAwait(false);
+
+GC.Collect();
+```
+
+Drop the references, unload, let the finalizers drain, and only then sweep. Sweeping before the finalizers finish just means they refill the caches behind you.
+
+### The sweeps
+
+That `SweepNonDefaultAlcCaches` call is the honest ugly part. It's three reflection-based pokes at Uno internals, deliberately parked in [one file][sweeps] so they're easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target:
+
+- **[Re-running Uno's own cache sweep][sweep-finalizers].** `ExitAlcApplication()` already clears the per-ALC static caches, but guest `DependencyObject` finalizers run afterwards and can re-populate them. I invoke `Application.CleanupNonDefaultAlcCaches` a second time once the finalizers have drained. ([uno#24075][issue-finalizers])
+- **[Clearing `DependencyProperty._getPropertyCache`][sweep-dp].** This one took a heap dump to find. That cache memoizes `(targetType, "ns:Owner.Property")` lookups, and a guest style targeting an attached property on a framework element caches a *default-ALC* key with a *guest-ALC* value. Uno's per-key sweep only checks the key, so the entry survives and roots the guest's `LoaderAllocator` forever. ([uno#24073][issue-dp])
+- **[Pruning `SystemNavigationManager` handlers][sweep-nav].** The samples' `Shell` subscribes to the process-wide `BackRequested` and nothing unsubscribes it on teardown, so the stale handler roots the guest's entire visual tree ([uno#24074][issue-nav]). The fix is to walk the invocation list and drop anything whose origin lives in a collectible context:
+
+```csharp
+var originAssembly = handler.Target?.GetType().Assembly ?? handler.Method.Module.Assembly;
+var targetAlc = AssemblyLoadContext.GetLoadContext(originAssembly);
+if (targetAlc is not null && targetAlc != AssemblyLoadContext.Default)
+{
+    pruned = Delegate.Remove(pruned, handler);
+}
+```
+
+None of this is exotic, it's the direct cost of sharing `Uno.UI` from the default context. Every shared assembly is non-collectible code that can hold a reference into the guest, and one static still pointing at a guest object roots the whole load context. The sweeps aren't really a workaround bolted on the side, they're the counterpart to sharing anything at all.
+
+### The parts that don't clean up
+
+I'll be honest about those too, because this is running on a 6.7-dev build and it shows. There's a native leak: each guest window create and destroy cycle leaks its native GL context on X11, somewhere around 12 to 15 MB a cycle, even though the managed side is fully reclaimed ([uno#24076][issue-x11]). Every one of these is now filed upstream with a repro and a suggested fix, so they're tracked deficiencies with a shelf life rather than mystery hacks, and each sweep deletes itself the day its fix ships. And by design, this hosts exactly one guest at a time. It started as a "wouldn't it be funny" experiment, it's had a real hardening pass since, but it still rides on a preview runtime and I want to be upfront about that.
+
+---
+The direction that matters
+
+Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory.
+
+With one exception the docs call out explicitly: strong GC handles block unload "from both inside and outside." A GCHandle.Alloc made by guest code, pointing at a guest object, prevents its own context from unloading — because a GC handle is a root regardless of who created it.
+
+Where this bites your app specifically
+
+Your shared-vs-isolated split is also your leak surface. Every assembly shared from Default is non-collectible code that might hold a guest reference. The highest-risk vector is statics in the shared Uno.UI — anything like Application.Current, or a resource-dictionary cache, still pointing at the guest's App instance after teardown roots the entire context. That's precisely what your reflection-based cache sweeping at :132 is doing, and framing it that way makes it read less like a hack and more like the mandatory counterpart to sharing Uno.UI at all.
+---
+
 
 ## Why Bother
 
@@ -139,11 +188,24 @@ If you go try something like this yourself, do it on a 6.7 build and expect to g
 
 Catch you in the next one :wave:
 
+<i>*</i> We are still hunting down some leaks, we've made good progress but memory management is hard ok? Give us a break.
+
 [tweet]: https://x.com/BiloganSteve/status/2087173345322152018
 [uno-discord]: https://platform.uno/discord
 [pr]: https://github.com/unoplatform/Uno.Themes/pull/1693
-[alc-docs]: https://learn.microsoft.com/en-us/dotnet/api/system.runtime.loader.assemblyloadcontext
+[alc-docs]: https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext
 [alc-unloadable]: https://learn.microsoft.com/en-us/dotnet/standard/assembly/unloadability
-[uno-studio]: https://platform.uno/uno-platform-studio/
+[r2r]: https://learn.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
+[uno-studio]: https://platform.uno/studio/
 [hot-design]: https://platform.uno/docs/articles/studio/Hot%20Design/hot-design-overview.html
+[uno-themes]: https://github.com/unoplatform/Uno.Themes
+[teardown]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L459-L480
+[sweeps]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs
+[sweep-finalizers]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L19-L21
+[sweep-dp]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L23-L35
+[sweep-nav]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L100-L158
+[issue-dp]: https://github.com/unoplatform/uno/issues/24073
+[issue-nav]: https://github.com/unoplatform/uno/issues/24074
+[issue-finalizers]: https://github.com/unoplatform/uno/issues/24075
+[issue-x11]: https://github.com/unoplatform/uno/issues/24076
 {% include links.md %}

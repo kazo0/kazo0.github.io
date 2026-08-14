@@ -14,3 +14,24 @@
 .height-half {
 	height: 10%
 }
+
+/* Self-hosted video
+   ========================================================================== */
+
+/* Safety net: a raw <video> has no max-width of its own, so a wide screen
+   recording will happily overflow the article column. */
+.page__content video {
+	max-width: 100%;
+	height: auto;
+}
+
+.video-figure {
+	margin: 2em 0;
+}
+
+.video-figure__video {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+}

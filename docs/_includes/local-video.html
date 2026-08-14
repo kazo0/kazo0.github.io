@@ -1,0 +1,25 @@
+{%- comment -%}
+Self-hosted video sized to the article column. Named `local-video` so it doesn't
+clash with the theme's `video.html` (the YouTube/Vimeo embed include).
+
+Fullscreen comes from the browser's own video controls.
+
+Usage:
+  {% include local-video.html
+       src="/assets/images/my-post/demo.mp4"
+       poster="/assets/images/my-post/poster.png"
+       caption="Optional caption" %}
+
+Options: src (required), poster, caption, type (default video/mp4),
+autoplay (default true — set to "false" for a click-to-play video).
+{%- endcomment -%}
+{%- assign autoplay = include.autoplay | default: "true" -%}
+<figure class="video-figure">
+  <video class="video-figure__video" {% if autoplay == "true" %}autoplay muted loop {% endif %}controls playsinline preload="metadata"{% if include.poster %} poster="{{ include.poster | relative_url }}"{% endif %}>
+    <source src="{{ include.src | relative_url }}" type="{{ include.type | default: 'video/mp4' }}" />
+    Your browser doesn't support embedded video. <a href="{{ include.src | relative_url }}">Download the clip</a> instead.
+  </video>
+  {%- if include.caption %}
+  <figcaption>{{ include.caption }}</figcaption>
+  {%- endif %}
+</figure>
