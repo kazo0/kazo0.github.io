@@ -215,7 +215,7 @@ Beyond it just being cool, there's a real payoff. The Uno.Themes repo deploys a 
 
 There's also something I like about pulling back the curtain. The ALC hosting that powers Uno Platform Studio can feel like magic when it's buried inside a product. Wiring it up myself, and hitting all the sharp edges, made it a lot less magical and a lot more approachable. If you want to see the whole thing, warts and workarounds included, all of the code is in the [pull request][pr].
 
-I should also mention I built this alongside an agent, using Claude Code, which fits right in with the [agentic development]({% post_url 2026-02-23-agent-skills-intro %}) thread I've been on lately. Chasing down a trimmer stripping type-forwarders is exactly the kind of deep, weird problem where having a tireless pair helps.
+I should also mention I built this with Claude, which fits right in with the [agentic development]({% post_url 2026-02-23-agent-skills-intro %}) thread I've been on lately. Chasing down a trimmer stripping type-forwarders is exactly the kind of deep, weird problem where having a tireless pair helps.
 
 ## Conclusion
 
