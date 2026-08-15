@@ -14,3 +14,81 @@
 .height-half {
 	height: 10%
 }
+
+/* Self-hosted video
+   ========================================================================== */
+
+/* Safety net: a raw <video> has no max-width of its own, so a wide screen
+   recording will happily overflow the article column. */
+.page__content video {
+	max-width: 100%;
+	height: auto;
+}
+
+.video-figure {
+	margin: 2em 0;
+}
+
+.video-figure__video {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+}
+
+/* Image lightbox zoom animation
+   ========================================================================== */
+
+/* The theme's Magnific Popup init sets mainClass "mfp-zoom-in" and tags the
+   figure with "mfp-with-anim", but ships no CSS for either — without these
+   rules the lightbox snaps open with no effect and hangs for its 500ms
+   removalDelay on close. */
+.mfp-zoom-in {
+	.mfp-with-anim {
+		opacity: 0;
+		transform: scale(0.8);
+		transition: all 0.25s ease-in-out;
+	}
+
+	&.mfp-bg {
+		opacity: 0;
+		transition: all 0.25s ease-out;
+	}
+
+	&.mfp-ready {
+		.mfp-with-anim {
+			opacity: 1;
+			transform: scale(1);
+		}
+
+		&.mfp-bg {
+			opacity: 0.8;
+		}
+	}
+
+	&.mfp-removing {
+		.mfp-with-anim {
+			opacity: 0;
+			transform: scale(0.8);
+		}
+
+		&.mfp-bg {
+			opacity: 0;
+		}
+	}
+}
+
+/* Source captions under code blocks
+   ========================================================================== */
+
+/* Pulls up against the code block's 1em bottom margin so the caption reads as
+   part of the snippet rather than as the next paragraph. */
+.code-caption {
+	margin: -0.75em 0 1.5em;
+	/* Not $muted-text-color: on the dark skin that mixes toward #fff, landing
+	   brighter than body text. Mixing toward the background recedes on any skin. */
+	color: mix($background-color, $text-color, 35%);
+	font-family: $sans-serif;
+	font-size: $type-size-7;
+	text-align: right;
+}
