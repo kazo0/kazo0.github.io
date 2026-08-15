@@ -52,7 +52,7 @@ I did not invent the hard part here. [Uno Platform Studio][uno-studio] already d
 There are really only three moving parts:
 
 - [`AlcContentHost`][alc-uno-code], a `ContentControl` you drop into your visual tree to reserve a spot for the guest.
-- [`WindowHelper.ContentHostOverride`][contenthostoverride-uno-code], which you point at that host so a guest's window content gets redirected into it instead of trying to open its own native window.
+- [`WindowHelper.ContentHostOverride`][contenthostoverride-uno-code], which allows the guest's window content to be redirected to that `AlcContentHost`.
 - A second `UnoPlatformHostBuilder`, which you build around the guest's `Application` and run.
 
 ## The Host Side
