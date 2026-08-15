@@ -124,4 +124,10 @@ var store = [{
         "tags": ["Agents","AI","MCP","skills","uno-platform","uno","unoplatform"],
         "url": "/uno-general/2026/02/23/agent-skills-intro.html",
         "teaser": "/assets/images/skills-intro/tool-hero.png"
+      },{
+        "title": "Uno Apps Inside of Uno Apps",
+        "excerpt":"I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet: Running your @UnoPlatform apps inside of your @UnoPlatform apps ;) Inspired by the plumbing of Uno Platform Studio, I thought it’d be fun...","categories": ["uno-general"],
+        "tags": ["uno-platform","uno","assemblyloadcontext","alc","hot-design","themes","skia","wasm"],
+        "url": "/uno-general/2026/08/11/alc-super-themes-app.html",
+        "teaser": "/assets/images/alc-super-themes/hero.png"
       }]
