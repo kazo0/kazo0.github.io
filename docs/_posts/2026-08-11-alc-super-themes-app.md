@@ -47,17 +47,17 @@ And things get weird when you start sharing types across contexts.
 
 ## Standing on Uno Studio's Shoulders
 
-I did not invent the hard part here. The [Uno Platform Studio][uno-studio] tooling, and [Hot Design][hot-design] in particular, already hosts your live, running app so it can turn it into a designer. That plumbing is exactly this: loading and running an app inside another process's world. The Uno 6.7-dev runtime exposes the pieces that make it work as public API, and I just wired them together for a much simpler purpose.
+I did not invent the hard part here. [Uno Platform Studio][uno-studio] already does exactly this in production: it loads your app into a fresh collectible `AssemblyLoadContext` and runs it inside the Studio process itself. [Hot Design][hot-design] then rides along inside that same context, which is how it can turn your live, running app into a designer. That plumbing is exactly what I needed: loading and running a whole app inside another app's world. The Uno runtime exposes the pieces that make it work as public API, and I just wired them together for a much simpler purpose.
 
-There are really only three moving parts, and the nicest surprise was that the main path needs zero reflection into Uno internals:
+There are really only three moving parts:
 
-- `AlcContentHost`, a `ContentControl` you drop into your visual tree to reserve a spot for the guest.
-- `WindowHelper.ContentHostOverride`, which you point at that host so a guest's window content gets redirected into it instead of trying to open its own native window.
+- [`AlcContentHost`][alc-uno-code], a `ContentControl` you drop into your visual tree to reserve a spot for the guest.
+- [`WindowHelper.ContentHostOverride`][contenthostoverride-uno-code], which you point at that host so a guest's window content gets redirected into it instead of trying to open its own native window.
 - A second `UnoPlatformHostBuilder`, which you build around the guest's `Application` and run.
 
 ## The Host Side
 
-On the wrapper's main page, I create the content host once and register it as the override for the whole app's lifetime:
+On the parent app's main page, I create the `AlcContentHost` once and register it as the override for the whole app's lifetime:
 
 ```csharp
 _contentHost = new AlcContentHost { HorizontalAlignment = HorizontalAlignment.Stretch };
@@ -67,7 +67,10 @@ GuestRegion.Child = _contentHost;
 WindowHelper.ContentHostOverride = _contentHost;
 ```
 
-When you pick a theme, the loader creates a fresh collectible ALC, loads the guest's assemblies into it, and starts the guest with its own host builder. The important subtlety is what gets shared versus isolated. The Uno framework assemblies (`Uno.UI` and friends) are shared from the default context, because if the host and the guest each loaded their own `Uno.UI`, their types would not be the same types and nothing would line up. The guest's own code and its theme library, on the other hand, stay fully isolated inside the collectible context. That whole shared-versus-isolated policy now lives in a single data file that both the loader and the build step read, so the runtime and the packaging can never quietly drift apart, a subtlety that bit me until I collapsed the two lists into one.
+Source: [`ThemesSampleApp/MainPage.xaml.cs`][src-mainpage]
+{: .code-caption}
+
+When you pick a theme, the loader creates a fresh collectible ALC, loads the guest's assemblies into it, and starts the guest with its own host builder. The important subtlety is what gets shared versus isolated. The Uno framework assemblies (`Uno.UI` and friends) are shared from the default context, because if the host and the guest each loaded their own `Uno.UI`, their types would not be the same types and nothing would line up. The guest's own code and its theme library, on the other hand, stay fully isolated inside the collectible context. That whole shared-versus-isolated policy now lives in a single data file that both the loader and the build step read, so the runtime and the packaging can never quietly drift apart.
 
 Starting the guest looks roughly like this. Note that it never runs the guest's `Program.Main`, it builds a brand new host around the guest's `App`:
 
@@ -81,17 +84,27 @@ var builder = UnoPlatformHostBuilder.Create().App(capturingFactory);
 var host = builder.Build();
 ```
 
-From there the guest constructs its `App`, sets up its window, and Uno quietly redirects that window's content into the `AlcContentHost`. The guest thinks it's a normal top-level app. It has no idea it's a guest.
+Source: [`GuestAppLoader.Desktop.cs`][src-host-desktop] and [`GuestAppLoader.Wasm.cs`][src-host-wasm] — split per platform in the repo rather than `#if`'d in one file
+{: .code-caption}
+
+From there the guest constructs its `App`, sets up its window, and Uno quietly redirects that window's content into the `AlcContentHost`. The guest thinks it's a normal top-level app. It has no idea it's a guest. There's an important subtlety here about how the guest app's content is plumbed through. We aren't dealing nesting Windows or multiple App instances or multiple independent visual trees. When we set the `WindowHelper.ContentHostOverride` to `_contentHost`, we are telling the Uno runtime that any `Window` created in the guest context should have its content redirected to the `AlcContentHost`. This allows the guest app to behave as if it has its own window, while actually rendering inside the host's visual tree. So, one visual tree for both apps.
+
+And yes, it makes resource resolution a bitch sometimes.
 
 ## Two Tiny Changes to Each Guest
 
 The coolest part is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.
 
-First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context. Basically, this is how we can ensure that the guest's static resources don't leak into the host's world, and vice versa. Add this to the guest's csproj:
+First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context. Basically, this is how we can ensure that the guest's static resources don't leak into the host's world, and vice versa. Well, actually, it's how the XAML generator knows to generate code that allows us to know which resources belong to which context. The Uno XAML generator has to be aware of the hosting scenario so it can generate code that respects the boundaries of the load contexts.
+
+Add this to the guest's csproj:
 
 ```xml
 <UnoEnableAlcAppSupport>true</UnoEnableAlcAppSupport>
 ```
+
+Source: [`MaterialSampleApp.csproj`][src-alc-support] — identical line in the Cupertino and Simple heads
+{: .code-caption}
 
 Second, and this one is a genuine gotcha, the sample apps used to grab their window like this:
 
@@ -105,20 +118,40 @@ MainWindow = Microsoft.UI.Xaml.Window.Current;
 MainWindow = new Microsoft.UI.Xaml.Window();
 ```
 
+Source: [`MaterialSampleApp/App.xaml.cs`][src-new-window] — identical line in the Cupertino and Simple heads
+{: .code-caption}
+
 That's still correct when the app runs standalone, because the first `new Window()` maps to the main window anyway. So the sample heads stay completely standalone. They gained the ability to be hosted without giving up the ability to run on their own.
 
-## Guest overstaying their welcome
+## Guests overstaying their welcome
 
-This was the question I most wanted to answer, because a memory leak per theme switch would make the whole thing a toy.
+Just the thought of loading, unloading, switching, and reloading assemblies over and over again during the app's lifetime is causing my RAM usage to skyrocket. It sounds like a recipe for leaks, and it is. The collectible ALC is supposed to reclaim its memory when nothing outside it points at anything inside it, but Uno's shared assemblies are non-collectible code that can hold references into the guest. If a static in `Uno.UI` still points at a guest object after teardown, the whole context stays alive.
 
-On desktop under X11, I ran a Release soak test that loads, switches, unloads, and reloads across all three guests for sixteen cycles. The previous guest's load context was collected fifteen out of fifteen times, and the managed heap stayed flat at around 32 MB the whole way through. On the managed side, this genuinely works. The collectible ALC does its job and the memory comes back. After a couple of rounds of internal architecture review, that check is now wired into CI as a hosting smoke test: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.
+The direction matters here: Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory. And it's not always as straightforward as it sound. In fact, as a result of this app and blog, we identified a few leaks that need to be cleaned up! More on that [in a bit](#sweeping-up).
 
-### The teardown dance
+This is why we now have a hosting smoke test wired into CI: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.
 
-Getting to fifteen out of fifteen took more than calling `Unload()`. Unloading is cooperative, so it only finishes once nothing outside the context still points at anything inside it, and the awkward part is that guest finalizers keep running *during* the unload and can put things back after you've cleaned up. The [sequence I landed on][teardown] is:
+The test itself is boring in the best way. Launch the wrapper with `--smoke` on desktop or `?smoke` in the browser and [it drives itself][smoke]: load each guest in turn, unload the last one, and check reclamation after every step. It's not perfect, I know. Technically, we should be be loading and unloading over and over again and maintain a count of maintained references that should be kept underneath a realistic threshold, but this is a smoke test, not a stress test.
+
+### The eviction
+
+The eviction is the part that actually tears down the guest. It calls `ExitAlcApplication()` to clean up the guest's static caches, then it sweeps a few Uno internals to make sure nothing is still pointing at the collectible context. Finally, it drops its reference to the ALC and forces a GC collection, then probes to see if the context was reclaimed.
+
+It starts politely, by asking the guest to exit itself. `Application.Exit()` is what internally triggers `ExitAlcApplication()`, which sweeps the per-ALC static caches:
 
 ```csharp
-// 7. Drop every session reference before unloading so the collectible ALC can go.
+if (session.GuestApp is { } guestApp)
+{
+    await RunOnUIThreadAsync(guestApp.Exit).ConfigureAwait(false);
+}
+```
+
+Source: [`GuestAppLoader.TeardownUnguardedAsync`][evict-exit]
+{: .code-caption}
+
+Then every reference the session holds gets dropped before the unload, because anything still pointing into the guest at this moment pins the context. The weak reference is deliberately the *only* thing left holding the ALC:
+
+```csharp
 var alc = session.Alc;
 session.GuestApp = null;
 session.ExecutionTask = null;
@@ -126,7 +159,14 @@ session.ExecutionThread = null;
 
 await Task.Run(alc.Dispose).ConfigureAwait(false);
 _lastUnloadedAlc = new WeakReference<GuestAssemblyLoadContext>(alc);
+```
 
+Source: [`GuestAppLoader.TeardownUnguardedAsync`][teardown]
+{: .code-caption}
+
+Ordering is the whole trick in the next bit. Guest `DependencyObject` finalizers run *during* the unload and can re-populate the shared property-system caches after `ExitAlcApplication` already swept them, so the sweep has to come after the finalizers drain, not before:
+
+```csharp
 GC.Collect();
 await DrainFinalizersAsync().ConfigureAwait(false);
 await RunOnUIThreadAsync(SweepNonDefaultAlcCaches).ConfigureAwait(false);
@@ -134,49 +174,46 @@ await RunOnUIThreadAsync(SweepNonDefaultAlcCaches).ConfigureAwait(false);
 GC.Collect();
 ```
 
-Drop the references, unload, let the finalizers drain, and only then sweep. Sweeping before the finalizers finish just means they refill the caches behind you.
+Source: [`GuestAppLoader.TeardownUnguardedAsync`][evict-sweep] — the sweep call is wrapped in a warning check in the repo
+{: .code-caption}
 
-### The sweeps
-
-That `SweepNonDefaultAlcCaches` call is the honest ugly part. It's three reflection-based pokes at Uno internals, deliberately parked in [one file][sweeps] so they're easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target:
-
-- **[Re-running Uno's own cache sweep][sweep-finalizers].** `ExitAlcApplication()` already clears the per-ALC static caches, but guest `DependencyObject` finalizers run afterwards and can re-populate them. I invoke `Application.CleanupNonDefaultAlcCaches` a second time once the finalizers have drained. ([uno#24075][issue-finalizers])
-- **[Clearing `DependencyProperty._getPropertyCache`][sweep-dp].** This one took a heap dump to find. That cache memoizes `(targetType, "ns:Owner.Property")` lookups, and a guest style targeting an attached property on a framework element caches a *default-ALC* key with a *guest-ALC* value. Uno's per-key sweep only checks the key, so the entry survives and roots the guest's `LoaderAllocator` forever. ([uno#24073][issue-dp])
-- **[Pruning `SystemNavigationManager` handlers][sweep-nav].** The samples' `Shell` subscribes to the process-wide `BackRequested` and nothing unsubscribes it on teardown, so the stale handler roots the guest's entire visual tree ([uno#24074][issue-nav]). The fix is to walk the invocation list and drop anything whose origin lives in a collectible context:
+And the verdict is just a weak-reference probe. If the target is still reachable after all that, something in the host is still rooting the guest:
 
 ```csharp
-var originAssembly = handler.Target?.GetType().Assembly ?? handler.Method.Module.Assembly;
-var targetAlc = AssemblyLoadContext.GetLoadContext(originAssembly);
-if (targetAlc is not null && targetAlc != AssemblyLoadContext.Default)
+if (weakAlc.TryGetTarget(out var previous))
 {
-    pruned = Delegate.Remove(pruned, handler);
+    LastUnloadedAlcCollected = false;
+    _logger.LogWarning("Previous guest ALC {Name} is still alive after unload + GC.", previous.Name);
+}
+else
+{
+    LastUnloadedAlcCollected = true;
 }
 ```
 
-None of this is exotic, it's the direct cost of sharing `Uno.UI` from the default context. Every shared assembly is non-collectible code that can hold a reference into the guest, and one static still pointing at a guest object roots the whole load context. The sweeps aren't really a workaround bolted on the side, they're the counterpart to sharing anything at all.
+Source: [`GuestAppLoader.ReportPreviousAlcCollectionState`][smoke-probe]
+{: .code-caption}
 
-### The parts that don't clean up
+### Sweeping up
 
-I'll be honest about those too, because this is running on a 6.7-dev build and it shows. There's a native leak: each guest window create and destroy cycle leaks its native GL context on X11, somewhere around 12 to 15 MB a cycle, even though the managed side is fully reclaimed ([uno#24076][issue-x11]). Every one of these is now filed upstream with a repro and a suggested fix, so they're tracked deficiencies with a shelf life rather than mystery hacks, and each sweep deletes itself the day its fix ships. And by design, this hosts exactly one guest at a time. It started as a "wouldn't it be funny" experiment, it's had a real hardening pass since, but it still rides on a preview runtime and I want to be upfront about that.
+That `SweepNonDefaultAlcCaches` call is the honest ugly part. It's three reflection-based pokes at Uno internals, deliberately parked in [one file][sweeps] so they're easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target.
 
----
-The direction that matters
+I won't go into each sweep, but we can focus on what I think is the most interesting one. This is the one that that illustrates the hidden complexity of the `Guest → host references are fine. Host → guest is what kills you` rule. The `SystemNavigationManager.BackRequested` event is a process-wide static in the shared `Uno.UI`, and the guest's `Shell` subscribes to it. At face-value, this may sound like a guest -> host reference. But this is one of those pesky cases where the guest's subscription roots the guest itself. The event is a multicast delegate, and the invocation list holds strong references to each subscriber.
 
-Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory.
+ Nothing unsubscribes it on teardown, so the stale handler roots the guest's entire visual tree. The fix is to walk the invocation list and drop anything whose origin lives in a collectible context:
 
-With one exception the docs call out explicitly: strong GC handles block unload "from both inside and outside." A GCHandle.Alloc made by guest code, pointing at a guest object, prevents its own context from unloading — because a GC handle is a root regardless of who created it.
+- **[Pruning `SystemNavigationManager` handlers][sweep-nav].** The samples' `Shell` subscribes to the process-wide `BackRequested` and nothing unsubscribes it on teardown, so the stale handler roots the guest's entire visual tree ([uno#24074][issue-nav]).
 
-Where this bites your app specifically
+#### Remaining sweeps
 
-Your shared-vs-isolated split is also your leak surface. Every assembly shared from Default is non-collectible code that might hold a guest reference. The highest-risk vector is statics in the shared Uno.UI — anything like Application.Current, or a resource-dictionary cache, still pointing at the guest's App instance after teardown roots the entire context. That's precisely what your reflection-based cache sweeping at :132 is doing, and framing it that way makes it read less like a hack and more like the mandatory counterpart to sharing Uno.UI at all.
----
-
+- **[Re-running Uno's own cache sweep][sweep-finalizers].** ([uno#24075][issue-finalizers])
+- **[Clearing `DependencyProperty._getPropertyCache`][sweep-dp].** ([uno#24073][issue-dp])
 
 ## Why Bother
 
 Beyond it just being cool, there's a real payoff. The Uno.Themes repo deploys a staging site for every pull request, and it used to only cover the Simple theme. This wrapper now lets one deployment host all three theme samples behind a picker, so every PR gets a single staging site that covers Material, Cupertino, and Simple at once. The fun demo turned into an actual improvement to how we test the themes.
 
-There's also something I like about pulling back the curtain. The ALC hosting that powers Hot Design can feel like magic when it's buried inside a product. Wiring it up myself, and hitting all the sharp edges, made it a lot less magical and a lot more approachable. If you want to see the whole thing, warts and workarounds included, all of the code is in the [pull request][pr].
+There's also something I like about pulling back the curtain. The ALC hosting that powers Uno Platform Studio can feel like magic when it's buried inside a product. Wiring it up myself, and hitting all the sharp edges, made it a lot less magical and a lot more approachable. If you want to see the whole thing, warts and workarounds included, all of the code is in the [pull request][pr].
 
 I should also mention I built this alongside an agent, using Claude Code, which fits right in with the [agentic development]({% post_url 2026-02-23-agent-skills-intro %}) thread I've been on lately. Chasing down a trimmer stripping type-forwarders is exactly the kind of deep, weird problem where having a tireless pair helps.
 
@@ -184,7 +221,7 @@ I should also mention I built this alongside an agent, using Claude Code, which 
 
 So there it is. Uno apps running inside Uno apps, one collectible load context at a time, built on the same runtime plumbing that Uno Platform Studio uses in production. It started as a "wouldn't it be funny if" and turned into both a genuine testing improvement and the most I've learned about `AssemblyLoadContext` in one sitting.
 
-If you go try something like this yourself, do it on a 6.7 build and expect to get friendly with load contexts. And if you build something sillier than a SUPER THEMES APP, please come show me in the [Uno Discord][uno-discord].
+If you go try something like this yourself, do it on a 6.7 build (may still be prerelease -dev builds at the time of this post) and expect to get friendly with load contexts. And if you build something sillier than a SUPER THEMES APP, please come show me in the [Uno Discord][uno-discord] ;).
 
 Catch you in the next one :wave:
 
@@ -194,18 +231,26 @@ Catch you in the next one :wave:
 [uno-discord]: https://platform.uno/discord
 [pr]: https://github.com/unoplatform/Uno.Themes/pull/1693
 [alc-docs]: https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext
-[alc-unloadable]: https://learn.microsoft.com/en-us/dotnet/standard/assembly/unloadability
-[r2r]: https://learn.microsoft.com/en-us/dotnet/core/deploying/ready-to-run
 [uno-studio]: https://platform.uno/studio/
 [hot-design]: https://platform.uno/docs/articles/studio/Hot%20Design/hot-design-overview.html
 [uno-themes]: https://github.com/unoplatform/Uno.Themes
-[teardown]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L459-L480
-[sweeps]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs
-[sweep-finalizers]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L19-L21
-[sweep-dp]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L23-L35
-[sweep-nav]: https://github.com/unoplatform/Uno.Themes/blob/f31c03fa4dfc59749bdeb67bf4f1f80b45e8f4ae/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L100-L158
+[src-mainpage]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/MainPage.xaml.cs#L28-L39
+[src-host-desktop]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Desktop.cs#L18-L25
+[src-host-wasm]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Wasm.cs#L14-L18
+[src-alc-support]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/MaterialSampleApp/MaterialSampleApp.csproj#L22
+[src-new-window]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/MaterialSampleApp/App.xaml.cs#L38
+[teardown]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L459-L480
+[sweeps]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs
+[sweep-finalizers]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L25-L28
+[sweep-dp]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L30-L41
+[sweep-nav]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L114-L166
+[smoke]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestHostingSmoke.cs
+[smoke-probe]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L490-L509
+[evict-exit]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L403-L421
+[evict-sweep]: https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L468-L480
 [issue-dp]: https://github.com/unoplatform/uno/issues/24073
 [issue-nav]: https://github.com/unoplatform/uno/issues/24074
 [issue-finalizers]: https://github.com/unoplatform/uno/issues/24075
-[issue-x11]: https://github.com/unoplatform/uno/issues/24076
+[alc-uno-code]: https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/AlcContentHost.cs#L15
+[contenthostoverride-uno-code]: https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/WindowHelper.cs#L39
 {% include links.md %}

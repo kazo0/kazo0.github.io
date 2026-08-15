@@ -35,3 +35,18 @@
 	height: auto;
 	border-radius: 10px;
 }
+
+/* Source captions under code blocks
+   ========================================================================== */
+
+/* Pulls up against the code block's 1em bottom margin so the caption reads as
+   part of the snippet rather than as the next paragraph. */
+.code-caption {
+	margin: -0.75em 0 1.5em;
+	/* Not $muted-text-color: on the dark skin that mixes toward #fff, landing
+	   brighter than body text. Mixing toward the background recedes on any skin. */
+	color: mix($background-color, $text-color, 35%);
+	font-family: $sans-serif;
+	font-size: $type-size-7;
+	text-align: right;
+}
