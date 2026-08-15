@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          12 minute read
+          11 minute read
         
       </span>
     
@@ -413,7 +413,7 @@
   <li>
 <a href="https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/AlcContentHost.cs#L15"><code class="language-plaintext highlighter-rouge">AlcContentHost</code></a>, a <code class="language-plaintext highlighter-rouge">ContentControl</code> you drop into your visual tree to reserve a spot for the guest.</li>
   <li>
-<a href="https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/WindowHelper.cs#L39"><code class="language-plaintext highlighter-rouge">WindowHelper.ContentHostOverride</code></a>, which you point at that host so a guest’s window content gets redirected into it instead of trying to open its own native window.</li>
+<a href="https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/WindowHelper.cs#L39"><code class="language-plaintext highlighter-rouge">WindowHelper.ContentHostOverride</code></a>, which allows the guest’s window content to be redirected to that <code class="language-plaintext highlighter-rouge">AlcContentHost</code>.</li>
   <li>A second <code class="language-plaintext highlighter-rouge">UnoPlatformHostBuilder</code>, which you build around the guest’s <code class="language-plaintext highlighter-rouge">Application</code> and run.</li>
 </ul>
 
