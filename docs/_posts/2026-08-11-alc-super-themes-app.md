@@ -21,7 +21,7 @@ And here's the thing actually running. One app, and I'm picking which whole othe
 
 ## What Even Is This
 
-The [Uno.Themes repo][uno-themes] contains three sample apps, one per design system: Material, Simple, and Cupertino (out of support). I wanted a single app where I could tap a button and load any of them, then unload it and load the next one. The catch is that these aren't little user controls I'm swapping in. Each one is a complete, independent Uno application, with its own `App` class, its own resources, its own theme library, its own everything. What you're watching in that video is one Uno app hosting another entire Uno app, swapping between three of them, with a <i>clean</i><sup>*</sup> teardown in between.
+The [Uno.Themes repo][uno-themes] contains three sample apps, one per design system: Material, Simple, and Cupertino (out of support). I wanted a single app where I could tap a button and load any of them, then unload it and load the next one. The catch is that these aren't little user controls I'm swapping in. Each one is a complete, independent Uno application, with its own resources, its own theme library, its own everything. What you're watching in that video is one Uno app hosting another entire Uno app, swapping between three of them, with a <i>clean</i><sup>*</sup> teardown in between.
 
 ## But Like, Why?
 
@@ -35,7 +35,7 @@ The [Uno.Themes repo][uno-themes] contains three sample apps, one per design sys
 
  3. It's also a single entry point for automated runtime tests that need to run against all three themes. Imagine having a single "runner" app that is capable of being provided a set of automated runtime test cases, and then running them against the live app to be tested. That's the payoff.
 
-<a href="/assets/images/alc-super-themes/themes-running.png"><img class="align-center" src="/assets/images/alc-super-themes/themes-running.png" alt="The wrapper app hosting the Material, Cupertino, and Simple theme samples one at a time, each showing an 'is running' status"/></a>
+<a href="/assets/images/alc-super-themes/themes-running.png" class="image-popup"><img class="align-center" src="/assets/images/alc-super-themes/themes-running.png" alt="The wrapper app hosting the Material, Cupertino, and Simple theme samples one at a time, each showing an 'is running' status"/></a>
 
 ## A Quick Word on AssemblyLoadContext
 
@@ -123,7 +123,7 @@ Source: [`MaterialSampleApp/App.xaml.cs`][src-new-window] — identical line in 
 
 That's still correct when the app runs standalone, because the first `new Window()` maps to the main window anyway. So the sample heads stay completely standalone. They gained the ability to be hosted without giving up the ability to run on their own.
 
-## Guests overstaying their welcome
+## Guests Overstaying Their Welcome
 
 Just the thought of loading, unloading, switching, and reloading assemblies over and over again during the app's lifetime is causing my RAM usage to skyrocket. It sounds like a recipe for leaks, and it is. The collectible ALC is supposed to reclaim its memory when nothing outside it points at anything inside it, but Uno's shared assemblies are non-collectible code that can hold references into the guest. If a static in `Uno.UI` still points at a guest object after teardown, the whole context stays alive.
 
@@ -133,7 +133,7 @@ This is why we now have a hosting smoke test wired into CI: every build loads al
 
 The test itself is boring in the best way. Launch the wrapper with `--smoke` on desktop or `?smoke` in the browser and [it drives itself][smoke]: load each guest in turn, unload the last one, and check reclamation after every step. It's not perfect, I know. Technically, we should be be loading and unloading over and over again and maintain a count of maintained references that should be kept underneath a realistic threshold, but this is a smoke test, not a stress test.
 
-### The eviction
+### The Eviction
 
 The eviction is the part that actually tears down the guest. It calls `ExitAlcApplication()` to clean up the guest's static caches, then it sweeps a few Uno internals to make sure nothing is still pointing at the collectible context. Finally, it drops its reference to the ALC and forces a GC collection, then probes to see if the context was reclaimed.
 
@@ -194,7 +194,7 @@ else
 Source: [`GuestAppLoader.ReportPreviousAlcCollectionState`][smoke-probe]
 {: .code-caption}
 
-### Sweeping up
+### Sweeping Up
 
 That `SweepNonDefaultAlcCaches` call is the honest ugly part. It's three reflection-based pokes at Uno internals, deliberately parked in [one file][sweeps] so they're easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target.
 
@@ -204,7 +204,7 @@ I won't go into each sweep, but we can focus on what I think is the most interes
 
 - **[Pruning `SystemNavigationManager` handlers][sweep-nav].** The samples' `Shell` subscribes to the process-wide `BackRequested` and nothing unsubscribes it on teardown, so the stale handler roots the guest's entire visual tree ([uno#24074][issue-nav]).
 
-#### Remaining sweeps
+#### Remaining Sweeps
 
 - **[Re-running Uno's own cache sweep][sweep-finalizers].** ([uno#24075][issue-finalizers])
 - **[Clearing `DependencyProperty._getPropertyCache`][sweep-dp].** ([uno#24073][issue-dp])
@@ -225,7 +225,7 @@ If you go try something like this yourself, do it on a 6.7 build (may still be p
 
 Catch you in the next one :wave:
 
-<i>*</i> We are still hunting down some leaks, we've made good progress but memory management is hard ok? Give us a break.
+<i><sup>*</sup> We are still hunting down some leaks, we've made good progress but memory management is hard ok? Give us a break.</i>
 
 [tweet]: https://x.com/BiloganSteve/status/2087173345322152018
 [uno-discord]: https://platform.uno/discord
