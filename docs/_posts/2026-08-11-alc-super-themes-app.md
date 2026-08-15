@@ -125,13 +125,13 @@ That's still correct when the app runs standalone, because the first `new Window
 
 ## Guests Overstaying Their Welcome
 
-Just the thought of loading, unloading, switching, and reloading assemblies over and over again during the app's lifetime is causing my RAM usage to skyrocket. It sounds like a recipe for leaks, and it is. The collectible ALC is supposed to reclaim its memory when nothing outside it points at anything inside it, but Uno's shared assemblies are non-collectible code that can hold references into the guest. If a static in `Uno.UI` still points at a guest object after teardown, the whole context stays alive.
+Just the thought of loading, unloading, switching, and reloading assemblies over and over again during the app's lifetime is causing my RAM usage to skyrocket. It sounds like a recipe for leaks, and it is. The collectible ALC is supposed to reclaim its memory when nothing outside it points at anything inside it But, Uno's shared assemblies are non-collectible code that can hold references into the guest. If a static in `Uno.UI` still points at a guest object after teardown, the whole context stays alive.
 
-The direction matters here: Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory. And it's not always as straightforward as it sound. In fact, as a result of this app and blog, we identified a few leaks that need to be cleaned up! More on that [in a bit](#sweeping-up).
+The direction matters here: Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory. And it's not always as straightforward as it sounds. In fact, as a result of this app and blog, we identified a few leaks that need to be cleaned up! More on that [in a bit](#sweeping-up).
 
 This is why we now have a hosting smoke test wired into CI: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.
 
-The test itself is boring in the best way. Launch the wrapper with `--smoke` on desktop or `?smoke` in the browser and [it drives itself][smoke]: load each guest in turn, unload the last one, and check reclamation after every step. It's not perfect, I know. Technically, we should be be loading and unloading over and over again and maintain a count of maintained references that should be kept underneath a realistic threshold, but this is a smoke test, not a stress test.
+The test itself is boring in the best way. Launch the wrapper with `--smoke` on desktop or `?smoke` in the browser and [it drives itself][smoke]: load each guest in turn, unload the last one, and check reclamation after every step. It's not perfect, I know. Technically, we should be be loading and unloading over and over again and tracking a count of retained references that should be kept underneath a realistic threshold, but this is a smoke test, not a stress test.
 
 ### The Eviction
 
