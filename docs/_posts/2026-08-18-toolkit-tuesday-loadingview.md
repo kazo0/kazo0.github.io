@@ -56,7 +56,7 @@ Let's start with the simplest possible setup. A `LoadingView` has two conceptual
 </utu:LoadingView>
 ```
 
-The default child of the `LoadingView` (the `Grid` here) is its `Content`. The `LoadingContent` is the `ProgressRing`. While `FetchWeatherForecasts` reports that it's executing, you see the ring; once it's done, the `ListView` fades in over top of it.
+The default child of the `LoadingView` (the `Grid` here) is its `Content`. The `LoadingContent` is the `ProgressRing`. While `FetchWeatherForecasts` reports that it's executing, you see the ring; once it's done, the `ListView` fades in as the ring fades away.
 
 One small nicety: `LoadingView`'s template automatically toggles the [`ProgressExtensions.IsActive`][progress-docs] attached property on your loading content as it moves between states. So even if you forget to bind `IsActive`, a `ProgressRing` sitting in your `LoadingContent` will start and stop spinning along with the loading state. It's a little detail, but it's the kind of thing that saves you a "why isn't my spinner spinning" moment.
 
@@ -64,7 +64,7 @@ One small nicety: `LoadingView`'s template automatically toggles the [`ProgressE
 
 You might have noticed something in that last snippet: the same `FetchWeatherForecasts` is bound to both the button's `Command` and the `LoadingView`'s `Source`. That's not a typo. It's the nicest way to use this control.
 
-The trick is a command that also implements `ILoadable`. Here's a compact `AsyncCommand` that does exactly that, straight from the [Toolkit docs][loadingview-docs]:
+The trick is a command that also implements `ILoadable`. Here's a compact `AsyncCommand` that does exactly that, lightly adapted from the [Toolkit docs][loadingview-docs]:
 
 ```csharp
 public class AsyncCommand : ICommand, ILoadable
@@ -142,19 +142,21 @@ Here's the thing that'll bite you the first time, and it's not obvious. `Loading
 
 The good news is the Toolkit folks clearly got this bug report enough times that recent builds now help you out. If the `Source` is still `null` five seconds after the template loads, `LoadingView` logs a debug warning spelling out exactly what's wrong:
 
-> Source is still null 5 seconds after the template was applied. The view will remain in 'Loading' state indefinitely. Ensure that the Source property is set to an ILoadable instance.
+> Source is still null 5 seconds after the template was applied. The view will remain in 'Loading' state indefinitely. Ensure that the Source property is set to an ILoadable instance (e.g., via navigation extensions).
 
 So if you ever find yourself staring at a spinner that never goes away, check your debug output. Odds are your `Source` binding isn't resolving to anything.
 
 ## LoadingView or FeedView?
 
-If you've followed along with the [Uno Chefs walkthrough]({% post_url 2025-07-02-chefs-login %}) series, you might be thinking this sounds an awful lot like the `FeedView` control that shows up all over that app. They do overlap, so let's be clear about when to reach for which.
+If you've followed along with the [Uno Chefs walkthrough]({% post_url 2025-07-02-chefs-login %}) series, you might be thinking this sounds an awful lot like the `FeedView` control that's all over that app's XAML. They do overlap, so let's be clear about when to reach for which.
 
 `FeedView` comes from Uno Extensions Reactive and is built specifically for MVUX. It understands feeds and states, and it gives you distinct visual states for loading, error, AND empty (`NoneTemplate`) data on top of your data template. If you're already all-in on MVUX, it's the natural fit, and it does more than `LoadingView` does.
 
 `LoadingView` is the more general tool. It doesn't know or care about MVUX. All it needs is an `ILoadable`, which means it works just as happily in a classic MVVM app, or wrapped around a single command, or driving an extended splash screen. It's a focused "is this busy or not" wrapper you can drop anywhere.
 
 The way I think about it: if you're consuming an MVUX feed, use `FeedView`. If you just need to show a busy indicator over some content while an arbitrary bit of work runs, and especially if you're not using MVUX at all, `LoadingView` is your control.
+
+And here's a little bit of trivia that ties this whole post together: it's not actually an either/or choice. `FeedView` itself implements `ILoadable`, which means a `FeedView` can be the `Source` of a `LoadingView`, or even of an `ExtendedSplashScreen` to keep the splash screen up until your first feed comes back. That integration is deliberate, too. A `FeedView` normally smooths out its visual state changes to avoid flashing states at you, but when it notices something is subscribed to its loading state (usually a wrapping `LoadingView`), it applies its states synchronously so the hand-off between the two controls doesn't flicker. `LoadingView` may not know anything about MVUX, but MVUX definitely knows about `LoadingView`.
 
 ## Conclusion
 
