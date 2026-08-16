@@ -1,4 +1,264 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-32/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-32/" rel="alternate" type="text/html" /><updated>2026-07-18T23:41:52+00:00</updated><id>https://kazo0.dev/previews/pr-32/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-07-18T00:00:00+00:00</published><updated>2026-07-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-32/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-32/" rel="alternate" type="text/html" /><updated>2026-08-16T18:20:43+00:00</updated><id>https://kazo0.dev/previews/pr-32/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Apps Inside of Uno Apps</title><link href="https://kazo0.dev/previews/pr-32/uno-general/2026/08/11/alc-super-themes-app.html" rel="alternate" type="text/html" title="Uno Apps Inside of Uno Apps" /><published>2026-08-11T00:00:00+00:00</published><updated>2026-08-11T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-32/uno-general/2026/08/11/alc-super-themes-app</id><content type="html" xml:base="https://kazo0.dev/previews/pr-32/uno-general/2026/08/11/alc-super-themes-app.html"><![CDATA[<p>I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s <a href="https://x.com/BiloganSteve/status/2087173345322152018">the tweet</a>:</p>
+
+<blockquote>
+  <p>Running your @UnoPlatform apps inside of your @UnoPlatform apps ;)</p>
+
+  <p>Inspired by the plumbing of Uno Platform Studio, I thought it’d be fun to take advantage of AssemblyLoadContext to load each Uno Themes sample app inside of a new SUPER THEMES APP. Works surprisingly well!</p>
+</blockquote>
+
+<p>And here’s the thing actually running. One app, and I’m picking which whole other app renders inside it, live:</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-32/assets/images/alc-super-themes/super-themes-demo-poster.png">
+    <source src="/previews/pr-32/assets/images/alc-super-themes/super-themes-demo.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-32/assets/images/alc-super-themes/super-themes-demo.mp4">Download the clip</a> instead.
+  </video>
+</figure>
+
+<h2 id="what-even-is-this">What Even Is This</h2>
+
+<p>The <a href="https://github.com/unoplatform/Uno.Themes">Uno.Themes repo</a> contains three sample apps, one per design system: Material, Simple, and Cupertino (out of support). I wanted a single app where I could tap a button and load any of them, then unload it and load the next one. The catch is that these aren’t little user controls I’m swapping in. Each one is a complete, independent Uno application, with its own resources, its own theme library, its own everything. What you’re watching in that video is one Uno app hosting another entire Uno app, swapping between three of them, with a <i>clean</i><sup>*</sup> teardown in between.</p>
+
+<h2 id="but-like-why">But Like, Why?</h2>
+
+<blockquote>
+  <p>Is this just some flashy demoware?</p>
+</blockquote>
+
+<p>No! I have reasons; and they are threefold:</p>
+
+<ol>
+  <li>
+    <p>This is the underlying plumbing the powers <a href="https://platform.uno/studio/">Uno Platform Studio</a>, more on that <a href="#standing-on-uno-studios-shoulders">later</a></p>
+  </li>
+  <li>
+    <p>Today, testing each Themes app means launching a different sample head for each one. It means packaging each one separately. It means deploying to three separate slots in the dev environment via the CI. It means a larger, more complex setup locally and on the CI. It’s also a way to test the themes in a single staging slot for every pull request, instead of three separate ones.</p>
+  </li>
+  <li>
+    <p>It’s also a single entry point for automated runtime tests that need to run against all three themes. Imagine having a single “runner” app that is capable of being provided a set of automated runtime test cases, and then running them against the live app to be tested. That’s the payoff.</p>
+  </li>
+</ol>
+
+<p><a href="/assets/images/alc-super-themes/themes-running.png" class="image-popup"><img class="align-center" src="/assets/images/alc-super-themes/themes-running.png" alt="The wrapper app hosting the Material, Cupertino, and Simple theme samples one at a time, each showing an 'is running' status" /></a></p>
+
+<h2 id="a-quick-word-on-assemblyloadcontext">A Quick Word on AssemblyLoadContext</h2>
+
+<p>The piece of .NET that makes this possible is <a href="https://learn.microsoft.com/en-us/dotnet/core/dependency-loading/understanding-assemblyloadcontext"><code class="language-plaintext highlighter-rouge">AssemblyLoadContext</code></a>, or ALC. If you’ve never had a reason to reach for it, here’s the two-minute version.</p>
+
+<p>Normally every assembly your app loads goes into one big shared bucket, the default load context. ALC lets you create additional, isolated buckets. Two different contexts can each load an assembly with the same name, even different versions of it, and the runtime treats them as genuinely separate. Worth being precise about “isolated” though, because it isn’t a sandbox. There’s no binary isolation between contexts, they’re only isolated by not finding each other by name.</p>
+
+<p>And things get weird when you start sharing types across contexts.</p>
+
+<h2 id="standing-on-uno-studios-shoulders">Standing on Uno Studio’s Shoulders</h2>
+
+<p>I did not invent the hard part here. <a href="https://platform.uno/studio/">Uno Platform Studio</a> already does exactly this in production: it loads your app into a fresh collectible <code class="language-plaintext highlighter-rouge">AssemblyLoadContext</code> and runs it inside the Studio process itself. <a href="https://platform.uno/docs/articles/studio/Hot%20Design/hot-design-overview.html">Hot Design</a> then rides along inside that same context, which is how it can turn your live, running app into a designer. That plumbing is exactly what I needed: loading and running a whole app inside another app’s world. The Uno runtime exposes the pieces that make it work as public API, and I just wired them together for a much simpler purpose.</p>
+
+<p>There are really only three moving parts:</p>
+
+<ul>
+  <li><a href="https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/AlcContentHost.cs#L15"><code class="language-plaintext highlighter-rouge">AlcContentHost</code></a>, a <code class="language-plaintext highlighter-rouge">ContentControl</code> you drop into your visual tree to reserve a spot for the guest.</li>
+  <li><a href="https://github.com/unoplatform/uno/blob/bfecdcb7e5dbcbf49903439b5cb3681c28cbd15a/src/Uno.UI/UI/Xaml/Window/WindowHelper.cs#L39"><code class="language-plaintext highlighter-rouge">WindowHelper.ContentHostOverride</code></a>, which allows the guest’s window content to be redirected to that <code class="language-plaintext highlighter-rouge">AlcContentHost</code>.</li>
+  <li>A second <code class="language-plaintext highlighter-rouge">UnoPlatformHostBuilder</code>, which you build around the guest’s <code class="language-plaintext highlighter-rouge">Application</code> and run.</li>
+</ul>
+
+<h2 id="the-host-side">The Host Side</h2>
+
+<p>On the parent app’s main page, I create the <code class="language-plaintext highlighter-rouge">AlcContentHost</code> once and register it as the override for the whole app’s lifetime:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">_contentHost</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AlcContentHost</span> <span class="p">{</span> <span class="n">HorizontalAlignment</span> <span class="p">=</span> <span class="n">HorizontalAlignment</span><span class="p">.</span><span class="n">Stretch</span> <span class="p">};</span>
+<span class="n">GuestRegion</span><span class="p">.</span><span class="n">Child</span> <span class="p">=</span> <span class="n">_contentHost</span><span class="p">;</span>
+
+<span class="c1">// Redirect any hosted guest's window into our region.</span>
+<span class="n">WindowHelper</span><span class="p">.</span><span class="n">ContentHostOverride</span> <span class="p">=</span> <span class="n">_contentHost</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/MainPage.xaml.cs#L28-L39"><code class="language-plaintext highlighter-rouge">ThemesSampleApp/MainPage.xaml.cs</code></a></p>
+
+<p>When you pick a theme, the loader creates a fresh collectible ALC, loads the guest’s assemblies into it, and starts the guest with its own host builder. The important subtlety is what gets shared versus isolated. The Uno framework assemblies (<code class="language-plaintext highlighter-rouge">Uno.UI</code> and friends) are shared from the default context, because if the host and the guest each loaded their own <code class="language-plaintext highlighter-rouge">Uno.UI</code>, their types would not be the same types and nothing would line up. The guest’s own code and its theme library, on the other hand, stay fully isolated inside the collectible context. That whole shared-versus-isolated policy now lives in a single data file that both the loader and the build step read, so the runtime and the packaging can never quietly drift apart.</p>
+
+<p>Starting the guest looks roughly like this. Note that it never runs the guest’s <code class="language-plaintext highlighter-rouge">Program.Main</code>, it builds a brand new host around the guest’s <code class="language-plaintext highlighter-rouge">App</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="n">UnoPlatformHostBuilder</span><span class="p">.</span><span class="nf">Create</span><span class="p">().</span><span class="nf">App</span><span class="p">(</span><span class="n">capturingFactory</span><span class="p">);</span>
+<span class="cp">#if __WASM__
+</span>    <span class="n">builder</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">UseWebAssembly</span><span class="p">();</span>
+<span class="cp">#else
+</span>    <span class="n">builder</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">UseX11</span><span class="p">().</span><span class="nf">UseLinuxFrameBuffer</span><span class="p">().</span><span class="nf">UseMacOS</span><span class="p">().</span><span class="nf">UseWin32</span><span class="p">();</span>
+<span class="cp">#endif
+</span><span class="kt">var</span> <span class="n">host</span> <span class="p">=</span> <span class="n">builder</span><span class="p">.</span><span class="nf">Build</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Desktop.cs#L18-L25"><code class="language-plaintext highlighter-rouge">GuestAppLoader.Desktop.cs</code></a> and <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Wasm.cs#L14-L18"><code class="language-plaintext highlighter-rouge">GuestAppLoader.Wasm.cs</code></a> — split per platform in the repo rather than <code class="language-plaintext highlighter-rouge">#if</code>‘d in one file</p>
+
+<p>From there the guest constructs its <code class="language-plaintext highlighter-rouge">App</code>, sets up its window, and Uno quietly redirects that window’s content into the <code class="language-plaintext highlighter-rouge">AlcContentHost</code>. The guest thinks it’s a normal top-level app. It has no idea it’s a guest. There’s an important subtlety here about how the guest app’s content is plumbed through. We aren’t dealing nesting Windows or multiple App instances or multiple independent visual trees. When we set the <code class="language-plaintext highlighter-rouge">WindowHelper.ContentHostOverride</code> to <code class="language-plaintext highlighter-rouge">_contentHost</code>, we are telling the Uno runtime that any <code class="language-plaintext highlighter-rouge">Window</code> created in the guest context should have its content redirected to the <code class="language-plaintext highlighter-rouge">AlcContentHost</code>. This allows the guest app to behave as if it has its own window, while actually rendering inside the host’s visual tree. So, one visual tree for both apps.</p>
+
+<p>And yes, it makes resource resolution a bitch sometimes.</p>
+
+<h2 id="two-tiny-changes-to-each-guest">Two Tiny Changes to Each Guest</h2>
+
+<p>The coolest part is how little the sample apps had to change to become hostable. Exactly two things, and both are one-liners.</p>
+
+<p>First, one property in the csproj so the XAML generator knows this app might be hosted and scopes its resource dictionaries to the right load context. Basically, this is how we can ensure that the guest’s static resources don’t leak into the host’s world, and vice versa. Well, actually, it’s how the XAML generator knows to generate code that allows us to know which resources belong to which context. The Uno XAML generator has to be aware of the hosting scenario so it can generate code that respects the boundaries of the load contexts.</p>
+
+<p>Add this to the guest’s csproj:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoEnableAlcAppSupport&gt;</span>true<span class="nt">&lt;/UnoEnableAlcAppSupport&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/MaterialSampleApp/MaterialSampleApp.csproj#L22"><code class="language-plaintext highlighter-rouge">MaterialSampleApp.csproj</code></a> — identical line in the Cupertino and Simple heads</p>
+
+<p>Second, and this one is a genuine gotcha, the sample apps used to grab their window like this:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">MainWindow</span> <span class="p">=</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">UI</span><span class="p">.</span><span class="n">Xaml</span><span class="p">.</span><span class="n">Window</span><span class="p">.</span><span class="n">Current</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Window.Current</code> is a process-wide static living in the shared <code class="language-plaintext highlighter-rouge">Uno.UI</code>. When the app runs hosted, that static is the wrapper’s window, so the guest would reach up and grab the host’s window and promptly try to close it. The fix is to just make a new one:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">MainWindow</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">UI</span><span class="p">.</span><span class="n">Xaml</span><span class="p">.</span><span class="nf">Window</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/MaterialSampleApp/App.xaml.cs#L38"><code class="language-plaintext highlighter-rouge">MaterialSampleApp/App.xaml.cs</code></a> — identical line in the Cupertino and Simple heads</p>
+
+<p>That’s still correct when the app runs standalone, because the first <code class="language-plaintext highlighter-rouge">new Window()</code> maps to the main window anyway. So the sample heads stay completely standalone. They gained the ability to be hosted without giving up the ability to run on their own.</p>
+
+<h2 id="guests-overstaying-their-welcome">Guests Overstaying Their Welcome</h2>
+
+<p>Just the thought of loading, unloading, switching, and reloading assemblies over and over again during the app’s lifetime is causing my RAM usage to skyrocket. It sounds like a recipe for leaks, and it is. The collectible ALC is supposed to reclaim its memory when nothing outside it points at anything inside it But, Uno’s shared assemblies are non-collectible code that can hold references into the guest. If a static in <code class="language-plaintext highlighter-rouge">Uno.UI</code> still points at a guest object after teardown, the whole context stays alive.</p>
+
+<p>The direction matters here: Guest → host references are fine. Host → guest is what kills you. A non-collectible root reaching into collectible memory. And it’s not always as straightforward as it sounds. In fact, as a result of this app and blog, we identified a few leaks that need to be cleaned up! More on that <a href="#sweeping-up">in a bit</a>.</p>
+
+<p>This is why we now have a hosting smoke test wired into CI: every build loads all three guests, unloads them, and asserts that each load context was actually reclaimed. If a future change starts leaking, the build fails instead of the leak sneaking through.</p>
+
+<p>The test itself is boring in the best way. Launch the wrapper with <code class="language-plaintext highlighter-rouge">--smoke</code> on desktop or <code class="language-plaintext highlighter-rouge">?smoke</code> in the browser and <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestHostingSmoke.cs">it drives itself</a>: load each guest in turn, unload the last one, and check reclamation after every step. It’s not perfect, I know. Technically, we should be be loading and unloading over and over again and tracking a count of retained references that should be kept underneath a realistic threshold, but this is a smoke test, not a stress test.</p>
+
+<h3 id="the-eviction">The Eviction</h3>
+
+<p>The eviction is the part that actually tears down the guest. It calls <code class="language-plaintext highlighter-rouge">ExitAlcApplication()</code> to clean up the guest’s static caches, then it sweeps a few Uno internals to make sure nothing is still pointing at the collectible context. Finally, it drops its reference to the ALC and forces a GC collection, then probes to see if the context was reclaimed.</p>
+
+<p>It starts politely, by asking the guest to exit itself. <code class="language-plaintext highlighter-rouge">Application.Exit()</code> is what internally triggers <code class="language-plaintext highlighter-rouge">ExitAlcApplication()</code>, which sweeps the per-ALC static caches:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">GuestApp</span> <span class="k">is</span> <span class="p">{</span> <span class="p">}</span> <span class="n">guestApp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">await</span> <span class="nf">RunOnUIThreadAsync</span><span class="p">(</span><span class="n">guestApp</span><span class="p">.</span><span class="n">Exit</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L403-L421"><code class="language-plaintext highlighter-rouge">GuestAppLoader.TeardownUnguardedAsync</code></a></p>
+
+<p>Then every reference the session holds gets dropped before the unload, because anything still pointing into the guest at this moment pins the context. The weak reference is deliberately the <em>only</em> thing left holding the ALC:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="kt">var</span> <span class="n">alc</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Alc</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">GuestApp</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">ExecutionTask</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<span class="n">session</span><span class="p">.</span><span class="n">ExecutionThread</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="k">await</span> <span class="n">Task</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="n">alc</span><span class="p">.</span><span class="n">Dispose</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="n">_lastUnloadedAlc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WeakReference</span><span class="p">&lt;</span><span class="n">GuestAssemblyLoadContext</span><span class="p">&gt;(</span><span class="n">alc</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L459-L480"><code class="language-plaintext highlighter-rouge">GuestAppLoader.TeardownUnguardedAsync</code></a></p>
+
+<p>Ordering is the whole trick in the next bit. Guest <code class="language-plaintext highlighter-rouge">DependencyObject</code> finalizers run <em>during</em> the unload and can re-populate the shared property-system caches after <code class="language-plaintext highlighter-rouge">ExitAlcApplication</code> already swept them, so the sweep has to come after the finalizers drain, not before:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">GC</span><span class="p">.</span><span class="nf">Collect</span><span class="p">();</span>
+<span class="k">await</span> <span class="nf">DrainFinalizersAsync</span><span class="p">().</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<span class="k">await</span> <span class="nf">RunOnUIThreadAsync</span><span class="p">(</span><span class="n">SweepNonDefaultAlcCaches</span><span class="p">).</span><span class="nf">ConfigureAwait</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+
+<span class="n">GC</span><span class="p">.</span><span class="nf">Collect</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L468-L480"><code class="language-plaintext highlighter-rouge">GuestAppLoader.TeardownUnguardedAsync</code></a> — the sweep call is wrapped in a warning check in the repo</p>
+
+<p>And the verdict is just a weak-reference probe. If the target is still reachable after all that, something in the host is still rooting the guest:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="k">if</span> <span class="p">(</span><span class="n">weakAlc</span><span class="p">.</span><span class="nf">TryGetTarget</span><span class="p">(</span><span class="k">out</span> <span class="kt">var</span> <span class="n">previous</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="n">LastUnloadedAlcCollected</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="s">"Previous guest ALC {Name} is still alive after unload + GC."</span><span class="p">,</span> <span class="n">previous</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="n">LastUnloadedAlcCollected</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p class="code-caption">Source: <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.cs#L490-L509"><code class="language-plaintext highlighter-rouge">GuestAppLoader.ReportPreviousAlcCollectionState</code></a></p>
+
+<h3 id="sweeping-up">Sweeping Up</h3>
+
+<p>That <code class="language-plaintext highlighter-rouge">SweepNonDefaultAlcCaches</code> call is the honest ugly part. It’s three reflection-based pokes at Uno internals, deliberately parked in <a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs">one file</a> so they’re easy to delete later, and every one of them degrades to a logged warning rather than an exception if a future Uno rename moves the target.</p>
+
+<p>I won’t go into each sweep, but we can focus on what I think is the most interesting one. This is the one that that illustrates the hidden complexity of the <code class="language-plaintext highlighter-rouge">Guest → host references are fine. Host → guest is what kills you</code> rule. The <code class="language-plaintext highlighter-rouge">SystemNavigationManager.BackRequested</code> event is a process-wide static in the shared <code class="language-plaintext highlighter-rouge">Uno.UI</code>, and the guest’s <code class="language-plaintext highlighter-rouge">Shell</code> subscribes to it. At face-value, this may sound like a guest -&gt; host reference. But this is one of those pesky cases where the guest’s subscription roots the guest itself. The event is a multicast delegate, and the invocation list holds strong references to each subscriber.</p>
+
+<p>Nothing unsubscribes it on teardown, so the stale handler roots the guest’s entire visual tree. The fix is to walk the invocation list and drop anything whose origin lives in a collectible context:</p>
+
+<ul>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L114-L166">Pruning <code class="language-plaintext highlighter-rouge">SystemNavigationManager</code> handlers</a>.</strong> The samples’ <code class="language-plaintext highlighter-rouge">Shell</code> subscribes to the process-wide <code class="language-plaintext highlighter-rouge">BackRequested</code> and nothing unsubscribes it on teardown, so the stale handler roots the guest’s entire visual tree (<a href="https://github.com/unoplatform/uno/issues/24074">uno#24074</a>).</li>
+</ul>
+
+<h4 id="remaining-sweeps">Remaining Sweeps</h4>
+
+<ul>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L25-L28">Re-running Uno’s own cache sweep</a>.</strong> (<a href="https://github.com/unoplatform/uno/issues/24075">uno#24075</a>)</li>
+  <li><strong><a href="https://github.com/unoplatform/Uno.Themes/blob/d20cd74337c6e5b8564a9871be46243a0bac8aac/src/samples/ThemesSampleApp/GuestHosting/GuestAppLoader.Sweeps.cs#L30-L41">Clearing <code class="language-plaintext highlighter-rouge">DependencyProperty._getPropertyCache</code></a>.</strong> (<a href="https://github.com/unoplatform/uno/issues/24073">uno#24073</a>)</li>
+</ul>
+
+<h2 id="why-bother">Why Bother</h2>
+
+<p>Beyond it just being cool, there’s a real payoff. The Uno.Themes repo deploys a staging site for every pull request, and it used to only cover the Simple theme. This wrapper now lets one deployment host all three theme samples behind a picker, so every PR gets a single staging site that covers Material, Cupertino, and Simple at once. The fun demo turned into an actual improvement to how we test the themes.</p>
+
+<p>There’s also something I like about pulling back the curtain. The ALC hosting that powers Uno Platform Studio can feel like magic when it’s buried inside a product. Wiring it up myself, and hitting all the sharp edges, made it a lot less magical and a lot more approachable. If you want to see the whole thing, warts and workarounds included, all of the code is in the <a href="https://github.com/unoplatform/Uno.Themes/pull/1693">pull request</a>.</p>
+
+<p>I should also mention I built this with Claude, which fits right in with the <a href="/uno-general/2026/02/23/agent-skills-intro.html">agentic development</a> thread I’ve been on lately. Chasing down a trimmer stripping type-forwarders is exactly the kind of deep, weird problem where having a tireless pair helps.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>So there it is. Uno apps running inside Uno apps, one collectible load context at a time, built on the same runtime plumbing that Uno Platform Studio uses in production. It started as a “wouldn’t it be funny if” and turned into both a genuine testing improvement and the most I’ve learned about <code class="language-plaintext highlighter-rouge">AssemblyLoadContext</code> in one sitting.</p>
+
+<p>If you go try something like this yourself, do it on a 6.7 build (may still be prerelease -dev builds at the time of this post) and expect to get friendly with load contexts. And if you build something sillier than a SUPER THEMES APP, please come show me in the <a href="https://platform.uno/discord">Uno Discord</a> ;).</p>
+
+<p>Catch you in the next one :wave:</p>
+
+<p><i><sup>*</sup> We are still hunting down some leaks, we’ve made good progress but memory management is hard ok? Give us a break.</i></p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="assemblyloadcontext" /><category term="alc" /><category term="hot-design" /><category term="themes" /><category term="skia" /><category term="wasm" /><summary type="html"><![CDATA[I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-07-18T00:00:00+00:00</published><updated>2026-07-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>It’s been a while since the last one of these, so I’m happy to be back at it. This week we’re covering the <code class="language-plaintext highlighter-rouge">LoadingView</code>, and there’s a decent chance you’ve already used it without realizing. If you read the <a href="/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">ExtendedSplashScreen post</a>, you met <code class="language-plaintext highlighter-rouge">LoadingView</code> in passing: the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> is actually derived from it. Today it gets to be the star of the show.</p>
 
@@ -2326,94 +2586,4 @@ This is where you would typically implement your own authentication logic, such 
     
   
   
-</figure>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="ndc-conference" /><category term="uno-platform" /><category term="cphdevfest" /><category term="copenhagen" /><summary type="html"><![CDATA[We are back with another conference recap! This time, I had the pleasure of attending NDC Copenhagen DevFest 2024 in Copenhagen, Denmark. This was my first time attending an NDC event and I was very excited to see what it was all about. I was also looking forward to visiting Copenhagen for the first time. I had heard so many great things about the city and I was eager to explore it.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Tidbit: Extending Your Resources</title><link href="https://kazo0.dev/previews/pr-32/uno-tidbit/2024/04/21/tidbit-resource-extension.html" rel="alternate" type="text/html" title="Uno Tidbit: Extending Your Resources" /><published>2024-04-21T00:00:00+00:00</published><updated>2024-04-21T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-32/uno-tidbit/2024/04/21/tidbit-resource-extension</id><content type="html" xml:base="https://kazo0.dev/previews/pr-32/uno-tidbit/2024/04/21/tidbit-resource-extension.html"><![CDATA[<p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can do more with your <code class="language-plaintext highlighter-rouge">ResourceDictionary</code> in Uno Platform.</p>
-
-<!-- Courtesy of embedresponsively.com -->
-
-<div class="responsive-video-container">
-    <iframe src="https://www.youtube-nocookie.com/embed/OwQkYSlowfU" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-  </div>
-
-<h2 id="the-problem">The Problem</h2>
-
-<p>Ever wanted to make a slight modification to a control’s appearance only to find out that there’s no public property to drive that change? Maybe you want to change the color of a <code class="language-plaintext highlighter-rouge">Button</code> when it’s disabled, or you want to change the foreground color of a <code class="language-plaintext highlighter-rouge">TextBox</code> when it’s focused. These changes would be buried deep in the control’s template, perhaps as part of the beautiful mess that is the <code class="language-plaintext highlighter-rouge">VisualStateManager</code>.</p>
-
-<h2 id="the-solution">The Solution?</h2>
-
-<p>Good news! There already exists a half-baked solution for you!</p>
-
-<p>Thanks to <a href="https://learn.microsoft.com/en-us/windows/apps/design/style/xaml-styles#lightweight-styling">Lightweight Styling</a> you have the ability to override resources that are referenced in a control’s template. These overrides can be scoped to a specific control, a page, or even the entire app.</p>
-
-<p>Now what if you wanted to include those overrides for specific instances of the control across your app? What if you wanted to package up these overrides into a reusable style that you could apply anywhere you want?</p>
-
-<p>Well, now you’re just getting greedy.</p>
-
-<h2 id="the-real-solution">The REAL Solution</h2>
-
-<p>Luckily for you, I am also greedy and I have a solution for you!</p>
-
-<p>Ideally, we would be able to package up any resource overrides as part of a custom <code class="language-plaintext highlighter-rouge">Style</code>. Unfortunately, the <code class="language-plaintext highlighter-rouge">Resources</code> property of a <code class="language-plaintext highlighter-rouge">FrameworkElement</code> is not a <code class="language-plaintext highlighter-rouge">DependencyProperty</code> and, therefore, cannot be set using a <code class="language-plaintext highlighter-rouge">Style.Setter</code>.</p>
-
-<p>This is where the <a href="https://github.com/unoplatform/uno.toolkit.ui">Uno Toolkit</a> comes in! Within the Uno Toolkit, there is a <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/resource-extensions.html"><code class="language-plaintext highlighter-rouge">ResourceExtensions</code></a> class that provides a <code class="language-plaintext highlighter-rouge">Resources</code> Attached Property that forwards the provided <code class="language-plaintext highlighter-rouge">ResourceDictionary</code> to the <code class="language-plaintext highlighter-rouge">FrameworkElement.Resources</code> but comes with all of that <code class="language-plaintext highlighter-rouge">DependencyProperty</code> goodness. This allows you to package up your resource overrides into a <code class="language-plaintext highlighter-rouge">ResourceDictionary</code> and use it within a <code class="language-plaintext highlighter-rouge">Setter</code> of a <code class="language-plaintext highlighter-rouge">Style</code>.</p>
-
-<h2 id="example">Example</h2>
-
-<p>Let’s say you want to edit some of the <code class="language-plaintext highlighter-rouge">Button</code> styles from <a href="https://github.com/unoplatform/Uno.Themes/tree/master/src/library/Uno.Material">Uno Material</a>. You might have a specific flow or section in your app that requires a different color for the <code class="language-plaintext highlighter-rouge">Button</code> when it’s at rest and when it’s in the PointerOver state. Your favorite colors just happen to be <code class="language-plaintext highlighter-rouge">CornflowerBlue</code> and <code class="language-plaintext highlighter-rouge">LightSeaGreen</code>. Except those clash with the app while it’s in Dark Mode. So you want to use <code class="language-plaintext highlighter-rouge">Red</code> and <code class="language-plaintext highlighter-rouge">Orange</code> in that case instead. Just go with me here.</p>
-
-<p>You can define your own <code class="language-plaintext highlighter-rouge">Style</code> based on the <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> and use your favorite colors:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Style</span> <span class="na">TargetType=</span><span class="s">"Button"</span>
-       <span class="na">x:Key=</span><span class="s">"MyCustomButtonStyle"</span>
-       <span class="na">BasedOn=</span><span class="s">"{StaticResource FilledButtonStyle}"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Setter</span> <span class="na">Property=</span><span class="s">"utu:ResourceExtensions.Resources"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Setter.Value&gt;</span>
-            <span class="nt">&lt;ResourceDictionary&gt;</span>
-                <span class="nt">&lt;ResourceDictionary.ThemeDictionaries&gt;</span>
-                    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Light"</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"FilledButtonBackground"</span> <span class="na">Color=</span><span class="s">"LightSeaGreen"</span> <span class="nt">/&gt;</span>
-                        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"FilledButtonBackgroundPointerOver"</span> <span class="na">Color=</span><span class="s">"CornflowerBlue"</span> <span class="nt">/&gt;</span>
-                    <span class="nt">&lt;/ResourceDictionary&gt;</span>
-                    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Dark"</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"FilledButtonBackground"</span> <span class="na">Color=</span><span class="s">"Red"</span> <span class="nt">/&gt;</span>
-                        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"FilledButtonBackgroundPointerOver"</span> <span class="na">Color=</span><span class="s">"Orange"</span> <span class="nt">/&gt;</span>
-                    <span class="nt">&lt;/ResourceDictionary&gt;</span>
-                <span class="nt">&lt;/ResourceDictionary.ThemeDictionaries&gt;</span>
-            <span class="nt">&lt;/ResourceDictionary&gt;</span>
-        <span class="nt">&lt;/Setter.Value&gt;</span>
-    <span class="nt">&lt;/Setter&gt;</span>
-<span class="nt">&lt;/Style&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p><img src="/assets/images/res-ext/res-ext-button.gif" alt="MyCustomButtonStyle in action" /></p>
-
-<p>A completely customized button without needing to re-template the control!</p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>That’s it! We now have the ability to package up our resource overrides into a <code class="language-plaintext highlighter-rouge">Style</code> and apply them anywhere we want.</p>
-
-<p>You can check out a working example of this in the <a href="https://github.com/kazo0/ResourceExtensionsApp">ResourceExtensionsApp repository</a> on GitHub.</p>
-
-<p>Catch you in the next one :wave:</p>
-
-<p>Special thanks to Fons Sonnemans for the <a href="https://www.reflectionit.nl/blog/2021/xaml-lightweight-styling-done-right">original inspiration</a> for the <code class="language-plaintext highlighter-rouge">ResourceExtensions</code></p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="resources" /><category term="staticresource" /><category term="resourcedictionary" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can do more with your ResourceDictionary in Uno Platform.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+</figure>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="ndc-conference" /><category term="uno-platform" /><category term="cphdevfest" /><category term="copenhagen" /><summary type="html"><![CDATA[We are back with another conference recap! This time, I had the pleasure of attending NDC Copenhagen DevFest 2024 in Copenhagen, Denmark. This was my first time attending an NDC event and I was very excited to see what it was all about. I was also looking forward to visiting Copenhagen for the first time. I had heard so many great things about the city and I was eager to explore it.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-32/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

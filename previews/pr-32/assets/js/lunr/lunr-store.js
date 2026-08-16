@@ -130,4 +130,10 @@ var store = [{
         "tags": ["uno-toolkit","toolkit","loadingview","loading","iloadable","progressring","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-32/toolkit-tuesday/2026/07/18/toolkit-tuesday-loadingview.html",
         "teaser": "/previews/pr-32/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Uno Apps Inside of Uno Apps",
+        "excerpt":"I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet: Running your @UnoPlatform apps inside of your @UnoPlatform apps ;) Inspired by the plumbing of Uno Platform Studio, I thought it’d be fun...","categories": ["uno-general"],
+        "tags": ["uno-platform","uno","assemblyloadcontext","alc","hot-design","themes","skia","wasm"],
+        "url": "/previews/pr-32/uno-general/2026/08/11/alc-super-themes-app.html",
+        "teaser": "/previews/pr-32/assets/images/alc-super-themes/hero.png"
       }]
