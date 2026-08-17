@@ -30,11 +30,11 @@ In the example GIFs below, you can see that the `ExtendedSplashScreen` control i
 
 ### Android
 
-![Android Extended Splashscreen](/assets/images/extsplash/android-splash.gif){: .width-half}
+{% include local-video.html src="/assets/images/extsplash/android-splash.mp4" class="width-half" %}
 
 ### WASM
 
-![WASM Extended Splashscreen](/assets/images/extsplash/wasm-splash.gif)
+{% include local-video.html src="/assets/images/extsplash/wasm-splash.mp4" %}
 
 To be clear, the `ExtendedSplashScreen` does not enable customization of the initial native splash screen. It simply allows you to prolong the display of the native splash screen while your app continues to load. During this prolonged display, you can overlay the native splash screen with custom content.
 {: .notice--warning}
@@ -57,7 +57,7 @@ This will give us a brand new application with the Uno Toolkit library already i
 
 If we were to launch this app right now, we would see this:
 
-![Android blank Uno app startup](/assets/images/extsplash/android-blank-splash.gif){: .width-half}
+{% include local-video.html src="/assets/images/extsplash/android-blank-splash.mp4" class="width-half" %}
 
 This is the default native splash screen that is displayed while the app is loading. It's a simple white screen with the Uno Platform logo in the center. Those assets are generated for you by the [Uno Resizetizer][uno-resizetizer] tooling. If you wanted to customize the native splash screen, you could do so by replacing the assets in the `Splash` folder of the `ExtendedSplashApp.Shared.csproj`.
 
@@ -240,15 +240,15 @@ Now, if we were to run the app, we would see the `ExtendedSplashScreen` control 
 
 ### Android
 
-![Android Extended Splashscreen](/assets/images/extsplash/android-splash.gif){: .width-half}
+{% include local-video.html src="/assets/images/extsplash/android-splash.mp4" class="width-half" %}
 
 ### WASM
 
-![WASM Extended Splashscreen](/assets/images/extsplash/wasm-splash.gif)
+{% include local-video.html src="/assets/images/extsplash/wasm-splash.mp4" %}
 
 ### Windows
 
-![Windows Extended Splashscreen](/assets/images/extsplash/windows-splash.gif)
+{% include local-video.html src="/assets/images/extsplash/windows-splash.mp4" %}
 
 ## Conclusion
 

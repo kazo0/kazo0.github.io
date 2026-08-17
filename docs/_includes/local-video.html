@@ -11,10 +11,13 @@ Usage:
        caption="Optional caption" %}
 
 Options: src (required), poster, caption, type (default video/mp4),
-autoplay (default true — set to "false" for a click-to-play video).
+autoplay (default true — set to "false" for a click-to-play video),
+class (extra classes on the figure, e.g. "width-half" for a phone recording
+that would otherwise stretch across the whole column — it goes on the figure
+because .video-figure__video already sets width on the video itself).
 {%- endcomment -%}
 {%- assign autoplay = include.autoplay | default: "true" -%}
-<figure class="video-figure">
+<figure class="video-figure{% if include.class %} {{ include.class }}{% endif %}">
   <video class="video-figure__video" {% if autoplay == "true" %}autoplay muted loop {% endif %}controls playsinline preload="metadata"{% if include.poster %} poster="{{ include.poster | relative_url }}"{% endif %}>
     <source src="{{ include.src | relative_url }}" type="{{ include.type | default: 'video/mp4' }}" />
     Your browser doesn't support embedded video. <a href="{{ include.src | relative_url }}">Download the clip</a> instead.

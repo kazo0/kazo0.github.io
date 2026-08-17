@@ -64,9 +64,7 @@ There's actually a lot going on in this page. We have multiple `FlipView` contro
 
 We are using multiple `FlipView` controls to achieve a seamless transition between the two possible page layouts. This is where developing for multiple platforms can cause some friction. Not only do we need to support narrow layouts for phones, we also need to support wide layouts for tablets, desktops, and browsers. On top of that, certain platforms allow for the window to be resized. So we need an easy way to transition between the two layouts. This is what the end result looks like:
 
-<a href="/assets/images/chefs-intro/welcome-responsive.gif">
-  <img class="align-center" src="/assets/images/chefs-intro/welcome-responsive.gif" alt="Welcome Page Responsive"/>
-</a>
+{% include local-video.html src="/assets/images/chefs-intro/welcome-responsive.mp4" %}
 
 In Chefs, we achieve this with the `Responsive` Markup Extension from Uno Toolkit. We've actually covered this in a [previous post]({% post_url 2024-01-30-toolkit-tuesday-responsive %}) so I won't go into a lot of detail here. But you can expect to find `Responsive` markup extensions peppered all throughout the app.
 
@@ -138,9 +136,7 @@ The last pieces of the puzzle are the navigation buttons. We are using the [`Fli
 
 Putting it all together, we now have multiple ways to navigate through the `FlipView` items. The user can swipe left or right, click the navigation buttons, or use the `PipsPager` to jump to a specific item.
 
-<a href="/assets/images/chefs-intro/welcome-mobile.gif">
-  <img class="align-center width-half" src="/assets/images/chefs-intro/welcome-mobile.gif" alt="Welcome Page Flip"/>
-</a>
+{% include local-video.html src="/assets/images/chefs-intro/welcome-mobile.mp4" class="width-half" %}
 
 Only thing left now is to properly show/hide the Next and Previous buttons depending on the current index of the `FlipView`.
 

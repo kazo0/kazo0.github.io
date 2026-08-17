@@ -75,7 +75,7 @@ Let's start by creating a simple `Flyout` that will open with the click of a `Bu
 </Grid>
 ```
 
-![Simple Android Flyout](/assets/images/drawerflyout/android-simple-flyout.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-simple-flyout.mp4" class="width-half" %}
 
 Breathtaking.
 
@@ -124,9 +124,9 @@ We can use the `DrawerFlyoutPresenter` to build a navigation drawer experience. 
 
 Here's what we are looking to build by the end of this section (both Android and WASM are shown):
 
-![Android Nav Flyout](/assets/images/drawerflyout/android-nav-drawer.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-nav-drawer.mp4" class="width-half" %}
 
-![WASM Nav Flyout](/assets/images/drawerflyout/wasm-nav-drawer.gif)
+{% include local-video.html src="/assets/images/drawerflyout/wasm-nav-drawer.mp4" %}
 
 You may have noticed that we are opening the navigation drawer by clicking on the `MainCommand` of a `NavigationBar`. This is a custom control from the Uno Toolkit and one that we have [previously covered]({% post_url 2023-11-21-toolkit-tuesday-navigationbar %}).
 
@@ -218,7 +218,7 @@ Let's now use one of the [pre-built styles that we covered earlier](#styles) and
 
 Now when we press on the `MainCommand`, we should have a `Flyout` open from the left side of the screen. We can also drag the `Flyout` to close it:
 
-![Android page with LeftDrawerFlyoutPresenterStyle](/assets/images/drawerflyout/android-drawer-step-3.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-drawer-step-3.mp4" class="width-half" %}
 
 Starting to look good!
 
@@ -384,9 +384,9 @@ Then, we set the `FlyoutPresenterStyle` on our `Flyout` accordingly:
 
 And there we go! We have a nice navigation drawer experience that is consistent across platforms:
 
-![Android Nav Flyout](/assets/images/drawerflyout/android-nav-drawer.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-nav-drawer.mp4" class="width-half" %}
 
-![WASM Nav Flyout](/assets/images/drawerflyout/wasm-nav-drawer-final.gif)
+{% include local-video.html src="/assets/images/drawerflyout/wasm-nav-drawer-final.mp4" %}
 
 We can even get spicy and use some of the `DrawerFlyoutPresenter` attached properties to customize the experience further. For example, we can set the `DrawerLength` to `0.9*` to make the drawer take up 90% of the screen width and use a ridiculous `LightDismissOverlayBackground`:
 
@@ -400,7 +400,7 @@ We can even get spicy and use some of the `DrawerFlyoutPresenter` attached prope
  </Style>
 ```
 
-![Android page with Red NavFlyoutPresenterStyle](/assets/images/drawerflyout/android-nav-drawer-red.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-nav-drawer-red.mp4" class="width-half" %}
 
 Now that we know how to build a beautiful navigation drawer, we can apply these skills to build a [bottom sheet][m3-bottom-sheet] experience!
 
@@ -408,9 +408,9 @@ Now that we know how to build a beautiful navigation drawer, we can apply these 
 
 Here's what we are looking to build by the end of this section (both Android and WASM are shown):
 
-![Android Bottom Sheet](/assets/images/drawerflyout/android-sheet.gif){: .width-half}
+{% include local-video.html src="/assets/images/drawerflyout/android-sheet.mp4" class="width-half" %}
 
-![WASM Bottom Sheet](/assets/images/drawerflyout/wasm-sheet.gif)
+{% include local-video.html src="/assets/images/drawerflyout/wasm-sheet.mp4" %}
 
 Since we just went through the whole process of transforming a `Flyout` into a navigation drawer, we can use the same process to transform it into a bottom sheet. First things first, let's create a new custom flyout called `BottomSheetFlyout`:
 
