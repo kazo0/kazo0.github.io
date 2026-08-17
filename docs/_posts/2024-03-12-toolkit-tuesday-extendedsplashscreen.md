@@ -15,7 +15,6 @@ As always, these components require some extra setup since they are part of the 
 {: .notice--info}
 
 {% include video id="jMI4E2e9gYE" provider="youtube" %}
-c
 
 ## Anatomy of `ExtendedSplashScreen`
 
