@@ -3,6 +3,14 @@ name: PR preview
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
+  # Rebuild one preview on demand. Without this, a change to how previews are
+  # built only reaches an open PR on its next push, so an oversized preview
+  # could sit on gh-pages for weeks.
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "PR number to rebuild the preview for"
+        required: true
 
 permissions:
   contents: write # push the built preview to gh-pages
@@ -10,20 +18,27 @@ permissions:
 
 # Newest commit on a PR wins; older in-flight preview builds are cancelled.
 concurrency:
-  group: preview-${{ github.event.number }}
+  group: preview-${{ github.event.number || inputs.pr }}
   cancel-in-progress: true
 
 jobs:
   deploy:
-    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
+    env:
+      PR: ${{ github.event.number || inputs.pr }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # The ref a pull_request event checks out by default, spelled out so a
+          # manual rebuild lands on the PR rather than on master.
+          ref: refs/pull/${{ github.event.number || inputs.pr }}/merge
 
       - name: Configure preview build
-        env:
-          PR: ${{ github.event.number }}
         run: |
           # Serve theme assets and internal links under the preview sub-path.
           sed -i "s|^baseurl:.*|baseurl: \"/previews/pr-${PR}\"|" docs/_config.yml
@@ -39,24 +54,37 @@ jobs:
 
       - name: Post-process preview output
         env:
-          PR: ${{ github.event.number }}
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
+
           # jekyll-build-pages is a Docker action and writes _site as root;
           # reclaim it so this non-root step can edit the files in place.
           sudo chown -R "$(id -u):$(id -g)" _site
-          # Rewrite root-absolute asset paths (e.g. images referenced as
-          # /assets/... in post markdown) so they resolve under the preview.
-          # Theme assets are already prefixed via baseurl, so they don't match.
+
+          # Non-baseurl-aware paths hand-written in post markdown still need the
+          # preview prefix; theme-emitted links already carry it.
           find _site -name '*.html' -exec \
             sed -i "s|=\"/assets/|=\"/previews/pr-${PR}/assets/|g" {} +
+
+          # Bundle only the images this PR adds or edits and leave the rest to
+          # the production root, so previews stop duplicating ~270 MB of assets
+          # each. See .github/scripts/preview-slim.py for why that matters.
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" \
+            --jq '.[] | select(.status != "removed") | .filename' \
+            | sed -n 's|^docs/assets/images/||p' | sort -u > "${RUNNER_TEMP}/preview-keep.txt"
+          python3 .github/scripts/preview-slim.py \
+            _site "/previews/pr-${PR}" "${RUNNER_TEMP}/preview-keep.txt"
+
           # The apex domain belongs to production only.
           rm -f _site/CNAME
+          echo "Preview payload: $(du -sh _site | cut -f1)"
 
       - name: Publish preview to gh-pages
         env:
           GITHUB_TOKEN: ${{ github.token }}
           MODE: deploy
-          DEST_DIR: previews/pr-${{ github.event.number }}
+          DEST_DIR: previews/pr-${{ github.event.number || inputs.pr }}
           SOURCE_DIR: _site
         run: bash .github/scripts/gh-pages-deploy.sh
 
@@ -64,7 +92,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const pr = context.issue.number;
+            const pr = Number(process.env.PR);
             const url = `https://kazo0.dev/previews/pr-${pr}/`;
             const marker = '<!-- pr-preview -->';
             const body = [

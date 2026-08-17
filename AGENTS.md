@@ -77,6 +77,17 @@ Reusable link references are defined in `_includes/links.md`. Include them in po
 - **`_layouts/single.html`** — Extends the theme's default single layout (adds hero image rendering before content).
 - **`_data/navigation.yml`** — Site navigation links.
 
+### Deployment & PR Previews
+
+Pushes to `master` build with `actions/jekyll-build-pages` and publish to the root of the `gh-pages` branch; each PR publishes a preview to `gh-pages/previews/pr-N/`, linked from a sticky comment and torn down when the PR closes. Both go through `.github/scripts/gh-pages-deploy.sh`, which splices one subtree at a time so production and previews coexist on the branch.
+
+GitHub Pages deploys the **whole** `gh-pages` branch as a single artifact, capped at 1 GB — so anything stale or duplicated on that branch counts against every deploy.
+
+- A preview bundles only the images its own PR adds or edits. `.github/scripts/preview-slim.py` rewrites every other image URL to the production root and deletes the file, which keeps a preview around a few MB instead of ~270 MB. The practical consequence: **a preview shows production's copy of any image the PR didn't touch**, so edit an image in the PR if you need to see the change.
+- `preview-gc.yml` sweeps weekly for previews whose PR is closed, in case the per-PR teardown was missed.
+- To rebuild one preview without pushing (e.g. after changing the preview workflow), run the **PR preview** workflow manually with the PR number.
+- Keep new images small — every one lands in the production root permanently.
+
 ### Linting & Commits
 
 This repo enforces **markdownlint** and **Conventional Commits** via git hooks (husky) and GitHub Actions (`.github/workflows/lint.yml`). The Node tooling lives at the repo root, separate from the Jekyll/Ruby toolchain under `docs/`.

@@ -1,0 +1,67 @@
+name: Preview GC
+
+# The per-PR `closed` cleanup in pr-preview.yml is the primary teardown, but it
+# only fires once — a cancelled run, a workflow that didn't exist yet when the PR
+# merged, or a preview published from a since-deleted PR all strand a directory
+# on gh-pages forever. Every stranded preview counts against the 1 GB Pages
+# deployment artifact, so sweep for them on a schedule.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write # push the pruned gh-pages branch
+  pull-requests: read # check whether each preview's PR is still open
+
+concurrency:
+  group: deploy-production # never race the production publisher
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find previews whose PR is closed
+        id: stale
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Listing the tree over the API avoids cloning the (large) branch.
+          gh api "repos/${GITHUB_REPOSITORY}/contents/previews?ref=gh-pages" \
+            --jq '.[] | select(.type == "dir") | .name' > previews.txt 2>/dev/null || true
+
+          stale=""
+          while IFS= read -r name; do
+            [ -n "$name" ] || continue
+            pr="${name#pr-}"
+            case "$pr" in
+              ''|*[!0-9]*) echo "${name}: not a PR preview, leaving alone"; continue ;;
+            esac
+            # Only prune on a definite "closed" — a transient API failure must
+            # never be read as permission to delete a live preview.
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr}" --jq .state 2>/dev/null || echo "")
+            case "$state" in
+              closed) echo "pr-${pr}: closed -> prune"; stale="${stale} previews/pr-${pr}" ;;
+              open) echo "pr-${pr}: open -> keep" ;;
+              *) echo "pr-${pr}: state unknown -> keep" ;;
+            esac
+          done < previews.txt
+
+          if [ -z "$stale" ]; then
+            echo "Nothing to sweep."
+          fi
+          echo "dirs=${stale# }" >> "$GITHUB_OUTPUT"
+
+      - name: Remove stale previews
+        if: steps.stale.outputs.dirs != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MODE: remove
+          DEST_DIR: ${{ steps.stale.outputs.dirs }}
+        run: bash .github/scripts/gh-pages-deploy.sh
