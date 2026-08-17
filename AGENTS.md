@@ -48,7 +48,16 @@ cd docs && bundle update
 
 - **`_posts/`** — Published posts. File naming: `YYYY-MM-DD-slug.md`. Post dates must be in the past/present to be published.
 - **`_drafts/`** — Work-in-progress posts with no date in the filename. Only visible with `--drafts`.
-- **`assets/images/`** — Post images, organized in per-post subdirectories (e.g., `assets/images/chefs-login/`).
+- **`assets/images/`** — Post media, organized in per-post subdirectories (e.g., `assets/images/chefs-login/`). Nothing here is ever cleaned up, and it all ships in every deploy, so add media at the size it needs to be:
+  - **Screen recordings are MP4, not GIF.** Embed with `{% include local-video.html src="..." %}` (add `class="width-half"` for portrait phone captures) — it already autoplays muted and loops, so it behaves like a GIF at a fraction of the size.
+
+    ```bash
+    ffmpeg -i in.gif -vf "scale=-2:1600:flags=lanczos" -c:v libx264 -crf 23 \
+      -preset slow -pix_fmt yuv420p -movflags +faststart -an out.mp4
+    ```
+
+  - **Photos and screenshots cap at 2048px on the long edge.** Gallery posts use the same file for the thumbnail and the click-through, so an oversized original is downloaded just to draw a thumbnail.
+  - **Save screenshots without an alpha channel** unless something is genuinely transparent.
 
 ### Post Frontmatter
 
