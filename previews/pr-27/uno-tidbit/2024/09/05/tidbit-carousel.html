@@ -2,7 +2,7 @@
 
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
   Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
   Copyright 2024-2026 iBug - ibugone.com | @iBug
   Free for personal and commercial use under the MIT license
@@ -36,7 +36,7 @@
 
 
 
-  <meta property="og:image" content="https://kazo0.dev/previews/pr-27/assets/images/tidbit-hero.png">
+  <meta property="og:image" content="https://kazo0.dev/assets/images/tidbit-hero.png">
   
 
 
@@ -48,7 +48,7 @@
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-27/assets/images/tidbit-hero.png">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/tidbit-hero.png">
     
   
 
@@ -173,7 +173,7 @@
   
     <div class="author__avatar">
       <a href="https://kazo0.dev/previews/pr-27/">
-        <img src="/previews/pr-27/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -344,7 +344,7 @@
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-27/assets/images/tidbit-hero.png" class="hero-image">
+        <img alt="Hero Image" src="/assets/images/tidbit-hero.png" class="hero-image">
         <p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.</p>
 
 <h2 id="the-problem">The Problem</h2>
@@ -488,7 +488,7 @@
 
 <p>With this, we should have a nice swipeable carousel with some basic content</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/ios-carousel-simple.gif" alt="FlipView on iOS in action" class="align-center"></p>
+<p><img src="/assets/images/carousel/ios-carousel-simple.gif" alt="FlipView on iOS in action" class="align-center"></p>
 
 <p>Now, what we can do here is introduce the <code class="language-plaintext highlighter-rouge">PipsPager</code> to our page that will eventually work as a context indicator for the <code class="language-plaintext highlighter-rouge">FlipView</code>. This will show the user how many items are in the <code class="language-plaintext highlighter-rouge">FlipView</code> and which one they are currently on. I think it makes sense to have this at the bottom of the page, so let’s wrap our <code class="language-plaintext highlighter-rouge">FlipView</code> in a <code class="language-plaintext highlighter-rouge">Grid</code> and overlay the <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom:</p>
 
@@ -523,7 +523,7 @@
 
 <p>Now we have this nice <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of our page:</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/pipspager.png" alt="PipsPager" class="align-center"></p>
+<p><img src="/assets/images/carousel/pipspager.png" alt="PipsPager" class="align-center"></p>
 
 <h3 id="connecting-the-dots">Connecting The Dots</h3>
 
@@ -562,17 +562,17 @@
 
 <p>We should now have a fully functional carousel experience with a <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of the page. You should be able to swipe through the items or tap on one of the “pips” to navigate to that item.</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/ios-carousel-swipe.gif" alt="Swiping through carousel on iOS" class="align-center"></p>
+<p><img src="/assets/images/carousel/ios-carousel-swipe.gif" alt="Swiping through carousel on iOS" class="align-center"></p>
 
 <p>Before we wrap up, let’s make sure this also looks good for other platforms. Especially desktop/web targets where we have a lot more screen real estate.</p>
 
 <p>Running this on the macOS Desktop target currently looks like this:</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/desktop-carousel-ugly.png" alt="Ugly Desktop Carousel" class="align-center"></p>
+<p><img src="/assets/images/carousel/desktop-carousel-ugly.png" alt="Ugly Desktop Carousel" class="align-center"></p>
 
 <p>…</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/side-eye.jpg" alt="Side eye meme"></p>
+<p><img src="/assets/images/carousel/side-eye.jpg" alt="Side eye meme"></p>
 
 <h3 id="making-it-responsive">Making it Responsive</h3>
 
@@ -757,15 +757,15 @@
 
 <p>Here we are using some extra <code class="language-plaintext highlighter-rouge">Grid</code>s and the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension to fiddle with the rows and columns. Now we should have more of a horizontal layout on wider screens and a vertical layout on narrower screens. So, if we were to re-run this on the macOS Desktop target, we should be able to transition between both layouts:</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/desktop-resize.gif" alt="Resizing the Desktop window" class="align-center"></p>
+<p><img src="/assets/images/carousel/desktop-resize.gif" alt="Resizing the Desktop window" class="align-center"></p>
 
 <p>For non-touch platforms, you can flip through the views by using the built-in navigation buttons on the <code class="language-plaintext highlighter-rouge">FlipView</code>:</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/desktop-arrows.gif" alt="Navigate FlipView with arrow buttons" class="align-center"></p>
+<p><img src="/assets/images/carousel/desktop-arrows.gif" alt="Navigate FlipView with arrow buttons" class="align-center"></p>
 
 <p>Or, by clicking on the individual pips:</p>
 
-<p><img src="/previews/pr-27/assets/images/carousel/desktop-pips.gif" alt="Navigate FlipView with pips" class="align-center"></p>
+<p><img src="/assets/images/carousel/desktop-pips.gif" alt="Navigate FlipView with pips" class="align-center"></p>
 
 <h2 id="conclusion">Conclusion</h2>
 
@@ -830,7 +830,113 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-27/assets/images/chefs-intro/chefslogo.png" alt="">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-27/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-27/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/chefs-intro/chefslogo.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -882,7 +988,7 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-27/assets/images/skills-intro/tool-hero.png" alt="">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -921,112 +1027,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-27/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-27/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-27/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-27/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
-
-</p>
   </article>
 </div>
 
