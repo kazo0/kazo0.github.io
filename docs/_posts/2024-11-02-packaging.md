@@ -45,7 +45,7 @@ After running the provided command, I have a new Uno Platform app ready to go. I
 
 ![Blank Uno Platform app running on macOS](/assets/images/packaging/macOSApp.png){: .align-center}
 
-A beautiful app, let's ship it! :shipit:
+A beautiful app, let's ship it! <img class="emoji" title=":shipit:" alt=":shipit:" src="https://github.githubassets.com/images/icons/emoji/shipit.png" height="20" width="20">
 
 ## Packaging (Windows)
 
