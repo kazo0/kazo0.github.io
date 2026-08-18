@@ -48,7 +48,16 @@ cd docs && bundle update
 
 - **`_posts/`** — Published posts. File naming: `YYYY-MM-DD-slug.md`. Post dates must be in the past/present to be published.
 - **`_drafts/`** — Work-in-progress posts with no date in the filename. Only visible with `--drafts`.
-- **`assets/images/`** — Post images, organized in per-post subdirectories (e.g., `assets/images/chefs-login/`).
+- **`assets/images/`** — Post media, organized in per-post subdirectories (e.g., `assets/images/chefs-login/`). Nothing here is ever cleaned up, and it all ships in every deploy, so add media at the size it needs to be:
+  - **Screen recordings are MP4, not GIF.** Embed with `{% include local-video.html src="..." %}` (add `class="width-half"` for portrait phone captures) — it already autoplays muted and loops, so it behaves like a GIF at a fraction of the size.
+
+    ```bash
+    ffmpeg -i in.gif -vf "scale=-2:1600:flags=lanczos" -c:v libx264 -crf 23 \
+      -preset slow -pix_fmt yuv420p -movflags +faststart -an out.mp4
+    ```
+
+  - **Photos and screenshots cap at 2048px on the long edge.** Gallery posts use the same file for the thumbnail and the click-through, so an oversized original is downloaded just to draw a thumbnail.
+  - **Save screenshots without an alpha channel** unless something is genuinely transparent.
 
 ### Post Frontmatter
 
@@ -76,6 +85,17 @@ Reusable link references are defined in `_includes/links.md`. Include them in po
 - **`_sass/custom_styles.scss`** — Custom CSS overrides for the Minimal Mistakes theme.
 - **`_layouts/single.html`** — Extends the theme's default single layout (adds hero image rendering before content).
 - **`_data/navigation.yml`** — Site navigation links.
+
+### Deployment & PR Previews
+
+Pushes to `master` build with `actions/jekyll-build-pages` and publish to the root of the `gh-pages` branch; each PR publishes a preview to `gh-pages/previews/pr-N/`, linked from a sticky comment and torn down when the PR closes. Both go through `.github/scripts/gh-pages-deploy.sh`, which splices one subtree at a time so production and previews coexist on the branch.
+
+GitHub Pages deploys the **whole** `gh-pages` branch as a single artifact, capped at 1 GB — so anything stale or duplicated on that branch counts against every deploy.
+
+- A preview bundles only the images its own PR adds or edits. `.github/scripts/preview-slim.py` rewrites every other image URL to the production root and deletes the file, which keeps a preview around a few MB instead of ~270 MB. The practical consequence: **a preview shows production's copy of any image the PR didn't touch**, so edit an image in the PR if you need to see the change.
+- `preview-gc.yml` sweeps weekly for previews whose PR is closed, in case the per-PR teardown was missed.
+- To rebuild one preview without pushing (e.g. after changing the preview workflow), run the **PR preview** workflow manually with the PR number.
+- Keep new images small — every one lands in the production root permanently.
 
 ### Linting & Commits
 

@@ -16,6 +16,8 @@
 # Environment inputs:
 #   MODE        deploy | remove                     (default: deploy)
 #   DEST_DIR    subtree on gh-pages; "" = prod root
+#               (MODE=remove accepts a whitespace-separated list, so a sweep
+#                can retire several stale previews in one commit)
 #   SOURCE_DIR  built site to publish               (required when MODE=deploy)
 #   GITHUB_TOKEN / GITHUB_REPOSITORY / GITHUB_SHA   (provided by Actions)
 #
@@ -67,7 +69,10 @@ publish() {
 
   local msg
   if [ "$MODE" = "remove" ]; then
-    rm -rf "${tmp:?}/${DEST_DIR}"
+    # shellcheck disable=SC2086 -- splitting DEST_DIR into words is the point
+    for dir in $DEST_DIR; do
+      rm -rf "${tmp:?}/${dir}"
+    done
     msg="chore(preview): remove ${DEST_DIR}"
   elif [ -z "$DEST_DIR" ]; then
     # Production: replace root-level files but keep previews/ (and .git).
