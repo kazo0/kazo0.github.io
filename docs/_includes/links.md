@@ -9,3 +9,9 @@
 [uno-homepage]: https://platform.uno/posts/uno
 [toolkit-homepage]: https://platform.uno/posts/toolkit
 [uno-toolkit-docs]: https://aka.platform.uno/uno-toolkit
+[uno-docs]: https://platform.uno/docs/articles/intro.html
+[uno-discord]: https://platform.uno/discord
+[uno-mcp-vs-app-mcp]: https://platform.uno/blog/uno-mcp-vs-app-mcp/
+[uno-mcps-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html
+[explore-app-ai]: https://platform.uno/docs/articles/explore-your-app-ai-agents.html
+[common-issues-ai-agents]: https://platform.uno/docs/articles/common-issues-ai-agents.html
