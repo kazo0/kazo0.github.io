@@ -36,7 +36,7 @@
 
 
 
-  <meta property="og:image" content="https://kazo0.dev/previews/pr-34/assets/images/uno-toolkit-hero.png">
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
   
 
 
@@ -48,7 +48,7 @@
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-34/assets/images/uno-toolkit-hero.png">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
     
   
 
@@ -177,7 +177,7 @@
   
     <div class="author__avatar">
       <a href="https://kazo0.dev/previews/pr-34/">
-        <img src="/previews/pr-34/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -337,7 +337,7 @@
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-34/assets/images/uno-toolkit-hero.png" class="hero-image" />
+        <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image" />
         <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we are covering the <code class="language-plaintext highlighter-rouge">DrawerFlyoutPresenter</code>, a lightweight way to create a <a href="https://m3.material.io/components/navigation-drawer/guidelines">drawer-like experience</a> in your applications using <a href="https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.flyout">Flyouts</a>. It can also be utilized for other experiences such as a <a href="https://m3.material.io/components/bottom-sheets/overview">bottom sheet</a> or a <a href="https://m3.material.io/components/side-sheets/overview">side sheet</a>. In this article we will cover both the “navigation drawer” and “bottom sheet” use cases.</p>
@@ -354,11 +354,11 @@
 
 <h3 id="android">Android</h3>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-nav-anatomy.png" alt="Android Nav Flyout Anatomy" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-nav-anatomy.png" alt="Android Nav Flyout Anatomy" class="width-half" /></p>
 
 <h3 id="wasm">WASM</h3>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/wasm-nav-anatomy.png" alt="WASM Nav Flyout Anatomy" class="align-center" /></p>
+<p><img src="/assets/images/drawerflyout/wasm-nav-anatomy.png" alt="WASM Nav Flyout Anatomy" class="align-center" /></p>
 
 <ol>
   <li>Flyout Content</li>
@@ -457,7 +457,7 @@
 <span class="nt">&lt;/Grid&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-simple-flyout.gif" alt="Simple Android Flyout" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-simple-flyout.gif" alt="Simple Android Flyout" class="width-half" /></p>
 
 <p>Breathtaking.</p>
 
@@ -513,7 +513,7 @@
 <span class="nt">&lt;/Button&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-simple-flyout-style.png" alt="Simple Android Flyout with FlyoutPresenterStyle" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-simple-flyout-style.png" alt="Simple Android Flyout with FlyoutPresenterStyle" class="width-half" /></p>
 
 <p>Now that we have a better understanding of how <code class="language-plaintext highlighter-rouge">FlyoutPresenter</code> works, let’s take a look at what you can do with the <code class="language-plaintext highlighter-rouge">DrawerFlyoutPresenter</code> from the Uno Toolkit!</p>
 
@@ -525,9 +525,9 @@
 
 <p>Here’s what we are looking to build by the end of this section (both Android and WASM are shown):</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/wasm-nav-drawer.gif" alt="WASM Nav Flyout" /></p>
+<p><img src="/assets/images/drawerflyout/wasm-nav-drawer.gif" alt="WASM Nav Flyout" /></p>
 
 <p>You may have noticed that we are opening the navigation drawer by clicking on the <code class="language-plaintext highlighter-rouge">MainCommand</code> of a <code class="language-plaintext highlighter-rouge">NavigationBar</code>. This is a custom control from the Uno Toolkit and one that we have <a href="/toolkit-tuesday/2023/11/21/toolkit-tuesday-navigationbar.html">previously covered</a>.</p>
 
@@ -581,7 +581,7 @@
 <span class="nt">&lt;/Page&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-drawer-step-1.png" alt="Android initial page with NavigationBar" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-drawer-step-1.png" alt="Android initial page with NavigationBar" class="width-half" /></p>
 
 <p>Now, we can have the <code class="language-plaintext highlighter-rouge">MainCommand</code> open a <code class="language-plaintext highlighter-rouge">Flyout</code> with <code class="language-plaintext highlighter-rouge">Placement="Full"</code> when clicked. We will add some dummy content to get started:</p>
 
@@ -629,7 +629,7 @@
 
 <p>Now here is what the <code class="language-plaintext highlighter-rouge">Flyout</code> looks like once we press on the <code class="language-plaintext highlighter-rouge">MainCommand</code>:</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-drawer-step-2.png" alt="Android page with full Flyout" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-drawer-step-2.png" alt="Android page with full Flyout" class="width-half" /></p>
 
 <p>Let’s now use one of the <a href="#styles">pre-built styles that we covered earlier</a> and set the <code class="language-plaintext highlighter-rouge">FlyoutPresenterStyle</code> to <code class="language-plaintext highlighter-rouge">LeftDrawerFlyoutPresenterStyle</code>:</p>
 
@@ -677,7 +677,7 @@
 
 <p>Now when we press on the <code class="language-plaintext highlighter-rouge">MainCommand</code>, we should have a <code class="language-plaintext highlighter-rouge">Flyout</code> open from the left side of the screen. We can also drag the <code class="language-plaintext highlighter-rouge">Flyout</code> to close it:</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-drawer-step-3.gif" alt="Android page with LeftDrawerFlyoutPresenterStyle" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-drawer-step-3.gif" alt="Android page with LeftDrawerFlyoutPresenterStyle" class="width-half" /></p>
 
 <p>Starting to look good!</p>
 
@@ -795,7 +795,7 @@
 
 <p>Let’s pause and take a look at what this looks like on another platform, maybe one with a different screen size like the browser:</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/wasm-drawer-step-4.png" alt="WASM page with LeftDrawerFlyoutPresenterStyle" /></p>
+<p><img src="/assets/images/drawerflyout/wasm-drawer-step-4.png" alt="WASM page with LeftDrawerFlyoutPresenterStyle" /></p>
 
 <p>You’ll notice that the navigation drawer is much wider in this case. This is because the <code class="language-plaintext highlighter-rouge">DrawerLength</code> is set to <code class="language-plaintext highlighter-rouge">0.66*</code> by default. This means that the drawer will take up 66% of the screen width.</p>
 
@@ -921,7 +921,7 @@
 </span> &lt;/Flyout&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-drawer-step-5.png" alt="Android page with LeftDrawerFlyoutPresenterStyle and content" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-drawer-step-5.png" alt="Android page with LeftDrawerFlyoutPresenterStyle and content" class="width-half" /></p>
 
 <p>Almost there!</p>
 
@@ -955,13 +955,13 @@
  &lt;/Flyout&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-drawer-step-6.png" alt="Android page with custom NavFlyoutPresenterStyle" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-drawer-step-6.png" alt="Android page with custom NavFlyoutPresenterStyle" class="width-half" /></p>
 
 <p>And there we go! We have a nice navigation drawer experience that is consistent across platforms:</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/wasm-nav-drawer-final.gif" alt="WASM Nav Flyout" /></p>
+<p><img src="/assets/images/drawerflyout/wasm-nav-drawer-final.gif" alt="WASM Nav Flyout" /></p>
 
 <p>We can even get spicy and use some of the <code class="language-plaintext highlighter-rouge">DrawerFlyoutPresenter</code> attached properties to customize the experience further. For example, we can set the <code class="language-plaintext highlighter-rouge">DrawerLength</code> to <code class="language-plaintext highlighter-rouge">0.9*</code> to make the drawer take up 90% of the screen width and use a ridiculous <code class="language-plaintext highlighter-rouge">LightDismissOverlayBackground</code>:</p>
 
@@ -981,7 +981,7 @@
 </span> &lt;/Style&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-nav-drawer-red.gif" alt="Android page with Red NavFlyoutPresenterStyle" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-nav-drawer-red.gif" alt="Android page with Red NavFlyoutPresenterStyle" class="width-half" /></p>
 
 <p>Now that we know how to build a beautiful navigation drawer, we can apply these skills to build a <a href="https://m3.material.io/components/bottom-sheets/overview">bottom sheet</a> experience!</p>
 
@@ -989,9 +989,9 @@
 
 <p>Here’s what we are looking to build by the end of this section (both Android and WASM are shown):</p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-sheet.gif" alt="Android Bottom Sheet" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-sheet.gif" alt="Android Bottom Sheet" class="width-half" /></p>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/wasm-sheet.gif" alt="WASM Bottom Sheet" /></p>
+<p><img src="/assets/images/drawerflyout/wasm-sheet.gif" alt="WASM Bottom Sheet" /></p>
 
 <p>Since we just went through the whole process of transforming a <code class="language-plaintext highlighter-rouge">Flyout</code> into a navigation drawer, we can use the same process to transform it into a bottom sheet. First things first, let’s create a new custom flyout called <code class="language-plaintext highlighter-rouge">BottomSheetFlyout</code>:</p>
 
@@ -1185,7 +1185,7 @@
  &lt;/Page&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-sheet-step-1.png" alt="Android page with BottomSheetFlyout" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-sheet-step-1.png" alt="Android page with BottomSheetFlyout" class="width-half" /></p>
 
 <p>Almost there, but if we look at the <a href="https://m3.material.io/components/bottom-sheets/overview">bottom sheet guidance from Material Design</a>, we can see the the sheet should have some rounded corners and shouldn’t open up too high. We can achieve this by creating a custom <code class="language-plaintext highlighter-rouge">Style</code> for the <code class="language-plaintext highlighter-rouge">FlyoutPresenter</code> that is based on the <code class="language-plaintext highlighter-rouge">BottomDrawerFlyoutPresenterStyle</code>. In our <code class="language-plaintext highlighter-rouge">AppResources.xaml</code>, we can add the following:</p>
 
@@ -1219,7 +1219,7 @@
  &lt;/Flyout&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-34/assets/images/drawerflyout/android-sheet-step-2.png" alt="Android page with custom BottomSheetFlyoutPresenterStyle" class="width-half" /></p>
+<p><img src="/assets/images/drawerflyout/android-sheet-step-2.png" alt="Android page with custom BottomSheetFlyoutPresenterStyle" class="width-half" /></p>
 
 <p>And there we go! We were able to customize the <code class="language-plaintext highlighter-rouge">CornerRadius</code> as well as ensure that the sheet only takes up 33% of the screen height.</p>
 
@@ -1298,7 +1298,59 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-34/assets/images/msal-auth/hero.png" alt="">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/msal-auth/hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -1350,7 +1402,61 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-34/assets/images/skills-intro/tool-hero.png" alt="">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -1389,112 +1495,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-34/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-34/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-34/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-34/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
-
-</p>
   </article>
 </div>
 
