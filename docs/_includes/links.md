@@ -15,3 +15,4 @@
 [uno-mcps-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html
 [explore-app-ai]: https://platform.uno/docs/articles/explore-your-app-ai-agents.html
 [common-issues-ai-agents]: https://platform.uno/docs/articles/common-issues-ai-agents.html
+[uno-66-release]: https://platform.uno/blog/uno-platform-6-6/

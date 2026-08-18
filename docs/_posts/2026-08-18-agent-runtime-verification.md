@@ -7,7 +7,7 @@ header:
 tags: [agents, ai, mcp, app-mcp, runtime, verification, uno-platform, uno, unoplatform]
 ---
 
-In my [last post]({% post_url 2026-02-23-agent-skills-intro %}), we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it's the part that stuck with me the most. I added a single line to my prompt:
+Back in my [Agent Skills post]({% post_url 2026-02-23-agent-skills-intro %}), we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it's the part that stuck with me the most. I added a single line to my prompt:
 
 > Run the desktop target afterward and confirm the expected behaviour
 
@@ -25,8 +25,8 @@ The agent has no eyes and no hands. It can't run the app, look at it, or poke at
 
 Before we get into the fun part, a quick refresher, because the Uno MCP and the App MCP are easy to mix up. If you want the deep dive, the team wrote a great [dedicated post][uno-mcp-vs-app-mcp] on exactly this.
 
-1. The **Uno MCP** is about *knowledge*. It gives the agent the entire [Uno documentation][uno-docs] as a searchable knowledge base through tools like `uno_platform_docs_search`. This is what shapes what the agent proposes in the first place.
-2. The **App MCP** is about *runtime*. It runs locally and lets the agent reach into your actual running app. The [docs][uno-mcps-docs] describe it perfectly: these tools give "eyes" and "hands" to agents so they can validate the assumptions behind the changes they just made.
+1. **Uno MCP**: this one is about *knowledge*. It gives the agent the entire [Uno documentation][uno-docs] as a searchable knowledge base through tools like `uno_platform_docs_search`. This is what shapes what the agent proposes in the first place.
+2. **App MCP**: this one is about *runtime*. It runs locally and lets the agent reach into your actual running app. The [docs][uno-mcps-docs] describe it perfectly: these tools give "eyes" and "hands" to agents so they can validate the assumptions behind the changes they just made.
 
 I used a cooking analogy last time, so let me keep it going: if the Uno MCP is the pantry of ingredients and Agent Skills are the recipes, then the App MCP is the agent finally walking over to the stove, tasting the dish, and fixing the seasoning before it ever reaches your plate.
 
@@ -36,6 +36,7 @@ This is where it clicked for me. The App MCP isn't just snapping a screenshot an
 
 Here's what ships under the Community license:
 
+- `uno_app_start`: start the app in the first place, with Hot Reload support
 - `uno_app_get_runtime_info`: general info about the running app (PID, OS, platform, and so on)
 - `uno_app_get_screenshot`: a screenshot of the app as it looks *right now*
 - `uno_app_pointer_click`: click at an X,Y coordinate
@@ -52,13 +53,15 @@ And a couple more come with the Pro license:
 
 That last one is the one I keep thinking about. Being able to read an element's `DataContext` means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed cleanly. Anyone who's lost an afternoon to a silent binding failure knows exactly why that's a big deal.
 
+There's also one diagnostic freebie, `uno_health`, which is available even before your app connects. It reports on the state of the MCP bridge itself, so the agent can tell the difference between "the app isn't running" and "the plumbing is broken."
+
 ## Closing the Loop
 
 Put these together and a really satisfying loop falls out of it:
 
-1. The agent leans on the **Uno MCP** to research the right approach and proposes a change.
+1. The agent leans on the Uno MCP to research the right approach and proposes a change.
 2. That change gets applied and built.
-3. The agent launches the app and uses the **App MCP** to check its own work: walk the visual tree to confirm an element is there, click it, type into it, screenshot the result, and read back the state.
+3. The agent launches the app with `uno_app_start` and uses the App MCP to check its own work. It walks the visual tree to confirm an element is there, pokes at it, and screenshots the result.
 
 The key shift is that the agent stops reasoning about static code in a vacuum. It's checking against the *running application* now, which is exactly what you do when you hit F5 and start clicking around.
 
@@ -66,13 +69,14 @@ Back to that MVUX selection example from last time: once the agent wired up the 
 
 ## Getting Set Up
 
-The good news: there isn't much ceremony here. The App MCP is part of the Uno tooling, and if you've been following the recommended agentic setup, you might already have it wired up. Since it's a local runtime service, the one thing to remember is that your app has to actually be running for the agent to attach to it.
+The good news: there isn't much ceremony here, and as of [Uno Platform 6.6][uno-66-release] there's even less than when I started drafting this post. The MCPs now register themselves automatically with supported agents and IDEs (Visual Studio, VS Code, Claude Code, Cursor, Codex CLI, and Gemini CLI at the time of writing), so if your tooling is current you might already have everything wired up.
 
 A few notes from my own tinkering:
 
-- The App MCP is **local**. It talks to a running instance of your app on your machine, not some hosted service.
+- The App MCP is local. It talks to a running instance of your app on your machine, not some hosted service. And if the app isn't running yet, that's fine too, since the agent can start it with `uno_app_start`.
 - It spans all of Uno's targets, so you can point it at your desktop target for quick iteration and trust that the behavior carries over to the rest.
-- If you're in Visual Studio and the App MCP indicator goes red, don't panic like I did. The fix is usually just to reload it: click the three dots and hit **Reload**. I spent way too long on that before spotting the note in the [docs][common-issues-ai-agents].
+- If the automatic registration didn't kick in for your agent, the Dev Server CLI has your back: `uno-devserver mcp status` shows what's registered where, and `uno-devserver mcp install` fills in the gaps.
+- If you're in Visual Studio and the App MCP indicator goes red, don't panic like I did. The fix is usually just to reload it: click the three dots and hit `Reload`. I spent way too long on that before spotting the note in the [docs][common-issues-ai-agents].
 
 For the full reference, the [Uno MCPs documentation][uno-mcps-docs] and the [Explore Your App with AI Agents][explore-app-ai] guide both go deeper than I can fit here.
 
