@@ -38,6 +38,17 @@ jobs:
           # manual rebuild lands on the PR rather than on master.
           ref: refs/pull/${{ github.event.number || inputs.pr }}/merge
 
+      # A PR's merge ref is only recomputed when the PR itself moves, so on a
+      # manual rebuild it can be a tree that predates the scripts this workflow
+      # calls. Take them from the commit the run was launched from instead:
+      # the merge commit on a pull_request, so a PR can still test its own
+      # changes to them, and the default branch on a manual rebuild.
+      - name: Sync preview tooling
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin "$GITHUB_SHA"
+          git checkout "$GITHUB_SHA" -- .github/scripts
+
       - name: Configure preview build
         run: |
           # Serve theme assets and internal links under the preview sub-path.
