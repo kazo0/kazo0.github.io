@@ -2,7 +2,7 @@
 
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
   Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
   Copyright 2024-2026 iBug - ibugone.com | @iBug
   Free for personal and commercial use under the MIT license
@@ -36,7 +36,7 @@
 
 
 
-  <meta property="og:image" content="https://kazo0.dev/previews/pr-23/assets/images/uno-toolkit-hero.png">
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
   
 
 
@@ -48,7 +48,7 @@
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-23/assets/images/uno-toolkit-hero.png">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
     
   
 
@@ -177,7 +177,7 @@
   
     <div class="author__avatar">
       <a href="https://kazo0.dev/previews/pr-23/">
-        <img src="/previews/pr-23/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -337,7 +337,7 @@
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-23/assets/images/uno-toolkit-hero.png" class="hero-image" />
+        <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image" />
         <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we are covering the brand-new <code class="language-plaintext highlighter-rouge">Responsive</code> components that are part of the <a href="https://aka.platform.uno/blog-5-1">5.1 Uno Toolkit release</a>. The <code class="language-plaintext highlighter-rouge">Responsive</code> components encompass two new additions to the Uno Toolkit library: a new <a href="#responsiveview"><code class="language-plaintext highlighter-rouge">ResponsiveView</code> control</a> and a new <a href="#responsive-markup-extension"><code class="language-plaintext highlighter-rouge">Responsive</code> markup extension</a>.</p>
@@ -506,7 +506,7 @@
 <span class="nt">&lt;/Page&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-23/assets/images/responsive/responsiveView_resize.gif" alt="ResponsiveView Resizing" /></p>
+<p><img src="/assets/images/responsive/responsiveView_resize.gif" alt="ResponsiveView Resizing" /></p>
 
 <p>You can see here how each template is applied as the screen width changes. But, what if we don’t define a template for a certain screen width? Let’s remove the <code class="language-plaintext highlighter-rouge">NarrowTemplate</code> and <code class="language-plaintext highlighter-rouge">WideTemplate</code> from the above example and see what happens:</p>
 
@@ -598,7 +598,7 @@
   &lt;/utu:ResponsiveView&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-23/assets/images/responsive/responsiveView_resize2.gif" alt="ResponsiveView Resizing without Narrow or Wide Templates" /></p>
+<p><img src="/assets/images/responsive/responsiveView_resize2.gif" alt="ResponsiveView Resizing without Narrow or Wide Templates" /></p>
 
 <p>Notice now how we stay in certain templates for longer as the screen width changes. This is because the <code class="language-plaintext highlighter-rouge">ResponsiveView</code> control will always pick the smallest defined template that satisfies the width requirements. Since we removed the <code class="language-plaintext highlighter-rouge">WideTemplate</code> and <code class="language-plaintext highlighter-rouge">NarrowTemplate</code>, the <code class="language-plaintext highlighter-rouge">ResponsiveView</code> control will default to the <code class="language-plaintext highlighter-rouge">NormalTemplate</code> and the <code class="language-plaintext highlighter-rouge">NarrowestTemplate</code> for the <code class="language-plaintext highlighter-rouge">Wide</code> and <code class="language-plaintext highlighter-rouge">Narrow</code> screen widths, respectively.</p>
 
@@ -684,7 +684,7 @@
 <span class="nt">&lt;/Page&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-23/assets/images/responsive/responsiveMarkup_resize.gif" alt="Responsive Markup Extension Resizing" /></p>
+<p><img src="/assets/images/responsive/responsiveMarkup_resize.gif" alt="Responsive Markup Extension Resizing" /></p>
 
 <p>Much simpler, right? The <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension is a great way to quickly adapt a single property value based on the current window width. It is also a great way to quickly prototype a responsive layout without having to define multiple templates.</p>
 
@@ -753,7 +753,7 @@
 
 <p>This ridiculous example will cause the responsive resolution logic to stay in <code class="language-plaintext highlighter-rouge">Wide</code> mode for most configurations until the screen width is at least 1200 pixels wide. Let’s see what that looks like:</p>
 
-<p><img src="/previews/pr-23/assets/images/responsive/responsiveView_resize3.gif" alt="ResponsiveView Resizing with Custom ResponsiveLayout" /></p>
+<p><img src="/assets/images/responsive/responsiveView_resize3.gif" alt="ResponsiveView Resizing with Custom ResponsiveLayout" /></p>
 
 <p>The way you could achieve this would look different depending on whether you are using <code class="language-plaintext highlighter-rouge">ResponsiveView</code> or the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension. Let’s take a look at both examples:</p>
 
@@ -884,7 +884,113 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-23/assets/images/agent-runtime-verification/hero.png" alt="">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/agent-runtime-verification/hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -936,7 +1042,7 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-23/assets/images/skills-intro/tool-hero.png" alt="">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -975,112 +1081,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-23/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-23/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-23/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
-
-</p>
   </article>
 </div>
 
