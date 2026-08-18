@@ -2,7 +2,7 @@
 
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
   Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
   Copyright 2024-2026 iBug - ibugone.com | @iBug
   Free for personal and commercial use under the MIT license
@@ -36,7 +36,7 @@
 
 
 
-  <meta property="og:image" content="https://kazo0.dev/previews/pr-31/assets/images/uno-toolkit-hero.png">
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
   
 
 
@@ -48,7 +48,7 @@
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-31/assets/images/uno-toolkit-hero.png">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
     
   
 
@@ -173,7 +173,7 @@
   
     <div class="author__avatar">
       <a href="https://kazo0.dev/previews/pr-31/">
-        <img src="/previews/pr-31/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
       </a>
     </div>
   
@@ -359,7 +359,7 @@
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-31/assets/images/uno-toolkit-hero.png" class="hero-image">
+        <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image">
         <p>Welcome to the first post in my new series, Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://github.com/unoplatform/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we are covering the <code class="language-plaintext highlighter-rouge">NavigationBar</code> control. This control has a simple purpose with a complex and interesting implementation across the multiple platforms that Uno supports. On Android and iOS/Catalyst, the <code class="language-plaintext highlighter-rouge">NavigationBar</code> serves as a sort of proxy to the native Android <code class="language-plaintext highlighter-rouge">Toolbar</code> and iOS <code class="language-plaintext highlighter-rouge">UINavigationBar</code>. On all other platforms, its functionality and UI are driven by a customized <code class="language-plaintext highlighter-rouge">CommandBar</code>.</p>
@@ -378,8 +378,8 @@
 <h3 id="android">Android</h3>
 
 <figure>
-    <img src="/previews/pr-31/assets/images/navbar/android-anatomy.png" alt="Android NavigationBar Anatomy" style="margin-bottom:10px;">
-    <img src="/previews/pr-31/assets/images/navbar/android-anatomy-2.png" alt="Android NavigationBar Anatomy 2">
+    <img src="/assets/images/navbar/android-anatomy.png" alt="Android NavigationBar Anatomy" style="margin-bottom:10px;">
+    <img src="/assets/images/navbar/android-anatomy-2.png" alt="Android NavigationBar Anatomy 2">
     <figcaption>
         <ol>
             <li>Main Command</li>
@@ -394,7 +394,7 @@
 <h3 id="ios">iOS</h3>
 
 <figure>
-    <img src="/previews/pr-31/assets/images/navbar/ios-anatomy.png" alt="iOS NavigationBar Anatomy">
+    <img src="/assets/images/navbar/ios-anatomy.png" alt="iOS NavigationBar Anatomy">
     <figcaption>
         <ol>
             <li>Main Command</li>
@@ -434,8 +434,8 @@
 <table>
   <tbody>
     <tr>
-      <td><img src="/previews/pr-31/assets/images/navbar/simple/first-page.png" alt="Simple NavigationBar First Page"></td>
-      <td><img src="/previews/pr-31/assets/images/navbar/simple/second-page.png" alt="Simple NavigationBar Secondbun Page"></td>
+      <td><img src="/assets/images/navbar/simple/first-page.png" alt="Simple NavigationBar First Page"></td>
+      <td><img src="/assets/images/navbar/simple/second-page.png" alt="Simple NavigationBar Secondbun Page"></td>
     </tr>
   </tbody>
 </table>
@@ -528,7 +528,7 @@
 
 <p>Most of the heavy lifting is done for you by the underlying implementation so you don’t have to worry about when to hide/show the back button. On top of that, the back button actually works out of the box! You don’t even need to hook the button to any click handler or command. The <code class="language-plaintext highlighter-rouge">NavigationBar</code> will fire any custom <code class="language-plaintext highlighter-rouge">ICommand</code> that may be set on the <code class="language-plaintext highlighter-rouge">MainCommand</code> but will also take care of the actual navigation for you!</p>
 
-<p><img src="/previews/pr-31/assets/images/navbar/simple/nav-small.gif" alt="GIF of navigation on iOS"></p>
+<p><img src="/assets/images/navbar/simple/nav-small.gif" alt="GIF of navigation on iOS"></p>
 
 <h3 id="maincommand-customization">
 <code class="language-plaintext highlighter-rouge">MainCommand</code> Customization</h3>
@@ -552,7 +552,7 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-31/assets/images/navbar/custom-main/navbar-no-back-text.png" alt="iOS NavigationBar with back button text"></p>
+<p><img src="/assets/images/navbar/custom-main/navbar-no-back-text.png" alt="iOS NavigationBar with back button text"></p>
 
 <p>Much better!</p>
 
@@ -583,7 +583,7 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-31/assets/images/navbar/custom-main/navbar-custom-back-icon.png" alt="iOS NavigationBar with custom back icon"></p>
+<p><img src="/assets/images/navbar/custom-main/navbar-custom-back-icon.png" alt="iOS NavigationBar with custom back icon"></p>
 
 <p>Perfection <img class="emoji" title=":ok_hand:" alt=":ok_hand:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44c.png" height="20" width="20"></p>
 
@@ -618,7 +618,7 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-31/assets/images/navbar/custom-main/navbar-burger.png" alt="Android NavigationBar on first page with burger menu icon"></p>
+<p><img src="/assets/images/navbar/custom-main/navbar-burger.png" alt="Android NavigationBar on first page with burger menu icon"></p>
 
 <h3 id="complex-usage">Complex Usage</h3>
 
@@ -699,9 +699,9 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p><img src="/previews/pr-31/assets/images/navbar/complex/android-complex.png" alt="Android Complex NavigationBar"></p>
+<p><img src="/assets/images/navbar/complex/android-complex.png" alt="Android Complex NavigationBar"></p>
 
-<p><img src="/previews/pr-31/assets/images/navbar/complex/android-complex-share.png" alt="Android Complex NavigationBar with Share overflow"></p>
+<p><img src="/assets/images/navbar/complex/android-complex-share.png" alt="Android Complex NavigationBar with Share overflow"></p>
 
 <p>It’s important to note here that we are using <code class="language-plaintext highlighter-rouge">BitmapIcon</code> as our <code class="language-plaintext highlighter-rouge">Icon</code> on the <code class="language-plaintext highlighter-rouge">AppBarButton</code>. Currently, <code class="language-plaintext highlighter-rouge">NavigationBar</code> only supports <code class="language-plaintext highlighter-rouge">BitmapIcon</code> on Android and iOS as the underlying native bar is expecting a bitmap image. There is currently <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/631">work underway</a> to allow support for other <code class="language-plaintext highlighter-rouge">IconElement</code> types but, at the time of writing this, it has not yet been released.</p>
 
@@ -775,6 +775,112 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-31/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-31/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
         <img src="/previews/pr-31/assets/images/daily-reflection/hero.png" alt="">
       </div>
     
@@ -829,7 +935,7 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/previews/pr-31/assets/images/skills-intro/tool-hero.png" alt="">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc p-name" itemprop="headline">
@@ -868,112 +974,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-31/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-31/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/previews/pr-31/assets/images/chefs-intro/chefslogo.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-31/uno-general/2025/05/25/chefs-intro.html" rel="permalink">Introducing Uno Chefs (and some other stuff)
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2025-05-25T00:00:00+00:00">May 25, 2025</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform 6.0 has been released!
-
-</p>
   </article>
 </div>
 
