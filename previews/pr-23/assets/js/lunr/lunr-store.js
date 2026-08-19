@@ -125,12 +125,6 @@ var store = [{
         "url": "/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html",
         "teaser": "/previews/pr-23/assets/images/skills-intro/tool-hero.png"
       },{
-        "title": "Teaching Your Agent to See: Runtime Verification with the Uno App MCP",
-        "excerpt":"In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I...","categories": ["uno-general"],
-        "tags": ["agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
-        "url": "/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html",
-        "teaser": "/previews/pr-23/assets/images/agent-runtime-verification/hero.png"
-      },{
         "title": "Uno Apps Inside of Uno Apps",
         "excerpt":"I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet: Running your @UnoPlatform apps inside of your @UnoPlatform apps ;) Inspired by the plumbing of Uno Platform Studio, I thought it’d be fun...","categories": ["uno-general"],
         "tags": ["uno-platform","uno","assemblyloadcontext","alc","hot-design","themes","skia","wasm"],
@@ -142,4 +136,10 @@ var store = [{
         "tags": ["uno-toolkit","toolkit","loadingview","loading","iloadable","progressring","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html",
         "teaser": "/previews/pr-23/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP",
+        "excerpt":"Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we...","categories": ["uno-tidbit"],
+        "tags": ["uno-tidbits","uno-tidbit","tidbit","agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html",
+        "teaser": "/previews/pr-23/assets/images/tidbit-hero.png"
       }]

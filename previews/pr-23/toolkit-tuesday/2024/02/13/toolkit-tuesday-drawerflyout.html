@@ -318,7 +318,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          11 minute read
+          12 minute read
         
       </span>
     
@@ -457,7 +457,12 @@
 <span class="nt">&lt;/Grid&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/assets/images/drawerflyout/android-simple-flyout.gif" alt="Simple Android Flyout" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-simple-flyout.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-simple-flyout.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>Breathtaking.</p>
 
@@ -525,9 +530,19 @@
 
 <p>Here’s what we are looking to build by the end of this section (both Android and WASM are shown):</p>
 
-<p><img src="/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-nav-drawer.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-nav-drawer.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
-<p><img src="/assets/images/drawerflyout/wasm-nav-drawer.gif" alt="WASM Nav Flyout" /></p>
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/wasm-nav-drawer.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/wasm-nav-drawer.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>You may have noticed that we are opening the navigation drawer by clicking on the <code class="language-plaintext highlighter-rouge">MainCommand</code> of a <code class="language-plaintext highlighter-rouge">NavigationBar</code>. This is a custom control from the Uno Toolkit and one that we have <a href="/toolkit-tuesday/2023/11/21/toolkit-tuesday-navigationbar.html">previously covered</a>.</p>
 
@@ -677,7 +692,12 @@
 
 <p>Now when we press on the <code class="language-plaintext highlighter-rouge">MainCommand</code>, we should have a <code class="language-plaintext highlighter-rouge">Flyout</code> open from the left side of the screen. We can also drag the <code class="language-plaintext highlighter-rouge">Flyout</code> to close it:</p>
 
-<p><img src="/assets/images/drawerflyout/android-drawer-step-3.gif" alt="Android page with LeftDrawerFlyoutPresenterStyle" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-drawer-step-3.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-drawer-step-3.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>Starting to look good!</p>
 
@@ -959,9 +979,19 @@
 
 <p>And there we go! We have a nice navigation drawer experience that is consistent across platforms:</p>
 
-<p><img src="/assets/images/drawerflyout/android-nav-drawer.gif" alt="Android Nav Flyout" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-nav-drawer.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-nav-drawer.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
-<p><img src="/assets/images/drawerflyout/wasm-nav-drawer-final.gif" alt="WASM Nav Flyout" /></p>
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/wasm-nav-drawer-final.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/wasm-nav-drawer-final.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>We can even get spicy and use some of the <code class="language-plaintext highlighter-rouge">DrawerFlyoutPresenter</code> attached properties to customize the experience further. For example, we can set the <code class="language-plaintext highlighter-rouge">DrawerLength</code> to <code class="language-plaintext highlighter-rouge">0.9*</code> to make the drawer take up 90% of the screen width and use a ridiculous <code class="language-plaintext highlighter-rouge">LightDismissOverlayBackground</code>:</p>
 
@@ -981,7 +1011,12 @@
 </span> &lt;/Style&gt;
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p><img src="/assets/images/drawerflyout/android-nav-drawer-red.gif" alt="Android page with Red NavFlyoutPresenterStyle" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-nav-drawer-red.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-nav-drawer-red.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>Now that we know how to build a beautiful navigation drawer, we can apply these skills to build a <a href="https://m3.material.io/components/bottom-sheets/overview">bottom sheet</a> experience!</p>
 
@@ -989,9 +1024,19 @@
 
 <p>Here’s what we are looking to build by the end of this section (both Android and WASM are shown):</p>
 
-<p><img src="/assets/images/drawerflyout/android-sheet.gif" alt="Android Bottom Sheet" class="width-half" /></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/android-sheet.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/android-sheet.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
-<p><img src="/assets/images/drawerflyout/wasm-sheet.gif" alt="WASM Bottom Sheet" /></p>
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/drawerflyout/wasm-sheet.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/drawerflyout/wasm-sheet.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>Since we just went through the whole process of transforming a <code class="language-plaintext highlighter-rouge">Flyout</code> into a navigation drawer, we can use the same process to transform it into a bottom sheet. First things first, let’s create a new custom flyout called <code class="language-plaintext highlighter-rouge">BottomSheetFlyout</code>:</p>
 
@@ -1298,6 +1343,58 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
+        <img src="/assets/images/tidbit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
         <img src="/assets/images/uno-toolkit-hero.png" alt="">
       </div>
     
@@ -1391,58 +1488,6 @@
     <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
 
 </p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/agent-runtime-verification/hero.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html" rel="permalink">Teaching Your Agent to See: Runtime Verification with the Uno App MCP
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2026-07-09T00:00:00+00:00">July 9, 2026</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that...</p>
   </article>
 </div>
 

@@ -1,4 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-23/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-23/" rel="alternate" type="text/html" /><updated>2026-08-18T03:08:40+00:00</updated><id>https://kazo0.dev/previews/pr-23/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-23/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-23/" rel="alternate" type="text/html" /><updated>2026-08-19T19:34:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP</title><link href="https://kazo0.dev/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="alternate" type="text/html" title="Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP" /><published>2026-08-19T00:00:00+00:00</published><updated>2026-08-19T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html"><![CDATA[<p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to look at how the Uno App MCP lets an agent actually run your app and check its own work.</p>
+
+<p>This one is a quick follow-up to my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>. Near the end of that one I added a single line to my prompt, “run the desktop target afterward and confirm the expected behaviour,” and the agent just did it: launched the app, clicked a name in a <code class="language-plaintext highlighter-rouge">ListView</code>, navigated to the next page, and checked the right name came along. That whole step was powered by the App MCP, and it deserves its own tidbit.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Every AI coding assistant loves to tell you “the code compiles!” Great. But you and I both know compiling and working are two very different things. Code that builds perfectly can still bind to the wrong property, navigate to the wrong page, or render a button halfway off the screen.</p>
+
+<p>When an agent can only read your source, it’s reasoning in the dark. It writes some XAML, sees a green build, and declares victory. Then you hit F5 and the <code class="language-plaintext highlighter-rouge">ListView</code> is empty. The agent has no eyes and no hands, so it guesses, and “it should probably work” isn’t the confidence level I’m after.</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>Uno actually ships two MCPs, and they’re easy to mix up (the team wrote a great <a href="https://platform.uno/blog/uno-mcp-vs-app-mcp/">dedicated post</a> if you want the deep dive):</p>
+
+<ul>
+  <li>The <strong>Uno MCP</strong> is about KNOWLEDGE. It gives the agent the <a href="https://platform.uno/docs/articles/intro.html">Uno docs</a> as a searchable knowledge base, which shapes what it proposes in the first place.</li>
+  <li>The <strong>App MCP</strong> is about RUNTIME. It runs locally and reaches into your actual running app. The <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">docs</a> put it perfectly: these tools give “eyes” and “hands” to agents so they can validate the assumptions behind the changes they just made.</li>
+</ul>
+
+<h2 id="what-it-can-do">What It Can Do</h2>
+
+<p>The App MCP isn’t just snapping a screenshot and squinting at it. It’s a proper toolbox for driving a live Uno app, and it works across Windows, WebAssembly, macOS, iOS, Android, and Linux. A few of my favorites from the Community license:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_get_screenshot</code>: a screenshot of the app as it looks RIGHT NOW</li>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_visualtree_snapshot</code>: a textual dump of the live visual tree</li>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_pointer_click</code> and <code class="language-plaintext highlighter-rouge">uno_app_type_text</code>: click and type into your controls</li>
+</ul>
+
+<p>And one Pro tool I keep thinking about, <code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>, reads a textual representation of the <code class="language-plaintext highlighter-rouge">DataContext</code> on a <code class="language-plaintext highlighter-rouge">FrameworkElement</code>. That means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed. Anyone who’s lost an afternoon to a silent binding failure knows why that’s a big deal.</p>
+
+<h2 id="closing-the-loop">Closing the Loop</h2>
+
+<p>Put these together and a satisfying loop falls out:</p>
+
+<ol>
+  <li>The agent uses the <strong>Uno MCP</strong> to research the right approach and proposes a change.</li>
+  <li>That change gets applied and built.</li>
+  <li>The agent launches the app and uses the <strong>App MCP</strong> to check its own work: walk the visual tree, click an element, screenshot the result, and read back the state.</li>
+</ol>
+
+<p>The key shift is that the agent stops reasoning about static code in a vacuum and starts checking against the RUNNING app, which is exactly what you do when you hit F5 and start clicking around. Back to that selection example: once the agent wired up the <code class="language-plaintext highlighter-rouge">ListView</code>, it grabbed a visual tree snapshot to confirm the list was populated, clicked an item, navigated to the second page, and screenshotted it to make sure the selected name made the trip.</p>
+
+<p>One small gotcha to save you the headache I gave myself: the App MCP is a local runtime service, so your app has to actually be running for the agent to attach. And if the App MCP indicator goes red in Visual Studio, don’t panic like I did, just click the three dots and hit Reload. It’s in the <a href="https://platform.uno/docs/articles/common-issues-ai-agents.html">docs</a>, which I found only after spending way too long on it.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The more I use it, the more I’m convinced the real value of an agent isn’t how fast it writes code, it’s how well it can check its own work. Pair the App MCP with a solid set of <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills</a> and the Uno MCP, and you’ve got an agent that researches, implements, and verifies. If you build something neat with it, come share it over on the <a href="https://platform.uno/discord">Uno Discord</a>!</p>
+
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="agents" /><category term="ai" /><category term="mcp" /><category term="app-mcp" /><category term="runtime" /><category term="verification" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to look at how the Uno App MCP lets an agent actually run your app and check its own work.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we’re covering the <code class="language-plaintext highlighter-rouge">LoadingView</code>, and there’s a decent chance you’ve already used it without realizing. If you read the <a href="/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">ExtendedSplashScreen post</a>, you met <code class="language-plaintext highlighter-rouge">LoadingView</code> in passing: the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> is actually derived from it. Today it gets to be the star of the show.</p>
 
@@ -538,96 +587,7 @@
 
 <p>Catch you in the next one :wave:</p>
 
-<p><i><sup>*</sup> We are still hunting down some leaks, we’ve made good progress but memory management is hard ok? Give us a break.</i></p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="assemblyloadcontext" /><category term="alc" /><category term="hot-design" /><category term="themes" /><category term="skia" /><category term="wasm" /><summary type="html"><![CDATA[I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Teaching Your Agent to See: Runtime Verification with the Uno App MCP</title><link href="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html" rel="alternate" type="text/html" title="Teaching Your Agent to See: Runtime Verification with the Uno App MCP" /><published>2026-07-09T00:00:00+00:00</published><updated>2026-07-09T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/uno-general/2026/07/09/agent-runtime-verification.html"><![CDATA[<p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">last post</a>, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:</p>
-
-<blockquote>
-  <p>Run the desktop target afterward and confirm the expected behaviour</p>
-</blockquote>
-
-<p>And the agent just… did it. It launched the app, clicked a name in a <code class="language-plaintext highlighter-rouge">ListView</code>, navigated to the next page, and checked that the right name had come along for the ride. No hand-holding from me. That whole “go run it and make sure it actually works” step was powered by the Uno App MCP, and I think it’s worth slowing down and giving it the attention it deserves.</p>
-
-<h2 id="the-problem">The Problem</h2>
-
-<p>Here’s something every AI coding assistant loves to tell you: “The code compiles!” Great. But if you’ve been writing software for more than about a week, you know that compiling and working are two very different things.</p>
-
-<p>Code that builds perfectly can still bind to the wrong property, navigate to the wrong page, or render a button halfway off the screen. When an agent can only read your source, it’s essentially reasoning in the dark. It writes some XAML, sees a green build, and declares victory. Then you hit F5 and the <code class="language-plaintext highlighter-rouge">ListView</code> is empty.</p>
-
-<p>The agent has no eyes and no hands. It can’t run the app, look at it, or poke at it the way you and I do a hundred times a day. So it guesses. And when I’m handing off work to an agent, “it should probably work” isn’t the confidence level I’m after.</p>
-
-<h2 id="the-two-mcps">The Two MCPs</h2>
-
-<p>Before we get into the fun part, a quick refresher, because the Uno MCP and the App MCP are easy to mix up. If you want the deep dive, the team wrote a great <a href="https://platform.uno/blog/uno-mcp-vs-app-mcp/">dedicated post</a> on exactly this.</p>
-
-<ol>
-  <li>The <strong>Uno MCP</strong> is about <em>knowledge</em>. It gives the agent the entire <a href="https://platform.uno/docs/articles/intro.html">Uno documentation</a> as a searchable knowledge base through tools like <code class="language-plaintext highlighter-rouge">uno_platform_docs_search</code>. This is what shapes what the agent proposes in the first place.</li>
-  <li>The <strong>App MCP</strong> is about <em>runtime</em>. It runs locally and lets the agent reach into your actual running app. The <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">docs</a> describe it perfectly: these tools give “eyes” and “hands” to agents so they can validate the assumptions behind the changes they just made.</li>
-</ol>
-
-<p>I used a cooking analogy last time, so let me keep it going: if the Uno MCP is the pantry of ingredients and Agent Skills are the recipes, then the App MCP is the agent finally walking over to the stove, tasting the dish, and fixing the seasoning before it ever reaches your plate.</p>
-
-<h2 id="what-the-app-mcp-can-actually-do">What the App MCP Can Actually Do</h2>
-
-<p>This is where it clicked for me. The App MCP isn’t just snapping a screenshot and squinting at it. It’s a proper toolbox for driving a live Uno app, and it works across Windows, WebAssembly, macOS, iOS, Android, and Linux.</p>
-
-<p>Here’s what ships under the Community license:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_get_runtime_info</code>: general info about the running app (PID, OS, platform, and so on)</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_get_screenshot</code>: a screenshot of the app as it looks <em>right now</em></li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_pointer_click</code>: click at an X,Y coordinate</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_key_press</code>: press individual keys, optionally with modifiers</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_type_text</code>: type longer strings into a control</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_visualtree_snapshot</code>: a textual dump of the live visual tree</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_element_peer_default_action</code>: run the default automation peer action on an element</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_close</code>: close the running app</li>
-</ul>
-
-<p>And a couple more come with the Pro license:</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_element_peer_action</code>: invoke a <em>specific</em> automation peer action</li>
-  <li><code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>: read a textual representation of the <code class="language-plaintext highlighter-rouge">DataContext</code> on a <code class="language-plaintext highlighter-rouge">FrameworkElement</code></li>
-</ul>
-
-<p>That last one is the one I keep thinking about. Being able to read an element’s <code class="language-plaintext highlighter-rouge">DataContext</code> means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed cleanly. Anyone who’s lost an afternoon to a silent binding failure knows exactly why that’s a big deal.</p>
-
-<h2 id="closing-the-loop">Closing the Loop</h2>
-
-<p>Put these together and a really satisfying loop falls out of it:</p>
-
-<ol>
-  <li>The agent leans on the <strong>Uno MCP</strong> to research the right approach and proposes a change.</li>
-  <li>That change gets applied and built.</li>
-  <li>The agent launches the app and uses the <strong>App MCP</strong> to check its own work: walk the visual tree to confirm an element is there, click it, type into it, screenshot the result, and read back the state.</li>
-</ol>
-
-<p>The key shift is that the agent stops reasoning about static code in a vacuum. It’s checking against the <em>running application</em> now, which is exactly what you do when you hit F5 and start clicking around.</p>
-
-<p>Back to that MVUX selection example from last time: once the agent wired up the <code class="language-plaintext highlighter-rouge">ListView</code> and the model, it didn’t just trust the build. It grabbed a visual tree snapshot to make sure the list was actually populated, clicked an item, navigated to the second page, and screenshotted it to confirm the selected name made the trip. And that’s the real payoff, because when something <em>is</em> off, that same loop is what lets the agent notice and fix it instead of handing me code that only looks finished.</p>
-
-<h2 id="getting-set-up">Getting Set Up</h2>
-
-<p>The good news: there isn’t much ceremony here. The App MCP is part of the Uno tooling, and if you’ve been following the recommended agentic setup, you might already have it wired up. Since it’s a local runtime service, the one thing to remember is that your app has to actually be running for the agent to attach to it.</p>
-
-<p>A few notes from my own tinkering:</p>
-
-<ul>
-  <li>The App MCP is <strong>local</strong>. It talks to a running instance of your app on your machine, not some hosted service.</li>
-  <li>It spans all of Uno’s targets, so you can point it at your desktop target for quick iteration and trust that the behavior carries over to the rest.</li>
-  <li>If you’re in Visual Studio and the App MCP indicator goes red, don’t panic like I did. The fix is usually just to reload it: click the three dots and hit <strong>Reload</strong>. I spent way too long on that before spotting the note in the <a href="https://platform.uno/docs/articles/common-issues-ai-agents.html">docs</a>.</li>
-</ul>
-
-<p>For the full reference, the <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">Uno MCPs documentation</a> and the <a href="https://platform.uno/docs/articles/explore-your-app-ai-agents.html">Explore Your App with AI Agents</a> guide both go deeper than I can fit here.</p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>The more I use it, the more I’m convinced that the real value of an agent isn’t how fast it writes code, it’s how well it can check its own work. A tight feedback loop is what separates an agent that produces plausible-looking code from one that produces code that actually runs the way you asked.</p>
-
-<p>Giving your agent eyes and hands through the App MCP is a genuine step in that direction. It’s the difference between “I wrote the XAML you asked for” and “I wrote it, ran it, clicked the button, and confirmed the right page showed up.” I know which of those two I’d rather have on my team.</p>
-
-<p>Pair the App MCP with a solid set of <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills</a> and the Uno MCP, and you’ve got an agent that researches, implements, and verifies. I’d love to hear how others are folding runtime verification into their own workflows, so if you’ve built something neat with the App MCP, come share it over on the <a href="https://platform.uno/discord">Uno Discord</a>!</p>
-
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="agents" /><category term="ai" /><category term="mcp" /><category term="app-mcp" /><category term="runtime" /><category term="verification" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[In my last post, we dug into Agent Skills and how they guide an agent toward the right Uno MCP tools for a given task. There was one moment near the end that I kind of rushed past, but honestly it’s the part that stuck with me the most. I added a single line to my prompt:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Agent Skills + Uno Platform</title><link href="https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" rel="alternate" type="text/html" title="Agent Skills + Uno Platform" /><published>2026-02-23T00:00:00+00:00</published><updated>2026-02-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html"><![CDATA[<p>Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as <a href="https://github.com/jeromelaban">Jerome’s</a> presentation from this past .NET Conf:</p>
+<p><i><sup>*</sup> We are still hunting down some leaks, we’ve made good progress but memory management is hard ok? Give us a break.</i></p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="assemblyloadcontext" /><category term="alc" /><category term="hot-design" /><category term="themes" /><category term="skia" /><category term="wasm" /><summary type="html"><![CDATA[I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-23/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Agent Skills + Uno Platform</title><link href="https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" rel="alternate" type="text/html" title="Agent Skills + Uno Platform" /><published>2026-02-23T00:00:00+00:00</published><updated>2026-02-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro</id><content type="html" xml:base="https://kazo0.dev/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html"><![CDATA[<p>Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .NET UI frameworks out there. Now, in the age of agentic development, a great framework also needs to be paired with a robust tooling ecosystem. I would highly recommend checking out some of the recent developments surrounding AI-assisted development in Uno, such as <a href="https://github.com/jeromelaban">Jerome’s</a> presentation from this past .NET Conf:</p>
 
 <!-- Courtesy of embedresponsively.com -->
 
@@ -1628,9 +1588,12 @@ This is where you would typically implement your own authentication logic, such 
 
 <p>We are using multiple <code class="language-plaintext highlighter-rouge">FlipView</code> controls to achieve a seamless transition between the two possible page layouts. This is where developing for multiple platforms can cause some friction. Not only do we need to support narrow layouts for phones, we also need to support wide layouts for tablets, desktops, and browsers. On top of that, certain platforms allow for the window to be resized. So we need an easy way to transition between the two layouts. This is what the end result looks like:</p>
 
-<p><a href="/assets/images/chefs-intro/welcome-responsive.gif">
-  <img class="align-center" src="/assets/images/chefs-intro/welcome-responsive.gif" alt="Welcome Page Responsive" />
-</a></p>
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-23/assets/images/chefs-intro/welcome-responsive.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-23/assets/images/chefs-intro/welcome-responsive.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>In Chefs, we achieve this with the <code class="language-plaintext highlighter-rouge">Responsive</code> Markup Extension from Uno Toolkit. We’ve actually covered this in a <a href="/toolkit-tuesday/2024/01/30/toolkit-tuesday-responsive.html">previous post</a> so I won’t go into a lot of detail here. But you can expect to find <code class="language-plaintext highlighter-rouge">Responsive</code> markup extensions peppered all throughout the app.</p>
 
@@ -1744,9 +1707,12 @@ This is where you would typically implement your own authentication logic, such 
 
 <p>Putting it all together, we now have multiple ways to navigate through the <code class="language-plaintext highlighter-rouge">FlipView</code> items. The user can swipe left or right, click the navigation buttons, or use the <code class="language-plaintext highlighter-rouge">PipsPager</code> to jump to a specific item.</p>
 
-<p><a href="/assets/images/chefs-intro/welcome-mobile.gif">
-  <img class="align-center width-half" src="/assets/images/chefs-intro/welcome-mobile.gif" alt="Welcome Page Flip" />
-</a></p>
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-23/assets/images/chefs-intro/welcome-mobile.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-23/assets/images/chefs-intro/welcome-mobile.mp4">Download the clip</a> instead.
+  </video>
+</figure>
 
 <p>Only thing left now is to properly show/hide the Next and Previous buttons depending on the current index of the <code class="language-plaintext highlighter-rouge">FlipView</code>.</p>
 
@@ -2009,7 +1975,7 @@ This is where you would typically implement your own authentication logic, such 
 
 <p><img src="/assets/images/packaging/macOSApp.png" alt="Blank Uno Platform app running on macOS" class="align-center" /></p>
 
-<p>A beautiful app, let’s ship it! :shipit:</p>
+<p>A beautiful app, let’s ship it! <img class="emoji" title=":shipit:" alt=":shipit:" src="https://github.githubassets.com/images/icons/emoji/shipit.png" height="20" width="20" /></p>
 
 <h2 id="packaging-windows">Packaging (Windows)</h2>
 
