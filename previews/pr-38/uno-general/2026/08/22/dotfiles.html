@@ -1,0 +1,878 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Syncing my terminal (and my agents) across machines with dotfiles - dotnet new bald</title>
+<meta name="description" content="I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Syncing my terminal (and my agents) across machines with dotfiles">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html">
+
+
+  <meta property="og:description" content="I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/dotfiles/hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Syncing my terminal (and my agents) across machines with dotfiles">
+  <meta name="twitter:description" content="I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/dotfiles/hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-22T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-38/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-38/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-38/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-38/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-38/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-38/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Syncing my terminal (and my agents) across machines with dotfiles">
+    <meta itemprop="description" content="I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.">
+    <meta itemprop="datePublished" content="2026-08-22T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html" class="u-url" itemprop="url">Syncing my terminal (and my agents) across machines with dotfiles
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-22T00:00:00+00:00">August 22, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-idea-one-source-of-truth-symlinked-everywhere">The idea: one source of truth, symlinked everywhere</a></li>
+<li><a href="#one-script-to-link-it-all">One script to link it all</a></li>
+<li><a href="#not-owning-bashrc">Not owning ~/.bashrc</a></li>
+<li><a href="#the-prompt">The prompt</a></li>
+<li><a href="#keeping-secrets-out-of-the-repo">Keeping secrets out of the repo</a></li>
+<li>
+<a href="#the-part-i-actually-care-about-my-agents">The part I actually care about: my agents</a><ul>
+<li><a href="#shared-instructions-across-every-agent">Shared instructions across every agent</a></li>
+<li><a href="#shared-skills">Shared skills</a></li>
+<li><a href="#switching-claude-code-accounts-without-re-logging-in">Switching Claude Code accounts without re-logging-in</a></li>
+</ul>
+</li>
+<li><a href="#every-dev-container-for-free">Every dev container, for free</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/dotfiles/hero.png" class="hero-image">
+        <p>I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.</p>
+
+<p>For years my “system” for this was to open an old machine, squint at its <code class="language-plaintext highlighter-rouge">.zshrc</code>, and copy-paste the bits I remembered into the new one. It works right up until it doesn’t. You forget an alias, one machine drifts out of sync with another, and you spend twenty minutes wondering why <code class="language-plaintext highlighter-rouge">dotnet tool</code> isn’t on your PATH on the laptop but is on the desktop.</p>
+
+<p>So I finally did the thing every developer eventually does: I put it all in a <a href="https://github.com/kazo0/dotfiles">dotfiles repo</a>. Let’s walk through how it’s set up, because the agentic side of it turned out to be the most useful part and I think it’s worth sharing.</p>
+
+<h2 id="the-idea-one-source-of-truth-symlinked-everywhere">The idea: one source of truth, symlinked everywhere</h2>
+
+<p>The whole approach rests on one simple trick: the files in the repo are the single source of truth, and each machine symlinks its real config locations back to the repo.</p>
+
+<p>So <code class="language-plaintext highlighter-rouge">~/.zshrc</code> on any given machine isn’t a copy of my zsh config, it’s a symlink pointing at <code class="language-plaintext highlighter-rouge">zsh/zshrc</code> inside the cloned repo. That means editing the linked file IS editing the repo file; they’re literally the same file on disk. The day-to-day loop becomes:</p>
+
+<ol>
+  <li>Edit a config file (either in the repo, or the linked location, same thing).</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">git commit &amp;&amp; git push</code>.</li>
+  <li>On the next machine, <code class="language-plaintext highlighter-rouge">git pull</code> and restart the shell.</li>
+</ol>
+
+<p>That’s it. No copy-paste, no drift. A change I make on the Mac shows up on the Windows box after a pull.</p>
+
+<h2 id="one-script-to-link-it-all">One script to link it all</h2>
+
+<p>Cloning the repo doesn’t do anything on its own; you need those symlinks created. That’s what the setup scripts are for: <code class="language-plaintext highlighter-rouge">setup.sh</code> for macOS/Linux/WSL and <code class="language-plaintext highlighter-rouge">Setup.ps1</code> for Windows. You clone the repo anywhere you like and run the script once:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>git clone &lt;repo-url&gt; ~/src/dotfiles
+~/src/dotfiles/setup.sh
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The heart of the script is a little map of “repo file → where it should be linked,” and a loop that creates each link:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td>
+<td class="rouge-code"><pre><span class="nv">links</span><span class="o">=(</span>
+    <span class="s2">"</span><span class="nv">$repo_root</span><span class="s2">/zsh/zshrc|</span><span class="nv">$HOME</span><span class="s2">/.zshrc"</span>
+    <span class="s2">"</span><span class="nv">$repo_root</span><span class="s2">/zsh/zprofile|</span><span class="nv">$HOME</span><span class="s2">/.zprofile"</span>
+    <span class="s2">"</span><span class="nv">$repo_root</span><span class="s2">/bash/bashrc|</span><span class="nv">$HOME</span><span class="s2">/.bashrc.shared"</span>
+    <span class="s2">"</span><span class="nv">$repo_root</span><span class="s2">/oh-my-posh/steve.omp.json|</span><span class="nv">$HOME</span><span class="s2">/Documents/oh-my-posh/steve.omp.json"</span>
+    <span class="c"># ...</span>
+<span class="o">)</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>A couple of things I made sure it does, because a setup script you can’t trust is worse than no script at all:</p>
+
+<ul>
+  <li>
+<strong>It backs up before it clobbers.</strong> If there’s already a REAL file where a symlink should go, it gets copied to <code class="language-plaintext highlighter-rouge">&lt;name&gt;.bak</code> before being replaced. Nothing of yours gets silently nuked.</li>
+  <li>
+<strong>It’s safe to re-run.</strong> A link that’s already correct is left alone. So running the script again after adding a new file is a no-op for everything else.</li>
+</ul>
+
+<p>On Windows there’s one extra hoop: you need Developer Mode turned on (or an elevated shell) so the OS will let you create symlinks without admin rights. Once that’s on, <code class="language-plaintext highlighter-rouge">pwsh -File Setup.ps1</code> does the same job.</p>
+
+<h2 id="not-owning-bashrc">Not owning <code class="language-plaintext highlighter-rouge">~/.bashrc</code>
+</h2>
+
+<p>Zsh was easy: I own <code class="language-plaintext highlighter-rouge">~/.zshrc</code>, so I just link it. Bash was trickier. On most Linux distros the <code class="language-plaintext highlighter-rouge">~/.bashrc</code> isn’t really mine; the distro ships one, and there’s often machine-specific stuff in there (WSL likes to append Windows paths, for example). I didn’t want to blow that away.</p>
+
+<p>So the shared bash config links to <code class="language-plaintext highlighter-rouge">~/.bashrc.shared</code> instead, and the setup script appends a single line to the real <code class="language-plaintext highlighter-rouge">~/.bashrc</code> to source it, once and idempotently:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre><span class="o">[</span> <span class="nt">-f</span> ~/.bashrc.shared <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">.</span> ~/.bashrc.shared   <span class="c"># shared dotfiles</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The distro’s file and any machine-specific bits stay put, and my shared stuff rides along on top.</p>
+
+<p>That shared bash file also has to survive running on both macOS and Linux, so everything in it is guarded. Homebrew might live at <code class="language-plaintext highlighter-rouge">/opt/homebrew</code> (macOS) or <code class="language-plaintext highlighter-rouge">/home/linuxbrew</code> (Linux); a tool like <code class="language-plaintext highlighter-rouge">pyenv</code> or <code class="language-plaintext highlighter-rouge">nvm</code> might not be installed at all. Rather than assume, it checks first:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="c"># oh-my-posh prompt, only if it's actually installed</span>
+<span class="k">if </span><span class="nb">command</span> <span class="nt">-v</span> oh-my-posh <span class="o">&gt;</span>/dev/null 2&gt;&amp;1 <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/Documents/oh-my-posh/steve.omp.json"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>oh-my-posh init bash <span class="nt">--config</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/Documents/oh-my-posh/steve.omp.json"</span><span class="si">)</span><span class="s2">"</span>
+<span class="k">fi</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>A machine that doesn’t have a given tool just skips that block silently instead of spitting out an error on every new shell.</p>
+
+<h2 id="the-prompt">The prompt</h2>
+
+<p>The prompt itself is <a href="https://ohmyposh.dev/">oh-my-posh</a>, with a single theme file (<code class="language-plaintext highlighter-rouge">steve.omp.json</code>) shared across zsh, bash, and PowerShell. Since all three shells point at the same JSON, my prompt looks identical no matter where I am or which shell I’m in. Tweak the theme once, push, pull, done.</p>
+
+<h2 id="keeping-secrets-out-of-the-repo">Keeping secrets out of the repo</h2>
+
+<p>The obvious trap with a public dotfiles repo is leaking a token. The rule here is simple: NOTHING secret is ever committed. Machine-local values and credentials go in a <code class="language-plaintext highlighter-rouge">~/.zshrc.local</code> (or <code class="language-plaintext highlighter-rouge">~/.bashrc.local</code>) file that the shared config sources at the end if it exists:</p>
+
+<div class="language-zsh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c"># ~/.zshrc.local  (git-ignored, never leaves the machine)</span>
+<span class="nb">export </span><span class="nv">SOME_GITHUB_TOKEN</span><span class="o">=</span><span class="s2">"..."</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Those <code class="language-plaintext highlighter-rouge">*.local</code> files are in <code class="language-plaintext highlighter-rouge">.gitignore</code>, so they physically can’t be committed by accident. The shared config just does a <code class="language-plaintext highlighter-rouge">[ -f ~/.zshrc.local ] &amp;&amp; source ~/.zshrc.local</code> and moves on if it’s not there.</p>
+
+<p>One more gotcha worth mentioning while we’re on the subject of things that bite you: line endings. Shell files with CRLF endings break outright when a Unix shell tries to source them, and a Windows checkout with <code class="language-plaintext highlighter-rouge">core.autocrlf=true</code> will happily hand you CRLF copies. A <code class="language-plaintext highlighter-rouge">.gitattributes</code> that pins the shell files to <code class="language-plaintext highlighter-rouge">eol=lf</code> keeps a Windows clone from poisoning WSL:</p>
+
+<pre><code class="language-gitattributes">*.sh          text eol=lf
+zsh/zshrc     text eol=lf
+bash/bashrc   text eol=lf
+</code></pre>
+
+<h2 id="the-part-i-actually-care-about-my-agents">The part I actually care about: my agents</h2>
+
+<p>Here’s where this stopped being a generic dotfiles repo and started earning its keep. I run multiple CLI coding agents against the same repos (Claude Code, Codex, and Kimi), and I want them to behave consistently no matter the machine. Dotfiles turned out to be the perfect place for that.</p>
+
+<h3 id="shared-instructions-across-every-agent">Shared instructions across every agent</h3>
+
+<p>I keep one tool-agnostic <code class="language-plaintext highlighter-rouge">AGENTS.md</code>: how I like commits written, that “done” means it builds and the tests pass, which Uno targets to validate against, and so on. Rather than maintain a copy per tool, that one file is the canonical source and gets fanned out:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>repo/agents/AGENTS.md ─→ ~/.agents/AGENTS.md ─→ ~/.codex/AGENTS.md
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Kimi reads <code class="language-plaintext highlighter-rouge">~/.agents/AGENTS.md</code> natively, Codex gets a symlink, and Claude Code imports it from <code class="language-plaintext highlighter-rouge">~/.claude/CLAUDE.md</code> with a single <code class="language-plaintext highlighter-rouge">@../.agents/AGENTS.md</code> line. Edit the one file, and all three agents pick up the change on the next run.</p>
+
+<h3 id="shared-skills">Shared skills</h3>
+
+<p>If you read my <a href="/uno-general/2026/02/23/agent-skills-intro.html">earlier post on Agent Skills</a>, you know I’m a fan. The catch is that skills are only useful if your agents actually HAVE them, on every machine. So the setup scripts shallow-clone a set of upstream skill repos and symlink each skill into a shared <code class="language-plaintext highlighter-rouge">~/.agents/skills</code> store, which then fans out to each tool:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>upstream repos ─→ ~/.agents/skills ─→ ~/.claude/skills, ~/.codex/skills
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Right now that pulls from the <a href="https://github.com/unoplatform/studio">Uno Platform Studio</a> skills (Uno, Toolkit, MVUX) and the <a href="https://github.com/dotnet/skills">.NET skills</a> repo. Re-running setup does a <code class="language-plaintext highlighter-rouge">git pull</code> on each source and relinks, so updating my whole skills library across every agent is one command. And because skills are generated rather than tracked, none of that clutters the dotfiles repo itself.</p>
+
+<h3 id="switching-claude-code-accounts-without-re-logging-in">Switching Claude Code accounts without re-logging-in</h3>
+
+<p>This one is my favorite. I have a work account and a personal account for Claude Code, and I used to <code class="language-plaintext highlighter-rouge">/login</code> back and forth constantly. Now a small shared shell function swaps between them by pointing <code class="language-plaintext highlighter-rouge">CLAUDE_CONFIG_DIR</code> at a different config directory:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre>claude-profile              <span class="c"># who am I right now?</span>
+claude-personal             <span class="c"># switch, and make it the default for new shells</span>
+claude-work
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Each profile is a full config dir with its own credentials, project history, and MCP tokens, so both accounts stay signed in at once and switching is instant. Two terminals can even drive two different accounts side by side. The active choice is saved and re-applied by the shell config in every new terminal, so it follows me around like everything else here.</p>
+
+<h2 id="every-dev-container-for-free">Every dev container, for free</h2>
+
+<p>The nice surprise: VS Code lets you point at a <a href="https://code.visualstudio.com/docs/devcontainers/containers#_personalizing-with-dotfile-repositories">dotfiles repository</a> and run an install command whenever it spins up a dev container. Since my setup script already knows how to merge in my Claude Code defaults, I wired it straight into my VS Code User settings (not any single repo’s):</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="nl">"dotfiles.repository"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kazo0/dotfiles"</span><span class="err">,</span><span class="w">
+</span><span class="nl">"dotfiles.targetPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~/dotfiles"</span><span class="err">,</span><span class="w">
+</span><span class="nl">"dotfiles.installCommand"</span><span class="p">:</span><span class="w"> </span><span class="s2">"setup.sh --claude-only"</span><span class="w">
+</span></pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Configure that once and every new dev container comes up with my agent config already applied, no per-repo files, nothing to remember. The <code class="language-plaintext highlighter-rouge">--claude-only</code> flag keeps it lightweight (just the Claude settings, skipping the shell symlinks and skill cloning), but if I want the full prompt-and-aliases experience in a container too, dropping the flag gets me that.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>None of the pieces here are complicated on their own. It’s git, symlinks, and a shell script. But together they turn “set up a new machine” from an afternoon of copy-paste into <code class="language-plaintext highlighter-rouge">git clone</code>, run one script, and get back to work. The agent config riding along in the same repo is what pushed it from “nice to have” to “I’d be annoyed without it,” especially now that so much of my day runs through Claude Code and friends.</p>
+
+<p>If you want to steal the setup wholesale or just crib a few ideas, the whole thing is on <a href="https://github.com/kazo0/dotfiles">GitHub</a>. Fair warning that the specifics are shaped around my own tools and paths, but that’s kind of the point of dotfiles. Make them yours.</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-22T00:00:00+00:00">August 22, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" class="pagination--pager" title="Toolkit Tuesdays: LoadingView">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-38/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          11 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-38/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/chefs-intro/chefslogo.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-38/uno-general/2025/07/02/chefs-login.html" rel="permalink">Uno Chefs Walkthrough - Login Page
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be cov...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-38/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-38/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-38/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-38/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-38/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
