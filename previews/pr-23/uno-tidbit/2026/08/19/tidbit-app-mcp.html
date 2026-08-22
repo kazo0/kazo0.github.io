@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          3 minute read
+          4 minute read
         
       </span>
     
@@ -334,6 +334,7 @@
 <li><a href="#the-problem">The Problem</a></li>
 <li><a href="#the-solution">The Solution</a></li>
 <li><a href="#what-it-can-do">What It Can Do</a></li>
+<li><a href="#getting-set-up">Getting Set Up</a></li>
 <li><a href="#closing-the-loop">Closing the Loop</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
@@ -374,6 +375,25 @@
 </ul>
 
 <p>And one Pro tool I keep thinking about, <code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>, reads a textual representation of the <code class="language-plaintext highlighter-rouge">DataContext</code> on a <code class="language-plaintext highlighter-rouge">FrameworkElement</code>. That means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed. Anyone who’s lost an afternoon to a silent binding failure knows why that’s a big deal.</p>
+
+<h2 id="getting-set-up">Getting Set Up</h2>
+
+<p class="notice--info">This is the CLI route. If you would rather set things up in an IDE, the docs have per-environment guides for <a href="https://platform.uno/docs/articles/get-started-vs-2022.html">Visual Studio</a>, <a href="https://platform.uno/docs/articles/get-started-vscode.html">VS Code with Copilot</a>, and the rest of the <a href="https://platform.uno/docs/articles/get-started.html">supported agents</a>.</p>
+
+<p>Setup is one command. From the root of your app’s repo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>uno-devserver mcp <span class="nb">install </span>claude-code
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That registers BOTH Uno MCPs at once. No global tool? Run it transiently with <code class="language-plaintext highlighter-rouge">dotnet dnx -y uno.devserver mcp install claude-code</code>. Then start Claude Code and run <code class="language-plaintext highlighter-rouge">/mcp</code> to confirm you see <code class="language-plaintext highlighter-rouge">UnoApp</code> and <code class="language-plaintext highlighter-rouge">UnoDocs</code>.</p>
+
+<p>Two tips that saved me some head-scratching: run the install from your app’s folder, not your home directory, since the registration is scoped to the project. And launch Claude Code from a folder that actually contains your Uno app, otherwise the App MCP has no solution to find and may not load.</p>
+
+<p>Other agents, <code class="language-plaintext highlighter-rouge">--dry-run</code>, and the full flag list are all in the <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html#dev-server-mcp-setup-commands">docs</a>.</p>
 
 <h2 id="closing-the-loop">Closing the Loop</h2>
 
