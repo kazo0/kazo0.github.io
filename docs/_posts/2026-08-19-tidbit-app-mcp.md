@@ -34,6 +34,23 @@ The App MCP isn't just snapping a screenshot and squinting at it. It's a proper 
 
 And one Pro tool I keep thinking about, `uno_app_get_element_datacontext`, reads a textual representation of the `DataContext` on a `FrameworkElement`. That means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed. Anyone who's lost an afternoon to a silent binding failure knows why that's a big deal.
 
+## Getting Set Up
+
+This is the CLI route. If you would rather set things up in an IDE, the docs have per-environment guides for [Visual Studio][uno-vs-docs], [VS Code with Copilot][uno-vscode-docs], and the rest of the [supported agents][uno-get-started-docs].
+{: .notice--info}
+
+Setup is one command. From the root of your app's repo:
+
+```bash
+uno-devserver mcp install claude-code
+```
+
+That registers BOTH Uno MCPs at once. No global tool? Run it transiently with `dotnet dnx -y uno.devserver mcp install claude-code`. Then start Claude Code and run `/mcp` to confirm you see `UnoApp` and `UnoDocs`.
+
+Two tips that saved me some head-scratching: run the install from your app's folder, not your home directory, since the registration is scoped to the project. And launch Claude Code from a folder that actually contains your Uno app, otherwise the App MCP has no solution to find and may not load.
+
+Other agents, `--dry-run`, and the full flag list are all in the [docs][uno-mcp-setup-docs].
+
 ## Closing the Loop
 
 Put these together and a satisfying loop falls out:

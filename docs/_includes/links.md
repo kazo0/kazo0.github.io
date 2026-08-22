@@ -15,3 +15,7 @@
 [uno-mcps-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html
 [explore-app-ai]: https://platform.uno/docs/articles/explore-your-app-ai-agents.html
 [common-issues-ai-agents]: https://platform.uno/docs/articles/common-issues-ai-agents.html
+[uno-mcp-setup-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html#dev-server-mcp-setup-commands
+[uno-vs-docs]: https://platform.uno/docs/articles/get-started-vs-2022.html
+[uno-vscode-docs]: https://platform.uno/docs/articles/get-started-vscode.html
+[uno-get-started-docs]: https://platform.uno/docs/articles/get-started.html
