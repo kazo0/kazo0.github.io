@@ -1,0 +1,1170 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Uno Chefs Walkthrough - Login Page - dotnet new bald</title>
+<meta name="description" content="Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Uno Chefs Walkthrough - Login Page">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-39/uno-general/2025/07/02/chefs-login.html">
+
+
+  <meta property="og:description" content="Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/chefs-intro/chefslogo.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Uno Chefs Walkthrough - Login Page">
+  <meta name="twitter:description" content="Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-39/uno-general/2025/07/02/chefs-login.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/chefs-intro/chefslogo.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2025-07-02T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-39/uno-general/2025/07/02/chefs-login.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-39/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-39/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-39/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-39/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-39/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-39/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Uno Chefs Walkthrough - Login Page">
+    <meta itemprop="description" content="Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.">
+    <meta itemprop="datePublished" content="2025-07-02T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-39/uno-general/2025/07/02/chefs-login.html" class="u-url" itemprop="url">Uno Chefs Walkthrough - Login Page
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li>
+<a href="#anatomy-of-the-login-page">Anatomy of the Login Page</a><ul>
+<li><a href="#custom-icons">Custom Icons</a></li>
+<li><a href="#keyboard-navigation">Keyboard Navigation</a></li>
+</ul>
+</li>
+<li>
+<a href="#the-xaml">The XAML</a><ul>
+<li><a href="#controlextensions">ControlExtensions</a></li>
+<li><a href="#inputextensions">InputExtensions</a></li>
+<li><a href="#commandextensions">CommandExtensions</a></li>
+<li><a href="#putting-it-all-together">Putting it all together</a></li>
+</ul>
+</li>
+<li>
+<a href="#the-mvux-model">The MVUX Model</a><ul>
+<li><a href="#usercredentials-state">UserCredentials State</a></li>
+<li><a href="#login-command">Login Command</a></li>
+<li><a href="#iauthenticationservice-usage">IAuthenticationService Usage</a></li>
+</ul>
+</li>
+<li><a href="#next-steps">Next Steps</a></li>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/chefs-intro/chefslogo.png" class="hero-image">
+        <p>Let’s continue our walkthrough of <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs</a>, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered <a href="/uno-general/2025/05/25/chefs-intro.html">last time</a>.</p>
+
+<h2 id="anatomy-of-the-login-page">Anatomy of the Login Page</h2>
+
+<p>I know an article on a login page sounds boring. But, there’s actually a lot of good stuff packed into this simple screen.</p>
+
+<p>We don’t need to separate the anatomy based on our wide/narrow layouts. This is one of the few pages that we simply lock to a <code class="language-plaintext highlighter-rouge">MaxWidth</code> so it looks good enough for both layout breakpoints.</p>
+
+<figure>
+    <a href="/assets/images/chefs-login/chefs-login.png"><img src="/assets/images/chefs-login/chefs-login.png" alt="Login Page Anatomy"></a>
+    <figcaption>
+        <ol>
+            <li>Username TextBox</li>
+            <li>Password PasswordBox</li>
+            <li>Login Button</li>
+            <li>Divider</li>
+            <li>Social Login Buttons</li>
+            <li>Registration Text Button</li>
+        </ol>
+    </figcaption>
+</figure>
+
+<p>The first, and most important, part of any login experience are the Username/Password fields. Not only should they be clearly indicated, it should be easy to quickly navigate between the two fields and invoke a form submission without using your mouse at all.</p>
+
+<h3 id="custom-icons">Custom Icons</h3>
+
+<p>Along with using the <code class="language-plaintext highlighter-rouge">PlaceholderText</code> property for the Username <code class="language-plaintext highlighter-rouge">TextBox</code> and the <code class="language-plaintext highlighter-rouge">PasswordBox</code> controls, we are using the <code class="language-plaintext highlighter-rouge">ControlExtensions.Icon</code> Attached Property from Uno Themes to add a nice leading icon image for each control. For more info on the <code class="language-plaintext highlighter-rouge">ControlExtensions.Icon</code> Attached Property you can check out the related Uno Tech Bite:</p>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/y7h9cAsDvfs" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<p>As a quick recap, the <code class="language-plaintext highlighter-rouge">Icon</code> Attached Property from Uno Themes’ <a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-control-extensions.html"><code class="language-plaintext highlighter-rouge">ControlExtensions</code></a> class provides the ability to define any type of <code class="language-plaintext highlighter-rouge">IconElement</code> and displays it in many situations as part of the custom styles coming from Uno Themes.</p>
+
+<p class="notice--warning">The <code class="language-plaintext highlighter-rouge">ControlExtensions</code> Attached Properties must be properly referenced inside of the control’s <code class="language-plaintext highlighter-rouge">ControlTemplate</code>. They do not work with the out-of-the-box Fluent styles from the core Uno library.</p>
+
+<h3 id="keyboard-navigation">Keyboard Navigation</h3>
+
+<p>We are also using the <code class="language-plaintext highlighter-rouge">InputExtensions</code> set of Attached Properties from Uno Toolkit in order to facilitate keyboard navigation support for tabbing through the input controls and invoking the Login command on Enter key press. Once again, we have a couple of Uno Tech Bite videos specifically on this topic :)</p>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/ehQYrTtircY" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/j0MWpLja3u4" title="YouTube video player" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<h2 id="the-xaml">The XAML</h2>
+
+<p>We can take a look now at the XAML for the Login Page. I extracted a snippet of the most relevant parts, but you can find the full XAML in the <a href="https://github.com/unoplatform/uno.chefs/blob/31a9e7621260f69d1b8d9ae845635d9424c45689/Chefs/Views/LoginPage.xaml">Uno Chefs repository</a>.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:AutoLayout</span> <span class="na">Spacing=</span><span class="s">"32"</span>
+                <span class="na">MaxWidth=</span><span class="s">"500"</span>
+                <span class="na">PrimaryAxisAlignment=</span><span class="s">"Center"</span>
+                <span class="na">Padding=</span><span class="s">"32"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">utu:AutoLayout.CounterAlignment=</span><span class="s">"Center"</span>
+            <span class="na">Width=</span><span class="s">"160"</span>
+            <span class="na">Height=</span><span class="s">"90"</span>
+            <span class="na">Source=</span><span class="s">"{ThemeResource ChefsLogoWithIcon}"</span>
+            <span class="na">Stretch=</span><span class="s">"Uniform"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;utu:AutoLayout</span> <span class="na">Spacing=</span><span class="s">"16"</span>
+                    <span class="na">PrimaryAxisAlignment=</span><span class="s">"Center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;TextBox</span> <span class="na">PlaceholderText=</span><span class="s">"Username"</span>
+                  <span class="na">x:Name=</span><span class="s">"LoginUsername"</span>
+                  <span class="na">AutomationProperties.AutomationId=</span><span class="s">"LoginUsername"</span>
+                  <span class="na">Style=</span><span class="s">"{StaticResource ChefsPrimaryTextBoxStyle}"</span>
+                  <span class="na">utu:InputExtensions.ReturnType=</span><span class="s">"Next"</span>
+                  <span class="na">utu:InputExtensions.AutoFocusNextElement=</span><span class="s">"{Binding ElementName=LoginPassword}"</span>
+                  <span class="na">IsSpellCheckEnabled=</span><span class="s">"False"</span>
+                  <span class="na">Text=</span><span class="s">"{Binding UserCredentials.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+                <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource Icon_Person_Outline}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+        <span class="nt">&lt;/TextBox&gt;</span>
+        <span class="nt">&lt;PasswordBox</span> <span class="na">x:Name=</span><span class="s">"LoginPassword"</span>
+                      <span class="na">AutomationProperties.AutomationId=</span><span class="s">"LoginPassword"</span>
+                      <span class="na">utu:InputExtensions.ReturnType=</span><span class="s">"Done"</span>
+                      <span class="na">utu:CommandExtensions.Command=</span><span class="s">"{Binding Login}"</span>
+                      <span class="na">Password=</span><span class="s">"{Binding UserCredentials.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"</span>
+                      <span class="na">PlaceholderText=</span><span class="s">"Password"</span>
+                      <span class="na">Style=</span><span class="s">"{StaticResource OutlinedPasswordBoxStyle}"</span>
+                      <span class="na">BorderBrush=</span><span class="s">"{ThemeResource OutlineVariantBrush}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+                <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource Icon_Lock}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+        <span class="nt">&lt;/PasswordBox&gt;</span>
+        <span class="nt">&lt;utu:AutoLayout</span> <span class="na">Spacing=</span><span class="s">"24"</span>
+                        <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                        <span class="na">CounterAxisAlignment=</span><span class="s">"Center"</span>
+                        <span class="na">Justify=</span><span class="s">"SpaceBetween"</span>
+                        <span class="na">PrimaryAxisAlignment=</span><span class="s">"Stretch"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;CheckBox</span> <span class="na">Content=</span><span class="s">"Remember me"</span>
+                      <span class="na">utu:AutoLayout.PrimaryAlignment=</span><span class="s">"Auto"</span>
+                      <span class="na">IsChecked=</span><span class="s">"{Binding UserCredentials.SaveCredentials, Mode=TwoWay}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Forgot password?"</span>
+                    <span class="na">Style=</span><span class="s">"{StaticResource TextButtonStyle}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/utu:AutoLayout&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Login"</span>
+                <span class="na">x:Name=</span><span class="s">"LoginButton"</span>
+                <span class="na">AutomationProperties.AutomationId=</span><span class="s">"LoginButton"</span>
+                <span class="na">Style=</span><span class="s">"{StaticResource ChefsPrimaryButtonStyle}"</span>
+                <span class="na">Command=</span><span class="s">"{Binding Login}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/utu:AutoLayout&gt;</span>
+
+    <span class="nt">&lt;utu:Divider</span> <span class="na">Style=</span><span class="s">"{StaticResource DividerStyle}"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;utu:AutoLayout</span> <span class="na">Spacing=</span><span class="s">"8"</span>
+                    <span class="na">PrimaryAxisAlignment=</span><span class="s">"Center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Sign in with Apple"</span>
+                <span class="na">Command=</span><span class="s">"{Binding LoginWithApple}"</span>
+                <span class="na">Style=</span><span class="s">"{StaticResource ChefsTonalButtonStyle}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+                <span class="nt">&lt;FontIcon</span> <span class="na">Style=</span><span class="s">"{StaticResource FontAwesomeBrandsFontIconStyle}"</span>
+                          <span class="na">Glyph=</span><span class="s">"{StaticResource Icon_Apple_Brand}"</span>
+                          <span class="na">FontSize=</span><span class="s">"18"</span>
+                          <span class="na">Foreground=</span><span class="s">"{ThemeResource OnSurfaceBrush}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+        <span class="nt">&lt;/Button&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Sign in with Google"</span>
+                <span class="na">Command=</span><span class="s">"{Binding LoginWithGoogle}"</span>
+                <span class="na">Style=</span><span class="s">"{StaticResource ChefsTonalButtonStyle}"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+                <span class="nt">&lt;FontIcon</span> <span class="na">Style=</span><span class="s">"{StaticResource FontAwesomeBrandsFontIconStyle}"</span>
+                          <span class="na">Glyph=</span><span class="s">"{StaticResource Icon_Google_Brand}"</span>
+                          <span class="na">FontSize=</span><span class="s">"18"</span>
+                          <span class="na">Foreground=</span><span class="s">"{ThemeResource OnSurfaceBrush}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+        <span class="nt">&lt;/Button&gt;</span>
+    <span class="nt">&lt;/utu:AutoLayout&gt;</span>
+    <span class="nt">&lt;utu:AutoLayout</span> <span class="na">PrimaryAxisAlignment=</span><span class="s">"Center"</span>
+                    <span class="na">CounterAxisAlignment=</span><span class="s">"Center"</span>
+                    <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                    <span class="na">Spacing=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Not a member?"</span>
+                    <span class="na">Foreground=</span><span class="s">"{ThemeResource OnSurfaceBrush}"</span>
+                    <span class="na">Style=</span><span class="s">"{StaticResource LabelLarge}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Register Now"</span>
+                <span class="na">uen:Navigation.Request=</span><span class="s">"-/Register"</span>
+                <span class="na">Style=</span><span class="s">"{StaticResource TextButtonStyle}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/utu:AutoLayout&gt;</span>
+<span class="nt">&lt;/utu:AutoLayout&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<h3 id="controlextensions"><code class="language-plaintext highlighter-rouge">ControlExtensions</code></h3>
+
+<p>First thing we want to look at are the <code class="language-plaintext highlighter-rouge">ControlExtensions.Icon</code> usages. In the snippet above, check out lines 20-22 and 32-34. This is where we are setting the leading icons for the <code class="language-plaintext highlighter-rouge">TextBox</code> and <code class="language-plaintext highlighter-rouge">PasswordBox</code> controls. We are using a <a href="https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.pathicon?view=windows-app-sdk-1.6"><code class="language-plaintext highlighter-rouge">PathIcon</code></a> to define the icon shape, which is a vector graphic that scales nicely across different screen sizes and resolutions.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Username Icon --&gt;</span>
+<span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource Icon_Person_Outline}"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+
+<span class="c">&lt;!-- Password Icon --&gt;</span>
+<span class="nt">&lt;ut:ControlExtensions.Icon&gt;</span>
+    <span class="nt">&lt;PathIcon</span> <span class="na">Data=</span><span class="s">"{StaticResource Icon_Lock}"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ut:ControlExtensions.Icon&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<h3 id="inputextensions"><code class="language-plaintext highlighter-rouge">InputExtensions</code></h3>
+
+<p>Next, we have the <code class="language-plaintext highlighter-rouge">InputExtensions</code> Attached Properties. This is where we are defining the keyboard navigation behavior. There are actually two properties we are using here: <code class="language-plaintext highlighter-rouge">ReturnType</code> and <code class="language-plaintext highlighter-rouge">AutoFocusNextElement</code>.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;TextBox</span> <span class="err">...</span>
+         <span class="na">utu:InputExtensions.ReturnType=</span><span class="s">"Next"</span>
+         <span class="na">utu:InputExtensions.AutoFocusNextElement=</span><span class="s">"{Binding ElementName=LoginPassword}"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;PasswordBox</span> <span class="na">x:Name=</span><span class="s">"LoginPassword"</span>
+             <span class="err">...</span>
+             <span class="na">utu:InputExtensions.ReturnType=</span><span class="s">"Done"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">ReturnType</code> property is set to <code class="language-plaintext highlighter-rouge">Next</code> for the <code class="language-plaintext highlighter-rouge">TextBox</code>. Which means that when the software keyboard is displayed while the Username <code class="language-plaintext highlighter-rouge">TextBox</code> is focused, the Next button will be shown in the spot for the Return key. For the <code class="language-plaintext highlighter-rouge">PasswordBox</code>, we set the <code class="language-plaintext highlighter-rouge">ReturnType</code> to <code class="language-plaintext highlighter-rouge">Done</code>, which should show a Done button instead.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">AutoFocusNextElement</code> property is set to the <code class="language-plaintext highlighter-rouge">LoginPassword</code> element. Which means that when the Next button or the Tab key is pressed, the focus will automatically move from the <code class="language-plaintext highlighter-rouge">TextBox</code> to the <code class="language-plaintext highlighter-rouge">PasswordBox</code>.</p>
+
+<h3 id="commandextensions"><code class="language-plaintext highlighter-rouge">CommandExtensions</code></h3>
+
+<p>Finally, we have the <code class="language-plaintext highlighter-rouge">CommandExtensions.Command</code> Attached Property on the <code class="language-plaintext highlighter-rouge">PasswordBox</code>. This is where we are binding the <code class="language-plaintext highlighter-rouge">Login</code> command to the <code class="language-plaintext highlighter-rouge">PasswordBox</code>. This means that when the Done button or the Enter key is pressed, it will invoke the <code class="language-plaintext highlighter-rouge">Login</code> command and will auto-dismiss the software keyboard.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;PasswordBox</span> <span class="err">...</span>
+             <span class="na">utu:CommandExtensions.Command=</span><span class="s">"{Binding Login}"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>Take note in the video below of the Return key changing from Next to Done as we navigate between the two input controls. As well as the Login successfully occurring when the Done button is pressed on the software keyboard.</p>
+
+<video class="align-center width-half" autoplay="" muted="" loop="" controls="">
+  <source src="/assets/images/chefs-login/ios-login.mp4" type="video/mp4"></source>
+</video>
+
+<h2 id="the-mvux-model">The MVUX Model</h2>
+
+<p>Next, let’s take a look at the MVUX model for the Login Page. The Login Page is a bit more complex than the Welcome Page, so we have a few more properties and commands to look at.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td>
+<td class="rouge-code"><pre><span class="k">public</span> <span class="k">partial</span> <span class="n">record</span> <span class="nf">LoginModel</span><span class="p">(</span><span class="n">IDispatcher</span> <span class="n">Dispatcher</span><span class="p">,</span> <span class="n">INavigator</span> <span class="n">Navigator</span><span class="p">,</span> <span class="n">IAuthenticationService</span> <span class="n">Authentication</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">IState</span><span class="p">&lt;</span><span class="n">Credentials</span><span class="p">&gt;</span> <span class="n">UserCredentials</span> <span class="p">=&gt;</span> <span class="n">State</span><span class="p">&lt;</span><span class="n">Credentials</span><span class="p">&gt;.</span><span class="nf">Value</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">Credentials</span><span class="p">());</span>
+
+    <span class="k">public</span> <span class="n">ICommand</span> <span class="n">Login</span> <span class="p">=&gt;</span> <span class="n">Command</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">b</span> <span class="p">=&gt;</span> <span class="n">b</span><span class="p">.</span><span class="nf">Given</span><span class="p">(</span><span class="n">UserCredentials</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">CanLogin</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">DoLogin</span><span class="p">));</span>
+
+    <span class="k">private</span> <span class="kt">bool</span> <span class="nf">CanLogin</span><span class="p">(</span><span class="n">Credentials</span> <span class="n">userCredentials</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">userCredentials</span> <span class="k">is</span> <span class="n">not</span> <span class="k">null</span> <span class="p">&amp;&amp;</span>
+               <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">userCredentials</span><span class="p">.</span><span class="n">Username</span><span class="p">)</span> <span class="p">&amp;&amp;</span>
+               <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrWhiteSpace</span><span class="p">(</span><span class="n">userCredentials</span><span class="p">.</span><span class="n">Password</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">async</span> <span class="n">ValueTask</span> <span class="nf">DoLogin</span><span class="p">(</span><span class="n">Credentials</span> <span class="n">userCredentials</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">ct</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="n">Authentication</span><span class="p">.</span><span class="nf">LoginAsync</span><span class="p">(</span><span class="n">Dispatcher</span><span class="p">,</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span> <span class="p">{</span> <span class="s">"Username"</span><span class="p">,</span> <span class="n">userCredentials</span><span class="p">.</span><span class="n">Username</span><span class="p">!</span> <span class="p">},</span> <span class="p">{</span> <span class="s">"Password"</span><span class="p">,</span> <span class="n">userCredentials</span><span class="p">.</span><span class="n">Password</span><span class="p">!</span> <span class="p">}</span> <span class="p">});</span>
+        <span class="k">await</span> <span class="nf">NavigateToMain</span><span class="p">(</span><span class="n">ct</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+
+    <span class="k">private</span> <span class="k">async</span> <span class="n">ValueTask</span> <span class="nf">NavigateToMain</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">ct</span><span class="p">)</span>
+        <span class="p">=&gt;</span> <span class="k">await</span> <span class="n">Navigator</span><span class="p">.</span><span class="n">NavigateViewModelAsync</span><span class="p">&lt;</span><span class="n">MainModel</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">,</span> <span class="n">qualifier</span><span class="p">:</span> <span class="n">Qualifiers</span><span class="p">.</span><span class="n">ClearBackStack</span><span class="p">,</span> <span class="n">cancellation</span><span class="p">:</span> <span class="n">ct</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<h3 id="usercredentials-state">
+<code class="language-plaintext highlighter-rouge">UserCredentials</code> State</h3>
+
+<p>First thing’s first, we have the <code class="language-plaintext highlighter-rouge">UserCredentials</code> property. This is a simple <code class="language-plaintext highlighter-rouge">Credentials</code> object that holds the Username and Password values. We are using an <code class="language-plaintext highlighter-rouge">IState&lt;Credentials&gt;</code> here instead of an <code class="language-plaintext highlighter-rouge">IFeed&lt;Credentials&gt;</code> since we want to be able to update the observable property as the user types in the input fields and react to the changes accordingly.</p>
+
+<h3 id="login-command">Login Command</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Login</code> command is defined using the <code class="language-plaintext highlighter-rouge">Command.Create</code> builder method from MVUX. This allows us to build an <code class="language-plaintext highlighter-rouge">ICommand</code> in a fluent way. We cover this in the <a href="https://platform.uno/docs/articles/external/uno.chefs/doc/extensions/CommandBuilder.html">Command Builder Chefs Recipe Book article</a>. You’ll notice the <code class="language-plaintext highlighter-rouge">When(CanLogin)</code> method that will properly wire up the <code class="language-plaintext highlighter-rouge">CanExecute</code> logic for the <code class="language-plaintext highlighter-rouge">ICommand</code>. This will ensure that the Login button is only enabled when both the Username and Password fields are not empty, or whatever validation logic you want to implement.</p>
+
+<h3 id="iauthenticationservice-usage">
+<code class="language-plaintext highlighter-rouge">IAuthenticationService</code> Usage</h3>
+
+<p>We can see that the <code class="language-plaintext highlighter-rouge">DoLogin</code> method is where we are using the injected <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> to handle the authentication logic. If you search the solution for something implementing the <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> interface, you’ll find that it is not implemented in Chefs. Instead, it is registered by the <code class="language-plaintext highlighter-rouge">UseAuthentication</code> extension method as part of the <code class="language-plaintext highlighter-rouge">IHostBuilder</code> in the <code class="language-plaintext highlighter-rouge">App.xaml</code> code-behind logic. This is all made available to us through the <a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Overview/Authentication/AuthenticationOverview.html">Uno Extensions Authentication</a> package.</p>
+
+<p>Here is the relevant code snippet from the <code class="language-plaintext highlighter-rouge">App</code> code-behind:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td>
+<td class="rouge-code"><pre><span class="p">...</span>
+
+<span class="p">.</span><span class="nf">Configure</span><span class="p">(</span><span class="n">host</span> <span class="p">=&gt;</span> <span class="n">host</span>
+    <span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">(</span><span class="n">auth</span> <span class="p">=&gt;</span>
+        <span class="n">auth</span><span class="p">.</span><span class="nf">AddCustom</span><span class="p">(</span>
+            <span class="n">custom</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">custom</span><span class="p">.</span><span class="nf">Login</span><span class="p">(</span><span class="k">async</span> <span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">dispatcher</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">cancellationToken</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">await</span> <span class="nf">ProcessCredentials</span><span class="p">(</span><span class="n">credentials</span><span class="p">));</span>
+            <span class="p">},</span>
+            <span class="n">name</span><span class="p">:</span> <span class="s">"CustomAuth"</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="p">...</span>
+
+<span class="k">private</span> <span class="k">async</span> <span class="n">ValueTask</span><span class="p">&lt;</span><span class="n">IDictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;?&gt;</span> <span class="nf">ProcessCredentials</span><span class="p">(</span><span class="n">IDictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">credentials</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Check for username to simulate credential processing</span>
+    <span class="k">if</span> <span class="p">(!(</span><span class="n">credentials</span><span class="p">?.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="s">"Username"</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">username</span><span class="p">)</span> <span class="p">??</span>
+            <span class="k">false</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="kt">string</span><span class="p">.</span><span class="nf">IsNullOrEmpty</span><span class="p">(</span><span class="n">username</span><span class="p">)))</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Simulate successful authentication by creating a dummy token dictionary</span>
+    <span class="kt">var</span> <span class="n">tokenDictionary</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="p">{</span> <span class="n">TokenCacheExtensions</span><span class="p">.</span><span class="n">AccessTokenKey</span><span class="p">,</span> <span class="s">"SampleToken"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="n">TokenCacheExtensions</span><span class="p">.</span><span class="n">RefreshTokenKey</span><span class="p">,</span> <span class="s">"RefreshToken"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s">"Expiry"</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="nf">AddMinutes</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"g"</span><span class="p">)</span> <span class="p">}</span> <span class="c1">// Set token expiry</span>
+    <span class="p">};</span>
+
+    <span class="k">return</span> <span class="n">tokenDictionary</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>In our case, we are simulating a successful login as long as the Username is not empty. We are achieving this by using the <code class="language-plaintext highlighter-rouge">AddCustom</code> method on the <code class="language-plaintext highlighter-rouge">IAuthenticationBuilder</code> to register the <code class="language-plaintext highlighter-rouge">CustomAuthenticationProvider</code> coming from Uno Extensions. The <code class="language-plaintext highlighter-rouge">CustomAuthenticationProvider</code> provides a basic implementation of the <code class="language-plaintext highlighter-rouge">IAuthenticationProvider</code> that requires callback methods to be defined for performing login, refresh, and logout actions.
+This is where you would typically implement your own authentication logic, such as calling an API to validate the credentials. You can easily swap this out with something like <code class="language-plaintext highlighter-rouge">.AddMsal</code> or <code class="language-plaintext highlighter-rouge">AddOidc</code>.</p>
+
+<p>Now, when we call the <code class="language-plaintext highlighter-rouge">LoginAsync</code> method on the <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> inside of the <code class="language-plaintext highlighter-rouge">LoginModel</code>, it will automatically call into the <code class="language-plaintext highlighter-rouge">ProcessCredentials</code> method to handle the auth request.</p>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>In the next article, we’ll get into the real meat of the application and explore the Home Page. In the meantime, I encourage you to check out the <a href="https://platform.uno/docs/articles/external/uno.chefs/doc/RecipeBooksOverview.html">Uno Chefs Recipe Book</a> and the <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs GitHub repository</a> and explore the code for yourself. There are a lot of interesting patterns and techniques used throughout the app that you can learn from.</p>
+
+<p>Hope you learned something and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li><a href="https://github.com/unoplatform/uno.chefs">Uno Chefs GitHub Repository</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.Focus.html">InputExtensions Focus Recipe Book</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.ReturnType.html">InputExtensions Return Type Recipe Book</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/CommandExtensions.html">CommandExtensions Recipe Book</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-07-02T00:00:00+00:00">July 2, 2025</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-39/uno-general/2025/05/25/chefs-intro.html" class="pagination--pager" title="Introducing Uno Chefs (and some other stuff)">Previous</a>
+    
+    
+      <a href="/previews/pr-39/uno-general/2026/02/23/agent-skills-intro.html" class="pagination--pager" title="Agent Skills + Uno Platform">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-39/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html" rel="permalink">Toolkit Tuesdays: ZoomContentControl
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-22T00:00:00+00:00">August 22, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-39/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-39/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-39/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-39/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-39/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-39/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-39/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-39/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
