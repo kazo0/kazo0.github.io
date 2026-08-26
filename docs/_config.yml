@@ -90,6 +90,7 @@ defaults:
     values:
       layout: single
       read_time: true
+      classes: wide
       show_date: true
       author_profile: true
       related: true
