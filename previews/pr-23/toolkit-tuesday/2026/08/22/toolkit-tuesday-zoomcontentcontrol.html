@@ -1,0 +1,969 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Toolkit Tuesdays: ZoomContentControl - dotnet new bald</title>
+<meta name="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Toolkit Tuesdays: ZoomContentControl">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html">
+
+
+  <meta property="og:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Toolkit Tuesdays: ZoomContentControl">
+  <meta name="twitter:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-08-22T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-23/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-23/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-23/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-23/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-23/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-23/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Toolkit Tuesdays: ZoomContentControl">
+    <meta itemprop="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+    <meta itemprop="datePublished" content="2026-08-22T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-23/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html" class="u-url" itemprop="url">Toolkit Tuesdays: ZoomContentControl
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-22T00:00:00+00:00">August 22, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-problem">The Problem</a></li>
+<li><a href="#anatomy-of-a-zoomcontentcontrol">Anatomy of a ZoomContentControl</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#controlling-the-zoom-from-code">Controlling the Zoom From Code</a></li>
+<li><a href="#the-helper-methods">The Helper Methods</a></li>
+<li><a href="#auto-fit-and-auto-center">Auto-Fit and Auto-Center</a></li>
+<li><a href="#fine-tuning-the-feel">Fine-Tuning the Feel</a></li>
+<li><a href="#focusing-on-a-specific-element">Focusing on a Specific Element</a></li>
+<li><a href="#a-note-on-the-docs">A Note on the Docs</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image">
+        <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+
+<p>This week we’re covering the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code>. The name pretty much explains it: it’s a control that lets you zoom and pan whatever content you put inside it. It handles the scaling, the panning, and even draws its own scroll bars, so you can focus on your content instead of the plumbing.</p>
+
+<p class="notice--info">As always, these components need a little extra setup since they’re part of the Uno Toolkit library. You can refer to the <a href="https://aka.platform.uno/uno-toolkit">Getting Started documentation</a> to get everything wired up.</p>
+
+<!-- TODO: screen recording of the ZoomContentControl demo (zoom in/out + pan) -> /assets/images/zoomcontentcontrol/zoom-demo.mp4 -->
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Say you’ve got a big, detailed image. A floor plan, a schematic, a map, a scanned document, a giant chart. Whatever it is, it doesn’t fit on screen at full size, and shrinking it down to fit makes it useless because nobody can read the details. We’ve all shipped that screen where the user squints and pinches at a blurry blob and quietly hates you for it.</p>
+
+<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom story leans on pinch gestures and doesn’t give you a clean, consistent way to drive the zoom level from code across every platform Uno targets. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
+
+<p>That plumbing is exactly what the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> hands you for free.</p>
+
+<h2 id="anatomy-of-a-zoomcontentcontrol">Anatomy of a <code class="language-plaintext highlighter-rouge">ZoomContentControl</code>
+</h2>
+
+<p>At its core, the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is a <code class="language-plaintext highlighter-rouge">ContentControl</code>. You drop it into your XAML, give it some <code class="language-plaintext highlighter-rouge">Content</code>, and it takes over the job of scaling and translating that content within its own bounds:</p>
+
+<!-- TODO: annotated screenshot of ZoomContentControl showing viewport + zoomed content -> /assets/images/zoomcontentcontrol/anatomy.png -->
+
+<ol>
+  <li>The viewport, which is the fixed-size area the control occupies in your layout</li>
+  <li>The content, which is whatever you put inside, scaled and panned within the viewport</li>
+</ol>
+
+<p>Under the hood it isn’t a real <code class="language-plaintext highlighter-rouge">ScrollViewer</code> at all. It simulates one using a <code class="language-plaintext highlighter-rouge">ScaleTransform</code> (that’s your <code class="language-plaintext highlighter-rouge">ZoomLevel</code>) and a <code class="language-plaintext highlighter-rouge">TranslateTransform</code> (that’s your pan offset), then draws its own scroll bars on top. That detail matters because it’s why the zoom behaves identically whether you’re on Windows, WebAssembly, or a Skia desktop head. No per-platform “why does this feel weird on WASM” rabbit holes, which I’ve been down more than once.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Add the <code class="language-plaintext highlighter-rouge">utu</code> namespace and wrap your content:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre>xmlns:utu="using:Uno.Toolkit.UI"
+...
+
+<span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">MinZoomLevel=</span><span class="s">"0.5"</span>
+                        <span class="na">MaxZoomLevel=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/large-map.png"</span>
+           <span class="na">Stretch=</span><span class="s">"Uniform"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That’s genuinely all it takes to get something zoomable. No code-behind, no gesture wrangling, nothing. <img class="emoji" title=":ok_hand:" alt=":ok_hand:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44c.png" height="20" width="20"></p>
+
+<p>Out of the box you get these interactions on desktop:</p>
+
+<ul>
+  <li>
+<strong>Ctrl + Mouse Wheel</strong> zooms in and out, centered on the cursor</li>
+  <li>
+<strong>Mouse Wheel</strong> scrolls vertically; <strong>Shift + Mouse Wheel</strong> scrolls horizontally</li>
+  <li>
+<strong>Middle-click + drag</strong> pans the content</li>
+</ul>
+
+<p class="notice--info">For any of that to work, the control needs to be loaded and visible, <code class="language-plaintext highlighter-rouge">IsActive</code> needs to be <code class="language-plaintext highlighter-rouge">true</code> (it is by default), and the relevant <code class="language-plaintext highlighter-rouge">IsZoomAllowed</code> / <code class="language-plaintext highlighter-rouge">IsPanAllowed</code> flags need to be <code class="language-plaintext highlighter-rouge">true</code> (also both default to <code class="language-plaintext highlighter-rouge">true</code>).</p>
+
+<p class="notice--warning">A quick note on expectations, because I don’t want you to be surprised: the built-in interactions above are mouse- and keyboard-driven. There’s no automatic pinch-to-zoom or double-tap gesture baked in, so if you’re targeting touch you’ll want to drive the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> yourself with some buttons. Which, conveniently, is exactly what we’re about to do.</p>
+
+<h2 id="controlling-the-zoom-from-code">Controlling the Zoom From Code</h2>
+
+<p>The most useful thing about this control is that <code class="language-plaintext highlighter-rouge">ZoomLevel</code> is just a plain <code class="language-plaintext highlighter-rouge">double</code> dependency property. Want a “Zoom In” button? Nudge the number:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;StackPanel&gt;</span>
+    <span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">x:Name=</span><span class="s">"ZoomContent"</span>
+                            <span class="na">Width=</span><span class="s">"400"</span>
+                            <span class="na">Height=</span><span class="s">"300"</span>
+                            <span class="na">ZoomLevel=</span><span class="s">"1"</span>
+                            <span class="na">MinZoomLevel=</span><span class="s">"0.5"</span>
+                            <span class="na">MaxZoomLevel=</span><span class="s">"10"</span>
+                            <span class="na">IsZoomAllowed=</span><span class="s">"True"</span>
+                            <span class="na">IsPanAllowed=</span><span class="s">"True"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Border</span> <span class="na">BorderBrush=</span><span class="s">"White"</span>
+                <span class="na">BorderThickness=</span><span class="s">"2"</span>
+                <span class="na">Padding=</span><span class="s">"10"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/UnoLogo.png"</span>
+                   <span class="na">Width=</span><span class="s">"75"</span>
+                   <span class="na">Height=</span><span class="s">"101"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Border&gt;</span>
+    <span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+
+    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                <span class="na">Spacing=</span><span class="s">"12"</span>
+                <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ZoomInButton"</span> <span class="na">Content=</span><span class="s">"Zoom In"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ZoomOutButton"</span> <span class="na">Content=</span><span class="s">"Zoom Out"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ResetButton"</span> <span class="na">Content=</span><span class="s">"Reset"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/StackPanel&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>And the code-behind is about as simple as it gets:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td>
+<td class="rouge-code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">OnZoomInClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">&lt;</span> <span class="n">ZoomContent</span><span class="p">.</span><span class="n">MaxZoomLevel</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">+=</span> <span class="m">0.2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnZoomOutClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">&gt;</span> <span class="n">ZoomContent</span><span class="p">.</span><span class="n">MinZoomLevel</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">-=</span> <span class="m">0.2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnResetClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ZoomContent</span><span class="p">.</span><span class="nf">ResetViewport</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<!-- TODO: screen recording of the button-driven zoom in/out/reset -> /assets/images/zoomcontentcontrol/buttons.mp4 -->
+
+<p>And that’s the whole trick. Notice I’m checking against <code class="language-plaintext highlighter-rouge">MinZoomLevel</code> and <code class="language-plaintext highlighter-rouge">MaxZoomLevel</code> before nudging the value. The control will happily clamp things for you, but guarding the button logic keeps the intent obvious for whoever reads this next (usually me, six months from now, having forgotten I wrote it). If you’re doing this in an MVVM or MVUX app, <code class="language-plaintext highlighter-rouge">ZoomLevel</code> binds just as happily to a view model property.</p>
+
+<h2 id="the-helper-methods">The Helper Methods</h2>
+
+<p>That <code class="language-plaintext highlighter-rouge">ResetButton</code> above calls <code class="language-plaintext highlighter-rouge">ResetViewport()</code>, which is one of a handful of convenience methods the control exposes. Here’s the full set and what each one actually does:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetZoom()</code></td>
+      <td>Sets <code class="language-plaintext highlighter-rouge">ZoomLevel</code> back to <code class="language-plaintext highlighter-rouge">1</code>
+</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetScroll()</code></td>
+      <td>Resets the scroll/pan position to <code class="language-plaintext highlighter-rouge">(0, 0)</code>
+</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetViewport()</code></td>
+      <td>Does both of the above, back to 100% and re-centered</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CenterContent()</code></td>
+      <td>Centers the content within the viewport</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FitToCanvas()</code></td>
+      <td>Adjusts <code class="language-plaintext highlighter-rouge">ZoomLevel</code> so the content fills the available space</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">FitToCanvas()</code> is the one I reach for most. If you’ve got a document or a diagram and you want the classic “fit to page” behavior, that’s your button. And if you’d rather it happen automatically whenever the content or viewport size changes? You don’t even need the button, as we’ll see next.</p>
+
+<h2 id="auto-fit-and-auto-center">Auto-Fit and Auto-Center</h2>
+
+<p>Two boolean properties handle the automatic cases:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">AutoFitToCanvas=</span><span class="s">"True"</span>
+                        <span class="na">AutoCenterContent=</span><span class="s">"True"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/large-map.png"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">AutoFitToCanvas</code> (defaults to <code class="language-plaintext highlighter-rouge">false</code>) calls <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> for you whenever the content or viewport resizes, so your content always starts out fully visible</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">AutoCenterContent</code> (defaults to <code class="language-plaintext highlighter-rouge">true</code>) keeps the content centered in the viewport</li>
+</ul>
+
+<p>That’s a lovely pairing for something like an image viewer that should always open showing the whole image, then let the user zoom in from there. Two properties, zero code-behind. I’ll take it.</p>
+
+<h2 id="fine-tuning-the-feel">Fine-Tuning the Feel</h2>
+
+<p>A few more properties let you dial in the experience:</p>
+
+<ul>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">ScaleWheelRatio</code></strong> controls how much the zoom factor changes per mouse wheel tick. It’s a small number by default (<code class="language-plaintext highlighter-rouge">0.0006</code>), so if scrolling feels too slow or too twitchy, this is your knob.</li>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">PanWheelRatio</code></strong> does the same thing for how far a wheel tick pans (defaults to <code class="language-plaintext highlighter-rouge">0.25</code>).</li>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">AdditionalMargin</code></strong> adds an unscaled <code class="language-plaintext highlighter-rouge">Thickness</code> of breathing room around the content, so you can pan a little past the edges instead of having the content jammed right up against the viewport border.</li>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">AllowFreePanning</code></strong> (defaults to <code class="language-plaintext highlighter-rouge">true</code>) lets the content be panned outside the viewport bounds rather than being locked in.</li>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">ScrollBarLayout</code></strong> lets you change how the simulated scroll bars are laid out.</li>
+</ul>
+
+<p>None of these are required reading (the defaults are sensible), but they’re there when you need to make the interaction feel right for your particular content.</p>
+
+<h2 id="focusing-on-a-specific-element">Focusing on a Specific Element</h2>
+
+<p>The last property worth calling out is <code class="language-plaintext highlighter-rouge">ElementOnFocus</code>. Point it at a child <code class="language-plaintext highlighter-rouge">FrameworkElement</code> and the control’s auto-zoom and auto-fit behavior will center around <em>that</em> element rather than the content as a whole. There’s a matching <code class="language-plaintext highlighter-rouge">SetLocalFocus(...)</code> / <code class="language-plaintext highlighter-rouge">ClearLocalFocus()</code> pair in code if you want to drive it dynamically, which is handy for something like “zoom to this node in a diagram” where the focus target changes as the user clicks around.</p>
+
+<h2 id="a-note-on-the-docs">A Note on the Docs</h2>
+
+<p class="notice--warning">One heads-up if you go digging through the reference material, because it tripped me up: an older how-to snippet mentions <code class="language-plaintext highlighter-rouge">ZoomTo(...)</code> and <code class="language-plaintext highlighter-rouge">ZoomToRect(...)</code> methods. Those aren’t part of the control as it ships today, so don’t go hunting for them like I did. Set the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> property directly (or use <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>) and you’ll get where you’re going. I’ve flagged it so the docs can catch up.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is one of those controls that looks small but quietly saves you a real chunk of work. Any time you’ve got content that’s bigger than the space you can give it (maps, floor plans, schematics, big images, documents), this is the thing that turns it into a proper zoom-and-pan experience, with a <code class="language-plaintext highlighter-rouge">ZoomLevel</code> you can bind and a set of reset/fit helpers that cover the common buttons you’d otherwise be writing by hand.</p>
+
+<p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform.</p>
+
+<p>I hope you enjoyed this edition of Toolkit Tuesdays! As always, I encourage you to consult the full documentation using the links below, and to jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a> if you find a bug, want to make an improvement, or want to help the docs along.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ZoomContentControl.html">ZoomContentControl Docs</a></li>
+  <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-08-22T00:00:00+00:00">August 22, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html" class="pagination--pager" title="Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/tidbit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          11 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/skills-intro/tool-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-23/uno-general/2026/02/23/agent-skills-intro.html" rel="permalink">Agent Skills + Uno Platform
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-02-23T00:00:00+00:00">February 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Uno Platform has been making some great strides in AI-assisted development recently. At its core, Uno still continues to be one of the best cross-platform .N...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-23/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-23/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-23/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-23/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
