@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-38/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-38/" rel="alternate" type="text/html" /><updated>2026-08-22T12:58:08+00:00</updated><id>https://kazo0.dev/previews/pr-38/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Syncing my terminal (and my agents) across machines with dotfiles</title><link href="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html" rel="alternate" type="text/html" title="Syncing my terminal (and my agents) across machines with dotfiles" /><published>2026-08-22T00:00:00+00:00</published><updated>2026-08-22T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html"><![CDATA[<p>I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-38/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-38/" rel="alternate" type="text/html" /><updated>2026-08-27T00:41:57+00:00</updated><id>https://kazo0.dev/previews/pr-38/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Syncing my terminal (and my agents) across machines with dotfiles</title><link href="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html" rel="alternate" type="text/html" title="Syncing my terminal (and my agents) across machines with dotfiles" /><published>2026-08-22T00:00:00+00:00</published><updated>2026-08-22T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/uno-general/2026/08/22/dotfiles.html"><![CDATA[<p>I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.</p>
 
 <p>For years my “system” for this was to open an old machine, squint at its <code class="language-plaintext highlighter-rouge">.zshrc</code>, and copy-paste the bits I remembered into the new one. It works right up until it doesn’t. You forget an alias, one machine drifts out of sync with another, and you spend twenty minutes wondering why <code class="language-plaintext highlighter-rouge">dotnet tool</code> isn’t on your PATH on the laptop but is on the desktop.</p>
 
@@ -162,7 +162,271 @@ claude-work
 
 <p>If you want to steal the setup wholesale or just crib a few ideas, the whole thing is on <a href="https://github.com/kazo0/dotfiles">GitHub</a>. Fair warning that the specifics are shaped around my own tools and paths, but that’s kind of the point of dotfiles. Make them yours.</p>
 
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="dotfiles" /><category term="terminal" /><category term="shell" /><category term="zsh" /><category term="powershell" /><category term="oh-my-posh" /><category term="claude-code" /><category term="agents" /><category term="dev-containers" /><summary type="html"><![CDATA[I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="dotfiles" /><category term="terminal" /><category term="shell" /><category term="zsh" /><category term="powershell" /><category term="oh-my-posh" /><category term="claude-code" /><category term="agents" /><category term="dev-containers" /><summary type="html"><![CDATA[I bounce between a lot of machines. There’s my Windows dev box where most of the real Uno work happens, a MacBook, the odd Linux box, WSL when I need a Unix shell on Windows, and lately a growing pile of dev containers. Every one of them wants my shell to feel the same: my prompt, my aliases, my PATH tweaks, and (increasingly) my coding agents all configured the way I like them.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: ZoomContentControl</title><link href="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: ZoomContentControl" /><published>2026-08-22T00:00:00+00:00</published><updated>2026-08-22T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+
+<p>This week we’re covering the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code>. The name pretty much explains it: it’s a control that lets you zoom and pan whatever content you put inside it. It handles the scaling, the panning, and even draws its own scroll bars, so you can focus on your content instead of the plumbing.</p>
+
+<p class="notice--info">As always, these components need a little extra setup since they’re part of the Uno Toolkit library. You can refer to the <a href="https://aka.platform.uno/uno-toolkit">Getting Started documentation</a> to get everything wired up.</p>
+
+<!-- TODO: screen recording of the ZoomContentControl demo (zoom in/out + pan) -> /assets/images/zoomcontentcontrol/zoom-demo.mp4 -->
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Say you’ve got a big, detailed image. A floor plan, a schematic, a map, a scanned document, a giant chart. Whatever it is, it doesn’t fit on screen at full size, and shrinking it down to fit makes it useless because nobody can read the details. We’ve all shipped that screen where the user squints and pinches at a blurry blob and quietly hates you for it.</p>
+
+<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom story leans on pinch gestures and doesn’t give you a clean, consistent way to drive the zoom level from code across every platform Uno targets. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
+
+<p>That plumbing is exactly what the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> hands you for free.</p>
+
+<h2 id="anatomy-of-a-zoomcontentcontrol">Anatomy of a <code class="language-plaintext highlighter-rouge">ZoomContentControl</code></h2>
+
+<p>At its core, the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is a <code class="language-plaintext highlighter-rouge">ContentControl</code>. You drop it into your XAML, give it some <code class="language-plaintext highlighter-rouge">Content</code>, and it takes over the job of scaling and translating that content within its own bounds:</p>
+
+<!-- TODO: annotated screenshot of ZoomContentControl showing viewport + zoomed content -> /assets/images/zoomcontentcontrol/anatomy.png -->
+
+<ol>
+  <li>The viewport, which is the fixed-size area the control occupies in your layout</li>
+  <li>The content, which is whatever you put inside, scaled and panned within the viewport</li>
+</ol>
+
+<p>Under the hood it isn’t a real <code class="language-plaintext highlighter-rouge">ScrollViewer</code> at all. It simulates one using a <code class="language-plaintext highlighter-rouge">ScaleTransform</code> (that’s your <code class="language-plaintext highlighter-rouge">ZoomLevel</code>) and a <code class="language-plaintext highlighter-rouge">TranslateTransform</code> (that’s your pan offset), then draws its own scroll bars on top. That detail matters because it’s why the zoom behaves identically whether you’re on Windows, WebAssembly, or a Skia desktop head. No per-platform “why does this feel weird on WASM” rabbit holes, which I’ve been down more than once.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>Add the <code class="language-plaintext highlighter-rouge">utu</code> namespace and wrap your content:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>xmlns:utu="using:Uno.Toolkit.UI"
+...
+
+<span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">MinZoomLevel=</span><span class="s">"0.5"</span>
+                        <span class="na">MaxZoomLevel=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/large-map.png"</span>
+           <span class="na">Stretch=</span><span class="s">"Uniform"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That’s genuinely all it takes to get something zoomable. No code-behind, no gesture wrangling, nothing. :ok_hand:</p>
+
+<p>Out of the box you get these interactions on desktop:</p>
+
+<ul>
+  <li><strong>Ctrl + Mouse Wheel</strong> zooms in and out, centered on the cursor</li>
+  <li><strong>Mouse Wheel</strong> scrolls vertically; <strong>Shift + Mouse Wheel</strong> scrolls horizontally</li>
+  <li><strong>Middle-click + drag</strong> pans the content</li>
+</ul>
+
+<p class="notice--info">For any of that to work, the control needs to be loaded and visible, <code class="language-plaintext highlighter-rouge">IsActive</code> needs to be <code class="language-plaintext highlighter-rouge">true</code> (it is by default), and the relevant <code class="language-plaintext highlighter-rouge">IsZoomAllowed</code> / <code class="language-plaintext highlighter-rouge">IsPanAllowed</code> flags need to be <code class="language-plaintext highlighter-rouge">true</code> (also both default to <code class="language-plaintext highlighter-rouge">true</code>).</p>
+
+<p class="notice--warning">A quick note on expectations, because I don’t want you to be surprised: the built-in interactions above are mouse- and keyboard-driven. There’s no automatic pinch-to-zoom or double-tap gesture baked in, so if you’re targeting touch you’ll want to drive the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> yourself with some buttons. Which, conveniently, is exactly what we’re about to do.</p>
+
+<h2 id="controlling-the-zoom-from-code">Controlling the Zoom From Code</h2>
+
+<p>The most useful thing about this control is that <code class="language-plaintext highlighter-rouge">ZoomLevel</code> is just a plain <code class="language-plaintext highlighter-rouge">double</code> dependency property. Want a “Zoom In” button? Nudge the number:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;StackPanel&gt;</span>
+    <span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">x:Name=</span><span class="s">"ZoomContent"</span>
+                            <span class="na">Width=</span><span class="s">"400"</span>
+                            <span class="na">Height=</span><span class="s">"300"</span>
+                            <span class="na">ZoomLevel=</span><span class="s">"1"</span>
+                            <span class="na">MinZoomLevel=</span><span class="s">"0.5"</span>
+                            <span class="na">MaxZoomLevel=</span><span class="s">"10"</span>
+                            <span class="na">IsZoomAllowed=</span><span class="s">"True"</span>
+                            <span class="na">IsPanAllowed=</span><span class="s">"True"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Border</span> <span class="na">BorderBrush=</span><span class="s">"White"</span>
+                <span class="na">BorderThickness=</span><span class="s">"2"</span>
+                <span class="na">Padding=</span><span class="s">"10"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/UnoLogo.png"</span>
+                   <span class="na">Width=</span><span class="s">"75"</span>
+                   <span class="na">Height=</span><span class="s">"101"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Border&gt;</span>
+    <span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+
+    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                <span class="na">Spacing=</span><span class="s">"12"</span>
+                <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ZoomInButton"</span> <span class="na">Content=</span><span class="s">"Zoom In"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ZoomOutButton"</span> <span class="na">Content=</span><span class="s">"Zoom Out"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">x:Name=</span><span class="s">"ResetButton"</span> <span class="na">Content=</span><span class="s">"Reset"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/StackPanel&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>And the code-behind is about as simple as it gets:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">OnZoomInClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">&lt;</span> <span class="n">ZoomContent</span><span class="p">.</span><span class="n">MaxZoomLevel</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">+=</span> <span class="m">0.2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnZoomOutClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">&gt;</span> <span class="n">ZoomContent</span><span class="p">.</span><span class="n">MinZoomLevel</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ZoomContent</span><span class="p">.</span><span class="n">ZoomLevel</span> <span class="p">-=</span> <span class="m">0.2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">OnResetClick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ZoomContent</span><span class="p">.</span><span class="nf">ResetViewport</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<!-- TODO: screen recording of the button-driven zoom in/out/reset -> /assets/images/zoomcontentcontrol/buttons.mp4 -->
+
+<p>And that’s the whole trick. Notice I’m checking against <code class="language-plaintext highlighter-rouge">MinZoomLevel</code> and <code class="language-plaintext highlighter-rouge">MaxZoomLevel</code> before nudging the value. The control will happily clamp things for you, but guarding the button logic keeps the intent obvious for whoever reads this next (usually me, six months from now, having forgotten I wrote it). If you’re doing this in an MVVM or MVUX app, <code class="language-plaintext highlighter-rouge">ZoomLevel</code> binds just as happily to a view model property.</p>
+
+<h2 id="the-helper-methods">The Helper Methods</h2>
+
+<p>That <code class="language-plaintext highlighter-rouge">ResetButton</code> above calls <code class="language-plaintext highlighter-rouge">ResetViewport()</code>, which is one of a handful of convenience methods the control exposes. Here’s the full set and what each one actually does:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetZoom()</code></td>
+      <td>Sets <code class="language-plaintext highlighter-rouge">ZoomLevel</code> back to <code class="language-plaintext highlighter-rouge">1</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetScroll()</code></td>
+      <td>Resets the scroll/pan position to <code class="language-plaintext highlighter-rouge">(0, 0)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ResetViewport()</code></td>
+      <td>Does both of the above, back to 100% and re-centered</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CenterContent()</code></td>
+      <td>Centers the content within the viewport</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FitToCanvas()</code></td>
+      <td>Adjusts <code class="language-plaintext highlighter-rouge">ZoomLevel</code> so the content fills the available space</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">FitToCanvas()</code> is the one I reach for most. If you’ve got a document or a diagram and you want the classic “fit to page” behavior, that’s your button. And if you’d rather it happen automatically whenever the content or viewport size changes? You don’t even need the button, as we’ll see next.</p>
+
+<h2 id="auto-fit-and-auto-center">Auto-Fit and Auto-Center</h2>
+
+<p>Two boolean properties handle the automatic cases:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;utu:ZoomContentControl</span> <span class="na">AutoFitToCanvas=</span><span class="s">"True"</span>
+                        <span class="na">AutoCenterContent=</span><span class="s">"True"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/large-map.png"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/utu:ZoomContentControl&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AutoFitToCanvas</code> (defaults to <code class="language-plaintext highlighter-rouge">false</code>) calls <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> for you whenever the content or viewport resizes, so your content always starts out fully visible</li>
+  <li><code class="language-plaintext highlighter-rouge">AutoCenterContent</code> (defaults to <code class="language-plaintext highlighter-rouge">true</code>) keeps the content centered in the viewport</li>
+</ul>
+
+<p>That’s a lovely pairing for something like an image viewer that should always open showing the whole image, then let the user zoom in from there. Two properties, zero code-behind. I’ll take it.</p>
+
+<h2 id="fine-tuning-the-feel">Fine-Tuning the Feel</h2>
+
+<p>A few more properties let you dial in the experience:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">ScaleWheelRatio</code></strong> controls how much the zoom factor changes per mouse wheel tick. It’s a small number by default (<code class="language-plaintext highlighter-rouge">0.0006</code>), so if scrolling feels too slow or too twitchy, this is your knob.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">PanWheelRatio</code></strong> does the same thing for how far a wheel tick pans (defaults to <code class="language-plaintext highlighter-rouge">0.25</code>).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">AdditionalMargin</code></strong> adds an unscaled <code class="language-plaintext highlighter-rouge">Thickness</code> of breathing room around the content, so you can pan a little past the edges instead of having the content jammed right up against the viewport border.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">AllowFreePanning</code></strong> (defaults to <code class="language-plaintext highlighter-rouge">true</code>) lets the content be panned outside the viewport bounds rather than being locked in.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ScrollBarLayout</code></strong> lets you change how the simulated scroll bars are laid out.</li>
+</ul>
+
+<p>None of these are required reading (the defaults are sensible), but they’re there when you need to make the interaction feel right for your particular content.</p>
+
+<h2 id="focusing-on-a-specific-element">Focusing on a Specific Element</h2>
+
+<p>The last property worth calling out is <code class="language-plaintext highlighter-rouge">ElementOnFocus</code>. Point it at a child <code class="language-plaintext highlighter-rouge">FrameworkElement</code> and the control’s auto-zoom and auto-fit behavior will center around <em>that</em> element rather than the content as a whole. There’s a matching <code class="language-plaintext highlighter-rouge">SetLocalFocus(...)</code> / <code class="language-plaintext highlighter-rouge">ClearLocalFocus()</code> pair in code if you want to drive it dynamically, which is handy for something like “zoom to this node in a diagram” where the focus target changes as the user clicks around.</p>
+
+<h2 id="a-note-on-the-docs">A Note on the Docs</h2>
+
+<p class="notice--warning">One heads-up if you go digging through the reference material, because it tripped me up: an older how-to snippet mentions <code class="language-plaintext highlighter-rouge">ZoomTo(...)</code> and <code class="language-plaintext highlighter-rouge">ZoomToRect(...)</code> methods. Those aren’t part of the control as it ships today, so don’t go hunting for them like I did. Set the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> property directly (or use <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>) and you’ll get where you’re going. I’ve flagged it so the docs can catch up.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is one of those controls that looks small but quietly saves you a real chunk of work. Any time you’ve got content that’s bigger than the space you can give it (maps, floor plans, schematics, big images, documents), this is the thing that turns it into a proper zoom-and-pan experience, with a <code class="language-plaintext highlighter-rouge">ZoomLevel</code> you can bind and a set of reset/fit helpers that cover the common buttons you’d otherwise be writing by hand.</p>
+
+<p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform.</p>
+
+<p>I hope you enjoyed this edition of Toolkit Tuesdays! As always, I encourage you to consult the full documentation using the links below, and to jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a> if you find a bug, want to make an improvement, or want to help the docs along.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ZoomContentControl.html">ZoomContentControl Docs</a></li>
+  <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+</ul>]]></content><author><name>Steve Bilogan</name></author><category term="toolkit-tuesday" /><category term="uno-toolkit" /><category term="toolkit" /><category term="zoomcontentcontrol" /><category term="zoom" /><category term="pan" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we’re covering the <code class="language-plaintext highlighter-rouge">LoadingView</code>, and there’s a decent chance you’ve already used it without realizing. If you read the <a href="/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">ExtendedSplashScreen post</a>, you met <code class="language-plaintext highlighter-rouge">LoadingView</code> in passing: the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> is actually derived from it. Today it gets to be the star of the show.</p>
 
@@ -2244,420 +2508,4 @@ This is where you would typically implement your own authentication logic, such 
 
 <p><img src="/assets/images/packaging/packaging-graph.png" alt="Uno Packaging Graph" /></p>
 
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="packaging" /><category term="publishing" /><category term="appstore" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[With the recent release of Uno Platform 5.5, there has been major work done to improve the packaging and publishing experience for Uno Platform apps. If you’ve ever tried packaging up your cross-platform apps for distribution, you’ll know how much of a pain it can be. Each platform has its own set of requirements and tools, and it can be a real headache to get everything set up correctly.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Tidbit: Building a Carousel Experience</title><link href="https://kazo0.dev/previews/pr-38/uno-tidbit/2024/09/05/tidbit-carousel.html" rel="alternate" type="text/html" title="Uno Tidbit: Building a Carousel Experience" /><published>2024-09-05T00:00:00+00:00</published><updated>2024-09-05T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-38/uno-tidbit/2024/09/05/tidbit-carousel</id><content type="html" xml:base="https://kazo0.dev/previews/pr-38/uno-tidbit/2024/09/05/tidbit-carousel.html"><![CDATA[<p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.</p>
-
-<h2 id="the-problem">The Problem</h2>
-
-<p>Need a nice onboarding experience for your app? Perhaps an initial set of tutorial pages that the user can swipe through on the first run? Or maybe you just want to show off some images in a nice, responsive carousel. You could build this from scratch, but that’s a lot of work for something that’s been done a million times before.</p>
-
-<h2 id="the-solution">The Solution</h2>
-
-<p>This is actually quite simple to achieve, and even Microsoft has <a href="https://learn.microsoft.com/en-us/windows/apps/design/controls/flipview#adding-a-context-indicator">some documentation</a> on how to do this with the <code class="language-plaintext highlighter-rouge">FlipView</code> control and a <code class="language-plaintext highlighter-rouge">PipsPager</code>. The <code class="language-plaintext highlighter-rouge">FlipView</code> control is a great way to display a collection of items that the user can flip through. While that guidance is good, there are a couple of neat tricks you can do to make this experience even better.</p>
-
-<h2 id="the-code">The Code</h2>
-
-<p>Let’s start with a basic <code class="language-plaintext highlighter-rouge">FlipView</code> with some hardcoded items:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;FlipView&gt;</span>
-    <span class="nt">&lt;FlipView.Items&gt;</span>
-        <span class="nt">&lt;Grid&gt;</span>
-            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-
-            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Tomato"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 1"</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
-                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                       <span class="na">Margin=</span><span class="s">"20"</span>
-                       <span class="na">Text=</span><span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at imperdiet lorem, ut vehicula tellus. Duis faucibus   vehicula erat, a ullamcorper diam placerat eget."</span>
-                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Grid&gt;</span>
-        <span class="nt">&lt;Grid&gt;</span>
-            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-
-            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"CornflowerBlue"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 2"</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
-                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                       <span class="na">Margin=</span><span class="s">"20"</span>
-                       <span class="na">Text=</span><span class="s">"Curabitur blandit leo in libero mollis posuere. Suspendisse luctus magna erat, et dapibus velit fringilla vel. Vivamus porttitor   sodales ante, sit amet condimentum enim facilisis vitae."</span>
-                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Grid&gt;</span>
-        <span class="nt">&lt;Grid&gt;</span>
-            <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-
-            <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Goldenrod"</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 3"</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-
-            <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
-                       <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                       <span class="na">Margin=</span><span class="s">"20"</span>
-                       <span class="na">Text=</span><span class="s">"Nam bibendum a justo eu luctus. Aliquam sagittis risus non consequat aliquam. Donec mattis ante sit amet dui interdum, et   condimentum metus viverra."</span>
-                       <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                       <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Grid&gt;</span>
-    <span class="nt">&lt;/FlipView.Items&gt;</span>
-<span class="nt">&lt;/FlipView&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>With this, we should have a nice swipeable carousel with some basic content</p>
-
-<p><img src="/assets/images/carousel/ios-carousel-simple.gif" alt="FlipView on iOS in action" class="align-center" /></p>
-
-<p>Now, what we can do here is introduce the <code class="language-plaintext highlighter-rouge">PipsPager</code> to our page that will eventually work as a context indicator for the <code class="language-plaintext highlighter-rouge">FlipView</code>. This will show the user how many items are in the <code class="language-plaintext highlighter-rouge">FlipView</code> and which one they are currently on. I think it makes sense to have this at the bottom of the page, so let’s wrap our <code class="language-plaintext highlighter-rouge">FlipView</code> in a <code class="language-plaintext highlighter-rouge">Grid</code> and overlay the <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Grid</span> <span class="na">utu:SafeArea.Insets=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;FlipView&gt;</span>
-        ...
-    <span class="nt">&lt;/FlipView&gt;</span>
-    <span class="nt">&lt;PipsPager</span> <span class="na">x:Name=</span><span class="s">"pipsPager"</span>
-               <span class="na">Margin=</span><span class="s">"0,0,0,10"</span>
-               <span class="na">NumberOfPages=</span><span class="s">"3"</span>
-               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-               <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
-               <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/Grid&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Notice that I have added <code class="language-plaintext highlighter-rouge">utu:SafeArea.Insets="Bottom"</code> to the <code class="language-plaintext highlighter-rouge">Grid</code>. This is something coming from the <a href="https://github.com/unoplatform/uno.toolkit.ui">Uno Toolkit</a> that we have <a href="/toolkit-tuesday/2023/12/19/toolkit-tuesday-safearea.html">previously covered</a>.</p>
-
-<p>Now we have this nice <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of our page:</p>
-
-<p><img src="/assets/images/carousel/pipspager.png" alt="PipsPager" class="align-center" /></p>
-
-<h3 id="connecting-the-dots">Connecting The Dots</h3>
-
-<p>Unfortunately, the <code class="language-plaintext highlighter-rouge">PipsPager</code> doesn’t actually do anything yet. We need to wire it up to the <code class="language-plaintext highlighter-rouge">FlipView</code> so that it updates as the user swipes through the items. Luckily, the Uno Toolkit actually provides some nice helpers for this. We can use the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html"><code class="language-plaintext highlighter-rouge">SelectorExtensions</code></a> to easily bind the <code class="language-plaintext highlighter-rouge">PipsPager</code> to any type of <code class="language-plaintext highlighter-rouge">Selector</code>. Since <code class="language-plaintext highlighter-rouge">FlipView</code> is a <code class="language-plaintext highlighter-rouge">Selector</code>, we can use this to bind the <code class="language-plaintext highlighter-rouge">PipsPager</code> to the <code class="language-plaintext highlighter-rouge">FlipView</code> and synchronize the <code class="language-plaintext highlighter-rouge">NumberOfPages</code> property and the <code class="language-plaintext highlighter-rouge">SelectedIndex</code> property.</p>
-
-<p>On our <code class="language-plaintext highlighter-rouge">Selector</code>, we can do the following:</p>
-
-<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-</pre></td><td class="rouge-code"><pre> &lt;Grid utu:SafeArea.Insets="Bottom"&gt;
-<span class="gd">-    &lt;FlipView&gt;
-</span><span class="gi">+    &lt;FlipView utu:SelectorExtensions.PipsPager="{Binding ElementName=pipsPager}"&gt;
-</span>         ...
-     &lt;/FlipView&gt;
-     &lt;PipsPager x:Name="pipsPager"
-                Margin="0,0,0,10"
-<span class="gd">-               NumberOfPages="3"
-</span>                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Orientation="Horizontal"/&gt;
- &lt;/Grid&gt;
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>We should now have a fully functional carousel experience with a <code class="language-plaintext highlighter-rouge">PipsPager</code> at the bottom of the page. You should be able to swipe through the items or tap on one of the “pips” to navigate to that item.</p>
-
-<p><img src="/assets/images/carousel/ios-carousel-swipe.gif" alt="Swiping through carousel on iOS" class="align-center" /></p>
-
-<p>Before we wrap up, let’s make sure this also looks good for other platforms. Especially desktop/web targets where we have a lot more screen real estate.</p>
-
-<p>Running this on the macOS Desktop target currently looks like this:</p>
-
-<p><img src="/assets/images/carousel/desktop-carousel-ugly.png" alt="Ugly Desktop Carousel" class="align-center" /></p>
-
-<p>…</p>
-
-<p><img src="/assets/images/carousel/side-eye.jpg" alt="Side eye meme" /></p>
-
-<h3 id="making-it-responsive">Making it Responsive</h3>
-
-<p>To make this look better on larger screens, we can use the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html">Responsive markup extensions from Uno Toolkit</a>. We have previously covered this in a <a href="/toolkit-tuesday/2024/01/30/toolkit-tuesday-responsive.html">Toolkit Tuesday post</a>. We can use the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension to change the layout of our <code class="language-plaintext highlighter-rouge">FlipView</code> items based on the window width.</p>
-
-<p>Here’s what an example of this might look like:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Grid</span> <span class="na">utu:SafeArea.Insets=</span><span class="s">"Bottom"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;FlipView</span> <span class="na">utu:SelectorExtensions.PipsPager=</span><span class="s">"{Binding ElementName=pipsPager}"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;FlipView.Items&gt;</span>
-            <span class="nt">&lt;Grid&gt;</span>
-                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
-
-                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Tomato"</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 1"</span>
-                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid&gt;</span>
-
-                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
-                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
-                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                           <span class="na">Margin=</span><span class="s">"20"</span>
-                           <span class="na">Text=</span><span class="s">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at imperdiet lorem, ut vehicula tellus. Duis faucibus vehicula erat, a ullamcorper diam placerat eget."</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-            <span class="nt">&lt;Grid&gt;</span>
-                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
-
-                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"CornflowerBlue"</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 2"</span>
-                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid&gt;</span>
-
-                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
-                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
-                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                           <span class="na">Margin=</span><span class="s">"20"</span>
-                           <span class="na">Text=</span><span class="s">"Curabitur blandit leo in libero mollis posuere. Suspendisse luctus magna erat, et dapibus velit fringilla vel. Vivamus porttitor sodales ante, sit amet condimentum enim facilisis vitae."</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-            <span class="nt">&lt;Grid&gt;</span>
-                <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"{utu:Responsive Wide='0', Narrow='*'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
-                <span class="nt">&lt;Grid.ColumnDefinitions&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;ColumnDefinition</span> <span class="na">Width=</span><span class="s">"{utu:Responsive Wide='*', Narrow='0'}"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid.ColumnDefinitions&gt;</span>
-
-                <span class="nt">&lt;Grid</span> <span class="na">Background=</span><span class="s">"Goldenrod"</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Item 3"</span>
-                               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                               <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-                <span class="nt">&lt;/Grid&gt;</span>
-
-                <span class="nt">&lt;TextBlock</span> <span class="na">Grid.Row=</span><span class="s">"{utu:Responsive Wide=0, Narrow=1}"</span>
-                           <span class="na">Grid.Column=</span><span class="s">"{utu:Responsive Wide=1, Narrow=0}"</span>
-                           <span class="na">TextWrapping=</span><span class="s">"Wrap"</span>
-                           <span class="na">Margin=</span><span class="s">"20"</span>
-                           <span class="na">Text=</span><span class="s">"Nam bibendum a justo eu luctus. Aliquam sagittis risus non consequat aliquam. Donec mattis ante sit amet dui interdum, et condimentum metus viverra."</span>
-                           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-                           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Grid&gt;</span>
-        <span class="nt">&lt;/FlipView.Items&gt;</span>
-    <span class="nt">&lt;/FlipView&gt;</span>
-
-    <span class="nt">&lt;PipsPager</span> <span class="na">x:Name=</span><span class="s">"pipsPager"</span>
-               <span class="na">Margin=</span><span class="s">"0,0,0,10"</span>
-               <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
-               <span class="na">VerticalAlignment=</span><span class="s">"Bottom"</span>
-               <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">/&gt;</span>
-
-<span class="nt">&lt;/Grid&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Here we are using some extra <code class="language-plaintext highlighter-rouge">Grid</code>s and the <code class="language-plaintext highlighter-rouge">Responsive</code> markup extension to fiddle with the rows and columns. Now we should have more of a horizontal layout on wider screens and a vertical layout on narrower screens. So, if we were to re-run this on the macOS Desktop target, we should be able to transition between both layouts:</p>
-
-<p><img src="/assets/images/carousel/desktop-resize.gif" alt="Resizing the Desktop window" class="align-center" /></p>
-
-<p>For non-touch platforms, you can flip through the views by using the built-in navigation buttons on the <code class="language-plaintext highlighter-rouge">FlipView</code>:</p>
-
-<p><img src="/assets/images/carousel/desktop-arrows.gif" alt="Navigate FlipView with arrow buttons" class="align-center" /></p>
-
-<p>Or, by clicking on the individual pips:</p>
-
-<p><img src="/assets/images/carousel/desktop-pips.gif" alt="Navigate FlipView with pips" class="align-center" /></p>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>That’s it! We now have a fancy carousel experience that works on all platforms and screen sizes.</p>
-
-<p>You can check out a working example of this in the <a href="https://github.com/kazo0/CarouselApp">CarouselApp repository</a> on GitHub.</p>
-
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="resources" /><category term="pipspager" /><category term="flipview" /><category term="carousel" /><category term="responsive" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="packaging" /><category term="publishing" /><category term="appstore" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[With the recent release of Uno Platform 5.5, there has been major work done to improve the packaging and publishing experience for Uno Platform apps. If you’ve ever tried packaging up your cross-platform apps for distribution, you’ll know how much of a pain it can be. Each platform has its own set of requirements and tools, and it can be a real headache to get everything set up correctly.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-38/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
