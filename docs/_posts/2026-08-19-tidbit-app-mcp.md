@@ -21,14 +21,14 @@ When an agent can only read your source, it's reasoning in the dark. It writes s
 
 Uno actually ships two MCPs, and they're easy to mix up (the team wrote a great [dedicated post][uno-mcp-vs-app-mcp] if you want the deep dive):
 
-- The **Uno MCP** is about KNOWLEDGE. It gives the agent the [Uno docs][uno-docs] as a searchable knowledge base, which shapes what it proposes in the first place.
-- The **App MCP** is about RUNTIME. It runs locally and reaches into your actual running app. The [docs][uno-mcps-docs] put it perfectly: these tools give "eyes" and "hands" to agents so they can validate the assumptions behind the changes they just made.
+- The **Uno MCP** is about *knowledge*. It gives the agent the [Uno docs][uno-docs] as a searchable knowledge base, which shapes what it proposes in the first place.
+- The **App MCP** is about *runtime*. It runs locally and reaches into your actual running app. The [docs][uno-mcps-docs] put it perfectly: these tools give "eyes" and "hands" to agents so they can validate the assumptions behind the changes they just made.
 
 ## What It Can Do
 
 The App MCP isn't just snapping a screenshot and squinting at it. It's a proper toolbox for driving a live Uno app, and it works across Windows, WebAssembly, macOS, iOS, Android, and Linux. A few of my favorites from the Community license:
 
-- `uno_app_get_screenshot`: a screenshot of the app as it looks RIGHT NOW
+- `uno_app_get_screenshot`: a screenshot of the app as it looks *right now*
 - `uno_app_visualtree_snapshot`: a textual dump of the live visual tree
 - `uno_app_pointer_click` and `uno_app_type_text`: click and type into your controls
 
@@ -45,7 +45,7 @@ Setup is one command. From the root of your app's repo:
 uno-devserver mcp install claude-code
 ```
 
-That registers BOTH Uno MCPs at once. No global tool? Run it transiently with `dotnet dnx -y uno.devserver mcp install claude-code`. Then start Claude Code and run `/mcp` to confirm you see `UnoApp` and `UnoDocs`.
+That registers both Uno MCPs at once. No global tool? Run it transiently with `dotnet dnx -y uno.devserver mcp install claude-code`. Then start Claude Code and run `/mcp` to confirm you see `UnoApp` and `UnoDocs`.
 
 Two tips that saved me some head-scratching: run the install from your app's folder, not your home directory, since the registration is scoped to the project. And launch Claude Code from a folder that actually contains your Uno app, otherwise the App MCP has no solution to find and may not load.
 
@@ -59,13 +59,13 @@ Put these together and a satisfying loop falls out:
 2. That change gets applied and built.
 3. The agent launches the app and uses the **App MCP** to check its own work: walk the visual tree, click an element, screenshot the result, and read back the state.
 
-The key shift is that the agent stops reasoning about static code in a vacuum and starts checking against the RUNNING app, which is exactly what you do when you hit F5 and start clicking around. Back to that selection example: once the agent wired up the `ListView`, it grabbed a visual tree snapshot to confirm the list was populated, clicked an item, navigated to the second page, and screenshotted it to make sure the selected name made the trip.
+The agent stops reasoning about static code in a vacuum and starts checking against the running app, exactly what you do when you hit F5 and start clicking around. Back to that selection example: once the agent wired up the `ListView`, it grabbed a visual tree snapshot to confirm the list was populated, clicked an item, navigated to the second page, and screenshotted it to make sure the selected name made the trip.
 
 One small gotcha to save you the headache I gave myself: the App MCP is a local runtime service, so your app has to actually be running for the agent to attach. And if the App MCP indicator goes red in Visual Studio, don't panic like I did, just click the three dots and hit Reload. It's in the [docs][common-issues-ai-agents], which I found only after spending way too long on it.
 
 ## Conclusion
 
-The more I use it, the more I'm convinced the real value of an agent isn't how fast it writes code, it's how well it can check its own work. Pair the App MCP with a solid set of [Agent Skills]({% post_url 2026-02-23-agent-skills-intro %}) and the Uno MCP, and you've got an agent that researches, implements, and verifies. If you build something neat with it, come share it over on the [Uno Discord][uno-discord]!
+The more I use it, the more I'm convinced an agent's real value is how well it checks its own work. Writing the code fast was never the hard part. Pair the App MCP with a solid set of [Agent Skills]({% post_url 2026-02-23-agent-skills-intro %}) and the Uno MCP, and you've got an agent that researches, implements, and verifies. If you build something neat with it, come share it over on the [Uno Discord][uno-discord]!
 
 Catch you in the next one :wave:
 
