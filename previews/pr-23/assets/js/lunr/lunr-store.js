@@ -142,10 +142,4 @@ var store = [{
         "tags": ["uno-tidbits","uno-tidbit","tidbit","agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-23/uno-tidbit/2026/08/19/tidbit-app-mcp.html",
         "teaser": "/previews/pr-23/assets/images/tidbit-hero.png"
-      },{
-        "title": "Toolkit Tuesdays: ZoomContentControl",
-        "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
-        "tags": ["uno-toolkit","toolkit","zoomcontentcontrol","zoom","pan","uno-platform","uno","unoplatform"],
-        "url": "/previews/pr-23/toolkit-tuesday/2026/08/22/toolkit-tuesday-zoomcontentcontrol.html",
-        "teaser": "/previews/pr-23/assets/images/uno-toolkit-hero.png"
       }]
