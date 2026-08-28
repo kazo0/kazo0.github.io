@@ -1,4 +1,185 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/" rel="alternate" type="text/html" /><updated>2026-08-28T01:19:21+00:00</updated><id>https://kazo0.dev/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/" rel="alternate" type="text/html" /><updated>2026-08-28T03:40:09+00:00</updated><id>https://kazo0.dev/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP</title><link href="https://kazo0.dev/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="alternate" type="text/html" title="Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP" /><published>2026-08-19T00:00:00+00:00</published><updated>2026-08-19T00:00:00+00:00</updated><id>https://kazo0.dev/uno-tidbit/2026/08/19/tidbit-app-mcp</id><content type="html" xml:base="https://kazo0.dev/uno-tidbit/2026/08/19/tidbit-app-mcp.html"><![CDATA[<p>Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to look at how the Uno App MCP lets an agent actually run your app and check its own work.</p>
+
+<p>This one is a quick follow-up to my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>. Near the end of that one I added a single line to my prompt, “run the desktop target afterward and confirm the expected behaviour,” and the agent just did it: launched the app, clicked a name in a <code class="language-plaintext highlighter-rouge">ListView</code>, navigated to the next page, and checked the right name came along. That whole step was powered by the App MCP, and it deserves its own tidbit.</p>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>Being able to generate correct-looking XAML is great. Making sure it actually works is another matter. Code that builds perfectly can still bind to the wrong property, navigate to the wrong page, or render a button halfway off the screen.</p>
+
+<p>Your agent needs a way to verify that the app behaves as expected at runtime.</p>
+
+<p>Now, given the time, it may very well figure out a way to do it. But wouldn’t it be a hell of a lot easier if there were some sort of set of <i>tools</i> that we can provide to agents via some sort of standardized <i>agent protocol</i> that it can call upon whenever it needs?</p>
+
+<p>Something that gives it “eyes” and “hands” to interact with the running app directly?</p>
+
+<p>Something that allows introspection of the app’s state in real-time?</p>
+
+<p>Wouldn’t that be just so cool??</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>If you’re reading this right now, you should know that I’d be very disappointed in you if you didn’t know where this was going already.</p>
+
+<p>Uno actually ships two MCPs, and they’re easy to mix up (the team wrote a great <a href="https://platform.uno/blog/uno-mcp-vs-app-mcp/">dedicated post</a> if you want the deep dive):</p>
+
+<ul>
+  <li>The <strong>Uno MCP</strong> is about <em>knowledge</em>. It gives the agent the <a href="https://platform.uno/docs/articles/intro.html">Uno docs</a> as a searchable knowledge base, which shapes what it proposes in the first place.</li>
+  <li>The <strong>App MCP</strong> is about <em>runtime</em>. It runs locally and reaches into your actual running app. The <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html">docs</a> put it perfectly: these tools give “eyes” and “hands” to agents so they can validate the assumptions behind the changes they just made.</li>
+</ul>
+
+<h2 id="what-it-can-do">What It Can Do</h2>
+
+<p>The App MCP isn’t just snapping a screenshot and squinting at it. It’s a proper toolbox for driving a live Uno app, and it works!</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_get_screenshot</code>: a screenshot of the app as it looks <em>right now</em></li>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_visualtree_snapshot</code>: a textual dump of the live visual tree</li>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_pointer_click</code> and <code class="language-plaintext highlighter-rouge">uno_app_type_text</code>: click and type into your controls</li>
+</ul>
+
+<p>These ones are pretty obvious things to have, nothing fancy.</p>
+
+<p>Now for the cool shit.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>: retrieves the <code class="language-plaintext highlighter-rouge">DataContext</code> of a specified <code class="language-plaintext highlighter-rouge">FrameworkElement</code> in the live visual tree</li>
+  <li><code class="language-plaintext highlighter-rouge">uno_app_element_peer_*</code>: executes <a href="https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.automation.peers.automationpeer?view=windows-app-sdk-2.0">automation peer</a> action(s) on a UI element</li>
+</ul>
+
+<p>Giving your agent:</p>
+
+<ul>
+  <li>Access to a textual representation of the <code class="language-plaintext highlighter-rouge">DataContext</code> on a <code class="language-plaintext highlighter-rouge">FrameworkElement</code> at runtime.</li>
+  <li>Access to a11y APIs to drive app interaction.</li>
+  <li>The ability to inspect not only the look but also the state of an element.</li>
+</ul>
+
+<p>That means the agent can confirm your bindings are actually resolving to the values you expect, not just that the XAML parsed.</p>
+
+<p>Fun fact: we actually rely on a lot of these MCP tool calls for our very own <a href="https://github.com/unoplatform/studio/tree/main/plugins/uno-platform-studio">skill plugins</a>! You can check out the <a href="https://github.com/unoplatform/studio/blob/main/plugins/uno-platform-studio/skills/uno-testing-assertions/SKILL.md">uno-testing-assertions</a> where we have instructions on how the agent can assert/validate state in 3 different ways:</p>
+
+<ol>
+  <li><a href="https://github.com/unoplatform/studio/blob/main/plugins/uno-platform-studio/skills/uno-testing-assertions/SKILL.md#visual-assertions-screenshots">Visually</a></li>
+  <li><a href="https://github.com/unoplatform/studio/blob/main/plugins/uno-platform-studio/skills/uno-testing-assertions/SKILL.md#structure-assertions-visual-tree">Structurally</a></li>
+  <li><a href="https://github.com/unoplatform/studio/blob/main/plugins/uno-platform-studio/skills/uno-testing-assertions/SKILL.md#data-assertions">Datally (?)</a></li>
+</ol>
+
+<h2 id="getting-set-up">Getting Set Up</h2>
+
+<p class="notice--info">This is the CLI route. If you would rather set things up in an IDE, the docs have per-environment guides for <a href="https://platform.uno/docs/articles/get-started-vs-2022.html">Visual Studio</a>, <a href="https://platform.uno/docs/articles/get-started-vscode.html">VS Code with Copilot</a>, and the rest of the <a href="https://platform.uno/docs/articles/get-started.html">supported agents</a>.</p>
+
+<p>Setup is one command. From the root of your app’s repo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>dotnet dnx <span class="nt">-y</span> uno.devserver mcp <span class="nb">install </span>claude-code
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That registers both Uno MCPs at once. Start Claude Code and run <code class="language-plaintext highlighter-rouge">/mcp</code> to confirm you see <code class="language-plaintext highlighter-rouge">UnoApp</code> and <code class="language-plaintext highlighter-rouge">UnoDocs</code>.</p>
+
+<p>Two tips that saved me some head-scratching:</p>
+
+<ol>
+  <li>Run the install from your app’s folder, not your home directory, since the registration is scoped to the project.</li>
+  <li>Launch Claude Code from a folder that actually contains your Uno app, otherwise the App MCP has no solution to find and may not load.</li>
+</ol>
+
+<p>Other agents, <code class="language-plaintext highlighter-rouge">--dry-run</code>, and the full flag list are all in the <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html#dev-server-mcp-setup-commands">docs</a>.</p>
+
+<h2 id="closing-the-loop">Closing the Loop</h2>
+
+<p>Put these together and a satisfying loop falls out:</p>
+
+<ol>
+  <li>The agent uses the <strong>Uno MCP</strong> to research the right approach and proposes a change.</li>
+  <li>That change gets applied and built.</li>
+  <li>The agent launches the app and uses the <strong>App MCP</strong> to check its own work: walk the visual tree, click an element, screenshot the result, and read back the state.</li>
+</ol>
+
+<p>As a quick example, I spun up Claude in my clone of the uno.chefs repo and asked it:</p>
+
+<blockquote>
+  <p>run the app on desktop, click through the onboarding items on the first page, then login via a social auth button, select a recipe from the home page thats already favourited, unfavourite in its detail page, validate that it shows as unfavourited back on the home page</p>
+</blockquote>
+
+<p>You can see what happened next:</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/assets/images/app-mcp/chefs-mcp.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/assets/images/app-mcp/chefs-mcp.mp4">Download the clip</a> instead.
+  </video>
+</figure>
+
+<details class="transcript">
+  <summary>Claude's transcript from that run</summary>
+
+  <p class="transcript__tool">Called UnoApp 7 times</p>
+
+  <p>The app is running and showing onboarding. Let me get the visual tree to interact properly.</p>
+
+  <p class="transcript__tool">Called UnoApp 3 times</p>
+
+  <p>Page 2 of 3. Advancing to the third.</p>
+
+  <p class="transcript__tool">Called UnoApp 2 times</p>
+
+  <p>All three onboarding pages viewed. Now proceeding past onboarding.</p>
+
+  <p class="transcript__tool">Called UnoApp 2 times</p>
+
+  <p>On the login page. Let me find the social auth buttons.</p>
+
+  <p class="transcript__tool">Called UnoApp 3 times</p>
+
+  <p>Logged in via Google. On the home page, Fresh Salad Thaid shows a filled (pink) heart — already favourited. Let me open it.</p>
+
+  <p class="transcript__tool">Called UnoApp</p>
+
+  <p>Let me confirm the favourite state from the data context before navigating.</p>
+
+  <p class="transcript__tool">Called UnoApp</p>
+
+  <p>Confirmed <code class="language-plaintext highlighter-rouge">IsFavorite = True</code>. Now opening its detail page.</p>
+
+  <p class="transcript__tool">Called UnoApp 3 times</p>
+
+  <p>Detail page open — the heart in the top bar is filled. Let me find that toggle.</p>
+
+  <p class="transcript__tool">Called UnoApp 3 times</p>
+
+  <p>Heart is now unfilled. Navigating back to Home to verify.</p>
+
+  <p class="transcript__tool">Called UnoApp 2 times</p>
+
+  <p>Back on Home — the heart on Fresh Salad Thaid is now outlined. Confirming in the data:</p>
+
+  <p class="transcript__tool">Called UnoApp 2 times</p>
+
+  <p>Full flow completed successfully on <code class="language-plaintext highlighter-rouge">net10.0-desktop</code> (PID 88074).</p>
+
+  <p>Steps run:</p>
+
+  <ol>
+    <li><strong>Onboarding</strong> — clicked through all three welcome pages (Welcome to your App! → Recipes → Personalize Your Recipe Journey; on the third page Next correctly disables), then Skip to reach the login page.</li>
+    <li><strong>Social auth</strong> — clicked Sign in with Google; landed on the Home page (Trending / Recently Added / Popular Contributors).</li>
+    <li><strong>Picked an already-favourited recipe</strong> — Fresh Salad Thaid showed a filled pink heart; its DataContext confirmed <code class="language-plaintext highlighter-rouge">IsFavorite = True</code>.</li>
+    <li><strong>Unfavourited in detail</strong> — opened the recipe, the nav-bar heart rendered filled, then switched to the outline glyph.</li>
+    <li><strong>Validated on Home</strong> — navigated back; the Fresh Salad Thaid card’s heart is now outlined, and its DataContext reads <code class="language-plaintext highlighter-rouge">IsFavorite = False</code>.</li>
+  </ol>
+
+  <p>The propagation works as intended — the detail page’s toggle published through <code class="language-plaintext highlighter-rouge">IMessenger</code> and the home list’s <code class="language-plaintext highlighter-rouge">.Observe(...)</code> state picked it up, so the same recipe record (Id variant 8) reflects the change on both screens.</p>
+
+  <p>The app is still running if you want to keep poking at it; <code class="language-plaintext highlighter-rouge">uno_app_close</code> will shut it down.</p>
+
+</details>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That’s all there is to it!</p>
+
+<p>Pair the App MCP with a solid set of <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills</a> and the Uno MCP, and you’ve got an agent that researches, implements, and verifies. If you build something neat with it, come share it over on the <a href="https://platform.uno/discord">Uno Discord</a>!</p>
+
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="agents" /><category term="ai" /><category term="mcp" /><category term="app-mcp" /><category term="runtime" /><category term="verification" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to look at how the Uno App MCP lets an agent actually run your app and check its own work.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: LoadingView</title><link href="https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: LoadingView" /><published>2026-08-18T00:00:00+00:00</published><updated>2026-08-18T00:00:00+00:00</updated><id>https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview</id><content type="html" xml:base="https://kazo0.dev/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we’re covering the <code class="language-plaintext highlighter-rouge">LoadingView</code>, and there’s a decent chance you’ve already used it without realizing. If you read the <a href="/toolkit-tuesday/2024/03/12/toolkit-tuesday-extendedsplashscreen.html">ExtendedSplashScreen post</a>, you met <code class="language-plaintext highlighter-rouge">LoadingView</code> in passing: the <code class="language-plaintext highlighter-rouge">ExtendedSplashScreen</code> is actually derived from it. Today it gets to be the star of the show.</p>
 
@@ -2496,142 +2677,4 @@ This is where you would typically implement your own authentication logic, such 
 
 <p>You can check out a working example of this in the <a href="https://github.com/kazo0/CarouselApp">CarouselApp repository</a> on GitHub.</p>
 
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="resources" /><category term="pipspager" /><category term="flipview" /><category term="carousel" /><category term="responsive" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">NDC Copenhagen DevFest 2024 Recap</title><link href="https://kazo0.dev/conference/2024/09/04/cph-devfest-recap.html" rel="alternate" type="text/html" title="NDC Copenhagen DevFest 2024 Recap" /><published>2024-09-04T00:00:00+00:00</published><updated>2024-09-04T00:00:00+00:00</updated><id>https://kazo0.dev/conference/2024/09/04/cph-devfest-recap</id><content type="html" xml:base="https://kazo0.dev/conference/2024/09/04/cph-devfest-recap.html"><![CDATA[<p>We are back with another conference recap! This time, I had the pleasure of attending <a href="https://cphdevfest.com/">NDC Copenhagen DevFest 2024</a> in Copenhagen, Denmark. This was my first time attending an NDC event and I was very excited to see what it was all about. I was also looking forward to visiting Copenhagen for the first time. I had heard so many great things about the city and I was eager to explore it.</p>
-
-<h2 id="the-conference">The Conference</h2>
-
-<p>The Copenhagen Developers Festival is run by <a href="https://ndcconferences.com/">NDC Conferences</a> and is a 5-day event for software developers with 2 workshop days, 3 days of conference talks, and 2 “festival evenings” with live music, entertainment, etc. This was my first time attending an NDC conference and I can tell you, they do not disappoint. Good food, good talks, and good people. What more could you ask for?</p>
-
-<figure class="third ">
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf1.jpg" title="CPH DevFest Signs">
-          <img src="/assets/images/cphdevfest-2024/cph-conf1.jpg" alt="CPH DevFest Signs" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf3.jpg" title="DevFest Conference Hall">
-          <img src="/assets/images/cphdevfest-2024/cph-conf3.jpg" alt="DevFest Conference Hall" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf4.jpg" title="DevFest Conference Hall">
-          <img src="/assets/images/cphdevfest-2024/cph-conf4.jpg" alt="DevFest Conference Hall 2" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf5.jpg" title="DevFest Conference Hall">
-          <img src="/assets/images/cphdevfest-2024/cph-conf5.jpg" alt="DevFest Conference Hall 3" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf6.jpg" title="DevFest Conference Hall">
-          <img src="/assets/images/cphdevfest-2024/cph-conf6.jpg" alt="DevFest Conference Hall 4" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/cph-conf9.jpg" title="Me at Heather Downing&#39;s session">
-          <img src="/assets/images/cphdevfest-2024/cph-conf9.jpg" alt="DevFest Downing Sessions" />
-      </a>
-    
-  
-  
-</figure>
-
-<p>The conference hall was lined with booths from various sponsors, no Uno Platform this time :wink:. There was a spot to play Super Smash Bros. on the N64, although we all know that Melee for the GameCube is the superior version. There were little mobile “barista stations” where you could get some nice espresso. They even had a booth setup for ad-hoc demos where you could just hook up your machine and show off your project to anyone who was interested. I thought that was a really cool idea.</p>
-
-<p>I didn’t have the responsibility of running any sort of Uno Platform booth so I was free to attend sessions and wander around. I was able to catch a few talks but these were the two that stood out to me the most:</p>
-
-<p>I attended a talk by <a href="https://x.com/quorralyne">Heather Downing</a> on <a href="https://cphdevfest.com/agenda/mobile-app-architecture-how-to-conquer-the-giant-0wgk/0l58y0v6ra9">“Mobile App Architecture”</a> which was really insightful. Heather broke down the pros and cons of native mobile development versus cross-platform versus hybrid/web solutions. I was curious if I would see an Uno Platform mention during the presentation but she mostly focused on MAUI/XF and React Native. Heather walked us through different scenarios where the native approach may be best and others where xplat may be the better option. She also shared some stories from the trenches surrounding an <em>UNNAMED .NET CROSS-PLATFORM FRAMEWORK</em> that she had worked with in the past :wink:. Specifically, her battles working with two runtimes at the same time, the .NET CLR and the JVM. As an engineer who works on a .NET cross-platform framework, I could definitely relate to some of the pain points she was describing. <code class="language-plaintext highlighter-rouge">ObjectDisposedException</code> anyone?</p>
-
-<p>I also attended a talk by <a href="https://x.com/NicoVermeir">Nico Vermeir</a> on <a href="https://cphdevfest.com/agenda/from-hell-to-heaven-porting-doom-to-maui-0atn/0v0o6tbhuod">“Porting Doom to MAUI”</a> which was also very interesting. Nico introduced us to the <a href="https://github.com/wcabus/doom-sharp">open-source WPF port of Doom</a>. That was the starting point for his MAUI port. The major change needed was based around the fact that MAUI does not have a <code class="language-plaintext highlighter-rouge">WriteableBitmap</code> class like WPF does. Nico had to come up with a way to render the game to a <a href="https://github.com/mono/SkiaSharp"><code class="language-plaintext highlighter-rouge">SkiaSharp</code></a> <code class="language-plaintext highlighter-rouge">SkCanvasView</code> instead with an <code class="language-plaintext highlighter-rouge">SkBitmap</code>. He also had to deal with the fact that MAUI has a different API for queueing up work on the UI thread. Nico was able to get the game running on MAUI with a few tweaks and it was really cool to see it in action. Since there is also SkiaSharp support for all platforms that Uno targets, we should be able to get a nice port of Doom running on Uno as well. Which means introducing Doom to WASM and Linux! I am thinking of reaching out to Nico and getting an Uno Platform version included in the repo.</p>
-
-<h2 id="the-talk">The Talk</h2>
-
-<p><img src="/assets/images/cphdevfest-2024/me-talking.png" alt="Me giving the Uno Platform Talk" /></p>
-
-<p>I had a session on the morning of the last day of the conference. The talk was titled <a href="https://cphdevfest.com/agenda/lets-build-a-net-youtube-player-for-which-platform-all-of-them-0jla/0msoy34upc1">“Let’s build a .NET YouTube player for which platform? All of them!”</a>. This was my first time giving this talk. It is more of a deep dive into building an entire app from scratch using Uno Platform. I am used to giving my <a href="https://sessionize.com/s/steve-bilogan/net-apps-everywhere/66417">general introduction to Uno Platform talk</a> so this was a nice change of pace.</p>
-
-<p>This talk is based on the <a href="https://aka.platform.uno/tubeplayer-workshop">TubePlayer Workshop</a> that we have created. The workshop is a step-by-step guide to building a YouTube player app using Uno Platform. The app is built using the <a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Mvux/Overview.html">MVUX pattern</a> and demonstrates how to use various Uno Platform features such as <code class="language-plaintext highlighter-rouge">Extensions</code>, <code class="language-plaintext highlighter-rouge">Toolkit</code>, and more. We start off with mock data and a basic UI and slowly build up to a fully functional app that can search for and play YouTube videos using the actual APIs from YouTube.</p>
-
-<p>I wasn’t sure if I was going to be able to fit every single step of the workshop into an hour session so I created <a href="https://github.com/kazo0/TubePlayer">my own GitHub repo</a> with the final version of the app as well as branches for each step of the workshop. This way, if I wanted to skip ahead, I could just checkout the branch for that step and continue from there. I ended up needing to do this a few times to keep the talk on track.</p>
-
-<p>As another way to speed things up and avoid having to type every line of code live, I found this handy Visual Studio extension called <a href="https://github.com/mrlacey/DemoSnippets">DemoSnippets</a> by <a href="https://x.com/mrlacey">Matt Lacey</a>. This extension allows you to create a list of code snippets that you can insert into your code file with a single click. I created snippets for each step of the workshop and was able to quickly add the code to the project without having to type it all out. The snippets get loaded into the Visual Studio Toolbox, which you might be familiar with if you ever built WPF/WinForms apps. I also used the names of the snippets as a summary/outline of the talk so I could refer to that instead of having to remember every single detail.</p>
-
-<p><img src="/assets/images/cphdevfest-2024/demo-snippets.png" alt="DemoSnippets in action" /></p>
-
-<p>I think the talk went well, there were a few people that came up with some questions. One person wanted more details on how the <a href="https://platform.uno/unofigma/">Uno Platform Figma Plugin</a> was being used to show a live preview of the app as well as extract the generated UI code. Another person actually asked me about the DemoSnippets extension that I was using, they thought it was pretty interesting.</p>
-
-<p>I did a slightly better job at incorporating pauses and water breaks into the talk. It was also helpful to use the time it took to build and launch the app at several intervals to take a break and let people absorb what I had just shown. I still need to work on my pacing and not rush through the content. I still find myself running out of breath during the first few minutes of the talk, need to remember to breathe in between sentences :sweat_smile:.</p>
-
-<h2 id="the-trip">The Trip</h2>
-
-<p>Copenhagen is amazing. I had an awesome time exploring the city with my wife and eating amazing food. We visited so many cool places like Nyhavn, Tivoli Gardens, Freetown Christiania. We also explored the Assistens Cemetery where Niels Bohr and Hans Christian Andersen are buried.</p>
-
-<p>The highlight of the trip was being able to eat at <a href="https://noma.dk/">Noma</a>, which is considered one of the best restaurants in the world. The food was incredible and the service was top-notch. We had the full tasting menu with the non-alcoholic beverage pairing. It was a once-in-a-lifetime experience that I will never forget. We actually were able to grab a reservation through the <a href="https://www.reddit.com/r/NomaReservations/">r/NomaReservations subreddit</a>. Another couple had a table for 4 and needed to fill the other two seats at the table. We took a chance and made a sketchy money transfer to them in the hopes that it wasn’t a scam. It all worked out in the end and we had a great time together. The night ended with a private tour of the kitchen which I’m sure was their way to get us to leave since we had been there for 5 hours.</p>
-
-<p>This was such an amazing trip. I have submitted to the other NDC conferences, next one up is <a href="https://ndclondon.com/">NDC Lodon</a>. Hopefully, I can do this talk again soon and maybe get a chance to visit London.</p>
-
-<figure class="third ">
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-1.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-1.jpg" alt="Copenhagen City Photo 1" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-2.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-2.jpg" alt="Copenhagen City Photo 2" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-3.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-3.jpg" alt="Copenhagen City Photo 3" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-4.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-4.jpg" alt="Copenhagen City Photo 4" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-5.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-5.jpg" alt="Copenhagen City Photo 5" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-6.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-6.jpg" alt="Copenhagen City Photo 6" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-7.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-7.jpg" alt="Copenhagen City Photo 7" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-8.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-8.jpg" alt="Copenhagen City Photo 8" />
-      </a>
-    
-  
-    
-      <a href="/assets/images/cphdevfest-2024/copenhagen-9.jpg" title="Copenhagen Photos">
-          <img src="/assets/images/cphdevfest-2024/copenhagen-9.jpg" alt="Copenhagen City Photo 9" />
-      </a>
-    
-  
-  
-</figure>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="ndc-conference" /><category term="uno-platform" /><category term="cphdevfest" /><category term="copenhagen" /><summary type="html"><![CDATA[We are back with another conference recap! This time, I had the pleasure of attending NDC Copenhagen DevFest 2024 in Copenhagen, Denmark. This was my first time attending an NDC event and I was very excited to see what it was all about. I was also looking forward to visiting Copenhagen for the first time. I had heard so many great things about the city and I was eager to explore it.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-tidbit" /><category term="uno-tidbits" /><category term="uno-tidbit" /><category term="tidbit" /><category term="resources" /><category term="pipspager" /><category term="flipview" /><category term="carousel" /><category term="responsive" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we are going to cover how you can quickly get a carousel type of experience built into your app with very little code.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

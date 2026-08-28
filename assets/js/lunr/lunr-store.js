@@ -136,4 +136,10 @@ var store = [{
         "tags": ["uno-toolkit","toolkit","loadingview","loading","iloadable","progressring","uno-platform","uno","unoplatform"],
         "url": "/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html",
         "teaser": "/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP",
+        "excerpt":"Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we...","categories": ["uno-tidbit"],
+        "tags": ["uno-tidbits","uno-tidbit","tidbit","agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
+        "url": "/uno-tidbit/2026/08/19/tidbit-app-mcp.html",
+        "teaser": "/assets/images/tidbit-hero.png"
       }]
