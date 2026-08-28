@@ -92,3 +92,49 @@
 	font-size: $type-size-7;
 	text-align: right;
 }
+
+/* Collapsible transcript
+   ========================================================================== */
+
+/* Long agent/terminal transcripts that would otherwise bury the rest of the
+   post. Collapsed by default; the browser's own <details> toggle does the
+   work, no JS. */
+.transcript {
+	margin: 2em 0;
+	padding: 0 1em;
+	border: 1px solid $border-color;
+	border-radius: 10px;
+	background-color: mix($text-color, $background-color, 4%);
+	font-size: $type-size-6;
+
+	> summary {
+		margin: 0 -1em;
+		padding: 0.75em 1em;
+		font-family: $sans-serif;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	/* Only pad the body once it's actually open, so a collapsed block stays a
+	   single tidy bar. */
+	&[open] > summary {
+		margin-bottom: 0.5em;
+		border-bottom: 1px solid $border-color;
+	}
+
+	> *:last-child {
+		margin-bottom: 1em;
+	}
+}
+
+/* The "Called UnoApp N times" markers — the tool calls Claude made between
+   each bit of narration. Muted so they read as scaffolding, not prose. */
+.transcript__tool {
+	color: mix($background-color, $text-color, 45%);
+	font-family: $monospace;
+	font-size: $type-size-7;
+
+	&::before {
+		content: "⏺ ";
+	}
+}
