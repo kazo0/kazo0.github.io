@@ -9,3 +9,12 @@
 [uno-homepage]: https://platform.uno/posts/uno
 [toolkit-homepage]: https://platform.uno/posts/toolkit
 [uno-toolkit-docs]: https://aka.platform.uno/uno-toolkit
+[uno-docs]: https://platform.uno/docs/articles/intro.html
+[uno-discord]: https://platform.uno/discord
+[uno-mcp-vs-app-mcp]: https://platform.uno/blog/uno-mcp-vs-app-mcp/
+[uno-mcps-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html
+[common-issues-ai-agents]: https://platform.uno/docs/articles/common-issues-ai-agents.html
+[uno-mcp-setup-docs]: https://platform.uno/docs/articles/features/using-the-uno-mcps.html#dev-server-mcp-setup-commands
+[uno-vs-docs]: https://platform.uno/docs/articles/get-started-vs-2022.html
+[uno-vscode-docs]: https://platform.uno/docs/articles/get-started-vscode.html
+[uno-get-started-docs]: https://platform.uno/docs/articles/get-started.html
