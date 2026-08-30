@@ -29,6 +29,16 @@
 	margin: 2em 0;
 }
 
+/* The theme's .align-center centers via `margin-inline: auto`, but it lives in
+   minimal-mistakes' _utilities.scss, which is imported before this file. The
+   `margin` shorthand above has the same specificity and comes later, so it
+   resets the inline margins back to 0 and the figure never centers. Restate it
+   here with a higher-specificity selector so `class="width-half align-center"`
+   works on a narrowed figure. */
+.video-figure.align-center {
+	margin-inline: auto;
+}
+
 .video-figure__video {
 	display: block;
 	width: 100%;
