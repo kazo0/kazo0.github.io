@@ -645,6 +645,14 @@
 
 <p>The last property worth calling out is <code class="language-plaintext highlighter-rouge">ElementOnFocus</code>. Point it at a child <code class="language-plaintext highlighter-rouge">FrameworkElement</code> and the control’s auto-zoom and auto-fit behavior will center around <em>that</em> element rather than the content as a whole. There’s a matching <code class="language-plaintext highlighter-rouge">SetLocalFocus(...)</code> / <code class="language-plaintext highlighter-rouge">ClearLocalFocus()</code> pair in code if you want to drive it dynamically, which is handy for something like “zoom to this node in a diagram” where the focus target changes as the user clicks around.</p>
 
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-40/assets/images/zoomcontentcontrol/focus-demo.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/focus-demo.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>ElementOnFocus pointed at each node of the diagram in turn: the control snaps its fit-and-center behavior to whichever element has focus, then back to the whole tree.</figcaption>
+</figure>
+
 <h2 id="a-note-on-the-docs">A Note on the Docs</h2>
 
 <p class="notice--warning">One heads-up if you go digging through the reference material, because it tripped me up: an older how-to snippet mentions <code class="language-plaintext highlighter-rouge">ZoomTo(...)</code> and <code class="language-plaintext highlighter-rouge">ZoomToRect(...)</code> methods. Those aren’t part of the control as it ships today, so don’t go hunting for them like I did. Set the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> property directly (or use <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>) and you’ll get where you’re going. I’ve flagged it so the docs can catch up.</p>
