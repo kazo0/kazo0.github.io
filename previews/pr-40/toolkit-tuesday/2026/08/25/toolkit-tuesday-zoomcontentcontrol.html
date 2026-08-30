@@ -386,6 +386,16 @@
 
 <p>Under the hood it isn’t a real <code class="language-plaintext highlighter-rouge">ScrollViewer</code> at all. It simulates one using a <code class="language-plaintext highlighter-rouge">ScaleTransform</code> (that’s your <code class="language-plaintext highlighter-rouge">ZoomLevel</code>) and a <code class="language-plaintext highlighter-rouge">TranslateTransform</code> (that’s your pan offset), then draws its own scroll bars on top. That detail matters because it’s why the zoom behaves identically whether you’re on Windows, WebAssembly, or a Skia desktop head. No per-platform “why does this feel weird on WASM” rabbit holes, which I’ve been down more than once.</p>
 
+<p>And because it’s a <code class="language-plaintext highlighter-rouge">ContentControl</code>, the content doesn’t have to be an image. Hand it any XAML tree and the whole thing scales: shapes and text stay crisp at every zoom level, and controls buried in the content stay fully interactive.</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-40/assets/images/zoomcontentcontrol/xaml-demo.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/xaml-demo.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>A plain XAML tree of borders, shapes, and live controls getting the same zoom-and-pan treatment. Vector content stays crisp all the way in.</figcaption>
+</figure>
+
 <h2 id="getting-started">Getting Started</h2>
 
 <p>Add the <code class="language-plaintext highlighter-rouge">utu</code> namespace and wrap your content:</p>
