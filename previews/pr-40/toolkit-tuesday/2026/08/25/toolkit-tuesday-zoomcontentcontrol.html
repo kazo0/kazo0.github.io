@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          8 minute read
+          12 minute read
         
       </span>
     
@@ -340,6 +340,7 @@
 <li><a href="#fine-tuning-the-feel">Fine-Tuning the Feel</a></li>
 <li><a href="#focusing-on-a-specific-element">Focusing on a Specific Element</a></li>
 <li><a href="#a-note-on-the-docs">A Note on the Docs</a></li>
+<li><a href="#so-why-not-just-a-scrollviewer">So Why Not Just a ScrollViewer?</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
 </ul>
@@ -365,7 +366,9 @@
 
 <p>Say you’ve got a big, detailed image. A floor plan, a schematic, a map, a scanned document, a giant chart. Whatever it is, it doesn’t fit on screen at full size, and shrinking it down to fit makes it useless because nobody can read the details. We’ve all shipped that screen where the user squints and pinches at a blurry blob and quietly hates you for it.</p>
 
-<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom story leans on pinch gestures and doesn’t give you a clean, consistent way to drive the zoom level from code across every platform Uno targets. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
+<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom story leans on gestures and doesn’t give you a clean, convenient way to drive the zoom level from code. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
+
+<p class="notice--info">And to be fair to <code class="language-plaintext highlighter-rouge">ScrollViewer</code>: those zoom APIs recently became real on Uno’s Skia targets (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>, merged July 2026), so “it doesn’t zoom outside Windows” is no longer the reason to reach for the Toolkit. I rebuilt this whole sample on plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code> to see how far that gets you — <a href="#so-why-not-just-a-scrollviewer">the plumbing section below</a> has the receipts.</p>
 
 <p>That plumbing is exactly what the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> hands you for free.</p>
 
@@ -656,6 +659,150 @@
 <h2 id="a-note-on-the-docs">A Note on the Docs</h2>
 
 <p class="notice--warning">One heads-up if you go digging through the reference material, because it tripped me up: an older how-to snippet mentions <code class="language-plaintext highlighter-rouge">ZoomTo(...)</code> and <code class="language-plaintext highlighter-rouge">ZoomToRect(...)</code> methods. Those aren’t part of the control as it ships today, so don’t go hunting for them like I did. Set the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> property directly (or use <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>) and you’ll get where you’re going. I’ve flagged it so the docs can catch up.</p>
+
+<h2 id="so-why-not-just-a-scrollviewer">So Why Not Just a ScrollViewer?</h2>
+
+<p>Since <code class="language-plaintext highlighter-rouge">ScrollViewer</code> zoom support landed in Uno (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>), this question deserves an honest answer instead of a hand-wave. So I rebuilt both demos from this post — the image viewer and the zoomable XAML tree — on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, no Toolkit control in sight. The XAML side is genuinely pleasant:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;ScrollViewer</span> <span class="na">x:Name=</span><span class="s">"Scroller"</span>
+              <span class="na">ZoomMode=</span><span class="s">"Enabled"</span>
+              <span class="na">MinZoomFactor=</span><span class="s">"0.1"</span>
+              <span class="na">MaxZoomFactor=</span><span class="s">"8"</span>
+              <span class="na">HorizontalScrollBarVisibility=</span><span class="s">"Auto"</span>
+              <span class="na">VerticalScrollBarVisibility=</span><span class="s">"Auto"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/profile.png"</span>
+           <span class="na">Stretch=</span><span class="s">"None"</span>
+           <span class="na">HorizontalAlignment=</span><span class="s">"Center"</span>
+           <span class="na">VerticalAlignment=</span><span class="s">"Center"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ScrollViewer&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>And it comes with things <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> doesn’t have: <strong>touch pinch-to-zoom is built in</strong>, Ctrl + wheel zooms <strong>centered on the cursor</strong>, and view changes get inertia and animation for free. If your zoom story is “the user pinches and scrolls, the end,” a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> is now a fine answer on every Uno target, and you should use it.</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-demo.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-demo.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>The same image demo on a plain ScrollViewer: fit on open, zoom from code, pan, fit again — every step of it hand-driven through ChangeView.</figcaption>
+</figure>
+
+<p>The catch is everything this post has been about: driving the view <em>from code</em>. <code class="language-plaintext highlighter-rouge">ZoomFactor</code> and the offsets are <strong>read-only</strong> on <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, so every programmatic view change funnels through one method, <code class="language-plaintext highlighter-rouge">ChangeView(horizontalOffset, verticalOffset, zoomFactor)</code>, and every convenience you saw earlier becomes your own helper method. A few I had to write to reach feature parity with the demos above:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td>
+<td class="rouge-code"><pre><span class="c1">// FitToCanvas(), by hand</span>
+<span class="kt">var</span> <span class="n">zoom</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Min</span><span class="p">(</span><span class="n">sv</span><span class="p">.</span><span class="n">ViewportWidth</span> <span class="p">/</span> <span class="n">content</span><span class="p">.</span><span class="n">ActualWidth</span><span class="p">,</span>
+                    <span class="n">sv</span><span class="p">.</span><span class="n">ViewportHeight</span> <span class="p">/</span> <span class="n">content</span><span class="p">.</span><span class="n">ActualHeight</span><span class="p">);</span>
+<span class="n">sv</span><span class="p">.</span><span class="nf">ChangeView</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="n">zoom</span><span class="p">,</span> <span class="n">sv</span><span class="p">.</span><span class="n">MinZoomFactor</span><span class="p">,</span> <span class="n">sv</span><span class="p">.</span><span class="n">MaxZoomFactor</span><span class="p">));</span>
+
+<span class="c1">// CenterContent(), by hand</span>
+<span class="n">sv</span><span class="p">.</span><span class="nf">ChangeView</span><span class="p">(</span><span class="n">sv</span><span class="p">.</span><span class="n">ScrollableWidth</span> <span class="p">/</span> <span class="m">2</span><span class="p">,</span> <span class="n">sv</span><span class="p">.</span><span class="n">ScrollableHeight</span> <span class="p">/</span> <span class="m">2</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+
+<span class="c1">// ElementOnFocus, by hand: fit-and-center one element</span>
+<span class="kt">var</span> <span class="n">rect</span> <span class="p">=</span> <span class="n">element</span><span class="p">.</span><span class="nf">TransformToVisual</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">TransformBounds</span><span class="p">(</span><span class="k">new</span> <span class="nf">Rect</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">element</span><span class="p">.</span><span class="n">ActualWidth</span><span class="p">,</span> <span class="n">element</span><span class="p">.</span><span class="n">ActualHeight</span><span class="p">));</span>
+<span class="kt">var</span> <span class="n">z</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">Min</span><span class="p">(</span><span class="n">sv</span><span class="p">.</span><span class="n">ViewportWidth</span> <span class="p">/</span> <span class="n">rect</span><span class="p">.</span><span class="n">Width</span><span class="p">,</span> <span class="n">sv</span><span class="p">.</span><span class="n">ViewportHeight</span> <span class="p">/</span> <span class="n">rect</span><span class="p">.</span><span class="n">Height</span><span class="p">),</span>
+                   <span class="n">sv</span><span class="p">.</span><span class="n">MinZoomFactor</span><span class="p">,</span> <span class="n">sv</span><span class="p">.</span><span class="n">MaxZoomFactor</span><span class="p">);</span>
+<span class="n">sv</span><span class="p">.</span><span class="nf">ChangeView</span><span class="p">((</span><span class="n">rect</span><span class="p">.</span><span class="n">X</span> <span class="p">+</span> <span class="n">rect</span><span class="p">.</span><span class="n">Width</span> <span class="p">/</span> <span class="m">2</span><span class="p">)</span> <span class="p">*</span> <span class="n">z</span> <span class="p">-</span> <span class="n">sv</span><span class="p">.</span><span class="n">ViewportWidth</span> <span class="p">/</span> <span class="m">2</span><span class="p">,</span>
+              <span class="p">(</span><span class="n">rect</span><span class="p">.</span><span class="n">Y</span> <span class="p">+</span> <span class="n">rect</span><span class="p">.</span><span class="n">Height</span> <span class="p">/</span> <span class="m">2</span><span class="p">)</span> <span class="p">*</span> <span class="n">z</span> <span class="p">-</span> <span class="n">sv</span><span class="p">.</span><span class="n">ViewportHeight</span> <span class="p">/</span> <span class="m">2</span><span class="p">,</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">z</span><span class="p">);</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-focus.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-focus.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>The 'element on focus' demo rebuilt on ScrollViewer — the same behavior, except now that TransformToVisual math is code you own.</figcaption>
+</figure>
+
+<p>It all works, as the videos show. But a scorecard of what I re-implemented (or couldn’t) fills in the rest:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">ZoomContentControl</code></th>
+      <th>Plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>
+</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">ZoomLevel = x</code>, settable and two-way bindable</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">ChangeView(null, null, x)</code>, plus syncing your slider back from <code class="language-plaintext highlighter-rouge">ViewChanged</code> yourself</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">CenterContent()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>
+</td>
+      <td>the helpers above</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">AutoFitToCanvas</code>, <code class="language-plaintext highlighter-rouge">AutoCenterContent</code>
+</td>
+      <td>refit from <code class="language-plaintext highlighter-rouge">SizeChanged</code> in code-behind; center via content alignment</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">ElementOnFocus</code> / <code class="language-plaintext highlighter-rouge">SetLocalFocus(...)</code>
+</td>
+      <td>
+<code class="language-plaintext highlighter-rouge">TransformToVisual</code> + rect math</td>
+    </tr>
+    <tr>
+      <td>Zooming from code keeps the content anchored sensibly</td>
+      <td>a bare zoom <code class="language-plaintext highlighter-rouge">ChangeView</code> anchors the <strong>top-left</strong>, so “zoom about the center” is more offset math</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">AdditionalMargin</code>, <code class="language-plaintext highlighter-rouge">AllowFreePanning</code>, wheel-ratio knobs, middle-click pan</td>
+      <td>no equivalent</td>
+    </tr>
+    <tr>
+      <td>Touch pinch zoom</td>
+      <td>
+<strong>built in</strong> — point, <code class="language-plaintext highlighter-rouge">ScrollViewer</code>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And one gotcha for the road, because it cost me a debugging session: if you fit-on-open from <code class="language-plaintext highlighter-rouge">ImageOpened</code>, you’ll fit against an <code class="language-plaintext highlighter-rouge">ActualWidth</code> of zero — that event fires when the bitmap is decoded, before layout. Hook the <code class="language-plaintext highlighter-rouge">Image</code>’s <code class="language-plaintext highlighter-rouge">SizeChanged</code> instead. <code class="language-plaintext highlighter-rouge">ChangeView</code> also quietly no-ops before the control has loaded, which is very on-brand for the amount of babysitting this path needs.</p>
+
+<p>So the honest summary: <code class="language-plaintext highlighter-rouge">ScrollViewer</code> now covers the <em>gesture</em> half of the story on every Uno platform, and covers it well. <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is still the control that covers the <em>programmatic</em> half — the bindable <code class="language-plaintext highlighter-rouge">ZoomLevel</code>, the fit/center/reset one-liners, and <code class="language-plaintext highlighter-rouge">ElementOnFocus</code> — which is precisely the half you need the moment your design has a toolbar.</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
