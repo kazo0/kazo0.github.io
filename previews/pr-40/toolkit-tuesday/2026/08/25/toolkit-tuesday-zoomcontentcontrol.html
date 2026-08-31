@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          12 minute read
+          10 minute read
         
       </span>
     
@@ -339,7 +339,6 @@
 <li><a href="#auto-fit-and-auto-center">Auto-Fit and Auto-Center</a></li>
 <li><a href="#fine-tuning-the-feel">Fine-Tuning the Feel</a></li>
 <li><a href="#focusing-on-a-specific-element">Focusing on a Specific Element</a></li>
-<li><a href="#a-note-on-the-docs">A Note on the Docs</a></li>
 <li><a href="#so-why-not-just-a-scrollviewer">So Why Not Just a ScrollViewer?</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#further-reading">Further Reading</a></li>
@@ -365,11 +364,11 @@
 
 <h2 id="the-problem">The Problem</h2>
 
-<p>Say you’ve got a big, detailed image. A floor plan, a schematic, a map, a scanned document, a giant chart. Whatever it is, it doesn’t fit on screen at full size, and shrinking it down to fit makes it useless because nobody can read the details. We’ve all shipped that screen where the user squints and pinches at a blurry blob and quietly hates you for it.</p>
+<p>Say you’ve got a big, detailed image. A floor plan, a schematic, a map, a scanned document, a giant chart. Or even just some good old XAML content that you need to display in a limited space. A graphic, a diagram, a complex layout. Whatever it is, you need to zoom it, pan it… bop it, twist it, pull it<sup id="fnref:bop-it-yt" role="doc-noteref"><a href="#fn:bop-it-yt" class="footnote" rel="footnote">2</a></sup></p>
 
-<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom story leans on gestures and doesn’t give you a clean, convenient way to drive the zoom level from code. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
+<p>The instinct is to reach for a <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, and a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> will happily let you scroll around content that’s bigger than the viewport. It even has <code class="language-plaintext highlighter-rouge">ZoomMode</code>, <code class="language-plaintext highlighter-rouge">MinZoomFactor</code>, and <code class="language-plaintext highlighter-rouge">MaxZoomFactor</code> properties inherited from WinUI, so you’d be forgiven for thinking you’re done. The trouble is that the built-in zoom doesn’t give you a clean, convenient way to drive the zoom level from code. The moment you want a “Zoom In” button, a “Reset” button, or a “fit this to the screen” behavior, you’re back to writing a pile of plumbing yourself.</p>
 
-<p class="notice--info">And to be fair to <code class="language-plaintext highlighter-rouge">ScrollViewer</code>: those zoom APIs recently became real on Uno’s Skia targets (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>, merged July 2026), so “it doesn’t zoom outside Windows” is no longer the reason to reach for the Toolkit. I rebuilt this whole sample on plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code> to see how far that gets you — <a href="#so-why-not-just-a-scrollviewer">the plumbing section below</a> has the receipts.</p>
+<p class="notice--info">And to be fair to <code class="language-plaintext highlighter-rouge">ScrollViewer</code>: those zoom APIs recently became real on Uno’s Skia targets (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>, merged July 2026). I rebuilt this whole sample on plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code> to see how far that gets you. The <a href="#so-why-not-just-a-scrollviewer">plumbing section</a> below has the receipts.</p>
 
 <p>That plumbing is exactly what the <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> hands you for free.</p>
 
@@ -388,7 +387,7 @@
   <figcaption>The two things to keep straight: the viewport stays put, the content scales and pans inside it.</figcaption>
 </figure>
 
-<p>Under the hood it isn’t a real <code class="language-plaintext highlighter-rouge">ScrollViewer</code> at all. It simulates one using a <code class="language-plaintext highlighter-rouge">ScaleTransform</code> (that’s your <code class="language-plaintext highlighter-rouge">ZoomLevel</code>) and a <code class="language-plaintext highlighter-rouge">TranslateTransform</code> (that’s your pan offset), then draws its own scroll bars on top. That detail matters because it’s why the zoom behaves identically whether you’re on Windows, WebAssembly, or a Skia desktop head. No per-platform “why does this feel weird on WASM” rabbit holes, which I’ve been down more than once.</p>
+<p>Under the hood it isn’t a real <code class="language-plaintext highlighter-rouge">ScrollViewer</code> at all. It simulates one using a <code class="language-plaintext highlighter-rouge">ScaleTransform</code> (that’s your <code class="language-plaintext highlighter-rouge">ZoomLevel</code>) and a <code class="language-plaintext highlighter-rouge">TranslateTransform</code> (that’s your pan offset), then draws its own scroll bars on top.</p>
 
 <p>And because it’s a <code class="language-plaintext highlighter-rouge">ContentControl</code>, the content doesn’t have to be an image. Hand it any XAML tree and the whole thing scales: shapes and text stay crisp at every zoom level, and controls buried in the content stay fully interactive.</p>
 
@@ -442,7 +441,7 @@
 
 <p class="notice--warning">A quick note on expectations, because I don’t want you to be surprised: in the packages shipping today, the built-in interactions above are mouse- and keyboard-driven — no pinch-to-zoom or drag-to-pan baked in. Writing this post made that gap annoying enough to do something about it: <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">uno.toolkit.ui#1630</a> wires standard touch and pen gestures into the control — pinch to zoom around your fingers’ focal point, single-finger drag to pan (with inertia), reusing the same anchor math as the Ctrl + wheel zoom. Until that reaches a package near you, drive <code class="language-plaintext highlighter-rouge">ZoomLevel</code> yourself with some buttons on touch. Which, conveniently, is exactly what we’re about to do.</p>
 
-<figure class="video-figure">
+<figure class="video-figure width-half align-center">
   <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
     <source src="/previews/pr-40/assets/images/zoomcontentcontrol/touch-gestures.mp4" type="video/mp4"></source>
     Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/touch-gestures.mp4">Download the clip</a> instead.
@@ -566,7 +565,7 @@
   <figcaption>Stepping the zoom from code, then ResetViewport() back to 100%.</figcaption>
 </figure>
 
-<p>And that’s the whole trick. Notice I’m checking against <code class="language-plaintext highlighter-rouge">MinZoomLevel</code> and <code class="language-plaintext highlighter-rouge">MaxZoomLevel</code> before nudging the value. The control will happily clamp things for you, but guarding the button logic keeps the intent obvious for whoever reads this next (usually me, six months from now, having forgotten I wrote it). If you’re doing this in an MVVM or MVUX app, <code class="language-plaintext highlighter-rouge">ZoomLevel</code> binds just as happily to a view model property.</p>
+<p>And that’s the whole trick. If you’re doing this in an MVVM or MVUX app, <code class="language-plaintext highlighter-rouge">ZoomLevel</code> binds just as happily to a view model property.</p>
 
 <h2 id="the-helper-methods">The Helper Methods</h2>
 
@@ -606,7 +605,7 @@
   </tbody>
 </table>
 
-<p><code class="language-plaintext highlighter-rouge">FitToCanvas()</code> is the one I reach for most. If you’ve got a document or a diagram and you want the classic “fit to page” behavior, that’s your button. And if you’d rather it happen automatically whenever the content or viewport size changes? You don’t even need the button, as we’ll see next.</p>
+<p><code class="language-plaintext highlighter-rouge">FitToCanvas()</code> is the juicy one. If you’ve got a document or a diagram and you want the classic “fit to page” behavior, that’s your button. And if you’d rather it happen automatically whenever the content or viewport size changes? You don’t even need the button, as we’ll see next.</p>
 
 <h2 id="auto-fit-and-auto-center">Auto-Fit and Auto-Center</h2>
 
@@ -631,8 +630,6 @@
   <li>
 <code class="language-plaintext highlighter-rouge">AutoCenterContent</code> (defaults to <code class="language-plaintext highlighter-rouge">true</code>) keeps the content centered in the viewport</li>
 </ul>
-
-<p>That’s a lovely pairing for something like an image viewer that should always open showing the whole image, then let the user zoom in from there. Two properties, zero code-behind. I’ll take it.</p>
 
 <h2 id="fine-tuning-the-feel">Fine-Tuning the Feel</h2>
 
@@ -665,13 +662,9 @@
   <figcaption>ElementOnFocus pointed at each node of the diagram in turn: the control snaps its fit-and-center behavior to whichever element has focus, then back to the whole tree.</figcaption>
 </figure>
 
-<h2 id="a-note-on-the-docs">A Note on the Docs</h2>
-
-<p class="notice--warning">One heads-up if you go digging through the reference material, because it tripped me up: an older how-to snippet mentions <code class="language-plaintext highlighter-rouge">ZoomTo(...)</code> and <code class="language-plaintext highlighter-rouge">ZoomToRect(...)</code> methods. Those aren’t part of the control as it ships today, so don’t go hunting for them like I did. Set the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> property directly (or use <code class="language-plaintext highlighter-rouge">FitToCanvas()</code> / <code class="language-plaintext highlighter-rouge">ResetViewport()</code>) and you’ll get where you’re going. I’ve flagged it so the docs can catch up.</p>
-
 <h2 id="so-why-not-just-a-scrollviewer">So Why Not Just a ScrollViewer?</h2>
 
-<p>Since <code class="language-plaintext highlighter-rouge">ScrollViewer</code> zoom support landed in Uno (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>), this question deserves an honest answer instead of a hand-wave. So I rebuilt both demos from this post — the image viewer and the zoomable XAML tree — on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, no Toolkit control in sight. The XAML side is genuinely pleasant:</p>
+<p>Since <code class="language-plaintext highlighter-rouge">ScrollViewer</code> zoom support landed in Uno (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>), this question deserves an honest answer. So I<sup id="fnref:not-me" role="doc-noteref"><a href="#fn:not-me" class="footnote" rel="footnote">3</a></sup> rebuilt both demos from this post, the image viewer and the zoomable XAML tree, on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>. The XAML side is nice and clean:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -700,14 +693,12 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>And it comes with things <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> doesn’t have: <strong>touch pinch-to-zoom is built in</strong>, Ctrl + wheel zooms <strong>centered on the cursor</strong>, and view changes get inertia and animation for free. If your zoom story is “the user pinches and scrolls, the end,” a <code class="language-plaintext highlighter-rouge">ScrollViewer</code> is now a fine answer on every Uno target, and you should use it.</p>
-
 <figure class="video-figure">
   <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
     <source src="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-demo.mp4" type="video/mp4"></source>
     Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-demo.mp4">Download the clip</a> instead.
   </video>
-  <figcaption>The same image demo on a plain ScrollViewer: fit on open, zoom from code, pan, fit again — every step of it hand-driven through ChangeView.</figcaption>
+  <figcaption>The same image demo on a plain ScrollViewer: fit on open, zoom from code, pan, fit again</figcaption>
 </figure>
 
 <p>The catch is everything this post has been about: driving the view <em>from code</em>. <code class="language-plaintext highlighter-rouge">ZoomFactor</code> and the offsets are <strong>read-only</strong> on <code class="language-plaintext highlighter-rouge">ScrollViewer</code>, so every programmatic view change funnels through one method, <code class="language-plaintext highlighter-rouge">ChangeView(horizontalOffset, verticalOffset, zoomFactor)</code>, and every convenience you saw earlier becomes your own helper method. A few I had to write to reach feature parity with the demos above:</p>
@@ -752,7 +743,7 @@
     <source src="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-focus.mp4" type="video/mp4"></source>
     Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/scrollviewer-focus.mp4">Download the clip</a> instead.
   </video>
-  <figcaption>The 'element on focus' demo rebuilt on ScrollViewer — the same behavior, except now that TransformToVisual math is code you own.</figcaption>
+  <figcaption>The 'element on focus' demo rebuilt on ScrollViewer</figcaption>
 </figure>
 
 <p>It all works, as the videos show. But a scorecard of what I re-implemented (or couldn’t) fills in the rest:</p>
@@ -808,10 +799,6 @@
   </tbody>
 </table>
 
-<p>And one gotcha for the road, because it cost me a debugging session: if you fit-on-open from <code class="language-plaintext highlighter-rouge">ImageOpened</code>, you’ll fit against an <code class="language-plaintext highlighter-rouge">ActualWidth</code> of zero — that event fires when the bitmap is decoded, before layout. Hook the <code class="language-plaintext highlighter-rouge">Image</code>’s <code class="language-plaintext highlighter-rouge">SizeChanged</code> instead. <code class="language-plaintext highlighter-rouge">ChangeView</code> also quietly no-ops before the control has loaded, which is very on-brand for the amount of babysitting this path needs.</p>
-
-<p>So the honest summary: <code class="language-plaintext highlighter-rouge">ScrollViewer</code> now covers the <em>gesture</em> half of the story on every Uno platform, and covers it well. <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is still the control that covers the <em>programmatic</em> half — the bindable <code class="language-plaintext highlighter-rouge">ZoomLevel</code>, the fit/center/reset one-liners, and <code class="language-plaintext highlighter-rouge">ElementOnFocus</code> — which is precisely the half you need the moment your design has a toolbar.</p>
-
 <h2 id="conclusion">Conclusion</h2>
 
 <p>The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is one of those controls that looks small but quietly saves you a real chunk of work. Any time you’ve got content that’s bigger than the space you can give it (maps, floor plans, schematics, big images, documents), this is the thing that turns it into a proper zoom-and-pan experience, with a <code class="language-plaintext highlighter-rouge">ZoomLevel</code> you can bind and a set of reset/fit helpers that cover the common buttons you’d otherwise be writing by hand.</p>
@@ -835,6 +822,12 @@
   <ol>
     <li id="fn:ish" role="doc-endnote">
       <p>-ish <a href="#fnref:ish" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:bop-it-yt" role="doc-endnote">
+      <p><a href="https://www.youtube.com/watch?v=oY82qDgYFjA">I feel so old</a> <a href="#fnref:bop-it-yt" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:not-me" role="doc-endnote">
+      <p>Claude <a href="#fnref:not-me" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
