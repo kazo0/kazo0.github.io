@@ -440,7 +440,15 @@
 
 <p class="notice--info">For any of that to work, the control needs to be loaded and visible, <code class="language-plaintext highlighter-rouge">IsActive</code> needs to be <code class="language-plaintext highlighter-rouge">true</code> (it is by default), and the relevant <code class="language-plaintext highlighter-rouge">IsZoomAllowed</code> / <code class="language-plaintext highlighter-rouge">IsPanAllowed</code> flags need to be <code class="language-plaintext highlighter-rouge">true</code> (also both default to <code class="language-plaintext highlighter-rouge">true</code>).</p>
 
-<p class="notice--warning">A quick note on expectations, because I don’t want you to be surprised: the built-in interactions above are mouse- and keyboard-driven. There’s no automatic pinch-to-zoom or double-tap gesture baked in, so if you’re targeting touch you’ll want to drive the <code class="language-plaintext highlighter-rouge">ZoomLevel</code> yourself with some buttons. Which, conveniently, is exactly what we’re about to do.</p>
+<p class="notice--warning">A quick note on expectations, because I don’t want you to be surprised: in the packages shipping today, the built-in interactions above are mouse- and keyboard-driven — no pinch-to-zoom or drag-to-pan baked in. Writing this post made that gap annoying enough to do something about it: <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">uno.toolkit.ui#1630</a> wires standard touch and pen gestures into the control — pinch to zoom around your fingers’ focal point, single-finger drag to pan (with inertia), reusing the same anchor math as the Ctrl + wheel zoom. Until that reaches a package near you, drive <code class="language-plaintext highlighter-rouge">ZoomLevel</code> yourself with some buttons on touch. Which, conveniently, is exactly what we’re about to do.</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
+    <source src="/previews/pr-40/assets/images/zoomcontentcontrol/touch-gestures.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-40/assets/images/zoomcontentcontrol/touch-gestures.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>The new touch gestures from uno.toolkit.ui#1630 on Android: pinching into the image, then pinching and dragging around the XAML tree — and typing into the zoomed TextBox on the way, because the content stays live.</figcaption>
+</figure>
 
 <h2 id="controlling-the-zoom-from-code">Controlling the Zoom From Code</h2>
 
@@ -795,8 +803,7 @@
     <tr>
       <td>Touch pinch zoom</td>
       <td>
-<strong>built in</strong> — point, <code class="language-plaintext highlighter-rouge">ScrollViewer</code>
-</td>
+<strong>built in</strong> — point, <code class="language-plaintext highlighter-rouge">ScrollViewer</code> (though <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">#1630</a> evens this one out)</td>
     </tr>
   </tbody>
 </table>
@@ -811,7 +818,7 @@
 
 <p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform.</p>
 
-<p>Fittingly, putting this post together shook a couple of real bugs out of the control itself: zooming from code across the point where the content fits the viewport (or zooming with an <code class="language-plaintext highlighter-rouge">AdditionalMargin</code> set) could land the content off-center. Both are fixed in <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1628">uno.toolkit.ui#1628</a>, so if your content drifts on zoom with an older package version, that’s why.</p>
+<p>Fittingly, putting this post together shook a couple of real bugs out of the control itself: zooming from code across the point where the content fits the viewport (or zooming with an <code class="language-plaintext highlighter-rouge">AdditionalMargin</code> set) could land the content off-center. Both are fixed in <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1628">uno.toolkit.ui#1628</a>, so if your content drifts on zoom with an older package version, that’s why. And the touch gap called out earlier turned into a feature: <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/1629">uno.toolkit.ui#1629</a> / <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">#1630</a> add pinch-to-zoom and drag-to-pan, as seen in the Android video above. Toolkit Tuesdays: come for the control tour, stay for the bug fixes.</p>
 
 <p>I hope you enjoyed this edition of Toolkit Tuesdays! As always, I encourage you to consult the full documentation using the links below, and to jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a> if you find a bug, want to make an improvement, or want to help the docs along.</p>
 
