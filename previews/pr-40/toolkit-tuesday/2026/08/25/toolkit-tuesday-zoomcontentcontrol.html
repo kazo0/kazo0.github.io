@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          11 minute read
+          10 minute read
         
       </span>
     
@@ -803,9 +803,7 @@
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is one of those controls that looks small but quietly saves you a real chunk of work. Any time you’ve got content that’s bigger than the space you can give it (maps, floor plans, schematics, big images, documents), this is the thing that turns it into a proper zoom-and-pan experience, with a <code class="language-plaintext highlighter-rouge">ZoomLevel</code> you can bind and a set of reset/fit helpers that cover the common buttons you’d otherwise be writing by hand.</p>
-
-<p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform. And both sample apps from this post are on GitHub if you want to clone them and follow along: <a href="https://github.com/kazo0/ZoomContentControlSample">ZoomContentControlSample</a> for the control itself, <a href="https://github.com/kazo0/ScrollViewerZoomSample">ScrollViewerZoomSample</a> for the <code class="language-plaintext highlighter-rouge">ScrollViewer</code> rebuild.</p>
+<p>Both sample apps from this post are on GitHub if you want to clone them and follow along: <a href="https://github.com/kazo0/ZoomContentControlSample">ZoomContentControlSample</a> for the control itself, <a href="https://github.com/kazo0/ScrollViewerZoomSample">ScrollViewerZoomSample</a> for the <code class="language-plaintext highlighter-rouge">ScrollViewer</code> rebuild.</p>
 
 <p>Fittingly, putting this post together shook a couple of real bugs out of the control itself: zooming from code across the point where the content fits the viewport (or zooming with an <code class="language-plaintext highlighter-rouge">AdditionalMargin</code> set) could land the content off-center. Both are fixed in <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1628">uno.toolkit.ui#1628</a>, so if your content drifts on zoom with an older package version, that’s why. And the touch gap called out earlier turned into a feature: <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/1629">uno.toolkit.ui#1629</a> / <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">#1630</a> add pinch-to-zoom and drag-to-pan, as seen in the Android video above. Toolkit Tuesdays: come for the control tour, stay for the bug fixes.</p>
 
