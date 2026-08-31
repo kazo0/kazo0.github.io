@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          10 minute read
+          11 minute read
         
       </span>
     
@@ -361,6 +361,8 @@
   </video>
   <figcaption>Zooming in, panning around, zooming back out, and fitting to the canvas.</figcaption>
 </figure>
+
+<p class="notice--info">Every demo you’re about to see comes from a runnable Uno Platform app. If you’d rather poke at the code than read about it, it’s all in <a href="https://github.com/kazo0/ZoomContentControlSample">kazo0/ZoomContentControlSample</a>.</p>
 
 <h2 id="the-problem">The Problem</h2>
 
@@ -664,7 +666,7 @@
 
 <h2 id="so-why-not-just-a-scrollviewer">So Why Not Just a ScrollViewer?</h2>
 
-<p>Since <code class="language-plaintext highlighter-rouge">ScrollViewer</code> zoom support landed in Uno (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>), this question deserves an honest answer. So I<sup id="fnref:not-me" role="doc-noteref"><a href="#fn:not-me" class="footnote" rel="footnote">3</a></sup> rebuilt both demos from this post, the image viewer and the zoomable XAML tree, on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>. The XAML side is nice and clean:</p>
+<p>Since <code class="language-plaintext highlighter-rouge">ScrollViewer</code> zoom support landed in Uno (<a href="https://github.com/unoplatform/uno/pull/22337">uno#22337</a>), this question deserves an honest answer. So I<sup id="fnref:not-me" role="doc-noteref"><a href="#fn:not-me" class="footnote" rel="footnote">3</a></sup> rebuilt both demos from this post, the image viewer and the zoomable XAML tree, on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code> (<a href="https://github.com/kazo0/ScrollViewerZoomSample">kazo0/ScrollViewerZoomSample</a>, if you want to run the comparison yourself). The XAML side is nice and clean:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -803,7 +805,7 @@
 
 <p>The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> is one of those controls that looks small but quietly saves you a real chunk of work. Any time you’ve got content that’s bigger than the space you can give it (maps, floor plans, schematics, big images, documents), this is the thing that turns it into a proper zoom-and-pan experience, with a <code class="language-plaintext highlighter-rouge">ZoomLevel</code> you can bind and a set of reset/fit helpers that cover the common buttons you’d otherwise be writing by hand.</p>
 
-<p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform.</p>
+<p>You can play with it right now in the <a href="https://github.com/unoplatform/uno.toolkit.ui/tree/main/samples">Uno Toolkit Samples app</a>, which has a live <code class="language-plaintext highlighter-rouge">ZoomContentControl</code> page you can poke at across every platform. And both sample apps from this post are on GitHub if you want to clone them and follow along: <a href="https://github.com/kazo0/ZoomContentControlSample">ZoomContentControlSample</a> for the control itself, <a href="https://github.com/kazo0/ScrollViewerZoomSample">ScrollViewerZoomSample</a> for the <code class="language-plaintext highlighter-rouge">ScrollViewer</code> rebuild.</p>
 
 <p>Fittingly, putting this post together shook a couple of real bugs out of the control itself: zooming from code across the point where the content fits the viewport (or zooming with an <code class="language-plaintext highlighter-rouge">AdditionalMargin</code> set) could land the content off-center. Both are fixed in <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1628">uno.toolkit.ui#1628</a>, so if your content drifts on zoom with an older package version, that’s why. And the touch gap called out earlier turned into a feature: <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/1629">uno.toolkit.ui#1629</a> / <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1630">#1630</a> add pinch-to-zoom and drag-to-pan, as seen in the Android video above. Toolkit Tuesdays: come for the control tour, stay for the bug fixes.</p>
 
@@ -814,6 +816,11 @@
 <ul>
   <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/ZoomContentControl.html">ZoomContentControl Docs</a></li>
   <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+  <li>
+<a href="https://github.com/kazo0/ZoomContentControlSample">ZoomContentControlSample</a> — the runnable sample behind this post’s demos</li>
+  <li>
+<a href="https://github.com/kazo0/ScrollViewerZoomSample">ScrollViewerZoomSample</a> — the same demos rebuilt on a plain <code class="language-plaintext highlighter-rouge">ScrollViewer</code>
+</li>
 </ul>
 
 <h2 id="footnotes">Footnotes</h2>
