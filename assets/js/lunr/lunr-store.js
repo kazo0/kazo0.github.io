@@ -146,6 +146,6 @@ var store = [{
         "title": "Toolkit Tuesdays: ZoomContentControl",
         "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
         "tags": ["uno-toolkit","toolkit","zoomcontentcontrol","zoom","pan","uno-platform","uno","unoplatform"],
-        "url": "/toolkit-tuesday/2026/08/25/toolkit-tuesday-zoomcontentcontrol.html",
+        "url": "/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html",
         "teaser": "/assets/images/uno-toolkit-hero.png"
       }]
