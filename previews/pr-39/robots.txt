@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /previews/
-
-Sitemap: https://kazo0.dev/sitemap.xml
