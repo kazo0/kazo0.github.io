@@ -1,0 +1,1020 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>MSAL Auth in Uno Platform with Uno.Extensions - dotnet new bald</title>
+<meta name="description" content="Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="MSAL Auth in Uno Platform with Uno.Extensions">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html">
+
+
+  <meta property="og:description" content="Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/profile.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="MSAL Auth in Uno Platform with Uno.Extensions">
+  <meta name="twitter:description" content="Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+      <meta name="twitter:image" content="https://kazo0.dev/assets/images/profile.png">
+      
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-09-07T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-34/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-34/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-34/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-34/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-34/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-34/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MSAL Auth in Uno Platform with Uno.Extensions">
+    <meta itemprop="description" content="Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.">
+    <meta itemprop="datePublished" content="2026-09-07T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html" class="u-url" itemprop="url">MSAL Auth in Uno Platform with Uno.Extensions
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-07T00:00:00+00:00">September 7, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-entra-setup">The Entra Setup</a></li>
+<li><a href="#register-the-msal-provider">Register the MSAL Provider</a></li>
+<li><a href="#sign-in-refresh-and-sign-out">Sign In, Refresh, and Sign Out</a></li>
+<li><a href="#call-microsoft-graph">Call Microsoft Graph</a></li>
+<li><a href="#what-the-provider-handles">What the Provider Handles</a></li>
+<li>
+<a href="#platform-wiring">Platform Wiring</a><ul>
+<li><a href="#android">Android</a></li>
+<li><a href="#ios">iOS</a></li>
+<li><a href="#webassembly-and-desktop">WebAssembly and Desktop</a></li>
+</ul>
+</li>
+<li><a href="#where-tokens-live">Where Tokens Live</a></li>
+<li><a href="#platform-gotchas">Platform Gotchas</a></li>
+<li><a href="#putting-it-together">Putting It Together</a></li>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        
+        <p>Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Uno.Extensions.Authentication.MSAL</code> connects Microsoft’s Authentication Library to Uno.Extensions’ authentication services. It handles token acquisition and caching, while your app uses <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> to sign in, refresh the session, and sign out.</p>
+
+<p>The <a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalExtensionsDemo">Authentication.MsalExtensionsDemo sample</a> walks through that flow and calls Microsoft Graph with the resulting access token. This post follows its configuration, the platform callbacks you still need to wire up, and where the tokens live.</p>
+
+<p class="notice--info">This post follows Uno.Extensions <code class="language-plaintext highlighter-rouge">main</code> and the sample on <code class="language-plaintext highlighter-rouge">master</code>, checked September 7, 2026. The sample uses prerelease packages: Uno.Sdk <code class="language-plaintext highlighter-rouge">6.8.0-dev.23</code> and Uno.Extensions <code class="language-plaintext highlighter-rouge">7.4.0-dev.29</code>. Start with its pinned versions when following along.</p>
+
+<h2 id="the-entra-setup">The Entra Setup</h2>
+
+<p>Start with a <a href="https://entra.microsoft.com/">Microsoft Entra app registration</a>:</p>
+
+<ol>
+  <li>Register an application and choose its <strong>Supported account types</strong>. Match those to your tenant setting: <code class="language-plaintext highlighter-rouge">common</code> for work/school and personal Microsoft accounts, <code class="language-plaintext highlighter-rouge">organizations</code> for work/school accounts, <code class="language-plaintext highlighter-rouge">consumers</code> for personal accounts, or a specific tenant ID for a single organization. The sample’s development configuration uses <code class="language-plaintext highlighter-rouge">consumers</code>.</li>
+  <li>Copy the <strong>Application (client) ID</strong> into the sample. These are public clients; no client secret belongs in the app.</li>
+  <li>Add the <strong>Microsoft Graph</strong> delegated permission <strong><code class="language-plaintext highlighter-rouge">User.Read</code></strong>, which the sample uses to call <code class="language-plaintext highlighter-rouge">/me</code>.</li>
+  <li>Register the redirect URIs for the platforms you plan to run.</li>
+</ol>
+
+<p>The sample guide also enables <strong>Allow public client flows</strong>. That setting is the fallback for flows without a redirect URI, such as device code flow. For these browser sign-ins, Entra determines the client type from the registered redirect URI, so the toggle cannot fix a URI registered under the wrong platform. <a href="https://learn.microsoft.com/troubleshoot/entra/entra-id/app-integration/confidential-client-application-authentication-error-aadsts7000218#how-microsoft-entra-id-determines-the-client-type">Microsoft explains that distinction here</a>.</p>
+
+<p>The redirect URI is where Entra sends the authorization response after sign-in:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>Redirect URI</th>
+      <th>Register it as</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Desktop (Skia)</td>
+      <td><code class="language-plaintext highlighter-rouge">http://localhost</code></td>
+      <td>Mobile and desktop</td>
+    </tr>
+    <tr>
+      <td>Android</td>
+      <td><code class="language-plaintext highlighter-rouge">msal{ClientId}://auth</code></td>
+      <td>Mobile and desktop, custom URI</td>
+    </tr>
+    <tr>
+      <td>iOS</td>
+      <td><code class="language-plaintext highlighter-rouge">msauth.{BundleId}://auth</code></td>
+      <td>iOS/macOS</td>
+    </tr>
+    <tr>
+      <td>WebAssembly</td>
+      <td><code class="language-plaintext highlighter-rouge">http://localhost:5000/authentication-callback</code></td>
+      <td>Single-page application</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The Android entries are custom URIs under <strong>Mobile and desktop</strong>, matching the sample’s system-browser flow. The portal’s Android platform option produces a different URI based on the package name and signing certificate.</p>
+
+<p>WebAssembly needs <strong>Single-page application</strong> registration so the browser can redeem the authorization code with CORS. Use your actual hosting origin outside local development, with HTTPS. The sample displays the redirect URI to register; copy it from there. Entra <a href="https://learn.microsoft.com/entra/identity-platform/reply-url#localhost-exceptions">ignores the port when matching <code class="language-plaintext highlighter-rouge">localhost</code> URIs</a>, but the path still matters.</p>
+
+<h2 id="register-the-msal-provider">Register the MSAL Provider</h2>
+
+<p>With Uno.Extensions, you register the provider with the host and use <code class="language-plaintext highlighter-rouge">IAuthenticationService</code>. Add <code class="language-plaintext highlighter-rouge">AuthenticationMsal</code> to the app’s UnoFeatures alongside its hosting and configuration setup.</p>
+
+<figure class="video-figure">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-34/assets/images/msal-cross-platform-auth/extensions-signin.png">
+    <source src="/previews/pr-34/assets/images/msal-cross-platform-auth/extensions-flow.mp4" type="video/mp4"></source>
+    Your browser doesn't support embedded video. <a href="/previews/pr-34/assets/images/msal-cross-platform-auth/extensions-flow.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>The Extensions sample on macOS: silently refresh the existing session, call Microsoft Graph, then clear local sign-in state. Redacted mode is enabled throughout.</figcaption>
+</figure>
+
+<p>The Extensions sample puts this configuration in <strong><code class="language-plaintext highlighter-rouge">appsettings.development.json</code></strong>:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td>
+<td class="rouge-code"><pre><span class="p">{</span><span class="w">
+  </span><span class="nl">"MsalAuthentication"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ClientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000-0000-0000-0000-000000000000"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"TenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"consumers"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Scopes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"User.Read"</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Its host explicitly selects the Development environment in Debug builds. The relevant registration is:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="nf">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Configure</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">host</span>
+<span class="cp">#if DEBUG
+</span>        <span class="p">.</span><span class="nf">UseEnvironment</span><span class="p">(</span><span class="n">Environments</span><span class="p">.</span><span class="n">Development</span><span class="p">)</span>
+<span class="cp">#endif
+</span>        <span class="p">.</span><span class="nf">UseConfiguration</span><span class="p">(</span><span class="n">config</span> <span class="p">=&gt;</span> <span class="n">config</span><span class="p">.</span><span class="n">EmbeddedSource</span><span class="p">&lt;</span><span class="n">App</span><span class="p">&gt;())</span>
+        <span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">(</span><span class="n">auth</span> <span class="p">=&gt;</span> <span class="n">auth</span>
+            <span class="p">.</span><span class="nf">AddMsal</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s">"MsalAuthentication"</span><span class="p">)));</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The section name matches the <code class="language-plaintext highlighter-rouge">name:</code> argument. Without that argument, <code class="language-plaintext highlighter-rouge">AddMsal(window)</code> uses <strong><code class="language-plaintext highlighter-rouge">Msal</code></strong>. For Release builds, put the client ID, tenant, and scopes in <code class="language-plaintext highlighter-rouge">appsettings.json</code>. These files are embedded resources, so rebuild after editing them.</p>
+
+<h2 id="sign-in-refresh-and-sign-out">Sign In, Refresh, and Sign Out</h2>
+
+<p>Your UI or view model can inject <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> and an <code class="language-plaintext highlighter-rouge">IDispatcher</code> for interactive sign-in. Its operations are:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="k">await</span> <span class="n">Auth</span><span class="p">.</span><span class="nf">LoginAsync</span><span class="p">(</span><span class="n">dispatcher</span><span class="p">);</span>   <span class="c1">// silent first, interactive if needed</span>
+<span class="k">await</span> <span class="n">Auth</span><span class="p">.</span><span class="nf">RefreshAsync</span><span class="p">();</span>          <span class="c1">// silent only</span>
+<span class="k">await</span> <span class="n">Auth</span><span class="p">.</span><span class="nf">LogoutAsync</span><span class="p">(</span><span class="n">dispatcher</span><span class="p">);</span>  <span class="c1">// clear local sign-in state</span>
+<span class="kt">var</span> <span class="n">signedIn</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Auth</span><span class="p">.</span><span class="nf">IsAuthenticated</span><span class="p">();</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>These calls return booleans; handle their results, cancellation, and exceptions in your UI. <code class="language-plaintext highlighter-rouge">IsAuthenticated()</code> checks whether Uno’s token cache has entries, not whether a token is still valid at the server. <code class="language-plaintext highlighter-rouge">RefreshAsync()</code> attempts silent renewal for an existing session; it never opens a browser and is not a background refresh timer. Current <code class="language-plaintext highlighter-rouge">main</code> preserves cached tokens on transient refresh failures, so its result alone is not proof that a new token was obtained.</p>
+
+<p><code class="language-plaintext highlighter-rouge">LogoutAsync()</code> performs <strong>local sign-out</strong>: it clears the cached accounts and tokens, but leaves the identity provider’s browser session intact. The next interactive sign-in may complete without asking for credentials again.</p>
+
+<h2 id="call-microsoft-graph">Call Microsoft Graph</h2>
+
+<p>Inject <code class="language-plaintext highlighter-rouge">ITokenCache</code> to read the access token exposed by the provider:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td>
+<td class="rouge-code"><pre><span class="kt">var</span> <span class="n">tokens</span> <span class="p">=</span> <span class="k">await</span> <span class="n">TokenCache</span><span class="p">.</span><span class="nf">GetAsync</span><span class="p">(</span><span class="n">CancellationToken</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">accessToken</span> <span class="p">=</span> <span class="n">tokens</span><span class="p">.</span><span class="nf">TryGetValue</span><span class="p">(</span><span class="n">TokenCacheExtensions</span><span class="p">.</span><span class="n">AccessTokenKey</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">token</span><span class="p">)</span>
+    <span class="p">?</span> <span class="n">token</span>
+    <span class="p">:</span> <span class="k">null</span><span class="p">;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That dictionary is Uno’s token cache. MSAL keeps its account and refresh-token state separately; the provider handles the connection between them. The sample sends the access token to <code class="language-plaintext highlighter-rouge">https://graph.microsoft.com/v1.0/me</code> in an <code class="language-plaintext highlighter-rouge">Authorization: Bearer</code> header.</p>
+
+<figure>
+  <a href="/previews/pr-34/assets/images/msal-cross-platform-auth/extensions-graph.png"><img src="/previews/pr-34/assets/images/msal-cross-platform-auth/extensions-graph.png" alt="Uno.Extensions MSAL sample displaying HTTP 200 from Microsoft Graph with profile details and JSON string values hidden."></a>
+  <figcaption>Microsoft Graph returns HTTP 200 using the access token exposed through Uno.Extensions' ITokenCache. Redacted mode hides the profile details and JSON string values.</figcaption>
+</figure>
+
+<h2 id="what-the-provider-handles">What the Provider Handles</h2>
+
+<p>Current Uno.Extensions <code class="language-plaintext highlighter-rouge">main</code> constructs the client, applies the Uno helpers, acquires tokens, and removes cached accounts on sign-out. It also derives the platform redirect conventions shown above. A <code class="language-plaintext highlighter-rouge">RedirectUri</code> in configuration overrides the convention, and a <code class="language-plaintext highlighter-rouge">Builder(...)</code> callback runs last. <code class="language-plaintext highlighter-rouge">UseDefaultPlatformRedirectUri: false</code> disables the provider’s automatic redirect selection.</p>
+
+<p>You can customize interactive requests too:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="n">auth</span><span class="p">.</span><span class="nf">AddMsal</span><span class="p">(</span><span class="n">window</span><span class="p">,</span>
+    <span class="n">msal</span> <span class="p">=&gt;</span> <span class="n">msal</span><span class="p">.</span><span class="nf">InteractiveBuilder</span><span class="p">(</span><span class="n">request</span> <span class="p">=&gt;</span> <span class="n">request</span><span class="p">.</span><span class="nf">WithPrompt</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="n">SelectAccount</span><span class="p">)),</span>
+    <span class="n">name</span><span class="p">:</span> <span class="s">"MsalAuthentication"</span><span class="p">);</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That callback runs only when login reaches the interactive step; it does not force a prompt when silent acquisition succeeds.</p>
+
+<h2 id="platform-wiring">Platform Wiring</h2>
+
+<p>The provider handles the token flow, but the Android activity, result forwarding, iOS delegate, URL scheme, and entitlements remain app responsibilities.</p>
+
+<h3 id="android">Android</h3>
+
+<p>A <code class="language-plaintext highlighter-rouge">BrowserTabActivity</code> catches the redirect. Its intent-filter scheme must match the client ID in configuration:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="p">[</span><span class="nf">Activity</span><span class="p">(</span><span class="n">NoHistory</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="n">LaunchMode</span> <span class="p">=</span> <span class="n">LaunchMode</span><span class="p">.</span><span class="n">SingleTop</span><span class="p">,</span> <span class="n">Exported</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">IntentFilter</span><span class="p">([</span><span class="n">Intent</span><span class="p">.</span><span class="n">ActionView</span><span class="p">],</span>
+    <span class="n">Categories</span> <span class="p">=</span> <span class="p">[</span><span class="n">Intent</span><span class="p">.</span><span class="n">CategoryDefault</span><span class="p">,</span> <span class="n">Intent</span><span class="p">.</span><span class="n">CategoryBrowsable</span><span class="p">],</span>
+    <span class="n">DataScheme</span> <span class="p">=</span> <span class="n">RedirectScheme</span><span class="p">,</span> <span class="n">DataHost</span> <span class="p">=</span> <span class="s">"auth"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MsalActivity</span> <span class="p">:</span> <span class="n">BrowserTabActivity</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">RedirectScheme</span> <span class="p">=</span> <span class="s">"msal00000000-0000-0000-0000-000000000000"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Replace the placeholder with <code class="language-plaintext highlighter-rouge">msal</code> followed by your client ID. This constant must be updated separately from <code class="language-plaintext highlighter-rouge">appsettings.json</code>: attributes cannot read configuration at runtime.</p>
+
+<p>The main activity also forwards the result to MSAL:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnActivityResult</span><span class="p">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="p">,</span> <span class="n">Result</span> <span class="n">resultCode</span><span class="p">,</span> <span class="n">Android</span><span class="p">.</span><span class="n">Content</span><span class="p">.</span><span class="n">Intent</span><span class="p">?</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">base</span><span class="p">.</span><span class="nf">OnActivityResult</span><span class="p">(</span><span class="n">requestCode</span><span class="p">,</span> <span class="n">resultCode</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">AuthenticationContinuationHelper</span><span class="p">.</span><span class="nf">SetAuthenticationContinuationEventArgs</span><span class="p">(</span><span class="n">requestCode</span><span class="p">,</span> <span class="n">resultCode</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<h3 id="ios">iOS</h3>
+
+<p>The sample registers a custom <code class="language-plaintext highlighter-rouge">UnoUIApplicationDelegate</code> with <code class="language-plaintext highlighter-rouge">UseUIApplicationDelegate&lt;MsalAppDelegate&gt;()</code> on the <code class="language-plaintext highlighter-rouge">UseAppleUIKit</code> builder. Its <code class="language-plaintext highlighter-rouge">OpenUrl</code> override forwards callback URLs to <code class="language-plaintext highlighter-rouge">AuthenticationContinuationHelper</code>. It also declares <code class="language-plaintext highlighter-rouge">msauth.{BundleId}</code> in <code class="language-plaintext highlighter-rouge">Info.plist</code> and grants keychain access in <code class="language-plaintext highlighter-rouge">Entitlements.plist</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;key&gt;</span>keychain-access-groups<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;array&gt;</span>
+    <span class="nt">&lt;string&gt;</span>$(AppIdentifierPrefix)$(CFBundleIdentifier)<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;string&gt;</span>$(AppIdentifierPrefix)com.microsoft.adalcache<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/array&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The first entry preserves the app’s own default keychain group; the second grants MSAL access to its default cache group. Missing entitlements can fail when MSAL first saves tokens or, depending on the version, while building the client.</p>
+
+<h3 id="webassembly-and-desktop">WebAssembly and Desktop</h3>
+
+<p>WebAssembly needs no redirect override or dedicated callback file in the sample. It uses <code class="language-plaintext highlighter-rouge">WebAuthenticationBroker</code>’s <code class="language-plaintext highlighter-rouge">/authentication-callback</code> URI, and its Static Web Apps configuration rewrites that path to <code class="language-plaintext highlighter-rouge">index.html</code>. Other hosts need an equivalent fallback or a page served at the callback path.</p>
+
+<p>On Desktop (Skia), MSAL opens the system browser and receives the response through a loopback listener using <code class="language-plaintext highlighter-rouge">http://localhost</code> with a runtime-selected port.</p>
+
+<h2 id="where-tokens-live">Where Tokens Live</h2>
+
+<p>The current Extensions provider persists MSAL’s cache differently on each platform:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>MSAL cache storage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Android / iOS</td>
+      <td>MSAL’s native persistent cache</td>
+    </tr>
+    <tr>
+      <td>Desktop (Skia)</td>
+      <td>MSAL cache helper with DPAPI, macOS Keychain, or Linux keyring</td>
+    </tr>
+    <tr>
+      <td>WebAssembly</td>
+      <td>Serialized MSAL cache through <code class="language-plaintext highlighter-rouge">IKeyValueStorage</code>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>If secure desktop storage is unavailable, Extensions keeps MSAL’s cache in memory by default. An unprotected file fallback requires explicitly setting <code class="language-plaintext highlighter-rouge">AllowUnprotectedTokenCacheFallback</code>.</p>
+
+<p>The Extensions sample selects browser session storage in its development configuration, alongside the authentication section:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre><span class="p">{</span><span class="w">
+  </span><span class="nl">"KeyValueStorageConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"BrowserCacheLocation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SessionStorage"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">SessionStorage</code> survives reloads for the tab’s session. <code class="language-plaintext highlighter-rouge">LocalStorage</code>, the framework default, also survives browser restarts; <code class="language-plaintext highlighter-rouge">MemoryStorage</code> keeps state only for the current page lifetime. This setting controls the host’s default key-value store, including both Uno’s tokens and the serialized MSAL cache. Browser storage is accessible to scripts on the same origin, and the MSAL cache includes refresh tokens.</p>
+
+<h2 id="platform-gotchas">Platform Gotchas</h2>
+
+<p>Older Uno builds deployed no-op MSAL helpers to Skia-rendered mobile and WebAssembly apps. The fix, <a href="https://github.com/unoplatform/uno/pull/24055">uno#24055</a>, merged August 13, 2026, corrects which platform assembly is deployed. The sample pins an Uno build containing that fix; the Extensions provider applies the Uno helpers for you.</p>
+
+<p>On <strong>WebAssembly</strong>, allow the sign-in popup and check your hosting headers. Uno’s popup flow needs to read the returned popup URL; a restrictive <code class="language-plaintext highlighter-rouge">Cross-Origin-Opener-Policy</code> can sever that connection. The callback must remain on the app’s origin.</p>
+
+<p>On <strong>iOS</strong>, verify that the URL scheme and keychain entitlements reached the signed app. If edits appear to have no effect, clean and rebuild the iOS output. This sample uses the app-delegate lifecycle; apps adopting UIScene should forward callback URLs from the scene delegate instead.</p>
+
+<p>On <strong>Desktop (Skia)</strong>, closing the browser does not notify MSAL’s loopback listener. The current Extensions provider cancels an unfinished interactive sign-in after five minutes by default; <code class="language-plaintext highlighter-rouge">InteractiveTimeout</code> configures that limit.</p>
+
+<h2 id="putting-it-together">Putting It Together</h2>
+
+<p><code class="language-plaintext highlighter-rouge">AuthenticationMsal</code> gives you token acquisition and persistence through Uno.Extensions’ authentication services. Your app supplies the Entra registration and platform callbacks, then uses <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> for the sign-in lifecycle and <code class="language-plaintext highlighter-rouge">ITokenCache</code> when it needs the access token.</p>
+
+<p>I introduced the same authentication service in my <a href="/uno-general/2025/07/02/chefs-login.html">Uno Chefs login walkthrough</a> with a custom provider. MSAL plugs into that pipeline too.</p>
+
+<p>Start with the <a href="https://github.com/unoplatform/Uno.Samples/blob/master/UI/Authentication.MsalExtensionsDemo/README.md">Extensions setup guide</a>, run the sample, and copy its displayed redirect URI into Entra. Come find me in the <a href="https://platform.uno/discord">Uno Discord</a> if you get stuck.</p>
+
+<p class="notice--info">For further reading, <a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalDemo">Authentication.MsalDemo</a> demonstrates implementing MSAL authentication <strong>without Uno.Extensions</strong>, using MSAL.NET and Uno’s platform helpers directly. Its <a href="https://github.com/unoplatform/Uno.Samples/blob/master/UI/Authentication.MsalDemo/MSAL-SETUP.md">setup guide</a> walks through that approach.</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li><a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalExtensionsDemo">Authentication.MsalExtensionsDemo sample (Uno.Extensions)</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Authentication/HowTo-MsalAuthentication.html">Uno.Extensions MSAL Authentication how-to</a></li>
+  <li><a href="https://github.com/unoplatform/uno.extensions/blob/main/src/Uno.Extensions.Authentication.MSAL/MsalAuthenticationProvider.cs">MSAL provider implementation on Uno.Extensions main</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-09-07T00:00:00+00:00">September 7, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" class="pagination--pager" title="Toolkit Tuesdays: ZoomContentControl">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="permalink">Toolkit Tuesdays: ZoomContentControl
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-31T00:00:00+00:00">August 31, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/tidbit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-34/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          11 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-34/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-34/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-34/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-34/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-34/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

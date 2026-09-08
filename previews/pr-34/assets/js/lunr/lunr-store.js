@@ -131,15 +131,27 @@ var store = [{
         "url": "/previews/pr-34/uno-general/2026/08/11/alc-super-themes-app.html",
         "teaser": "/previews/pr-34/assets/images/alc-super-themes/hero.png"
       },{
-        "title": "MSAL Auth in Uno Platform, With and Without Uno.Extensions",
-        "excerpt":"Authentication is one of those things every real app needs and almost nobody enjoys wiring up. Sign in with a Microsoft or work account, get a token, call an API, keep the token fresh, sign out. On a single platform it’s a known quantity. Across Android, iOS, WebAssembly, and desktop...","categories": ["uno-general"],
-        "tags": ["uno-platform","uno","msal","authentication","entra","uno-extensions","security"],
-        "url": "/previews/pr-34/uno-general/2026/08/14/msal-cross-platform-auth.html",
-        "teaser": "/previews/pr-34/assets/images/msal-auth/hero.png"
-      },{
         "title": "Toolkit Tuesdays: LoadingView",
         "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
         "tags": ["uno-toolkit","toolkit","loadingview","loading","iloadable","progressring","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-34/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html",
         "teaser": "/previews/pr-34/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP",
+        "excerpt":"Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we...","categories": ["uno-tidbit"],
+        "tags": ["uno-tidbits","uno-tidbit","tidbit","agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-34/uno-tidbit/2026/08/19/tidbit-app-mcp.html",
+        "teaser": "/previews/pr-34/assets/images/tidbit-hero.png"
+      },{
+        "title": "Toolkit Tuesdays: ZoomContentControl",
+        "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
+        "tags": ["uno-toolkit","toolkit","zoomcontentcontrol","zoom","pan","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html",
+        "teaser": "/previews/pr-34/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "MSAL Auth in Uno Platform with Uno.Extensions",
+        "excerpt":"Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app. Uno.Extensions.Authentication.MSAL connects Microsoft’s Authentication Library to Uno.Extensions’ authentication services. It handles token acquisition...","categories": ["uno-general"],
+        "tags": ["uno-platform","uno","msal","authentication","entra","uno-extensions","security"],
+        "url": "/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html",
+        "teaser": "/previews/pr-34/assets/images/profile.png"
       }]
