@@ -1,0 +1,998 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Cerulean: Your Agent Is Not Impressed - dotnet new bald</title>
+<meta name="description" content="In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Cerulean: Your Agent Is Not Impressed">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html">
+
+
+  <meta property="og:description" content="In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-41/assets/images/cerulean/hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Cerulean: Your Agent Is Not Impressed">
+  <meta name="twitter:description" content="In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-41/assets/images/cerulean/hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-09-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-41/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-41/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-41/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/previews/pr-41/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-41/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-41/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Cerulean: Your Agent Is Not Impressed">
+    <meta itemprop="description" content="In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.">
+    <meta itemprop="datePublished" content="2026-09-13T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html" class="u-url" itemprop="url">Cerulean: Your Agent Is Not Impressed
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-13T00:00:00+00:00">September 13, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#why-cerulean">Why Cerulean?</a></li><li><a href="#installing-the-disappointment">Installing the Disappointment</a></li><li><a href="#put-it-to-work">Put It to Work</a><ul><li><a href="#reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</a></li><li><a href="#giving-one-string-fewer-managers">Giving One String Fewer Managers</a></li><li><a href="#asking-for-agreement-you-havent-earned">Asking for Agreement You Haven’t Earned</a></li><li><a href="#when-the-code-is-actually-fine">When the Code Is Actually Fine</a></li></ul></li><li><a href="#adjusting-the-temperature">Adjusting the Temperature</a></li><li><a href="#the-rules-behind-the-attitude">The Rules Behind the Attitude</a></li><li><a href="#one-skill-several-agents">One Skill, Several Agents</a></li></ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/previews/pr-41/assets/images/cerulean/hero.png" class="hero-image" />
+        <p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.</p>
+
+<p>Naturally, my next contribution to this ecosystem was to make the agent disappointed in me.</p>
+
+<p>Meet <a href="https://github.com/kazo0/cerulean">Cerulean</a>, an agent skill I created for anyone who has heard “Great question!” one too many times after asking why their code doesn’t compile.</p>
+
+<p>I don’t need a standing ovation for renaming a variable. I need to know whether I broke the build.</p>
+
+<h2 id="why-cerulean">Why Cerulean?</h2>
+
+<p>The inspiration is Miranda Priestly from <em>The Devil Wears Prada</em>. Specifically, the cerulean sweater speech: the devastating explanation that something you thought was your own independent choice has an entire history behind it.</p>
+
+<p>Now apply that energy to the fourth abstraction layer you just added around a string.</p>
+
+<p>Cerulean gives your agent the tone of an editor-in-chief who has seen this all before and would really prefer that you had too. The mechanics take inspiration from <a href="https://github.com/juliusbrussee/caveman">caveman</a>, another skill that changes how an agent communicates. Here, the target is the automatic enthusiasm and agreement that can make an assistant’s feedback feel pretty meaningless.</p>
+
+<p>The opening instruction in <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md">the skill itself</a> sets the brief:</p>
+
+<blockquote>
+  <p>Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for. Be quietly, devastatingly unimpressed the entire time.</p>
+</blockquote>
+
+<p>The task still gets done. The agent is simply no longer emotionally invested in telling you that your <code class="language-plaintext highlighter-rouge">Helpers2.cs</code> file is an exciting architectural development.</p>
+
+<h2 id="installing-the-disappointment">Installing the Disappointment</h2>
+
+<p>For <strong>Claude Code</strong>, run these commands inside Claude:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>/plugin marketplace add kazo0/cerulean
+/plugin install cerulean@cerulean
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>For agents that support Agent Skills, you can use the <a href="https://github.com/vercel-labs/skills">skills CLI</a> from your project’s directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Or install it globally for specific agents:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean <span class="nt">-g</span> <span class="nt">-a</span> codex <span class="nt">-a</span> cursor
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a>. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters.</p>
+
+<p>Once installed, ask for:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>cerulean mode
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Where you’ve installed a slash command, you can use <code class="language-plaintext highlighter-rouge">/cerulean</code> instead. The default level is <code class="language-plaintext highlighter-rouge">full</code>, and the skill instructs the agent to keep that tone for the session until you change it or say <code class="language-plaintext highlighter-rouge">normal mode</code>.</p>
+
+<h2 id="put-it-to-work">Put It to Work</h2>
+
+<p>The useful part is giving Cerulean the same concrete tasks you’d already give your coding agent: review this method, simplify this implementation, challenge this proposal.</p>
+
+<p class="notice--info">The exchanges below are worked examples written for this post, not captured agent transcripts. They show practical prompts, the kind of response the skill calls for, and the actual code changes involved. Exact wording will vary by agent and model.</p>
+
+<h3 id="reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</h3>
+
+<p>Let’s start with a C# method that tries very hard to keep everyone happy:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">LoadItemsAsync</span><span class="p">(</span><span class="n">cancellationToken</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The prompt:</p>
+
+<blockquote>
+  <p>cerulean full. Review this method. I added the catch so refresh failures won’t interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.</p>
+</blockquote>
+
+<p>A response in that style:</p>
+
+<blockquote>
+  <p>Both paths return <code class="language-plaintext highlighter-rouge">true</code>, so the caller cannot distinguish a successful refresh from a failed one. The catch also swallows cancellation. Your success rate is a reporting decision.</p>
+
+  <p>Rethrow <code class="language-plaintext highlighter-rouge">OperationCanceledException</code> before the general catch, and return <code class="language-plaintext highlighter-rouge">false</code> for other exceptions:</p>
+</blockquote>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">LoadItemsAsync</span><span class="p">(</span><span class="n">cancellationToken</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">OperationCanceledException</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">throw</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That preserves the requested contract: success returns <code class="language-plaintext highlighter-rouge">true</code>, ordinary failure returns <code class="language-plaintext highlighter-rouge">false</code>, and cancellation remains cancellation. In a real repo, the agent should also preserve existing logging and check the caller’s handling of <code class="language-plaintext highlighter-rouge">false</code>. The relevant checks are those three outcomes, not whether the response included a sufficiently cutting adjective.</p>
+
+<p>The important detail is that the technical verdict comes first and means exactly what it says. You shouldn’t have to decode sarcasm to find out whether your error handling works.</p>
+
+<h3 id="giving-one-string-fewer-managers">Giving One String Fewer Managers</h3>
+
+<p>Here’s a complete little example of ceremony getting ahead of the job:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">Create</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="s">$"Hello, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingProvider</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">GreetingFactory</span> <span class="n">_factory</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">Get</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_factory</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingService</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">GreetingProvider</span> <span class="n">_provider</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">Greet</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_provider</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The prompt:</p>
+
+<blockquote>
+  <p>cerulean glacial. Simplify this code while keeping GreetingService.Greet(string) and its output unchanged. These are the only callers of the factory and provider, and neither has other behavior.</p>
+</blockquote>
+
+<p>The response could be:</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">GreetingProvider</code> and <code class="language-plaintext highlighter-rouge">GreetingFactory</code> add no behavior or substitution point here. Remove both and keep the formatting in <code class="language-plaintext highlighter-rouge">GreetingService</code>. The greeting has been through two departments without acquiring any information.</p>
+</blockquote>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingService</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nf">Greet</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="s">$"Hello, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Same public entry point. Same output. Fewer places to visit when you want to find out who said hello.</p>
+
+<p>The context in that prompt matters. In an actual codebase, the agent needs to inspect usages before deleting types. A provider that selects localized resources has a job. A factory with different construction strategies might have one too. Cerulean is supposed to judge the code it can see, so it shouldn’t declare every abstraction pointless just to land a line.</p>
+
+<h3 id="asking-for-agreement-you-havent-earned">Asking for Agreement You Haven’t Earned</h3>
+
+<p>Sometimes there isn’t code to fix yet. There is just a proposal and an alarming amount of confidence.</p>
+
+<blockquote>
+  <p>cerulean glacial. I’m going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.</p>
+</blockquote>
+
+<p>A suitable response:</p>
+
+<blockquote>
+  <p>That conclusion isn’t supported. Class count alone doesn’t establish what is slowing startup. Measure the current startup path, identify where the time goes, then compare a targeted change under the same conditions. The rewrite currently has a performance budget of wishful thinking.</p>
+</blockquote>
+
+<p>This is one of the more useful parts of the skill: it explicitly tells the agent that confidence, repetition, and requests for agreement are not evidence. It should disagree with a claim it can’t support, and change its verdict when the evidence changes.</p>
+
+<p>If you then ask it to implement an authorized rewrite anyway, the instructions say to state the drawback and do the work. You haven’t installed a tiny committee with veto power over your project.</p>
+
+<h3 id="when-the-code-is-actually-fine">When the Code Is Actually Fine</h3>
+
+<p>An agent that invents problems to stay in character would get old very quickly.</p>
+
+<blockquote>
+  <p>cerulean full. I replaced the mutable static selection field with state owned by each view model instance. Can separate instances still overwrite each other’s selection through that field?</p>
+</blockquote>
+
+<p>Given code that actually makes that change, an appropriate answer is:</p>
+
+<blockquote>
+  <p>No. An instance field belongs to its owning instance, so assigning it in one view model doesn’t assign the field in another. This removes that shared-state path. Keep it.</p>
+</blockquote>
+
+<p>That’s the concession. You may frame it.</p>
+
+<h2 id="adjusting-the-temperature">Adjusting the Temperature</h2>
+
+<p>There are three levels, defined in the <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#levels">skill’s level guide</a>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>What to expect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mild</code></td>
+      <td>Direct answers with the flattery removed. At most one dry remark, sometimes none.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">full</code></td>
+      <td>The default. Specific observations about the code or decision, with restrained sass.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">glacial</code></td>
+      <td>Sharper observations about unsupported claims, pointless ceremony, and avoidable maintenance.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Try the same prompt at each level:</p>
+
+<blockquote>
+  <p>This catches every exception and returns success. It’s resilient, right?</p>
+</blockquote>
+
+<p><strong>Mild:</strong></p>
+
+<blockquote>
+  <p>No. It hides failures from callers. Return or propagate the failure so callers can handle it. The catch isn’t a recovery strategy.</p>
+</blockquote>
+
+<p><strong>Full:</strong></p>
+
+<blockquote>
+  <p>No. It reports success after failure and hides the failure from callers. Return or propagate the failure. The green dashboard is being funded by missing information.</p>
+</blockquote>
+
+<p><strong>Glacial:</strong></p>
+
+<blockquote>
+  <p>No. It reports success after failure and hides the failure from callers. Return or propagate the failure. You’ve improved the result by removing its relationship with the outcome.</p>
+</blockquote>
+
+<p>The diagnosis stays the same. Turning up the sass should never change the facts or shorten the implementation. Persona commentary has a budget of at most three sentences per response, even at <code class="language-plaintext highlighter-rouge">glacial</code>. We’re trying to finish a task here. Nobody ordered the director’s commentary on a null check.</p>
+
+<p>Switch with <code class="language-plaintext highlighter-rouge">/cerulean mild</code>, <code class="language-plaintext highlighter-rouge">/cerulean full</code>, or <code class="language-plaintext highlighter-rouge">/cerulean glacial</code> where commands are available. Plain-language <code class="language-plaintext highlighter-rouge">cerulean glacial</code> works as a request to the skill too. <code class="language-plaintext highlighter-rouge">bleak</code> remains an alias for <code class="language-plaintext highlighter-rouge">glacial</code>, and <code class="language-plaintext highlighter-rouge">cerulean off</code> or <code class="language-plaintext highlighter-rouge">normal mode</code> ends the performance.</p>
+
+<h2 id="the-rules-behind-the-attitude">The Rules Behind the Attitude</h2>
+
+<p>Most of the interesting work in <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md">SKILL.md</a> is defining where the persona stops.</p>
+
+<p>Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response.</p>
+
+<p>The default boundary also keeps code comments, commit messages, documentation, and PR descriptions professional. Your reviewer didn’t install the skill. They just want to know why you changed the method.</p>
+
+<p>For example, a commit message for the refresh fix could be:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>fix(refresh): report failures and preserve cancellation
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>No closing insult. No fashion metaphor in the XML documentation. Save that energy for explaining why the interface has one implementation and fourteen factories.</p>
+
+<p>These are instructions to a model, so the tone doesn’t prove the answer is correct. You still need to review the diff, build, and run the relevant checks. A confidently delivered mistake remains a mistake, even if it has excellent posture.</p>
+
+<h2 id="one-skill-several-agents">One Skill, Several Agents</h2>
+
+<p>The source of the behavior is <code class="language-plaintext highlighter-rouge">skills/cerulean/SKILL.md</code>. The repo’s <code class="language-plaintext highlighter-rouge">scripts/build.mjs</code> generates the adapters and Gemini extension files from it, and its <code class="language-plaintext highlighter-rouge">--check</code> mode detects stale generated files.</p>
+
+<p>That means I can adjust the rules in one place without manually maintaining a different personality for every agent. Their loading mechanisms differ, but the intended behavior comes from the same instructions.</p>
+
+<p>It’s also a fun example of how far you can get with a skill that changes the way an agent approaches a conversation. My Uno skills point agents toward domain knowledge and tools. Cerulean tells them how to deliver the verdict once they’ve done the work.</p>
+
+<p>If you want to try it, the source and setup instructions are in <a href="https://github.com/kazo0/cerulean">kazo0/cerulean</a>. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that’s a bug worth reporting.</p>
+
+<p>Start with <code class="language-plaintext highlighter-rouge">mild</code> if you just want fewer compliments. Pick <code class="language-plaintext highlighter-rouge">glacial</code> if you’d like your next abstraction to explain itself.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-09-13T00:00:00+00:00">September 13, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-41/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" class="pagination--pager" title="Toolkit Tuesdays: ZoomContentControl">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-41/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="permalink">Toolkit Tuesdays: ZoomContentControl
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-31T00:00:00+00:00">August 31, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/tidbit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-41/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-41/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html" rel="permalink">Toolkit Tuesdays: LoadingView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-18T00:00:00+00:00">August 18, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/alc-super-themes/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-41/uno-general/2026/08/11/alc-super-themes-app.html" rel="permalink">Uno Apps Inside of Uno Apps
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-11T00:00:00+00:00">August 11, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          11 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet:
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-41/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-41/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-41/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-41/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-41/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
