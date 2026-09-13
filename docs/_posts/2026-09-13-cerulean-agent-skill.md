@@ -4,7 +4,7 @@ category: uno-general
 header:
   teaser: /assets/images/cerulean/hero.png
   og_image: /assets/images/cerulean/hero.png
-tags: [Agents, AI, skills, cerulean, claude-code, codex]
+tags: [agents, ai, skills, cerulean, claude-code, codex]
 ---
 
 In my [Agent Skills post]({% post_url 2026-02-23-agent-skills-intro %}), I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.
@@ -31,7 +31,7 @@ The task still gets done. The agent is simply no longer emotionally invested in 
 
 ## Installing the Disappointment
 
-For **Claude Code**, run these commands inside Claude:
+For Claude Code, run these commands inside Claude:
 
 ```text
 /plugin marketplace add kazo0/cerulean
@@ -50,7 +50,7 @@ Or install it globally for specific agents:
 npx skills add kazo0/cerulean -g -a codex -a cursor
 ```
 
-That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the [installation guide][cerulean-install]. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters.
+That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the [installation guide][cerulean-install]. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters :sweat_smile:
 
 Once installed, ask for:
 
@@ -159,7 +159,7 @@ public sealed class GreetingService
 }
 ```
 
-Same public entry point. Same output. Fewer places to visit when you want to find out who said hello.
+Three classes collapse into one. MUCH better. Same public entry point, same output, and far fewer places to visit when you want to find out who said hello.
 
 The context in that prompt matters. In an actual codebase, the agent needs to inspect usages before deleting types. A provider that selects localized resources has a job. A factory with different construction strategies might have one too. Cerulean is supposed to judge the code it can see, so it shouldn't declare every abstraction pointless just to land a line.
 
@@ -243,11 +243,15 @@ The source of the behavior is `skills/cerulean/SKILL.md`. The repo's `scripts/bu
 
 That means I can adjust the rules in one place without manually maintaining a different personality for every agent. Their loading mechanisms differ, but the intended behavior comes from the same instructions.
 
-It's also a fun example of how far you can get with a skill that changes the way an agent approaches a conversation. My Uno skills point agents toward domain knowledge and tools. Cerulean tells them how to deliver the verdict once they've done the work.
+## Conclusion
+
+This whole thing started as a joke and quietly became something I leave on most days. My Uno skills point agents toward domain knowledge and tools. Cerulean just tells them how to deliver the verdict once they've done the work. And honestly, I trust a "keep it" a lot more when the agent visibly didn't want to say it.
 
 If you want to try it, the source and setup instructions are in [kazo0/cerulean][cerulean-gh]. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that's a bug worth reporting.
 
-Start with `mild` if you just want fewer compliments. Pick `glacial` if you'd like your next abstraction to explain itself.
+Start with `mild` if you just want fewer compliments. Pick `glacial` if you'd like your next abstraction to explain itself. Either way, let me know if it gets too mean.
+
+Catch you in the next one :wave:
 
 [cerulean-gh]: https://github.com/kazo0/cerulean
 [cerulean-skill]: https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md
