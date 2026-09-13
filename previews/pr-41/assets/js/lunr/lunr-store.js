@@ -151,7 +151,7 @@ var store = [{
       },{
         "title": "Cerulean: Your Agent Is Not Impressed",
         "excerpt":"In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right. Naturally, my next contribution to this ecosystem was...","categories": ["uno-general"],
-        "tags": ["Agents","AI","skills","cerulean","claude-code","codex"],
+        "tags": ["agents","ai","skills","cerulean","claude-code","codex"],
         "url": "/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html",
         "teaser": "/previews/pr-41/assets/images/cerulean/hero.png"
       }]

@@ -134,11 +134,7 @@
           <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a
-                href="/previews/pr-41/about/"
-                
-                
-              >About</a>
+              <a href="/previews/pr-41/about/">About</a>
             </li></ul>
         
         <button class="search__toggle" type="button">
@@ -332,12 +328,28 @@
         
           <aside class="sidebar__right ">
             <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#why-cerulean">Why Cerulean?</a></li><li><a href="#installing-the-disappointment">Installing the Disappointment</a></li><li><a href="#put-it-to-work">Put It to Work</a><ul><li><a href="#reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</a></li><li><a href="#giving-one-string-fewer-managers">Giving One String Fewer Managers</a></li><li><a href="#asking-for-agreement-you-havent-earned">Asking for Agreement You Haven’t Earned</a></li><li><a href="#when-the-code-is-actually-fine">When the Code Is Actually Fine</a></li></ul></li><li><a href="#adjusting-the-temperature">Adjusting the Temperature</a></li><li><a href="#the-rules-behind-the-attitude">The Rules Behind the Attitude</a></li><li><a href="#one-skill-several-agents">One Skill, Several Agents</a></li></ul>
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#why-cerulean">Why Cerulean?</a></li>
+<li><a href="#installing-the-disappointment">Installing the Disappointment</a></li>
+<li>
+<a href="#put-it-to-work">Put It to Work</a><ul>
+<li><a href="#reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</a></li>
+<li><a href="#giving-one-string-fewer-managers">Giving One String Fewer Managers</a></li>
+<li><a href="#asking-for-agreement-you-havent-earned">Asking for Agreement You Haven’t Earned</a></li>
+<li><a href="#when-the-code-is-actually-fine">When the Code Is Actually Fine</a></li>
+</ul>
+</li>
+<li><a href="#adjusting-the-temperature">Adjusting the Temperature</a></li>
+<li><a href="#the-rules-behind-the-attitude">The Rules Behind the Attitude</a></li>
+<li><a href="#one-skill-several-agents">One Skill, Several Agents</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-41/assets/images/cerulean/hero.png" class="hero-image" />
+        <img alt="Hero Image" src="/previews/pr-41/assets/images/cerulean/hero.png" class="hero-image">
         <p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.</p>
 
 <p>Naturally, my next contribution to this ecosystem was to make the agent disappointed in me.</p>
@@ -364,33 +376,45 @@
 
 <h2 id="installing-the-disappointment">Installing the Disappointment</h2>
 
-<p>For <strong>Claude Code</strong>, run these commands inside Claude:</p>
+<p>For Claude Code, run these commands inside Claude:</p>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>/plugin marketplace add kazo0/cerulean
+</pre></td>
+<td class="rouge-code"><pre>/plugin marketplace add kazo0/cerulean
 /plugin install cerulean@cerulean
-</pre></td></tr></tbody></table></code></pre></div></div>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>For agents that support Agent Skills, you can use the <a href="https://github.com/vercel-labs/skills">skills CLI</a> from your project’s directory:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>npx skills add kazo0/cerulean
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>Or install it globally for specific agents:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean <span class="nt">-g</span> <span class="nt">-a</span> codex <span class="nt">-a</span> cursor
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>npx skills add kazo0/cerulean <span class="nt">-g</span> <span class="nt">-a</span> codex <span class="nt">-a</span> cursor
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
-<p>That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a>. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters.</p>
+<p>That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a>. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters <img class="emoji" title=":sweat_smile:" alt=":sweat_smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f605.png" height="20" width="20"></p>
 
 <p>Once installed, ask for:</p>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>cerulean mode
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>cerulean mode
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>Where you’ve installed a slash command, you can use <code class="language-plaintext highlighter-rouge">/cerulean</code> instead. The default level is <code class="language-plaintext highlighter-rouge">full</code>, and the skill instructs the agent to keep that tone for the session until you change it or say <code class="language-plaintext highlighter-rouge">normal mode</code>.</p>
 
@@ -404,7 +428,8 @@
 
 <p>Let’s start with a C# method that tries very hard to keep everyone happy:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -416,7 +441,8 @@
 10
 11
 12
-</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+</pre></td>
+<td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">try</span>
     <span class="p">{</span>
@@ -428,7 +454,8 @@
         <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>The prompt:</p>
 
@@ -444,7 +471,8 @@
   <p>Rethrow <code class="language-plaintext highlighter-rouge">OperationCanceledException</code> before the general catch, and return <code class="language-plaintext highlighter-rouge">false</code> for other exceptions:</p>
 </blockquote>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -460,7 +488,8 @@
 14
 15
 16
-</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+</pre></td>
+<td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">try</span>
     <span class="p">{</span>
@@ -476,7 +505,8 @@
         <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>That preserves the requested contract: success returns <code class="language-plaintext highlighter-rouge">true</code>, ordinary failure returns <code class="language-plaintext highlighter-rouge">false</code>, and cancellation remains cancellation. In a real repo, the agent should also preserve existing logging and check the caller’s handling of <code class="language-plaintext highlighter-rouge">false</code>. The relevant checks are those three outcomes, not whether the response included a sufficiently cutting adjective.</p>
 
@@ -486,7 +516,8 @@
 
 <p>Here’s a complete little example of ceremony getting ahead of the job:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -504,7 +535,8 @@
 16
 17
 18
-</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingFactory</span>
+</pre></td>
+<td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingFactory</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="kt">string</span> <span class="nf">Create</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="s">$"Hello, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!"</span><span class="p">;</span>
 <span class="p">}</span>
@@ -522,7 +554,8 @@
 
     <span class="k">public</span> <span class="kt">string</span> <span class="nf">Greet</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">_provider</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>The prompt:</p>
 
@@ -536,17 +569,20 @@
   <p><code class="language-plaintext highlighter-rouge">GreetingProvider</code> and <code class="language-plaintext highlighter-rouge">GreetingFactory</code> add no behavior or substitution point here. Remove both and keep the formatting in <code class="language-plaintext highlighter-rouge">GreetingService</code>. The greeting has been through two departments without acquiring any information.</p>
 </blockquote>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
-</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingService</span>
+</pre></td>
+<td class="rouge-code"><pre><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GreetingService</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="kt">string</span> <span class="nf">Greet</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="s">$"Hello, </span><span class="p">{</span><span class="n">name</span><span class="p">}</span><span class="s">!"</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
-<p>Same public entry point. Same output. Fewer places to visit when you want to find out who said hello.</p>
+<p>Three classes collapse into one. MUCH better. Same public entry point, same output, and far fewer places to visit when you want to find out who said hello.</p>
 
 <p>The context in that prompt matters. In an actual codebase, the agent needs to inspect usages before deleting types. A provider that selects localized resources has a job. A factory with different construction strategies might have one too. Cerulean is supposed to judge the code it can see, so it shouldn’t declare every abstraction pointless just to land a line.</p>
 
@@ -649,9 +685,12 @@
 
 <p>For example, a commit message for the refresh fix could be:</p>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>fix(refresh): report failures and preserve cancellation
-</pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>fix(refresh): report failures and preserve cancellation
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <p>No closing insult. No fashion metaphor in the XML documentation. Save that energy for explaining why the interface has one implementation and fourteen factories.</p>
 
@@ -663,11 +702,15 @@
 
 <p>That means I can adjust the rules in one place without manually maintaining a different personality for every agent. Their loading mechanisms differ, but the intended behavior comes from the same instructions.</p>
 
-<p>It’s also a fun example of how far you can get with a skill that changes the way an agent approaches a conversation. My Uno skills point agents toward domain knowledge and tools. Cerulean tells them how to deliver the verdict once they’ve done the work.</p>
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This whole thing started as a joke and quietly became something I leave on most days. My Uno skills point agents toward domain knowledge and tools. Cerulean just tells them how to deliver the verdict once they’ve done the work. And honestly, I trust a “keep it” a lot more when the agent visibly didn’t want to say it.</p>
 
 <p>If you want to try it, the source and setup instructions are in <a href="https://github.com/kazo0/cerulean">kazo0/cerulean</a>. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that’s a bug worth reporting.</p>
 
-<p>Start with <code class="language-plaintext highlighter-rouge">mild</code> if you just want fewer compliments. Pick <code class="language-plaintext highlighter-rouge">glacial</code> if you’d like your next abstraction to explain itself.</p>
+<p>Start with <code class="language-plaintext highlighter-rouge">mild</code> if you just want fewer compliments. Pick <code class="language-plaintext highlighter-rouge">glacial</code> if you’d like your next abstraction to explain itself. Either way, let me know if it gets too mean.</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
 
         
@@ -936,13 +979,15 @@
     
       <div class="search-content">
         
-<div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
     <label class="sr-only" for="search">
       Enter your search term...
     </label>
-    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
   </form>
-  <div id="results" class="results"></div></div>
+  <div id="results" class="results"></div>
+</div>
 
       </div>
     
@@ -970,7 +1015,7 @@
 </div>
 
 
-<div class="page__footer-copyright">&copy; 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
