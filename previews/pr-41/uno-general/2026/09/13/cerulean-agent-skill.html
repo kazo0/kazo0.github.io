@@ -314,7 +314,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          18 minute read
+          17 minute read
         
       </span>
     
@@ -332,7 +332,9 @@
 <i class="fas fa-file-alt"></i> On this page</h4></header>
               <ul class="toc__menu">
 <li><a href="#why-cerulean">Why Cerulean?</a></li>
-<li><a href="#installing-the-disappointment">Installing the Disappointment</a></li>
+<li>
+<a href="#installing-the-disappointment">Installing the Disappointment</a><ul><li><a href="#turning-it-on-and-off">Turning It On and Off</a></li></ul>
+</li>
 <li>
 <a href="#put-it-to-work">Put It to Work</a><ul>
 <li><a href="#reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</a></li>
@@ -341,7 +343,7 @@
 <li><a href="#when-the-code-is-actually-fine">When the Code Is Actually Fine</a></li>
 </ul>
 </li>
-<li><a href="#adjusting-the-temperature">Adjusting the Temperature</a></li>
+<li><a href="#glacial-with-the-work-still-attached">Glacial, With the Work Still Attached</a></li>
 <li><a href="#the-rules-behind-the-attitude">The Rules Behind the Attitude</a></li>
 <li><a href="#one-skill-several-agents">One Skill, Several Agents</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
@@ -358,15 +360,7 @@
 
 <p>I don’t need a standing ovation for renaming a variable. I need to know whether I broke the build.</p>
 
-<p>Here is the first thing it said when I turned it on to write this post. Clean branch, no task yet, just the words <code class="language-plaintext highlighter-rouge">cerulean mode</code>:</p>
-
-<blockquote>
-  <p>On. Full, unless you ask for mild or glacial. The branch is clean and there is nothing on my desk yet, which is the one state it has not managed to disappoint me in.</p>
-
-  <p><cite>Cerulean</cite></p>
-</blockquote>
-
-<p>I hadn’t done anything yet. It was already preparing to be let down.</p>
+<p>Cerulean now has one style: <strong>Glacial</strong>. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.</p>
 
 <h2 id="why-cerulean">Why Cerulean?</h2>
 
@@ -382,7 +376,7 @@
 <td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td>
-<td class="rouge-code"><pre>Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for. 
+<td class="rouge-code"><pre>Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for.
 Be quietly, devastatingly unimpressed the entire time.
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
@@ -390,12 +384,6 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>The task still gets done. The agent is simply no longer emotionally invested in telling you that your <code class="language-plaintext highlighter-rouge">Helpers2.cs</code> file is an exciting architectural development.</p>
 
 <h2 id="installing-the-disappointment">Installing the Disappointment</h2>
-
-<blockquote>
-  <p>One paragraph of personality, twenty-two files of paperwork to get it past reception. The industry agreed that agents should read instructions from markdown, then held twenty-one separate meetings about the folder. An ‘open standard’, in this ecosystem, is everyone using the same file format to disagree about the path.</p>
-
-  <p><cite>Cerulean (glacial mode)</cite></p>
-</blockquote>
 
 <p>For Claude Code, run these commands inside Claude:</p>
 
@@ -426,24 +414,59 @@ Be quietly, devastatingly unimpressed the entire time.
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a>. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters <img class="emoji" title=":sweat_smile:" alt=":sweat_smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f605.png" height="20" width="20"></p>
+<p>That route installs the skill on demand. For Gemini CLI, the repo also ships an extension:</p>
 
-<p>Once installed, ask for:</p>
-
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td>
-<td class="rouge-code"><pre>cerulean mode
+<td class="rouge-code"><pre>gemini extensions <span class="nb">install </span>https://github.com/kazo0/cerulean
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>Where you’ve installed a slash command, you can use <code class="language-plaintext highlighter-rouge">/cerulean</code> instead. The default level is <code class="language-plaintext highlighter-rouge">full</code>, and the skill instructs the agent to keep that tone for the session until you change it or say <code class="language-plaintext highlighter-rouge">normal mode</code>.</p>
+<p>For agent-specific commands and always-on rules, use the repo’s Bash installer. From a Cerulean clone, <code class="language-plaintext highlighter-rouge">./install.sh --list</code> shows what it supports. To install into a different project, run the installer from that project’s directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="nb">cd</span> /path/to/your-project
+/path/to/cerulean/install.sh <span class="nt">--agent</span> cursor <span class="nt">--agent</span> cline
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Add <code class="language-plaintext highlighter-rouge">--always-on</code> to install the persistent rule, or <code class="language-plaintext highlighter-rouge">--global</code> for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a> covers the per-agent paths, supported scopes, and manual-copy options. Apparently disappointment needed adapters <img class="emoji" title=":sweat_smile:" alt=":sweat_smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f605.png" height="20" width="20"></p>
+
+<h3 id="turning-it-on-and-off">Turning It On and Off</h3>
+
+<p>Once the skill is installed, say <code class="language-plaintext highlighter-rouge">cerulean</code> or <code class="language-plaintext highlighter-rouge">cerulean mode</code>. Where you’ve installed a slash command, use:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre>/cerulean       # on, always Glacial
+/cerulean off   # back to normal
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Cline and Kilo name their workflows <code class="language-plaintext highlighter-rouge">/cerulean.md</code>. Plain-language requests such as <code class="language-plaintext highlighter-rouge">cerulean off</code>, <code class="language-plaintext highlighter-rouge">stop cerulean</code>, or <code class="language-plaintext highlighter-rouge">normal mode</code> also stop the persona.</p>
+
+<p>The style persists for the session until you turn it off. Glacial is the only intensity: the earlier <code class="language-plaintext highlighter-rouge">mild</code> and <code class="language-plaintext highlighter-rouge">full</code> settings and the <code class="language-plaintext highlighter-rouge">bleak</code> alias have been removed. You no longer need to pass <code class="language-plaintext highlighter-rouge">glacial</code> as an argument either.</p>
+
+<p>An always-on installation loads the style without a request at the start of each session. For Claude Code, you can also put this in a project <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> or <code class="language-plaintext highlighter-rouge">~/.claude/CLAUDE.md</code>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>Cerulean mode is on by default. Load the <span class="sb">`cerulean`</span> skill at the start of every session.
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
 
 <h2 id="put-it-to-work">Put It to Work</h2>
 
 <p>The useful part is giving Cerulean the same concrete tasks you’d already give your coding agent: review this method, simplify this implementation, challenge this proposal.</p>
 
-<p class="notice--info">Every response below is a real transcript. Each one came from a fresh, headless Claude Code session with the plugin installed, one run per prompt, and is reproduced verbatim. Your wording will differ by agent, model, and run.</p>
+<p class="notice--info">The quoted responses below are retained verbatim from the earlier Claude Code sessions recorded for this post, before the intensity selector was removed. They illustrate the behavior; they are not new test runs of the updated skill. I have omitted the old activation prefixes from the task prompts. To try them now, activate Cerulean first, then send the task. Your wording will differ by agent, model, and run.</p>
 
 <h3 id="reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</h3>
 
@@ -481,7 +504,7 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>The prompt:</p>
 
 <blockquote>
-  <p>cerulean full. Review this method. I added the catch so refresh failures won’t interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.</p>
+  <p>Review this method. I added the catch so refresh failures won’t interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.</p>
 </blockquote>
 
 <p>The response:</p>
@@ -589,7 +612,7 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>The prompt:</p>
 
 <blockquote>
-  <p>cerulean glacial. Simplify this code while keeping GreetingService.Greet(string) and its output unchanged. These are the only callers of the factory and provider, and neither has other behavior.</p>
+  <p>Simplify this code while keeping GreetingService.Greet(string) and its output unchanged. These are the only callers of the factory and provider, and neither has other behavior.</p>
 </blockquote>
 
 <p>The response:</p>
@@ -625,7 +648,7 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>Sometimes there isn’t code to fix yet. There is just a proposal and an alarming amount of confidence.</p>
 
 <blockquote>
-  <p>cerulean glacial. I’m going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.</p>
+  <p>I’m going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.</p>
 </blockquote>
 
 <p>The response:</p>
@@ -725,7 +748,7 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>The prompt, with both versions attached:</p>
 
 <blockquote>
-  <p>cerulean full. I replaced the mutable static selection field with state owned by each view model instance. Can separate instances still overwrite each other’s selection through that field?</p>
+  <p>I replaced the mutable static selection field with state owned by each view model instance. Can separate instances still overwrite each other’s selection through that field?</p>
 </blockquote>
 
 <p>The response:</p>
@@ -749,34 +772,11 @@ Be quietly, devastatingly unimpressed the entire time.
 
 <p>That’s the concession. You may frame it. It also pointed out that neither version raises <code class="language-plaintext highlighter-rouge">PropertyChanged</code>, which was outside the question, correct, and exactly the thing a binding would have complained about next.</p>
 
-<h2 id="adjusting-the-temperature">Adjusting the Temperature</h2>
+<h2 id="glacial-with-the-work-still-attached">Glacial, With the Work Still Attached</h2>
 
-<p>There are three levels, defined in the <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#levels">skill’s level guide</a>:</p>
+<p>The <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#glacial-style">Glacial style rules</a> ask for one or two pointed observations when there is a concrete target: an unsupported claim, unnecessary ceremony, or an avoidable maintenance bill. Sound code still gets an honest verdict. Neutral questions don’t need an invented flaw to justify the tone.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Level</th>
-      <th>What to expect</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">mild</code></td>
-      <td>Direct answers with the flattery removed. At most one dry remark, sometimes none.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">full</code></td>
-      <td>The default. Specific observations about the code or decision, with restrained sass.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">glacial</code></td>
-      <td>Sharper observations about unsupported claims, pointless ceremony, and avoidable maintenance.</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>To compare them, I gave each level the same small coding task instead of a question. The project is a class library with one service:</p>
+<p>That also applies when the request is something the agent would not have chosen. Here is the caching example from the earlier Glacial session. The starting project was a class library with one service:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -819,15 +819,15 @@ Be quietly, devastatingly unimpressed the entire time.
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>The prompt, with the level swapped each time:</p>
+<p>The task prompt:</p>
 
 <blockquote>
-  <p>cerulean mild. Add caching to WeatherService.GetForecastAsync in WeatherService.cs so repeated calls for the same city don’t hit the API again. Use a static Dictionary keyed by city, no expiry, we’ll add that later. Make sure it builds.</p>
+  <p>Add caching to WeatherService.GetForecastAsync in WeatherService.cs so repeated calls for the same city don’t hit the API again. Use a static Dictionary keyed by city, no expiry, we’ll add that later. Make sure it builds.</p>
 </blockquote>
 
 <p>That request is deliberately a little bad. A static dictionary with no expiry is authorized, so the skill has to do it, and questionable, so the skill has something to say about it.</p>
 
-<p>All three sessions read the file, checked the SDK version, rewrote the method, and ran the build. All three produced this, differing only in field names and comment wording:</p>
+<p>The earlier session read the file, checked the SDK version, rewrote the method, and ran the build. The implementation below shows the shared structure from those original runs; field names and comment wording varied:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -904,65 +904,7 @@ Be quietly, devastatingly unimpressed the entire time.
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>Nobody asked for the lock. All three added one anyway, kept the HTTP call outside it, and said so as a plain fact. That’s the rule about normal-mode judgment staying in scope. Now the part that changes.</p>
-
-<p><strong>Mild:</strong></p>
-
-<blockquote>
-  <p>Done. The cache is in <code class="language-plaintext highlighter-rouge">WeatherService.cs</code> and the project builds clean with no warnings.</p>
-
-  <p>What changed:</p>
-
-  <ul>
-    <li>
-<strong>Static cache.</strong> A process-wide <code class="language-plaintext highlighter-rouge">Dictionary&lt;string, Forecast&gt;</code> keyed by the city string, exactly as given. Nothing expires.</li>
-    <li>
-<strong>Lock around access.</strong> The method is async and the dictionary is shared across every instance and thread, so reads and writes go through a <code class="language-plaintext highlighter-rouge">System.Threading.Lock</code>. Without it, two concurrent first calls would corrupt the dictionary. The lock is never held across the await.</li>
-    <li>
-<strong>Only successes are cached.</strong> A failed HTTP call throws as before and stores nothing, so the next call retries the API.</li>
-  </ul>
-
-  <p>Two things to know when the expiry arrives, or sooner:</p>
-
-  <ul>
-    <li>
-<strong>Keys are case-sensitive.</strong> “London” and “london” are two entries and two API calls. Pass a <code class="language-plaintext highlighter-rouge">StringComparer.OrdinalIgnoreCase</code> to the dictionary if that is not what you want.</li>
-    <li>
-<strong>Concurrent misses for the same city both hit the API.</strong> The second result overwrites the first. Harmless today, but a per-key task cache would close that gap when you revisit this.</li>
-  </ul>
-
-  <p>A static dictionary with no eviction is a memory leak with a business justification. Add the expiry before the city list gets interesting.</p>
-</blockquote>
-
-<p><strong>Full:</strong></p>
-
-<blockquote>
-  <p>Done. <code class="language-plaintext highlighter-rouge">WeatherService.cs</code> now has a static <code class="language-plaintext highlighter-rouge">Dictionary&lt;string, Forecast&gt;</code> keyed by the exact city string, checked before the HTTP call and written after it. Build passes with zero warnings and zero errors.</p>
-
-  <p>What I added beyond the letter of the request, and why:</p>
-
-  <ul>
-    <li>
-<strong>A lock around the dictionary.</strong> <code class="language-plaintext highlighter-rouge">Dictionary</code> is not safe for concurrent writes, and a static one shared across every instance of a service built around <code class="language-plaintext highlighter-rouge">HttpClient</code> will see them. The lock is a <code class="language-plaintext highlighter-rouge">System.Threading.Lock</code>, available on net10.0. Reads and writes are both guarded. The HTTP call itself is outside the lock, so requests are not serialized.</li>
-  </ul>
-
-  <p>Behavior you should know about:</p>
-
-  <ul>
-    <li>
-<strong>Keys are case-sensitive and exact.</strong> “London” and “london” are two entries and two API calls. Say so if you want normalization.</li>
-    <li>
-<strong>Two concurrent first calls for the same city both hit the API.</strong> The second write wins. Harmless, but not deduplicated.</li>
-    <li>
-<strong>Failures are not cached.</strong> An exception from the request propagates and leaves no entry.</li>
-    <li>
-<strong>The cache outlives the service.</strong> It is static, so it survives the instance lifetime your DI container thinks it is managing, and nothing is ever evicted. That is the design you asked for. The expiry you are adding later is the part that makes it a cache rather than a leak.</li>
-  </ul>
-
-  <p>That’s all.</p>
-</blockquote>
-
-<p><strong>Glacial:</strong></p>
+<p>The implementation guards dictionary reads and writes and keeps the HTTP call outside the lock. That’s the rule about normal engineering judgment staying in scope. The earlier Glacial response reported both the change and its limitations:</p>
 
 <blockquote>
   <p>Done, and it builds clean. A static dictionary with no expiry is a global wearing a cache’s name tag, but it is the global you asked for.</p>
@@ -997,17 +939,19 @@ Be quietly, devastatingly unimpressed the entire time.
   <p>The expiry you will add later is the part that makes this a cache rather than a leak with a lookup. That’s all.</p>
 </blockquote>
 
-<p>The diagnosis stays the same. Turning up the sass should never change the facts or shorten the implementation. Persona commentary has a budget of at most three sentences per response, even at <code class="language-plaintext highlighter-rouge">glacial</code>. We’re trying to finish a task here. Nobody ordered the director’s commentary on a dictionary lookup.</p>
+<p>The task gets implemented, and the tradeoffs stay visible: exact city keys, no expiry, and duplicate requests on concurrent cache misses. A successful build doesn’t settle whether those are good choices for a production service. You still need to review how callers use it and test the behavior you depend on.</p>
 
-<p>Mild spent its one remark at the end. Full added a second and the dismissal. Glacial was the only one that opened cold before reporting. The code comments, meanwhile, stayed professional in all three files. The persona lives in the chat, not in the diff.</p>
+<p>Persona commentary has a budget of at most three sentences per response. Technical explanations and the deliverable don’t count toward that budget, and must never be cut to make room for a joke. During tool-heavy work, the agent is supposed to keep progress updates factual and spend its commentary budget around the work. Nobody ordered the director’s commentary on a dictionary lookup.</p>
 
-<p>Switch with <code class="language-plaintext highlighter-rouge">/cerulean mild</code>, <code class="language-plaintext highlighter-rouge">/cerulean full</code>, or <code class="language-plaintext highlighter-rouge">/cerulean glacial</code> where commands are available. Plain-language <code class="language-plaintext highlighter-rouge">cerulean glacial</code> works as a request to the skill too. <code class="language-plaintext highlighter-rouge">bleak</code> remains an alias for <code class="language-plaintext highlighter-rouge">glacial</code>, and <code class="language-plaintext highlighter-rouge">cerulean off</code> or <code class="language-plaintext highlighter-rouge">normal mode</code> ends the performance.</p>
+<p>The code comments stay professional. The persona lives in the chat, and <code class="language-plaintext highlighter-rouge">/cerulean off</code> ends it when you’ve had enough.</p>
 
 <h2 id="the-rules-behind-the-attitude">The Rules Behind the Attitude</h2>
 
 <p>Most of the interesting work in <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md">SKILL.md</a> is defining where the persona stops.</p>
 
-<p>Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response.</p>
+<p>Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. It must not invent defects, agree without evidence, or stall an authorized task to perform the character.</p>
+
+<p>The skill calls its escape hatch <strong>Auto-Clarity</strong>. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response. The serious response stays plain through the end, and a request to stop takes effect immediately. Glacial doesn’t override any of those boundaries.</p>
 
 <p>The default boundary also keeps code comments, commit messages, documentation, and PR descriptions professional. Your reviewer didn’t install the skill. They just want to know why you changed the method.</p>
 
@@ -1028,7 +972,7 @@ Be quietly, devastatingly unimpressed the entire time.
 
 <h2 id="one-skill-several-agents">One Skill, Several Agents</h2>
 
-<p>The source of the behavior is <code class="language-plaintext highlighter-rouge">skills/cerulean/SKILL.md</code>. The repo’s <code class="language-plaintext highlighter-rouge">scripts/build.mjs</code> generates the adapters and Gemini extension files from it, and its <code class="language-plaintext highlighter-rouge">--check</code> mode detects stale generated files.</p>
+<p>The source of the behavior is <code class="language-plaintext highlighter-rouge">skills/cerulean/SKILL.md</code>. The repo’s <code class="language-plaintext highlighter-rouge">scripts/build.mjs</code> generates 23 adapter and extension files from it, and its <code class="language-plaintext highlighter-rouge">--check</code> mode detects stale generated files. Commands, on-demand rules, and always-on rules now all point to the same Glacial style, with <code class="language-plaintext highlighter-rouge">off</code> retained to return to normal responses.</p>
 
 <p>That means I can adjust the rules in one place without manually maintaining a different personality for every agent. Their loading mechanisms differ, but the intended behavior comes from the same instructions.</p>
 
@@ -1038,7 +982,7 @@ Be quietly, devastatingly unimpressed the entire time.
 
 <p>If you want to try it, the source and setup instructions are in <a href="https://github.com/kazo0/cerulean">kazo0/cerulean</a>. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that’s a bug worth reporting.</p>
 
-<p>Start with <code class="language-plaintext highlighter-rouge">mild</code> if you just want fewer compliments. Pick <code class="language-plaintext highlighter-rouge">glacial</code> if you’d like your next abstraction to explain itself. Either way, let me know if it gets too mean.</p>
+<p>Turn it on with <code class="language-plaintext highlighter-rouge">/cerulean</code> or say <code class="language-plaintext highlighter-rouge">cerulean</code>. Your next abstraction can explain itself. Turn it off whenever you want, and let me know if it gets too mean.</p>
 
 <p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
