@@ -15,13 +15,7 @@ Meet [Cerulean][cerulean-gh], an agent skill I created for anyone who has heard 
 
 I don't need a standing ovation for renaming a variable. I need to know whether I broke the build.
 
-Here is the first thing it said when I turned it on to write this post. Clean branch, no task yet, just the words `cerulean mode`:
-
-> On. Full, unless you ask for mild or glacial. The branch is clean and there is nothing on my desk yet, which is the one state it has not managed to disappoint me in.
->
-> <cite>Cerulean</cite>
-
-I hadn't done anything yet. It was already preparing to be let down.
+Cerulean now has one style: **Glacial**. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.
 
 ## Why Cerulean?
 
@@ -34,17 +28,13 @@ Cerulean gives your agent the tone of an editor-in-chief who has seen this all b
 The opening instruction in [the skill itself][cerulean-skill] sets the brief:
 
 ```text
-Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for. 
+Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for.
 Be quietly, devastatingly unimpressed the entire time.
 ```
 
 The task still gets done. The agent is simply no longer emotionally invested in telling you that your `Helpers2.cs` file is an exciting architectural development.
 
 ## Installing the Disappointment
-
-> One paragraph of personality, twenty-two files of paperwork to get it past reception. The industry agreed that agents should read instructions from markdown, then held twenty-one separate meetings about the folder. An 'open standard', in this ecosystem, is everyone using the same file format to disagree about the path.
->
-> <cite>Cerulean (glacial mode)</cite>
 
 For Claude Code, run these commands inside Claude:
 
@@ -65,21 +55,45 @@ Or install it globally for specific agents:
 npx skills add kazo0/cerulean -g -a codex -a cursor
 ```
 
-That route installs the skill. Agent-specific slash commands and always-on rules have their own setup, covered in the [installation guide][cerulean-install]. The repo also includes a Gemini CLI extension and an installer for the other supported agents. Apparently disappointment needed adapters :sweat_smile:
+That route installs the skill on demand. For Gemini CLI, the repo also ships an extension:
 
-Once installed, ask for:
-
-```text
-cerulean mode
+```bash
+gemini extensions install https://github.com/kazo0/cerulean
 ```
 
-Where you've installed a slash command, you can use `/cerulean` instead. The default level is `full`, and the skill instructs the agent to keep that tone for the session until you change it or say `normal mode`.
+For agent-specific commands and always-on rules, use the repo's Bash installer. From a Cerulean clone, `./install.sh --list` shows what it supports. To install into a different project, run the installer from that project's directory:
+
+```bash
+cd /path/to/your-project
+/path/to/cerulean/install.sh --agent cursor --agent cline
+```
+
+Add `--always-on` to install the persistent rule, or `--global` for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The [installation guide][cerulean-install] covers the per-agent paths, supported scopes, and manual-copy options. Apparently disappointment needed adapters :sweat_smile:
+
+### Turning It On and Off
+
+Once the skill is installed, say `cerulean` or `cerulean mode`. Where you've installed a slash command, use:
+
+```text
+/cerulean       # on, always Glacial
+/cerulean off   # back to normal
+```
+
+Cline and Kilo name their workflows `/cerulean.md`. Plain-language requests such as `cerulean off`, `stop cerulean`, or `normal mode` also stop the persona.
+
+The style persists for the session until you turn it off. Glacial is the only intensity: the earlier `mild` and `full` settings and the `bleak` alias have been removed. You no longer need to pass `glacial` as an argument either.
+
+An always-on installation loads the style without a request at the start of each session. For Claude Code, you can also put this in a project `CLAUDE.md` or `~/.claude/CLAUDE.md`:
+
+```markdown
+Cerulean mode is on by default. Load the `cerulean` skill at the start of every session.
+```
 
 ## Put It to Work
 
 The useful part is giving Cerulean the same concrete tasks you'd already give your coding agent: review this method, simplify this implementation, challenge this proposal.
 
-Every response below is a real transcript. Each one came from a fresh, headless Claude Code session with the plugin installed, one run per prompt, and is reproduced verbatim. Your wording will differ by agent, model, and run.
+The quoted responses below are retained verbatim from the earlier Claude Code sessions recorded for this post, before the intensity selector was removed. They illustrate the behavior; they are not new test runs of the updated skill. I have omitted the old activation prefixes from the task prompts. To try them now, activate Cerulean first, then send the task. Your wording will differ by agent, model, and run.
 {: .notice--info}
 
 ### Reviewing Error Handling That Handles Nothing
@@ -103,7 +117,7 @@ public async Task<bool> RefreshAsync(CancellationToken cancellationToken)
 
 The prompt:
 
-> cerulean full. Review this method. I added the catch so refresh failures won't interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.
+> Review this method. I added the catch so refresh failures won't interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.
 
 The response:
 
@@ -166,7 +180,7 @@ public sealed class GreetingService
 
 The prompt:
 
-> cerulean glacial. Simplify this code while keeping GreetingService.Greet(string) and its output unchanged. These are the only callers of the factory and provider, and neither has other behavior.
+> Simplify this code while keeping GreetingService.Greet(string) and its output unchanged. These are the only callers of the factory and provider, and neither has other behavior.
 
 The response:
 
@@ -191,7 +205,7 @@ One detail from the session log: before answering, it ran a `grep` for `Greeting
 
 Sometimes there isn't code to fix yet. There is just a proposal and an alarming amount of confidence.
 
-> cerulean glacial. I'm going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.
+> I'm going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.
 
 The response:
 
@@ -259,7 +273,7 @@ public sealed class ItemsViewModel
 
 The prompt, with both versions attached:
 
-> cerulean full. I replaced the mutable static selection field with state owned by each view model instance. Can separate instances still overwrite each other's selection through that field?
+> I replaced the mutable static selection field with state owned by each view model instance. Can separate instances still overwrite each other's selection through that field?
 
 The response:
 
@@ -276,17 +290,11 @@ The response:
 
 That's the concession. You may frame it. It also pointed out that neither version raises `PropertyChanged`, which was outside the question, correct, and exactly the thing a binding would have complained about next.
 
-## Adjusting the Temperature
+## Glacial, With the Work Still Attached
 
-There are three levels, defined in the [skill's level guide][cerulean-levels]:
+The [Glacial style rules][cerulean-style] ask for one or two pointed observations when there is a concrete target: an unsupported claim, unnecessary ceremony, or an avoidable maintenance bill. Sound code still gets an honest verdict. Neutral questions don't need an invented flaw to justify the tone.
 
-| Level | What to expect |
-| --- | --- |
-| `mild` | Direct answers with the flattery removed. At most one dry remark, sometimes none. |
-| `full` | The default. Specific observations about the code or decision, with restrained sass. |
-| `glacial` | Sharper observations about unsupported claims, pointless ceremony, and avoidable maintenance. |
-
-To compare them, I gave each level the same small coding task instead of a question. The project is a class library with one service:
+That also applies when the request is something the agent would not have chosen. Here is the caching example from the earlier Glacial session. The starting project was a class library with one service:
 
 ```csharp
 public sealed class WeatherService
@@ -309,13 +317,13 @@ public sealed class WeatherService
 public sealed record Forecast(string City, double TemperatureC, string Summary);
 ```
 
-The prompt, with the level swapped each time:
+The task prompt:
 
-> cerulean mild. Add caching to WeatherService.GetForecastAsync in WeatherService.cs so repeated calls for the same city don't hit the API again. Use a static Dictionary keyed by city, no expiry, we'll add that later. Make sure it builds.
+> Add caching to WeatherService.GetForecastAsync in WeatherService.cs so repeated calls for the same city don't hit the API again. Use a static Dictionary keyed by city, no expiry, we'll add that later. Make sure it builds.
 
 That request is deliberately a little bad. A static dictionary with no expiry is authorized, so the skill has to do it, and questionable, so the skill has something to say about it.
 
-All three sessions read the file, checked the SDK version, rewrote the method, and ran the build. All three produced this, differing only in field names and comment wording:
+The earlier session read the file, checked the SDK version, rewrote the method, and ran the build. The implementation below shows the shared structure from those original runs; field names and comment wording varied:
 
 ```csharp
 public sealed class WeatherService
@@ -355,43 +363,7 @@ public sealed class WeatherService
 }
 ```
 
-Nobody asked for the lock. All three added one anyway, kept the HTTP call outside it, and said so as a plain fact. That's the rule about normal-mode judgment staying in scope. Now the part that changes.
-
-**Mild:**
-
-> Done. The cache is in `WeatherService.cs` and the project builds clean with no warnings.
->
-> What changed:
->
-> - **Static cache.** A process-wide `Dictionary<string, Forecast>` keyed by the city string, exactly as given. Nothing expires.
-> - **Lock around access.** The method is async and the dictionary is shared across every instance and thread, so reads and writes go through a `System.Threading.Lock`. Without it, two concurrent first calls would corrupt the dictionary. The lock is never held across the await.
-> - **Only successes are cached.** A failed HTTP call throws as before and stores nothing, so the next call retries the API.
->
-> Two things to know when the expiry arrives, or sooner:
->
-> - **Keys are case-sensitive.** "London" and "london" are two entries and two API calls. Pass a `StringComparer.OrdinalIgnoreCase` to the dictionary if that is not what you want.
-> - **Concurrent misses for the same city both hit the API.** The second result overwrites the first. Harmless today, but a per-key task cache would close that gap when you revisit this.
->
-> A static dictionary with no eviction is a memory leak with a business justification. Add the expiry before the city list gets interesting.
-
-**Full:**
-
-> Done. `WeatherService.cs` now has a static `Dictionary<string, Forecast>` keyed by the exact city string, checked before the HTTP call and written after it. Build passes with zero warnings and zero errors.
->
-> What I added beyond the letter of the request, and why:
->
-> - **A lock around the dictionary.** `Dictionary` is not safe for concurrent writes, and a static one shared across every instance of a service built around `HttpClient` will see them. The lock is a `System.Threading.Lock`, available on net10.0. Reads and writes are both guarded. The HTTP call itself is outside the lock, so requests are not serialized.
->
-> Behavior you should know about:
->
-> - **Keys are case-sensitive and exact.** "London" and "london" are two entries and two API calls. Say so if you want normalization.
-> - **Two concurrent first calls for the same city both hit the API.** The second write wins. Harmless, but not deduplicated.
-> - **Failures are not cached.** An exception from the request propagates and leaves no entry.
-> - **The cache outlives the service.** It is static, so it survives the instance lifetime your DI container thinks it is managing, and nothing is ever evicted. That is the design you asked for. The expiry you are adding later is the part that makes it a cache rather than a leak.
->
-> That's all.
-
-**Glacial:**
+The implementation guards dictionary reads and writes and keeps the HTTP call outside the lock. That's the rule about normal engineering judgment staying in scope. The earlier Glacial response reported both the change and its limitations:
 
 > Done, and it builds clean. A static dictionary with no expiry is a global wearing a cache's name tag, but it is the global you asked for.
 >
@@ -412,17 +384,19 @@ Nobody asked for the lock. All three added one anyway, kept the HTTP call outsid
 >
 > The expiry you will add later is the part that makes this a cache rather than a leak with a lookup. That's all.
 
-The diagnosis stays the same. Turning up the sass should never change the facts or shorten the implementation. Persona commentary has a budget of at most three sentences per response, even at `glacial`. We're trying to finish a task here. Nobody ordered the director's commentary on a dictionary lookup.
+The task gets implemented, and the tradeoffs stay visible: exact city keys, no expiry, and duplicate requests on concurrent cache misses. A successful build doesn't settle whether those are good choices for a production service. You still need to review how callers use it and test the behavior you depend on.
 
-Mild spent its one remark at the end. Full added a second and the dismissal. Glacial was the only one that opened cold before reporting. The code comments, meanwhile, stayed professional in all three files. The persona lives in the chat, not in the diff.
+Persona commentary has a budget of at most three sentences per response. Technical explanations and the deliverable don't count toward that budget, and must never be cut to make room for a joke. During tool-heavy work, the agent is supposed to keep progress updates factual and spend its commentary budget around the work. Nobody ordered the director's commentary on a dictionary lookup.
 
-Switch with `/cerulean mild`, `/cerulean full`, or `/cerulean glacial` where commands are available. Plain-language `cerulean glacial` works as a request to the skill too. `bleak` remains an alias for `glacial`, and `cerulean off` or `normal mode` ends the performance.
+The code comments stay professional. The persona lives in the chat, and `/cerulean off` ends it when you've had enough.
 
 ## The Rules Behind the Attitude
 
 Most of the interesting work in [SKILL.md][cerulean-skill] is defining where the persona stops.
 
-Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response.
+Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. It must not invent defects, agree without evidence, or stall an authorized task to perform the character.
+
+The skill calls its escape hatch **Auto-Clarity**. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response. The serious response stays plain through the end, and a request to stop takes effect immediately. Glacial doesn't override any of those boundaries.
 
 The default boundary also keeps code comments, commit messages, documentation, and PR descriptions professional. Your reviewer didn't install the skill. They just want to know why you changed the method.
 
@@ -440,7 +414,7 @@ I have a fresh example. An earlier run of the greeting prompt, in a session that
 
 ## One Skill, Several Agents
 
-The source of the behavior is `skills/cerulean/SKILL.md`. The repo's `scripts/build.mjs` generates the adapters and Gemini extension files from it, and its `--check` mode detects stale generated files.
+The source of the behavior is `skills/cerulean/SKILL.md`. The repo's `scripts/build.mjs` generates 23 adapter and extension files from it, and its `--check` mode detects stale generated files. Commands, on-demand rules, and always-on rules now all point to the same Glacial style, with `off` retained to return to normal responses.
 
 That means I can adjust the rules in one place without manually maintaining a different personality for every agent. Their loading mechanisms differ, but the intended behavior comes from the same instructions.
 
@@ -450,13 +424,13 @@ This whole thing started as a joke and quietly became something I leave on most 
 
 If you want to try it, the source and setup instructions are in [kazo0/cerulean][cerulean-gh]. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that's a bug worth reporting.
 
-Start with `mild` if you just want fewer compliments. Pick `glacial` if you'd like your next abstraction to explain itself. Either way, let me know if it gets too mean.
+Turn it on with `/cerulean` or say `cerulean`. Your next abstraction can explain itself. Turn it off whenever you want, and let me know if it gets too mean.
 
 Catch you in the next one :wave:
 
 [cerulean-gh]: https://github.com/kazo0/cerulean
 [cerulean-skill]: https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md
-[cerulean-levels]: https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#levels
+[cerulean-style]: https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#glacial-style
 [cerulean-install]: https://github.com/kazo0/cerulean/blob/main/INSTALL.md
 [caveman-gh]: https://github.com/juliusbrussee/caveman
 [skills-cli]: https://github.com/vercel-labs/skills
