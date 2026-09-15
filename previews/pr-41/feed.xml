@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-41/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-41/" rel="alternate" type="text/html" /><updated>2026-09-14T20:50:00+00:00</updated><id>https://kazo0.dev/previews/pr-41/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Cerulean: Your Agent Is Not Impressed</title><link href="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html" rel="alternate" type="text/html" title="Cerulean: Your Agent Is Not Impressed" /><published>2026-09-13T00:00:00+00:00</published><updated>2026-09-13T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill</id><content type="html" xml:base="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html"><![CDATA[<p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-41/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-41/" rel="alternate" type="text/html" /><updated>2026-09-15T01:50:28+00:00</updated><id>https://kazo0.dev/previews/pr-41/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Cerulean: Your Agent Is Not Impressed</title><link href="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html" rel="alternate" type="text/html" title="Cerulean: Your Agent Is Not Impressed" /><published>2026-09-13T00:00:00+00:00</published><updated>2026-09-13T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill</id><content type="html" xml:base="https://kazo0.dev/previews/pr-41/uno-general/2026/09/13/cerulean-agent-skill.html"><![CDATA[<p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.</p>
 
 <p>Naturally, my next contribution to this ecosystem was to make the agent disappointed in me.</p>
 
@@ -6,7 +6,7 @@
 
 <p>I don’t need a standing ovation for renaming a variable. I need to know whether I broke the build.</p>
 
-<p>Cerulean now has one style: <strong>Glacial</strong>. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.</p>
+<p>Cerulean has one style: <strong>Glacial</strong>. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.</p>
 
 <h2 id="why-cerulean">Why Cerulean?</h2>
 
@@ -27,6 +27,12 @@ Be quietly, devastatingly unimpressed the entire time.
 <p>The task still gets done. The agent is simply no longer emotionally invested in telling you that your <code class="language-plaintext highlighter-rouge">Helpers2.cs</code> file is an exciting architectural development.</p>
 
 <h2 id="installing-the-disappointment">Installing the Disappointment</h2>
+
+<blockquote>
+  <p>One paragraph of personality, twenty-two files of paperwork to get it past reception. The industry agreed that agents should read instructions from markdown, then held twenty-one separate meetings about the folder. An ‘open standard’, in this ecosystem, is everyone using the same file format to disagree about the path.</p>
+
+  <p><cite>Cerulean, on the state of agent skill management</cite></p>
+</blockquote>
 
 <p>For Claude Code, run these commands inside Claude:</p>
 
@@ -62,7 +68,7 @@ Be quietly, devastatingly unimpressed the entire time.
 /path/to/cerulean/install.sh <span class="nt">--agent</span> cursor <span class="nt">--agent</span> cline
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>Add <code class="language-plaintext highlighter-rouge">--always-on</code> to install the persistent rule, or <code class="language-plaintext highlighter-rouge">--global</code> for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a> covers the per-agent paths, supported scopes, and manual-copy options. Apparently disappointment needed adapters :sweat_smile:</p>
+<p>Add <code class="language-plaintext highlighter-rouge">--always-on</code> to install the persistent rule, or <code class="language-plaintext highlighter-rouge">--global</code> for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a> covers the per-agent paths, supported scopes, and manual-copy options.</p>
 
 <h3 id="turning-it-on-and-off">Turning It On and Off</h3>
 
@@ -70,13 +76,11 @@ Be quietly, devastatingly unimpressed the entire time.
 
 <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>/cerulean       # on, always Glacial
+</pre></td><td class="rouge-code"><pre>/cerulean       # on, always glacial
 /cerulean off   # back to normal
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>Cline and Kilo name their workflows <code class="language-plaintext highlighter-rouge">/cerulean.md</code>. Plain-language requests such as <code class="language-plaintext highlighter-rouge">cerulean off</code>, <code class="language-plaintext highlighter-rouge">stop cerulean</code>, or <code class="language-plaintext highlighter-rouge">normal mode</code> also stop the persona.</p>
-
-<p>The style persists for the session until you turn it off. Glacial is the only intensity: the earlier <code class="language-plaintext highlighter-rouge">mild</code> and <code class="language-plaintext highlighter-rouge">full</code> settings and the <code class="language-plaintext highlighter-rouge">bleak</code> alias have been removed. You no longer need to pass <code class="language-plaintext highlighter-rouge">glacial</code> as an argument either.</p>
 
 <p>An always-on installation loads the style without a request at the start of each session. For Claude Code, you can also put this in a project <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> or <code class="language-plaintext highlighter-rouge">~/.claude/CLAUDE.md</code>:</p>
 
@@ -202,29 +206,7 @@ Be quietly, devastatingly unimpressed the entire time.
 
 <p>The code comments stay professional. The persona lives in the chat, and <code class="language-plaintext highlighter-rouge">/cerulean off</code> ends it when you’ve had enough.</p>
 
-<h2 id="the-rules-behind-the-attitude">The Rules Behind the Attitude</h2>
-
-<p>Most of the interesting work in <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md">SKILL.md</a> is defining where the persona stops.</p>
-
-<p>Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. It must not invent defects, agree without evidence, or stall an authorized task to perform the character.</p>
-
-<p>The skill calls its escape hatch <strong>Auto-Clarity</strong>. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response. The serious response stays plain through the end, and a request to stop takes effect immediately. Glacial doesn’t override any of those boundaries.</p>
-
-<p>The default boundary also keeps code comments, commit messages, documentation, and PR descriptions professional. Your reviewer didn’t install the skill. They just want to know why you changed the method.</p>
-
-<p>For example, a commit message for the refresh fix could be:</p>
-
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>fix(refresh): report failures and preserve cancellation
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>No closing insult. No fashion metaphor in the XML documentation. Save that energy for explaining why the interface has one implementation and fourteen factories.</p>
-
-<p>These are instructions to a model, so the tone doesn’t prove the answer is correct. You still need to review the diff, build, and run the relevant checks. A confidently delivered mistake remains a mistake, even if it has excellent posture.</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
-<p>This whole thing started as a joke and quietly became something I leave on most days. My Uno skills point agents toward domain knowledge and tools. Cerulean just tells them how to deliver the verdict once they’ve done the work. And honestly, I trust a “keep it” a lot more when the agent visibly didn’t want to say it.</p>
 
 <p>If you want to try it, the source and setup instructions are in <a href="https://github.com/kazo0/cerulean">kazo0/cerulean</a>. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that’s a bug worth reporting.</p>
 
