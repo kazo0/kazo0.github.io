@@ -15,7 +15,7 @@ Meet [Cerulean][cerulean-gh], an agent skill I created for anyone who has heard 
 
 I don't need a standing ovation for renaming a variable. I need to know whether I broke the build.
 
-Cerulean now has one style: **Glacial**. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.
+Cerulean has one style: **Glacial**. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.
 
 ## Why Cerulean?
 
@@ -35,6 +35,10 @@ Be quietly, devastatingly unimpressed the entire time.
 The task still gets done. The agent is simply no longer emotionally invested in telling you that your `Helpers2.cs` file is an exciting architectural development.
 
 ## Installing the Disappointment
+
+> One paragraph of personality, twenty-two files of paperwork to get it past reception. The industry agreed that agents should read instructions from markdown, then held twenty-one separate meetings about the folder. An 'open standard', in this ecosystem, is everyone using the same file format to disagree about the path.
+>
+> <cite>Cerulean, on the state of agent skill management</cite>
 
 For Claude Code, run these commands inside Claude:
 
@@ -68,20 +72,18 @@ cd /path/to/your-project
 /path/to/cerulean/install.sh --agent cursor --agent cline
 ```
 
-Add `--always-on` to install the persistent rule, or `--global` for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The [installation guide][cerulean-install] covers the per-agent paths, supported scopes, and manual-copy options. Apparently disappointment needed adapters :sweat_smile:
+Add `--always-on` to install the persistent rule, or `--global` for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The [installation guide][cerulean-install] covers the per-agent paths, supported scopes, and manual-copy options.
 
 ### Turning It On and Off
 
 Once the skill is installed, say `cerulean` or `cerulean mode`. Where you've installed a slash command, use:
 
 ```text
-/cerulean       # on, always Glacial
+/cerulean       # on, always glacial
 /cerulean off   # back to normal
 ```
 
 Cline and Kilo name their workflows `/cerulean.md`. Plain-language requests such as `cerulean off`, `stop cerulean`, or `normal mode` also stop the persona.
-
-The style persists for the session until you turn it off. Glacial is the only intensity: the earlier `mild` and `full` settings and the `bleak` alias have been removed. You no longer need to pass `glacial` as an argument either.
 
 An always-on installation loads the style without a request at the start of each session. For Claude Code, you can also put this in a project `CLAUDE.md` or `~/.claude/CLAUDE.md`:
 
@@ -173,29 +175,7 @@ Persona commentary has a budget of at most three sentences per response. Technic
 
 The code comments stay professional. The persona lives in the chat, and `/cerulean off` ends it when you've had enough.
 
-## The Rules Behind the Attitude
-
-Most of the interesting work in [SKILL.md][cerulean-skill] is defining where the persona stops.
-
-Criticism targets decisions and code. Personal attacks are out. If the agent made the mistake, it needs to own the mistake plainly. It must not invent defects, agree without evidence, or stall an authorized task to perform the character.
-
-The skill calls its escape hatch **Auto-Clarity**. Security warnings, destructive actions, signs of distress, and requests for clarification all call for a plain professional response. The serious response stays plain through the end, and a request to stop takes effect immediately. Glacial doesn't override any of those boundaries.
-
-The default boundary also keeps code comments, commit messages, documentation, and PR descriptions professional. Your reviewer didn't install the skill. They just want to know why you changed the method.
-
-For example, a commit message for the refresh fix could be:
-
-```text
-fix(refresh): report failures and preserve cancellation
-```
-
-No closing insult. No fashion metaphor in the XML documentation. Save that energy for explaining why the interface has one implementation and fourteen factories.
-
-These are instructions to a model, so the tone doesn't prove the answer is correct. You still need to review the diff, build, and run the relevant checks. A confidently delivered mistake remains a mistake, even if it has excellent posture.
-
 ## Conclusion
-
-This whole thing started as a joke and quietly became something I leave on most days. My Uno skills point agents toward domain knowledge and tools. Cerulean just tells them how to deliver the verdict once they've done the work. And honestly, I trust a "keep it" a lot more when the agent visibly didn't want to say it.
 
 If you want to try it, the source and setup instructions are in [kazo0/cerulean][cerulean-gh]. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that's a bug worth reporting.
 
