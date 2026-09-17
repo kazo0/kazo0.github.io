@@ -1,6 +1,9 @@
 ---
-title: "MSAL Auth in Uno Platform with Uno.Extensions"
-category: uno-general
+title: "Uno.Extensions: MSAL Auth Across Platforms"
+category: uno-extensions
+header:
+  teaser: /assets/images/uno-extensions-hero.png
+  og_image: /assets/images/uno-extensions-hero.png
 tags: [uno-platform, uno, msal, authentication, entra, uno-extensions, security]
 ---
 
