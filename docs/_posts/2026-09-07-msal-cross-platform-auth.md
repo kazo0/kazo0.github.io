@@ -10,7 +10,7 @@ Authentication has a familiar checklist: sign in, get a token, call an API, refr
 
 The [Authentication.MsalExtensionsDemo sample][gh-msalext] walks through that flow and calls Microsoft Graph with the resulting access token. This post follows its configuration, the platform callbacks you still need to wire up, and where the tokens live.
 
-This post follows Uno.Extensions `main` and the sample on `master`, checked September 7, 2026. The sample uses prerelease packages: Uno.Sdk `6.8.0-dev.23` and Uno.Extensions `7.4.0-dev.29`. Start with its pinned versions when following along.
+This post follows Uno.Extensions `main` and the sample on `master`, checked September 16, 2026. The sample uses prerelease packages: Uno.Sdk `6.8.0-dev.23` and Uno.Extensions `7.4.0-dev.29`. `main` has since moved to `8.0-dev` for the Uno 7.0 line, while the 7.4 packages continue on `servicing/7.4`; the MSAL provider code is identical on both. Start with the sample's pinned versions when following along.
 {: .notice--info}
 
 ## The Entra Setup
@@ -33,7 +33,7 @@ The redirect URI is where Entra sends the authorization response after sign-in:
 | iOS | `msauth.{BundleId}://auth` | iOS/macOS |
 | WebAssembly | `http://localhost:5000/authentication-callback` | Single-page application |
 
-The Android entries are custom URIs under **Mobile and desktop**, matching the sample's system-browser flow. The portal's Android platform option produces a different URI based on the package name and signing certificate.
+The Android entry is a custom URI under **Mobile and desktop**, matching the sample's system-browser flow. The portal's Android platform option produces a different URI based on the package name and signing certificate.
 
 WebAssembly needs **Single-page application** registration so the browser can redeem the authorization code with CORS. Use your actual hosting origin outside local development, with HTTPS. The sample displays the redirect URI to register; copy it from there. Entra [ignores the port when matching `localhost` URIs][redirect-rules], but the path still matters.
 
@@ -63,7 +63,7 @@ var builder = this.CreateBuilder(args)
 #if DEBUG
         .UseEnvironment(Environments.Development)
 #endif
-        .UseConfiguration(config => config.EmbeddedSource<App>())
+        .UseConfiguration(configure: config => config.EmbeddedSource<App>())
         .UseAuthentication(auth => auth
             .AddMsal(window, name: "MsalAuthentication")));
 ```
@@ -81,7 +81,7 @@ await Auth.LogoutAsync(dispatcher);  // clear local sign-in state
 var signedIn = await Auth.IsAuthenticated();
 ```
 
-These calls return booleans; handle their results, cancellation, and exceptions in your UI. `IsAuthenticated()` checks whether Uno's token cache has entries, not whether a token is still valid at the server. `RefreshAsync()` attempts silent renewal for an existing session; it never opens a browser and is not a background refresh timer. Current `main` preserves cached tokens on transient refresh failures, so its result alone is not proof that a new token was obtained.
+These calls return booleans; handle their results, cancellation, and exceptions in your UI. `IsAuthenticated()` checks whether Uno's token cache has entries, not whether a token is still valid at the server. `RefreshAsync()` attempts silent renewal for an existing session; it never opens a browser and is not a background refresh timer. It checks `IsAuthenticated()` first, so it returns `false` without calling MSAL when Uno's token cache is empty, even if MSAL still has a cached account. `LoginAsync()` is the call that picks that account up silently. Current `main` preserves cached tokens on transient refresh failures, so its result alone is not proof that a new token was obtained.
 
 `LogoutAsync()` performs **local sign-out**: it clears the cached accounts and tokens, but leaves the identity provider's browser session intact. The next interactive sign-in may complete without asking for credentials again.
 
@@ -219,6 +219,7 @@ Catch you in the next one :wave:
 
 - [Authentication.MsalExtensionsDemo sample (Uno.Extensions)][gh-msalext]
 - [Uno.Extensions MSAL Authentication how-to][msal-howto]
+- [The same how-to on Uno.Extensions main][msal-howto-main], which covers the newer settings in this post until the published docs catch up
 - [MSAL provider implementation on Uno.Extensions main][msal-source]
 
 [gh-msaldemo]: https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalDemo
@@ -228,6 +229,7 @@ Catch you in the next one :wave:
 [entra]: https://entra.microsoft.com/
 [uno-discord]: https://platform.uno/discord
 [msal-howto]: https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Authentication/HowTo-MsalAuthentication.html
+[msal-howto-main]: https://github.com/unoplatform/uno.extensions/blob/main/doc/Learn/Authentication/HowTo-MsalAuthentication.md
 [msal-source]: https://github.com/unoplatform/uno.extensions/blob/main/src/Uno.Extensions.Authentication.MSAL/MsalAuthenticationProvider.cs
 [uno-pr]: https://github.com/unoplatform/uno/pull/24055
 [public-client-flows]: https://learn.microsoft.com/troubleshoot/entra/entra-id/app-integration/confidential-client-application-authentication-error-aadsts7000218#how-microsoft-entra-id-determines-the-client-type
