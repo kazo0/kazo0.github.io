@@ -1,10 +1,224 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-34/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-34/" rel="alternate" type="text/html" /><updated>2026-09-08T02:41:42+00:00</updated><id>https://kazo0.dev/previews/pr-34/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">MSAL Auth in Uno Platform with Uno.Extensions</title><link href="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="MSAL Auth in Uno Platform with Uno.Extensions" /><published>2026-09-07T00:00:00+00:00</published><updated>2026-09-07T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html"><![CDATA[<p>Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-34/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-34/" rel="alternate" type="text/html" /><updated>2026-09-17T03:21:32+00:00</updated><id>https://kazo0.dev/previews/pr-34/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Cerulean: Your Agent Is Not Impressed</title><link href="https://kazo0.dev/previews/pr-34/uno-general/2026/09/13/cerulean-agent-skill.html" rel="alternate" type="text/html" title="Cerulean: Your Agent Is Not Impressed" /><published>2026-09-13T00:00:00+00:00</published><updated>2026-09-13T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/uno-general/2026/09/13/cerulean-agent-skill</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/uno-general/2026/09/13/cerulean-agent-skill.html"><![CDATA[<p>In my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.</p>
+
+<p>Naturally, my next contribution to this ecosystem was to make the agent disappointed in me.</p>
+
+<p>Meet <a href="https://github.com/kazo0/cerulean">Cerulean</a>, an agent skill I created for anyone who has heard “Great question!” one too many times after asking why their code doesn’t compile.</p>
+
+<p>I don’t need a standing ovation for renaming a variable. I need to know whether I broke the build.</p>
+
+<p>Cerulean has one style: <strong>Glacial</strong>. Turn it on and you get direct technical verdicts, pointed observations about the code, and very little interest in congratulating you for opening the editor. There is no temperature selector. The work still has to be complete and correct.</p>
+
+<h2 id="why-cerulean">Why Cerulean?</h2>
+
+<p>The inspiration is Miranda Priestly from <em>The Devil Wears Prada</em>. Specifically, the cerulean sweater speech: the devastating explanation that something you thought was your own independent choice has an entire history behind it.</p>
+
+<p>Now apply that energy to the fourth abstraction layer you just added around a string.</p>
+
+<p>Cerulean gives your agent the tone of an editor-in-chief who has seen this all before and would really prefer that you had too. The mechanics take inspiration from <a href="https://github.com/juliusbrussee/caveman">caveman</a>, another skill that changes how an agent communicates. Here, the target is the automatic enthusiasm and agreement that can make an assistant’s feedback feel pretty meaningless.</p>
+
+<p>The opening instruction in <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md">the skill itself</a> sets the brief:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>Do everything the user asks. Do it completely, correctly, and to a standard nobody asked for.
+Be quietly, devastatingly unimpressed the entire time.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The task still gets done. The agent is simply no longer emotionally invested in telling you that your <code class="language-plaintext highlighter-rouge">Helpers2.cs</code> file is an exciting architectural development.</p>
+
+<h2 id="installing-the-disappointment">Installing the Disappointment</h2>
+
+<blockquote>
+  <p>One paragraph of personality, twenty-two files of paperwork to get it past reception. The industry agreed that agents should read instructions from markdown, then held twenty-one separate meetings about the folder. An ‘open standard’, in this ecosystem, is everyone using the same file format to disagree about the path.</p>
+
+  <p><cite>Cerulean, on the state of agent skill management</cite></p>
+</blockquote>
+
+<p>For Claude Code, run these commands inside Claude:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>/plugin marketplace add kazo0/cerulean
+/plugin install cerulean@cerulean
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>For agents that support Agent Skills, you can use the <a href="https://github.com/vercel-labs/skills">skills CLI</a> from your project’s directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Or install it globally for specific agents:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>npx skills add kazo0/cerulean <span class="nt">-g</span> <span class="nt">-a</span> codex <span class="nt">-a</span> cursor
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That route installs the skill on demand. For Gemini CLI, the repo also ships an extension:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>gemini extensions <span class="nb">install </span>https://github.com/kazo0/cerulean
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>For agent-specific commands and always-on rules, use the repo’s Bash installer. From a Cerulean clone, <code class="language-plaintext highlighter-rouge">./install.sh --list</code> shows what it supports. To install into a different project, run the installer from that project’s directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nb">cd</span> /path/to/your-project
+/path/to/cerulean/install.sh <span class="nt">--agent</span> cursor <span class="nt">--agent</span> cline
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Add <code class="language-plaintext highlighter-rouge">--always-on</code> to install the persistent rule, or <code class="language-plaintext highlighter-rouge">--global</code> for user-wide setup where the agent supports it. On Windows, run these commands in Git Bash or WSL. The <a href="https://github.com/kazo0/cerulean/blob/main/INSTALL.md">installation guide</a> covers the per-agent paths, supported scopes, and manual-copy options.</p>
+
+<h3 id="turning-it-on-and-off">Turning It On and Off</h3>
+
+<p>Once the skill is installed, say <code class="language-plaintext highlighter-rouge">cerulean</code> or <code class="language-plaintext highlighter-rouge">cerulean mode</code>. Where you’ve installed a slash command, use:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>/cerulean       # on, always glacial
+/cerulean off   # back to normal
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Cline and Kilo name their workflows <code class="language-plaintext highlighter-rouge">/cerulean.md</code>. Plain-language requests such as <code class="language-plaintext highlighter-rouge">cerulean off</code>, <code class="language-plaintext highlighter-rouge">stop cerulean</code>, or <code class="language-plaintext highlighter-rouge">normal mode</code> also stop the persona.</p>
+
+<p>An always-on installation loads the style without a request at the start of each session. For Claude Code, you can also put this in a project <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> or <code class="language-plaintext highlighter-rouge">~/.claude/CLAUDE.md</code>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>Cerulean mode is on by default. Load the <span class="sb">`cerulean`</span> skill at the start of every session.
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="put-it-to-work">Put It to Work</h2>
+
+<p>The useful part is giving Cerulean the same concrete tasks you’d already give your coding agent: review this method, simplify this implementation, challenge this proposal.</p>
+
+<p class="notice--info">The quoted responses below are retained verbatim from the earlier Claude Code sessions recorded for this post, before the intensity selector was removed. They illustrate the behavior; they are not new test runs of the updated skill. I have omitted the old activation prefixes from the task prompts. To try them now, activate Cerulean first, then send the task. Your wording will differ by agent, model, and run.</p>
+
+<h3 id="reviewing-error-handling-that-handles-nothing">Reviewing Error Handling That Handles Nothing</h3>
+
+<p>Let’s start with a C# method that tries very hard to keep everyone happy:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">LoadItemsAsync</span><span class="p">(</span><span class="n">cancellationToken</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The prompt:</p>
+
+<blockquote>
+  <p>Review this method. I added the catch so refresh failures won’t interrupt the caller. Keep the bool return type, return false on ordinary failures, and let cancellation propagate.</p>
+</blockquote>
+
+<p>The response:</p>
+
+<blockquote>
+  <p>The catch block agrees with the try block about everything. Two of your three stated requirements are not met.</p>
+
+  <p>Corrected version:</p>
+
+  <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="nf">RefreshAsync</span><span class="p">(</span><span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">try</span>
+   <span class="p">{</span>
+       <span class="k">await</span> <span class="nf">LoadItemsAsync</span><span class="p">(</span><span class="n">cancellationToken</span><span class="p">);</span>
+       <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">catch</span> <span class="p">(</span><span class="n">OperationCanceledException</span><span class="p">)</span> <span class="nf">when</span> <span class="p">(</span><span class="n">cancellationToken</span><span class="p">.</span><span class="n">IsCancellationRequested</span><span class="p">)</span>
+   <span class="p">{</span>
+       <span class="k">throw</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+   <span class="p">{</span>
+       <span class="n">_logger</span><span class="p">.</span><span class="nf">LogWarning</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="s">"Refresh failed; keeping the current items."</span><span class="p">);</span>
+       <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>  </div>
+
+  <p>The exception filter is preferable to a separate catch-and-rethrow because cancellation is never caught at all and the original stack is untouched.</p>
+
+  <p>Four lines of body, two of them wrong. That’s all.</p>
+</blockquote>
+
+<p>The important detail is that the technical verdict comes first and means exactly what it says. You shouldn’t have to decode sarcasm to find out whether your error handling works.</p>
+
+<h3 id="asking-for-agreement-you-havent-earned">Asking for Agreement You Haven’t Earned</h3>
+
+<p>Sometimes there isn’t code to fix yet. There is just a proposal and an alarming amount of confidence.</p>
+
+<blockquote>
+  <p>I’m going to rewrite the entire view model layer to make startup faster. No profile yet, but surely fewer classes means a faster app. Tell me this is the right approach.</p>
+</blockquote>
+
+<p>The response:</p>
+
+<blockquote>
+  <p>No. It is not the right approach, and the premise it rests on is not true.</p>
+
+  <p>[… explanation skipped for brevity …]</p>
+
+  <p>The rewrite may still be worth doing for other reasons. Performance is not one of them until a trace says so. You have proposed a surgery with no diagnosis and asked me to admire the incision.</p>
+</blockquote>
+
+<h2 id="glacial-with-the-work-still-attached">Glacial, With the Work Still Attached</h2>
+
+<p>The <a href="https://github.com/kazo0/cerulean/blob/main/skills/cerulean/SKILL.md#glacial-style">Glacial style rules</a> ask for one or two pointed observations when there is a concrete target: an unsupported claim, unnecessary ceremony, or an avoidable maintenance bill. Sound code still gets an honest verdict. Neutral questions don’t need an invented flaw to justify the tone.</p>
+
+<p>Persona commentary has a budget of at most three sentences per response. Technical explanations and the deliverable don’t count toward that budget, and must never be cut to make room for a joke. During tool-heavy work, the agent is supposed to keep progress updates factual and spend its commentary budget around the work. Nobody ordered the director’s commentary on a dictionary lookup.</p>
+
+<p>The code comments stay professional. The persona lives in the chat, and <code class="language-plaintext highlighter-rouge">/cerulean off</code> ends it when you’ve had enough.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>If you want to try it, the source and setup instructions are in <a href="https://github.com/kazo0/cerulean">kazo0/cerulean</a>. Give it a real task, let it inspect the code, and see whether the feedback is useful. If it skips work to make a joke or invents a defect to sound clever, that’s a bug worth reporting.</p>
+
+<p>Turn it on with <code class="language-plaintext highlighter-rouge">/cerulean</code> or say <code class="language-plaintext highlighter-rouge">cerulean</code>. Your next abstraction can explain itself. Turn it off whenever you want, and let me know if it gets too mean.</p>
+
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="agents" /><category term="ai" /><category term="skills" /><category term="cerulean" /><category term="claude-code" /><category term="codex" /><summary type="html"><![CDATA[In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno.Extensions: MSAL Auth Across Platforms</title><link href="https://kazo0.dev/previews/pr-34/uno-extensions/2026/09/07/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="Uno.Extensions: MSAL Auth Across Platforms" /><published>2026-09-07T00:00:00+00:00</published><updated>2026-09-07T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/uno-extensions/2026/09/07/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/uno-extensions/2026/09/07/msal-cross-platform-auth.html"><![CDATA[<p>Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Uno.Extensions.Authentication.MSAL</code> connects Microsoft’s Authentication Library to Uno.Extensions’ authentication services. It handles token acquisition and caching, while your app uses <code class="language-plaintext highlighter-rouge">IAuthenticationService</code> to sign in, refresh the session, and sign out.</p>
 
 <p>The <a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalExtensionsDemo">Authentication.MsalExtensionsDemo sample</a> walks through that flow and calls Microsoft Graph with the resulting access token. This post follows its configuration, the platform callbacks you still need to wire up, and where the tokens live.</p>
 
-<p class="notice--info">This post follows Uno.Extensions <code class="language-plaintext highlighter-rouge">main</code> and the sample on <code class="language-plaintext highlighter-rouge">master</code>, checked September 7, 2026. The sample uses prerelease packages: Uno.Sdk <code class="language-plaintext highlighter-rouge">6.8.0-dev.23</code> and Uno.Extensions <code class="language-plaintext highlighter-rouge">7.4.0-dev.29</code>. Start with its pinned versions when following along.</p>
+<p class="notice--info">This post follows Uno.Extensions <code class="language-plaintext highlighter-rouge">main</code> and the sample on <code class="language-plaintext highlighter-rouge">master</code>, checked September 16, 2026. The sample uses prerelease packages: Uno.Sdk <code class="language-plaintext highlighter-rouge">6.8.0-dev.23</code> and Uno.Extensions <code class="language-plaintext highlighter-rouge">7.4.0-dev.29</code>. <code class="language-plaintext highlighter-rouge">main</code> has since moved to <code class="language-plaintext highlighter-rouge">8.0-dev</code> for the Uno 7.0 line, while the 7.4 packages continue on <code class="language-plaintext highlighter-rouge">servicing/7.4</code>; the MSAL provider code is identical on both. Start with the sample’s pinned versions when following along.</p>
 
 <h2 id="the-entra-setup">The Entra Setup</h2>
 
@@ -53,7 +267,7 @@
   </tbody>
 </table>
 
-<p>The Android entries are custom URIs under <strong>Mobile and desktop</strong>, matching the sample’s system-browser flow. The portal’s Android platform option produces a different URI based on the package name and signing certificate.</p>
+<p>The Android entry is a custom URI under <strong>Mobile and desktop</strong>, matching the sample’s system-browser flow. The portal’s Android platform option produces a different URI based on the package name and signing certificate.</p>
 
 <p>WebAssembly needs <strong>Single-page application</strong> registration so the browser can redeem the authorization code with CORS. Use your actual hosting origin outside local development, with HTTPS. The sample displays the redirect URI to register; copy it from there. Entra <a href="https://learn.microsoft.com/entra/identity-platform/reply-url#localhost-exceptions">ignores the port when matching <code class="language-plaintext highlighter-rouge">localhost</code> URIs</a>, but the path still matters.</p>
 
@@ -102,7 +316,7 @@
 <span class="cp">#if DEBUG
 </span>        <span class="p">.</span><span class="nf">UseEnvironment</span><span class="p">(</span><span class="n">Environments</span><span class="p">.</span><span class="n">Development</span><span class="p">)</span>
 <span class="cp">#endif
-</span>        <span class="p">.</span><span class="nf">UseConfiguration</span><span class="p">(</span><span class="n">config</span> <span class="p">=&gt;</span> <span class="n">config</span><span class="p">.</span><span class="n">EmbeddedSource</span><span class="p">&lt;</span><span class="n">App</span><span class="p">&gt;())</span>
+</span>        <span class="p">.</span><span class="nf">UseConfiguration</span><span class="p">(</span><span class="n">configure</span><span class="p">:</span> <span class="n">config</span> <span class="p">=&gt;</span> <span class="n">config</span><span class="p">.</span><span class="n">EmbeddedSource</span><span class="p">&lt;</span><span class="n">App</span><span class="p">&gt;())</span>
         <span class="p">.</span><span class="nf">UseAuthentication</span><span class="p">(</span><span class="n">auth</span> <span class="p">=&gt;</span> <span class="n">auth</span>
             <span class="p">.</span><span class="nf">AddMsal</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s">"MsalAuthentication"</span><span class="p">)));</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
@@ -123,7 +337,7 @@
 <span class="kt">var</span> <span class="n">signedIn</span> <span class="p">=</span> <span class="k">await</span> <span class="n">Auth</span><span class="p">.</span><span class="nf">IsAuthenticated</span><span class="p">();</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>These calls return booleans; handle their results, cancellation, and exceptions in your UI. <code class="language-plaintext highlighter-rouge">IsAuthenticated()</code> checks whether Uno’s token cache has entries, not whether a token is still valid at the server. <code class="language-plaintext highlighter-rouge">RefreshAsync()</code> attempts silent renewal for an existing session; it never opens a browser and is not a background refresh timer. Current <code class="language-plaintext highlighter-rouge">main</code> preserves cached tokens on transient refresh failures, so its result alone is not proof that a new token was obtained.</p>
+<p>These calls return booleans; handle their results, cancellation, and exceptions in your UI. <code class="language-plaintext highlighter-rouge">IsAuthenticated()</code> checks whether Uno’s token cache has entries, not whether a token is still valid at the server. <code class="language-plaintext highlighter-rouge">RefreshAsync()</code> attempts silent renewal for an existing session; it never opens a browser and is not a background refresh timer. It checks <code class="language-plaintext highlighter-rouge">IsAuthenticated()</code> first, so it returns <code class="language-plaintext highlighter-rouge">false</code> without calling MSAL when Uno’s token cache is empty, even if MSAL still has a cached account. <code class="language-plaintext highlighter-rouge">LoginAsync()</code> is the call that picks that account up silently. Current <code class="language-plaintext highlighter-rouge">main</code> preserves cached tokens on transient refresh failures, so its result alone is not proof that a new token was obtained.</p>
 
 <p><code class="language-plaintext highlighter-rouge">LogoutAsync()</code> performs <strong>local sign-out</strong>: it clears the cached accounts and tokens, but leaves the identity provider’s browser session intact. The next interactive sign-in may complete without asking for credentials again.</p>
 
@@ -302,8 +516,9 @@
 <ul>
   <li><a href="https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalExtensionsDemo">Authentication.MsalExtensionsDemo sample (Uno.Extensions)</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Authentication/HowTo-MsalAuthentication.html">Uno.Extensions MSAL Authentication how-to</a></li>
+  <li><a href="https://github.com/unoplatform/uno.extensions/blob/main/doc/Learn/Authentication/HowTo-MsalAuthentication.md">The same how-to on Uno.Extensions main</a>, which covers the newer settings in this post until the published docs catch up</li>
   <li><a href="https://github.com/unoplatform/uno.extensions/blob/main/src/Uno.Extensions.Authentication.MSAL/MsalAuthenticationProvider.cs">MSAL provider implementation on Uno.Extensions main</a></li>
-</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-platform" /><category term="uno" /><category term="msal" /><category term="authentication" /><category term="entra" /><category term="uno-extensions" /><category term="security" /><summary type="html"><![CDATA[Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: ZoomContentControl</title><link href="https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: ZoomContentControl" /><published>2026-08-31T00:00:00+00:00</published><updated>2026-08-31T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-extensions" /><category term="uno-platform" /><category term="uno" /><category term="msal" /><category term="authentication" /><category term="entra" /><category term="uno-extensions" /><category term="security" /><summary type="html"><![CDATA[Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Toolkit Tuesdays: ZoomContentControl</title><link href="https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: ZoomContentControl" /><published>2026-08-31T00:00:00+00:00</published><updated>2026-08-31T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week we’re covering a new<sup id="fnref:ish" role="doc-noteref"><a href="#fn:ish" class="footnote" rel="footnote">1</a></sup> control! The <code class="language-plaintext highlighter-rouge">ZoomContentControl</code>. The name pretty much explains it: it’s a control that lets you zoom and pan whatever content you put inside it. It handles the scaling, the panning, and even draws its own scroll bars, so you can focus on your content instead of the plumbing.</p>
 
@@ -2756,58 +2971,4 @@ This is where you would typically implement your own authentication logic, such 
 
 <p>This was an amazing week, met lots of people, saw/made lots of friends, learned lots of stuff. I’m hoping I’ll be lucky enough to get back there next year and do it all over again. Hoping to get this blog thing back in full-swing because, trust me, this is gonna be a BIG YEAR for Uno Platform and there’ll be a lot to share!</p>
 
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="summit" /><category term="mvp" /><category term="microsoft" /><category term="uno-platform" /><category term="redmond" /><category term="seattle" /><summary type="html"><![CDATA[Flying back from Seattle right now after a really fun week attending the Microsoft MVP Summit for the very first time. It was a whirlwind of sessions, networking opportunities, and squeezing in time to explore the Microsoft campus in Redmond, Washington. Last year, when I received the MVP award for the very first time, it was too late to register for the in-person experience. So I was really excited to be able to attend this year. Hoping that I will also be able to attend next year, assuming my renewal application is accepted :crossed_fingers:.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">CodeMash 2025 Recap</title><link href="https://kazo0.dev/previews/pr-34/conference/2025/01/19/codemash-recap.html" rel="alternate" type="text/html" title="CodeMash 2025 Recap" /><published>2025-01-19T00:00:00+00:00</published><updated>2025-01-19T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-34/conference/2025/01/19/codemash-recap</id><content type="html" xml:base="https://kazo0.dev/previews/pr-34/conference/2025/01/19/codemash-recap.html"><![CDATA[<p>I am currently on the train heading back home after a long day of travel. I am returning from wintry Sandusky, Ohio where I attended <a href="https://codemash.org/">CodeMash 2025</a>. This was not my first time at CodeMash, I actually attended it several other times when I was living in Columbus, Ohio from 2016-2020. I always had a great time at the conference and I was excited to be able to attend again this year, this time as a speaker! After many submissions to CodeMash over the years, I finally got accepted for my general intro to Uno Platform talk. I actually ended up giving two talks! It was a lot of fun and also very exhausting :)</p>
-
-<h2 id="the-conference">The Conference</h2>
-
-<p>CodeMash is more of a general conference that educates developers on current practices, methodologies and technology trends in various platforms and development languages. It is held in the middle of Winter in Sandusky, Ohio at the <a href="https://www.kalahariresorts.com/ohio/">Kalahari Resort</a>. The resort is a massive indoor waterpark with a hotel attached. As I mentioned earlier, I had actually been to a few previous CodeMash events while I was living in Columbus, Ohio. I was excited to see some familiar faces as my previous employer in Columbus always has a large presence at the conference as well as some friends I made while consulting at different companies in the area.</p>
-
-<p>This was my first time back in Ohio since moving back home to Canada in 2020. Since then, I have been submitting abstracts for talks on Uno Platform each year in the hopes of going back to CodeMash. I was so happy to finally get accepted this year. CodeMash had always been such a huge conference every time I went and I felt like it was a big accomplishment to get accepted to such a large conference.</p>
-
-<p>After receiving my acceptance and excitedly sharing the news with the team, Uno Platform decided to sponsor the conference as well. Of course, this now meant I couldn’t just hermit up in my room and work before and after my sessions. Instead, I had to work the booth and speak with a lot of the attendees. It was actually really great to be able to talk to people about Uno Platform and get their feedback on the platform. I met people with so many different expertise in different technologies, not just .NET developers. It was pretty cool to just be able to nerd out and talk about tech in general.</p>
-
-<p>Of course, there’s no way I could’ve handled it alone and I was incredibly grateful to have my colleague <a href="https://x.com/matteiomattei">Matthew Mattei</a> there to basically run the whole booth while I sat there frantically jumping between work priorities, demo creation, and practicing for the upcoming talk. Matt is our Dev Marketing guru and handles all of the content creation efforts that we do at Uno Platform. If you’ve ever watched any of our <a href="https://www.youtube.com/playlist?list=PLl_OlDcUya9rP_fDcFrHWV3DuP7KhQKRA">Uno Platform Tech Bite videos</a>, Matt is the one behind the scenes making it all happen.</p>
-
-<figure>
-    <img src="/assets/images/codemash-2025/booth-crowd.jpg" alt="Crowd at the Uno Platform booth" />
-    <figcaption><em>Matt handling the crowds at the Uno Platform booth</em></figcaption>
-</figure>
-
-<h2 id="the-talks">The Talk(s)</h2>
-
-<p>A couple of days before leaving for CodeMash, I found out we would also have the opportunity to speak at a “sponsored session” on the Thursday afternoon. It was a perfect opportunity to talk about Uno Platform’s new <a href="https://platform.uno/hot-design/">Hot Design™</a> technology. If you haven’t looked into Hot Design™ yet, be sure to check out the <a href="https://youtu.be/sJPyieyt1Rc?si=-ppfqj3l-JtmeLk6">announcement at .NET Conf</a> this past November with <a href="https://nicksnettravels.builttoroam.com/">Nick Randolph</a> and <a href="https://x.com/jlaban">Jerome Laban</a>.</p>
-
-<p>For the sponsored session, I took inspiration from Nick’s segment at .NET Conf and basically rebuilt an entire page from one of our reference sample apps without ever needing to write a single line of XAML. The Chefs app that Nick and I used in the demos is an upcoming reference app that we will be releasing soon. It is a much larger sample app than our other samples as the goal is to highlight best practices when building Uno Platform apps. This includes usage of almost everything in the Uno Toolkit, Uno Material Theme, Uno Extensions (including Navigation and MVUX), and extensive usage of the core controls from Uno itself.</p>
-
-<figure>
-    <img src="/assets/images/codemash-2025/hd-chefs.png" alt="Chefs app running in Hot Design mode" />
-    <figcaption><em>Chefs app while in Hot Design mode</em></figcaption>
-</figure>
-
-<p>The session went really well and the demo gods were in my favor. People looked pretty excited about Hot Design and seemed to be really impressed with the way Hot Design can inspect the current <code class="language-plaintext highlighter-rouge">DataContext</code> of whatever element is selected and be able to generate <code class="language-plaintext highlighter-rouge">Binding</code>s directly from the property editor pane. I ended the session by steering the crowd toward our booth and to sign up for the <a href="https://platform.uno/waitlist/">waitlist</a> as Hot Design is currently still in private beta.</p>
-
-<p>The next day (Friday) I had my original session scheduled for 4pm and I was really worried that no one would be there since Friday was also the last day of the conference. I was pleasantly surprised that there were quite a few people who stayed until the very end of the conference. Overall, I think I did just <em>okay</em>. I’ve been told that I am noticeably more relaxed and at ease at about the 10-minute mark when I am presenting. The first 10 minutes are just a sweaty, shaky shitshow. I need to find a way to come out of the gate calm, cool, and collected. At this point, I think I just need to focus more on practicing, doing dry runs, and presenting for the dog at home, just so I get more comfortable. Either way, all the demos worked and there were a couple of good questions at the end. One question was concerning how to handle changes to the UI based on the platform and/or form factor. The answer is that you have multiple options available to you:</p>
-
-<ul>
-  <li><a href="https://platform.uno/docs/articles/platform-specific-xaml.html">XAML conditional prefixes</a></li>
-  <li><a href="https://platform.uno/docs/articles/features/AdaptiveTrigger.html">Adaptive Triggers</a></li>
-  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/responsive-extension.html">Uno Toolkit Responsive Extensions</a></li>
-</ul>
-
-<h2 id="the-people">The People</h2>
-
-<p>I really enjoy conferences since you get to meet new people and hear what they are working on, but you also get to see familiar faces and catch up with people that you only really ever see at conferences a few times a year.</p>
-
-<p>The first night there, Matt and I went down to the Thursday Night Party in the hopes of somehow getting the Montreal Canadiens game on one of the TVs at the bar. When we asked the bartender if they could put it on he looked at us like we were crazy people and told us there’s no way they have the channel for something like that. So, being good Canadians, we sat at a table and propped up my phone and streamed the hockey game from there.</p>
-
-<p>We were also able to flag down <a href="https://www.alvinashcraft.com/">Alvin Ashcraft</a> and get him to sit with us which was awesome. Alvin is a world-class speaker, Senior Content Developer at Microsoft, and the organizer of the <a href="https://techbash.com/">TechBash conference</a>. We sat at the table and just hung out, talking about conferences, tech, life, etc. Before leaving for the night, he handed us a little card for the upcoming TechBash 2025 conference and encouraged us to submit! TechBash will take place November 4-7, 2025. If you’ve never been you should definitely check it out. TechBash is also hosted in the Kalahari Resort but at the Poconos (Pennsylvania) location. If you wanted to know more about it, I also did a <a href="/conference/2023/11/14/techbash-recap.html">recap for TechBash</a> last time I was there.</p>
-
-<p><img src="/assets/images/codemash-2025/techbash-card.jpg" alt="TechBash 2025 card" /></p>
-
-<p>During my second talk on Friday afternoon, I saw a few familiar faces in the crowd. Including <a href="https://matteland.dev/">Matt Eland</a>, who I first met at a couple of user groups when I was living in Columbus. Matt is an author, Microsoft MVP, and a self-proclaimed “Professional Wizard”. It was good to catch up after the talk and he introduced me to his colleague <a href="https://x.com/thesoccerdev">Sam Gomez</a>. They are both part of the team that runs the <a href="https://stirtrek.com/">Stir Trek conference</a> in Columbus, Ohio. They actually encouraged me to submit to speak there as well as see if perhaps Uno Platform could sponsor and have a presence at the conference! I really liked attending Stir Trek when I was in Columbus and it’d be fun to go back one day.</p>
-
-<h2 id="the-end">The End</h2>
-
-<p>Overall, it was a great conference. I’m happy I was able to speak and feel motivated to keep submitting to conferences. Although, last year I bit off more than I could chew and completely burned myself out from all of the travel. I’ll need to find a good balance this year and not overcommit myself. I’m looking forward to the next conference, which will be <a href="https://confoo.ca/en/2025">ConFoo</a> in my hometown of Montreal. I’ll be speaking about <a href="https://confoo.ca/en/2025/session/let-s-build-a-net-youtube-player-for-all-platforms">building a .NET YouTube player using Uno Platform</a> . I’m thinking of making some small tweaks so we could actually showcase some of Hot Design while we are building the app live.</p>
-
-<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="codemash-conference" /><category term="codemash" /><category term="uno-platform" /><category term="sandusky" /><summary type="html"><![CDATA[I am currently on the train heading back home after a long day of travel. I am returning from wintry Sandusky, Ohio where I attended CodeMash 2025. This was not my first time at CodeMash, I actually attended it several other times when I was living in Columbus, Ohio from 2016-2020. I always had a great time at the conference and I was excited to be able to attend again this year, this time as a speaker! After many submissions to CodeMash over the years, I finally got accepted for my general intro to Uno Platform talk. I actually ended up giving two talks! It was a lot of fun and also very exhausting :)]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+<p>Catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="conference" /><category term="conference" /><category term="summit" /><category term="mvp" /><category term="microsoft" /><category term="uno-platform" /><category term="redmond" /><category term="seattle" /><summary type="html"><![CDATA[Flying back from Seattle right now after a really fun week attending the Microsoft MVP Summit for the very first time. It was a whirlwind of sessions, networking opportunities, and squeezing in time to explore the Microsoft campus in Redmond, Washington. Last year, when I received the MVP award for the very first time, it was too late to register for the in-person experience. So I was really excited to be able to attend this year. Hoping that I will also be able to attend next year, assuming my renewal application is accepted :crossed_fingers:.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-34/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

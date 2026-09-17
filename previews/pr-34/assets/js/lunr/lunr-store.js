@@ -149,9 +149,15 @@ var store = [{
         "url": "/previews/pr-34/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html",
         "teaser": "/previews/pr-34/assets/images/uno-toolkit-hero.png"
       },{
-        "title": "MSAL Auth in Uno Platform with Uno.Extensions",
-        "excerpt":"Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app. Uno.Extensions.Authentication.MSAL connects Microsoft’s Authentication Library to Uno.Extensions’ authentication services. It handles token acquisition...","categories": ["uno-general"],
+        "title": "Uno.Extensions: MSAL Auth Across Platforms",
+        "excerpt":"Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser’s sign-in response back into your app. Uno.Extensions.Authentication.MSAL connects Microsoft’s Authentication Library to Uno.Extensions’ authentication services. It handles token acquisition...","categories": ["uno-extensions"],
         "tags": ["uno-platform","uno","msal","authentication","entra","uno-extensions","security"],
-        "url": "/previews/pr-34/uno-general/2026/09/07/msal-cross-platform-auth.html",
-        "teaser": "/previews/pr-34/assets/images/profile.png"
+        "url": "/previews/pr-34/uno-extensions/2026/09/07/msal-cross-platform-auth.html",
+        "teaser": "/previews/pr-34/assets/images/uno-extensions-hero.png"
+      },{
+        "title": "Cerulean: Your Agent Is Not Impressed",
+        "excerpt":"In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right. Naturally, my next contribution to this ecosystem was...","categories": ["uno-general"],
+        "tags": ["agents","ai","skills","cerulean","claude-code","codex"],
+        "url": "/previews/pr-34/uno-general/2026/09/13/cerulean-agent-skill.html",
+        "teaser": "/previews/pr-34/assets/images/cerulean/hero.png"
       }]
