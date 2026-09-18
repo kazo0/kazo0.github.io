@@ -76,6 +76,14 @@ tags: [tag1, tag2]
 
 The `layout`, `read_time`, `show_date`, `author_profile`, `related`, and `toc` fields are set globally in `_config.yml` defaults and don't need to be repeated per post.
 
+Series posts share a category, a title prefix, and one banner at the `assets/images/` root instead of a per-post `hero.png`. The category is part of the post URL, so don't change it after publishing.
+
+| Series | `category` | Title prefix | `teaser` / `og_image` |
+| --- | --- | --- | --- |
+| Toolkit Tuesdays | `toolkit-tuesday` | `Toolkit Tuesdays:` | `/assets/images/uno-toolkit-hero.png` |
+| Uno Tidbits | `uno-tidbit` | `Uno Tidbit:` | `/assets/images/tidbit-hero.png` |
+| Uno.Extensions features | `uno-extensions` | `Uno.Extensions:` | `/assets/images/uno-extensions-hero.jpg` |
+
 ### Shared Links
 
 Reusable link references are defined in `_includes/links.md`. Include them in posts with `{% include links.md %}` at the bottom, then reference them inline as `[text][link-id]`.
