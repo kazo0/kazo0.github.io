@@ -1,19 +1,19 @@
 ---
-title: "Uno.Extensions: MSAL Auth Across Platforms"
+title: "Uno Extensions: MSAL Auth Across Platforms"
 category: uno-extensions
 header:
-  teaser: /assets/images/uno-extensions-hero.png
-  og_image: /assets/images/uno-extensions-hero.png
+  teaser: /assets/images/uno-extensions-hero.jpg
+  og_image: /assets/images/uno-extensions-hero.jpg
 tags: [uno-platform, uno, msal, authentication, entra, uno-extensions, security]
 ---
 
-Authentication has a familiar checklist: sign in, get a token, call an API, refresh the token, sign out. Across Android, iOS, WebAssembly, and desktop, the extra work is getting the browser's sign-in response back into your app.
+Welcome to a brand-new series covering the [Uno Extensions library][extensions-repo]! We'll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation, and more).
 
-`Uno.Extensions.Authentication.MSAL` connects Microsoft's Authentication Library to Uno.Extensions' authentication services. It handles token acquisition and caching, while your app uses `IAuthenticationService` to sign in, refresh the session, and sign out.
+This post focuses on using the MSAL authentication provider within Uno Extensions to handle the cross-platform authentication flow.
 
-The [Authentication.MsalExtensionsDemo sample][gh-msalext] walks through that flow and calls Microsoft Graph with the resulting access token. This post follows its configuration, the platform callbacks you still need to wire up, and where the tokens live.
+The [Authentication.MsalExtensionsDemo sample][gh-msalext] walks through that flow and calls Microsoft Graph with the resulting access token. We'll take a deeper look at its configuration, the platform callbacks you still need to wire up, and where the tokens live.
 
-This post follows Uno.Extensions `main` and the sample on `master`, checked September 16, 2026. The sample uses prerelease packages: Uno.Sdk `6.8.0-dev.23` and Uno.Extensions `7.4.0-dev.29`. `main` has since moved to `8.0-dev` for the Uno 7.0 line, while the 7.4 packages continue on `servicing/7.4`; the MSAL provider code is identical on both. Start with the sample's pinned versions when following along.
+This post follows Uno Extensions `main` and the sample on `master`, checked September 16, 2026. The sample uses prerelease packages: Uno.Sdk `6.8.0-dev.23` and Uno Extensions `7.4.0-dev.29`.
 {: .notice--info}
 
 ## The Entra Setup
@@ -42,7 +42,7 @@ WebAssembly needs **Single-page application** registration so the browser can re
 
 ## Register the MSAL Provider
 
-With Uno.Extensions, you register the provider with the host and use `IAuthenticationService`. Add `AuthenticationMsal` to the app's UnoFeatures alongside its hosting and configuration setup.
+With Uno Extensions, you register the provider with the host and use `IAuthenticationService`. Add `AuthenticationMsal` to the app's UnoFeatures alongside its hosting and configuration setup.
 
 {% include local-video.html src="/assets/images/msal-cross-platform-auth/extensions-flow.mp4" poster="/assets/images/msal-cross-platform-auth/extensions-signin.png" caption="The Extensions sample on macOS: silently refresh the existing session, call Microsoft Graph, then clear local sign-in state. Redacted mode is enabled throughout." %}
 
@@ -103,12 +103,12 @@ That dictionary is Uno's token cache. MSAL keeps its account and refresh-token s
 
 <figure>
   <a href="{{ '/assets/images/msal-cross-platform-auth/extensions-graph.png' | relative_url }}"><img src="{{ '/assets/images/msal-cross-platform-auth/extensions-graph.png' | relative_url }}" alt="Uno.Extensions MSAL sample displaying HTTP 200 from Microsoft Graph with profile details and JSON string values hidden."></a>
-  <figcaption>Microsoft Graph returns HTTP 200 using the access token exposed through Uno.Extensions' ITokenCache. Redacted mode hides the profile details and JSON string values.</figcaption>
+  <figcaption>Microsoft Graph returns HTTP 200 using the access token exposed through Uno Extensions' ITokenCache. Redacted mode hides the profile details and JSON string values.</figcaption>
 </figure>
 
 ## What the Provider Handles
 
-Current Uno.Extensions `main` constructs the client, applies the Uno helpers, acquires tokens, and removes cached accounts on sign-out. It also derives the platform redirect conventions shown above. A `RedirectUri` in configuration overrides the convention, and a `Builder(...)` callback runs last. `UseDefaultPlatformRedirectUri: false` disables the provider's automatic redirect selection.
+Current Uno Extensions `main` constructs the client, applies the Uno helpers, acquires tokens, and removes cached accounts on sign-out. It also derives the platform redirect conventions shown above. A `RedirectUri` in configuration overrides the convention, and a `Builder(...)` callback runs last. `UseDefaultPlatformRedirectUri: false` disables the provider's automatic redirect selection.
 
 You can customize interactive requests too:
 
@@ -197,8 +197,6 @@ The Extensions sample selects browser session storage in its development configu
 
 ## Platform Gotchas
 
-Older Uno builds deployed no-op MSAL helpers to Skia-rendered mobile and WebAssembly apps. The fix, [uno#24055][uno-pr], merged August 13, 2026, corrects which platform assembly is deployed. The sample pins an Uno build containing that fix; the Extensions provider applies the Uno helpers for you.
-
 On **WebAssembly**, allow the sign-in popup and check your hosting headers. Uno's popup flow needs to read the returned popup URL; a restrictive `Cross-Origin-Opener-Policy` can sever that connection. The callback must remain on the app's origin.
 
 On **iOS**, verify that the URL scheme and keychain entitlements reached the signed app. If edits appear to have no effect, clean and rebuild the iOS output. This sample uses the app-delegate lifecycle; apps adopting UIScene should forward callback URLs from the scene delegate instead.
@@ -207,23 +205,21 @@ On **Desktop (Skia)**, closing the browser does not notify MSAL's loopback liste
 
 ## Putting It Together
 
-`AuthenticationMsal` gives you token acquisition and persistence through Uno.Extensions' authentication services. Your app supplies the Entra registration and platform callbacks, then uses `IAuthenticationService` for the sign-in lifecycle and `ITokenCache` when it needs the access token.
+`AuthenticationMsal` gives you token acquisition and persistence through Uno Extensions' authentication services. Your app supplies the Entra registration and platform callbacks, then uses `IAuthenticationService` for the sign-in lifecycle and `ITokenCache` when it needs the access token.
 
-I introduced the same authentication service in my [Uno Chefs login walkthrough]({% post_url 2025-07-02-chefs-login %}) with a custom provider. MSAL plugs into that pipeline too.
+Start with the [Extensions setup guide][extensions-setup], run the sample, and copy its displayed redirect URI into Entra. Come find me in the [Uno Discord][uno-discord] if you get stuck!
 
-Start with the [Extensions setup guide][extensions-setup], run the sample, and copy its displayed redirect URI into Entra. Come find me in the [Uno Discord][uno-discord] if you get stuck.
-
-For further reading, [Authentication.MsalDemo][gh-msaldemo] demonstrates implementing MSAL authentication **without Uno.Extensions**, using MSAL.NET and Uno's platform helpers directly. Its [setup guide][manual-setup] walks through that approach.
+For further reading, [Authentication.MsalDemo][gh-msaldemo] demonstrates implementing MSAL authentication **without Uno Extensions**, using MSAL.NET and Uno's platform helpers directly. Its [setup guide][manual-setup] walks through that approach.
 {: .notice--info}
 
 Catch you in the next one :wave:
 
 ## Additional Resources
 
-- [Authentication.MsalExtensionsDemo sample (Uno.Extensions)][gh-msalext]
-- [Uno.Extensions MSAL Authentication how-to][msal-howto]
-- [The same how-to on Uno.Extensions main][msal-howto-main], which covers the newer settings in this post until the published docs catch up
-- [MSAL provider implementation on Uno.Extensions main][msal-source]
+- [Authentication.MsalExtensionsDemo sample (Uno Extensions)][gh-msalext]
+- [Uno Extensions MSAL Authentication how-to][msal-howto]
+- [The same how-to on Uno Extensions main][msal-howto-main], which covers the newer settings in this post until the published docs catch up
+- [MSAL provider implementation on Uno Extensions main][msal-source]
 
 [gh-msaldemo]: https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalDemo
 [gh-msalext]: https://github.com/unoplatform/Uno.Samples/tree/master/UI/Authentication.MsalExtensionsDemo
@@ -234,7 +230,7 @@ Catch you in the next one :wave:
 [msal-howto]: https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Authentication/HowTo-MsalAuthentication.html
 [msal-howto-main]: https://github.com/unoplatform/uno.extensions/blob/main/doc/Learn/Authentication/HowTo-MsalAuthentication.md
 [msal-source]: https://github.com/unoplatform/uno.extensions/blob/main/src/Uno.Extensions.Authentication.MSAL/MsalAuthenticationProvider.cs
-[uno-pr]: https://github.com/unoplatform/uno/pull/24055
 [public-client-flows]: https://learn.microsoft.com/troubleshoot/entra/entra-id/app-integration/confidential-client-application-authentication-error-aadsts7000218#how-microsoft-entra-id-determines-the-client-type
 [redirect-rules]: https://learn.microsoft.com/entra/identity-platform/reply-url#localhost-exceptions
+[extensions-repo]: https://github.com/unoplatform/uno.extensions
 {% include links.md %}

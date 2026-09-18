@@ -82,7 +82,7 @@ Series posts share a category, a title prefix, and one banner at the `assets/ima
 | --- | --- | --- | --- |
 | Toolkit Tuesdays | `toolkit-tuesday` | `Toolkit Tuesdays:` | `/assets/images/uno-toolkit-hero.png` |
 | Uno Tidbits | `uno-tidbit` | `Uno Tidbit:` | `/assets/images/tidbit-hero.png` |
-| Uno.Extensions features | `uno-extensions` | `Uno.Extensions:` | `/assets/images/uno-extensions-hero.png` |
+| Uno.Extensions features | `uno-extensions` | `Uno.Extensions:` | `/assets/images/uno-extensions-hero.jpg` |
 
 ### Shared Links
 
