@@ -154,4 +154,10 @@ var store = [{
         "tags": ["agents","ai","skills","cerulean","claude-code","codex"],
         "url": "/uno-general/2026/09/13/cerulean-agent-skill.html",
         "teaser": "/assets/images/cerulean/hero.png"
+      },{
+        "title": "Uno Extensions: MSAL Auth Across Platforms",
+        "excerpt":"Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation,...","categories": ["uno-extensions"],
+        "tags": ["uno-platform","uno","msal","authentication","entra","uno-extensions","security"],
+        "url": "/uno-extensions/2026/09/17/msal-cross-platform-auth.html",
+        "teaser": "/assets/images/uno-extensions-hero.jpg"
       }]
