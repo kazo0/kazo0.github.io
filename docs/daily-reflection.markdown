@@ -46,5 +46,5 @@ Daily Reflection is an independent app and is not affiliated with or endorsed by
 [uno-platform]: https://platform.uno
 [source]: https://github.com/kazo0/DailyReflection
 [issues]: https://github.com/kazo0/DailyReflection/issues
-[privacy-policy]: /DailyReflection/privacy_policy
-[terms]: /DailyReflection/terms
+[privacy-policy]: https://kazo0.dev/DailyReflection/privacy_policy
+[terms]: https://kazo0.dev/DailyReflection/terms
