@@ -53,6 +53,9 @@ author:
     - label: "Sessionize"
       icon: "fa-solid fa-fw fa-microphone-lines"
       url: "https://sessionize.com/steve-bilogan/"
+    - label: "Daily Reflection App"
+      icon: "fa-solid fa-fw fa-book-open"
+      url: "/daily-reflection/"
 twitter:
   username: BiloganSteve
   card: summary_large_image
