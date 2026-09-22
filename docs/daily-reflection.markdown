@@ -5,15 +5,16 @@ permalink: /daily-reflection/
 author_profile: true
 excerpt: "A free, open-source app with a daily reading from Daily Reflections, a sober time tracker, and a daily reminder."
 header:
-  image: /assets/images/daily-reflection/feature-graphic.png
   teaser: /assets/images/daily-reflection/feature-graphic.png
   og_image: /assets/images/daily-reflection/feature-graphic.png
 ---
 
 Daily Reflection is a free, open-source app for Android and iOS that brings you each day's reading from *Daily Reflections*, the book of reflections written by A.A. members for A.A. members.
 
-[Download on the App Store][app-store]{: .btn .btn--primary}
-[Get it on Google Play][google-play]{: .btn .btn--primary}
+<p class="store-badges">
+  <a href="https://apps.apple.com/us/app/aa-daily-reflection/id1536494178"><img src="/assets/images/daily-reflection/app-store-badge.svg" alt="Download on the App Store"></a>
+  <a href="https://play.google.com/store/apps/details?id=com.kazo0.dailyreflection"><img src="/assets/images/daily-reflection/google-play-badge.png" alt="Get it on Google Play"></a>
+</p>
 
 ## Features
 
@@ -40,8 +41,9 @@ Daily Reflection is built with .NET and the [Uno Platform][uno-platform], and it
 Daily Reflection is an independent app and is not affiliated with or endorsed by Alcoholics Anonymous World Services, Inc. *Daily Reflections* is copyright © 1990 by Alcoholics Anonymous World Services, Inc.
 {: .notice}
 
-[app-store]: https://apps.apple.com/us/app/aa-daily-reflection/id1536494178
-[google-play]: https://play.google.com/store/apps/details?id=com.kazo0.dailyreflection
+Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc., registered in the U.S. and other countries. Google Play and the Google Play logo are trademarks of Google LLC.
+{: .small}
+
 [uno-platform]: https://platform.uno
 [source]: https://github.com/kazo0/DailyReflection
 [issues]: https://github.com/kazo0/DailyReflection/issues

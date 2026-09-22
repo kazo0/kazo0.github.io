@@ -148,3 +148,28 @@
 		content: "⏺ ";
 	}
 }
+
+/* App store badges
+   ========================================================================== */
+
+/* Both badges share one height: Apple wants 40px minimum on screen, and Google
+   wants its badge the same size or larger than any other store's. The gap and
+   margins are the one-quarter-height clear space both guidelines require. */
+.store-badges {
+	--badge-height: 48px;
+
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--badge-height) / 4);
+	margin-block: calc(var(--badge-height) / 4);
+
+	a {
+		display: block;
+		line-height: 0;
+	}
+
+	img {
+		height: var(--badge-height);
+		width: auto;
+	}
+}
