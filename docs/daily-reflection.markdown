@@ -26,7 +26,7 @@ Daily Reflection is a free, open-source app for Android and iOS that brings you 
 
 I build and maintain this app in my free time. If it has been helpful to you, any support is greatly appreciated, but never expected. Thanks for being here!
 
-[Buy Me a Coffee][buy-me-a-coffee]{: .btn .btn--warning}
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="kazo0" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
 
 ## Open source
 
@@ -42,7 +42,6 @@ Daily Reflection is an independent app and is not affiliated with or endorsed by
 
 [app-store]: https://apps.apple.com/us/app/aa-daily-reflection/id1536494178
 [google-play]: https://play.google.com/store/apps/details?id=com.kazo0.dailyreflection
-[buy-me-a-coffee]: https://buymeacoffee.com/kazo0
 [uno-platform]: https://platform.uno
 [source]: https://github.com/kazo0/DailyReflection
 [issues]: https://github.com/kazo0/DailyReflection/issues
