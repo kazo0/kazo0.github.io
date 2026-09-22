@@ -18,4 +18,4 @@ When not at my computer, I'm either watching the Montreal Canadiens lose or asle
 [uno-themes]: https://github.com/unoplatform/Uno.Themes
 [uno-toolkit]: https://github.com/unoplatform/Uno.Toolkit.UI
 [uno-extensions]: https://github.com/unoplatform/Uno.Extensions
-[aa-daily-reflections]: https://github.com/kazo0/DailyReflection
+[aa-daily-reflections]: /daily-reflection/
