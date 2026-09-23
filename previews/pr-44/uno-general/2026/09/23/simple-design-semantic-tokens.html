@@ -1,0 +1,999 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Simple Design and Semantic Tokens in Uno.Themes 7.0 - dotnet new bald</title>
+<meta name="description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something bigger. So here we are.">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Simple Design and Semantic Tokens in Uno.Themes 7.0">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html">
+
+
+  <meta property="og:description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something bigger. So here we are.">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/simple-design-semantic-tokens/hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Simple Design and Semantic Tokens in Uno.Themes 7.0">
+  <meta name="twitter:description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something bigger. So here we are.">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/simple-design-semantic-tokens/hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-09-23T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-44/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-44/assets/css/main.css?v=1790197776">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-44/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-44/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-44/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-44/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+          
+            <li><a href="/daily-reflection/" rel="nofollow noopener noreferrer me"><i class="fa-solid fa-fw fa-book-open" aria-hidden="true"></i><span class="label">Daily Reflection App</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Simple Design and Semantic Tokens in Uno.Themes 7.0">
+    <meta itemprop="description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something bigger. So here we are.">
+    <meta itemprop="datePublished" content="2026-09-23T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" class="u-url" itemprop="url">Simple Design and Semantic Tokens in Uno.Themes 7.0
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-23T00:00:00+00:00">September 23, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-problem-with-theme-prefixed-styles">The Problem With Theme-Prefixed Styles</a></li>
+<li><a href="#meet-the-simple-design-system">Meet the Simple Design System</a></li>
+<li><a href="#semantic-styles-one-key-any-theme">Semantic Styles: One Key, Any Theme</a></li>
+<li><a href="#design-tokens-the-shared-vocabulary">Design Tokens: The Shared Vocabulary</a></li>
+<li><a href="#turning-the-big-knobs">Turning the Big Knobs</a></li>
+<li><a href="#semantic-color-from-a-single-seed">Semantic Color From a Single Seed</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/simple-design-semantic-tokens/hero.png" class="hero-image">
+        <p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>, and I’ve been meaning to talk about the something bigger. So here we are.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Uno.Themes</code> just shipped its 7.0 release, and it’s a big one. There’s a brand new Simple Design System, and underneath it a whole semantic token layer that finally lets you write theme-agnostic XAML. If you’ve ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you’ve been waiting for.</p>
+
+<p>Let’s dive in.</p>
+
+<!-- TODO: hero image / side-by-side of the same app under Material vs Simple -> /assets/images/simple-design-semantic-tokens/hero.png -->
+
+<h2 id="the-problem-with-theme-prefixed-styles">The Problem With Theme-Prefixed Styles</h2>
+
+<p>Here’s the thing that’s always bugged me a little about styling Uno apps. If you wanted a filled button under Material, you reached for <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource MaterialFilledButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Save"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That works great, right up until the day you want to try a different design system. Now every one of those <code class="language-plaintext highlighter-rouge">Material*</code> keys is wrong, and you’re spelunking through your XAML swapping prefixes and praying you didn’t miss one. Your markup is welded to a single design system, and there’s no clean way to say “give me a filled button, whatever that means for the theme that’s currently active.”</p>
+
+<p>That welding is exactly what the new semantic layer melts away.</p>
+
+<h2 id="meet-the-simple-design-system">Meet the Simple Design System</h2>
+
+<p>Before we get to tokens, let’s meet the new design system that motivated a lot of this work. Simple (SDS, if you like acronyms) is Uno’s own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else’s.</p>
+
+<p>Turning it on is one <code class="language-plaintext highlighter-rouge">UnoFeatures</code> entry:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;UnoFeatures&gt;</span>SimpleTheme<span class="nt">&lt;/UnoFeatures&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Then merge the theme into your <code class="language-plaintext highlighter-rouge">App.xaml</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Application.Resources&gt;</span>
+    <span class="nt">&lt;ResourceDictionary&gt;</span>
+        <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
+            <span class="c">&lt;!-- other dictionaries omitted for brevity --&gt;</span>
+            <span class="nt">&lt;us:SimpleTheme</span> <span class="na">xmlns:us=</span><span class="s">"using:Uno.Simple"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+<span class="nt">&lt;/Application.Resources&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Or if you’re starting fresh, the template has you covered:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-o</span> UnoSimpleApp <span class="nt">-theme</span> simple
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Out of the box Simple is intentionally plain. No default seed color, just a neutral grayscale palette that stays grayscale until you give it something to work with. We’ll give it something to work with shortly. <img class="emoji" title=":wink:" alt=":wink:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f609.png" height="20" width="20"></p>
+
+<h2 id="semantic-styles-one-key-any-theme">Semantic Styles: One Key, Any Theme</h2>
+
+<p>Now for the good part. Instead of <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>, the new semantic layer gives you a single unprefixed key:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Works under both Material and Simple. No edits required. --&gt;</span>
+<span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource FilledButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Save"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That exact XAML renders a proper Material filled button under <code class="language-plaintext highlighter-rouge">MaterialTheme</code> and a proper Simple filled button under <code class="language-plaintext highlighter-rouge">SimpleTheme</code>. You don’t change a thing.</p>
+
+<p>The mechanism is refreshingly boring, which I mean as the highest compliment. Each theme’s <code class="language-plaintext highlighter-rouge">_Resources.xaml</code> defines a <code class="language-plaintext highlighter-rouge">StaticResource</code> alias that points the semantic key at the theme’s concrete style:</p>
+
+<ul>
+  <li>Under Material, <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> resolves to <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>
+</li>
+  <li>Under Simple, <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> resolves to <code class="language-plaintext highlighter-rouge">SimpleFilledButtonStyle</code>
+</li>
+</ul>
+
+<p>Same idea across the board: <code class="language-plaintext highlighter-rouge">OutlinedTextBoxStyle</code>, <code class="language-plaintext highlighter-rouge">ContentDialogStyle</code>, <code class="language-plaintext highlighter-rouge">ComboBoxStyle</code>, the full Material Design 3 typography scale (<code class="language-plaintext highlighter-rouge">HeadlineLarge</code>, <code class="language-plaintext highlighter-rouge">BodyMedium</code>, <code class="language-plaintext highlighter-rouge">LabelSmall</code>, and friends), all of it. Write the semantic key, let the active theme sort out the details.</p>
+
+<p class="notice--warning">Now, a bit of honesty, because the two design systems don’t have perfectly overlapping vocabularies. A few Material concepts simply don’t exist in Simple. <code class="language-plaintext highlighter-rouge">ElevatedButtonStyle</code> has no shadow-based equivalent, <code class="language-plaintext highlighter-rouge">CommandBarStyle</code> and <code class="language-plaintext highlighter-rouge">MediaTransportControlsStyle</code> aren’t implemented for Simple, and the whole Floating Action Button family maps onto Simple’s icon buttons rather than a true FAB. None of that will crash on you, but if you’re writing genuinely theme-agnostic markup, stick to the keys that exist on both sides. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">semantic styles docs</a> have the complete mapping table, gaps flagged and all.</p>
+
+<h2 id="design-tokens-the-shared-vocabulary">Design Tokens: The Shared Vocabulary</h2>
+
+<p>Semantic styles are the visible tip. The more interesting change is underneath: a shared set of design tokens. These are semantic XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.</p>
+
+<p>Spacing is a numeric scale, roughly following a familiar design-token naming convention:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value (px)</th>
+      <th>Thickness Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space100</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">Space100Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space200</code></td>
+      <td>8</td>
+      <td><code class="language-plaintext highlighter-rouge">Space200Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space300</code></td>
+      <td>12</td>
+      <td><code class="language-plaintext highlighter-rouge">Space300Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space400</code></td>
+      <td>16</td>
+      <td><code class="language-plaintext highlighter-rouge">Space400Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space600</code></td>
+      <td>24</td>
+      <td><code class="language-plaintext highlighter-rouge">Space600Thickness</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Shape (corner radius) works the same way, from <code class="language-plaintext highlighter-rouge">Radius0</code> all the way up to <code class="language-plaintext highlighter-rouge">RadiusFull</code> (a 9999px “just make it a pill” value):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value (px)</th>
+      <th>CornerRadius Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius100</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius100CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius200</code></td>
+      <td>8</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius400</code></td>
+      <td>16</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius400CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RadiusFull</code></td>
+      <td>9999</td>
+      <td><code class="language-plaintext highlighter-rouge">RadiusFullCornerRadius</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And density covers control heights and icon sizes (<code class="language-plaintext highlighter-rouge">ControlHeightMedium</code>, <code class="language-plaintext highlighter-rouge">IconSizeMedium</code>, <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code>, and so on).</p>
+
+<p>Want slightly rounder corners everywhere without touching a single control style? Override the token:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Page.Resources&gt;</span>
+    <span class="nt">&lt;CornerRadius</span> <span class="na">x:Key=</span><span class="s">"Radius200CornerRadius"</span><span class="nt">&gt;</span>10<span class="nt">&lt;/CornerRadius&gt;</span>
+<span class="nt">&lt;/Page.Resources&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Every control that uses <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> picks it up. That’s the whole point.</p>
+
+<h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
+
+<p>Overriding individual tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each generate a full scale from a single base value:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Every Radius* becomes a multiple of 4, every Space* a multiple of 6 --&gt;</span>
+<span class="nt">&lt;MaterialTheme</span> <span class="na">DefaultCornerRadius=</span><span class="s">"4"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>And my personal favorite, <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, which dials the padding across your whole app between three presets:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Tighten everything up for a data-dense screen --&gt;</span>
+<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultDensity=</span><span class="s">"Compact"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">DefaultDensity</code></th>
+      <th style="text-align: center">Base Spacing</th>
+      <th>Feel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Compact</code></td>
+      <td style="text-align: center">3</td>
+      <td>Tighter padding for data-dense UIs</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">Regular</code> (default)</td>
+      <td style="text-align: center">4</td>
+      <td>Balanced spacing</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Comfy</code></td>
+      <td style="text-align: center">5</td>
+      <td>More generous padding</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- TODO: screenshot comparing Compact vs Regular vs Comfy density on the same screen -> /assets/images/simple-design-semantic-tokens/density.png -->
+
+<p>One property, and every control in the app breathes in or out. The first time I flipped a real screen from <code class="language-plaintext highlighter-rouge">Regular</code> to <code class="language-plaintext highlighter-rouge">Compact</code> I genuinely grinned. It’s the kind of thing I’ve hand-tuned control by control more times than I’d like to admit.</p>
+
+<h2 id="semantic-color-from-a-single-seed">Semantic Color From a Single Seed</h2>
+
+<p>The last piece, and honestly the flashiest, is color. Historically, theming an app meant defining 30-plus color resources across Light and Dark. That’s a lot of hex codes to keep in sync, and I have absolutely shipped a Dark theme with one stubbornly-wrong shade because I fat-fingered a copy-paste. <img class="emoji" title=":sweat_smile:" alt=":sweat_smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f605.png" height="20" width="20"></p>
+
+<p>The new seed color generation takes a single color and derives the entire semantic palette for you, using the Material Design 3 HCT (Hue-Chroma-Tone) color space. You set a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> on a <code class="language-plaintext highlighter-rouge">ThemeColors</code> object, and out comes <code class="language-plaintext highlighter-rouge">Primary</code>, <code class="language-plaintext highlighter-rouge">Secondary</code>, <code class="language-plaintext highlighter-rouge">Tertiary</code>, <code class="language-plaintext highlighter-rouge">Error</code>, all the <code class="language-plaintext highlighter-rouge">Surface</code> and <code class="language-plaintext highlighter-rouge">Outline</code> roles, for both Light and Dark, at the correct M3 tone levels:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;us:SimpleTheme</span> <span class="na">xmlns:us=</span><span class="s">"using:Uno.Simple"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;us:SimpleTheme.Colors&gt;</span>
+        <span class="nt">&lt;ut:ThemeColors</span> <span class="na">xmlns:ut=</span><span class="s">"using:Uno.Themes"</span>
+                        <span class="na">PrimarySeed=</span><span class="s">"#6750A4"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/us:SimpleTheme.Colors&gt;</span>
+<span class="nt">&lt;/us:SimpleTheme&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That’s the “something to work with” I promised Simple earlier. ONE line, and the grayscale gives way to a full, cohesive palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.</p>
+
+<p>It even works at runtime. The library patches the existing <code class="language-plaintext highlighter-rouge">SolidColorBrush</code> instances in place, so the UI recolors itself with no page re-navigation:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="k">using</span> <span class="nn">Uno.Themes</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Windows.UI</span><span class="p">;</span>
+
+<span class="c1">// Rebrand the whole app on the fly</span>
+<span class="n">SemanticThemeHelper</span><span class="p">.</span><span class="n">PrimarySeed</span> <span class="p">=</span> <span class="n">Colors</span><span class="p">.</span><span class="n">Green</span><span class="p">;</span>
+
+<span class="c1">// Back to the theme's default look</span>
+<span class="n">SemanticThemeHelper</span><span class="p">.</span><span class="n">PrimarySeed</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<!-- TODO: screen recording of runtime seed color change recoloring the app -> /assets/images/simple-design-semantic-tokens/seed-runtime.mp4 -->
+
+<p>Picture a “pick your accent color” setting in your app, wired to one property. That used to be a small project. Now it’s a one-liner.</p>
+
+<p class="notice--info">If you’re already on Material and this is making you nervous, don’t be. Seed generation is opt-in, off unless you turn it on, and the 7.0 release didn’t rename or remove a single color or brush key. Existing apps upgrade with their visuals untouched. You only get the new behavior when you ask for it.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The through-line here is simple: your XAML stops caring which design system it renders under. You reference <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code>, <code class="language-plaintext highlighter-rouge">Space400</code>, <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and a <code class="language-plaintext highlighter-rouge">PrimarySeed</code>, and the active theme fills in the specifics. That’s what made the <a href="/uno-general/2026/08/11/alc-super-themes-app.html">three-themes-in-one-app demo</a> possible in the first place, and it’s what makes bringing your own brand to a Simple app a few lines of work instead of a few days.</p>
+
+<p>There’s a lot more here than one post can hold, especially around lightweight styling and the per-control resource keys, so go poke at the docs below. And if you build something fun by pointing a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> at your brand color, I’d love to see it.</p>
+
+<p>Hope you learned something and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html">Uno Simple: Getting Started</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Styles</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Design Tokens</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html">Seed Color Palette Generation</a></li>
+</ul>
+
+<p>&lt;/content&gt;</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-09-23T00:00:00+00:00">September 23, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" class="pagination--pager" title="Uno Extensions: MSAL Auth Across Platforms">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-extensions-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="permalink">Uno Extensions: MSAL Auth Across Platforms
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-17T00:00:00+00:00">September 17, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cro...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/cerulean/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-44/uno-general/2026/09/13/cerulean-agent-skill.html" rel="permalink">Cerulean: Your Agent Is Not Impressed
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-13T00:00:00+00:00">September 13, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-44/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="permalink">Toolkit Tuesdays: ZoomContentControl
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-31T00:00:00+00:00">August 31, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/tidbit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-44/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-44/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-44/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-44/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-44/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-44/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
