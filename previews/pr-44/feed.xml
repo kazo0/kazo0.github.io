@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-44/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-44/" rel="alternate" type="text/html" /><updated>2026-09-24T18:02:38+00:00</updated><id>https://kazo0.dev/previews/pr-44/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Simple Design and Semantic Tokens in Uno.Themes 8.0</title><link href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" rel="alternate" type="text/html" title="Simple Design and Semantic Tokens in Uno.Themes 8.0" /><published>2026-09-23T00:00:00+00:00</published><updated>2026-09-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html"><![CDATA[<p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>, and I’ve been meaning to talk about the something bigger. So here we are.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-44/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-44/" rel="alternate" type="text/html" /><updated>2026-09-24T18:10:40+00:00</updated><id>https://kazo0.dev/previews/pr-44/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design Language and Design Tokens in Uno.Themes 8.0</title><link href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" rel="alternate" type="text/html" title="Semantic Design Language and Design Tokens in Uno.Themes 8.0" /><published>2026-09-23T00:00:00+00:00</published><updated>2026-09-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html"><![CDATA[<p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?</p>
 
-<p><code class="language-plaintext highlighter-rouge">Uno.Themes</code> 7.0 landed over the summer with a brand new Simple Design System, and underneath it a whole semantic token layer that finally lets you write theme-agnostic XAML. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you’ve ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you’ve been waiting for.</p>
+<p>The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and Semantic Design Tokens to define the values they use. That theme-agnostic layer arrived in <code class="language-plaintext highlighter-rouge">Uno.Themes</code> 7.0 alongside the new Simple Design System, and it brings a common way to style and customize both Simple and Material. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you’ve ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you’ve been waiting for.</p>
 
 <p>Let’s dive in.</p>
 
@@ -18,45 +18,7 @@
 
 <p>That works great, right up until the day you want to try a different design system. Now every one of those <code class="language-plaintext highlighter-rouge">Material*</code> keys is wrong, and you’re spelunking through your XAML swapping prefixes and praying you didn’t miss one. Your markup is welded to a single design system, and there’s no clean way to say “give me a filled button, whatever that means for the theme that’s currently active.”</p>
 
-<p>That welding is exactly what the new semantic layer melts away.</p>
-
-<h2 id="meet-the-simple-design-system">Meet the Simple Design System</h2>
-
-<p>Before we get to tokens, let’s meet the new design system that motivated a lot of this work. Simple (SDS, if you like acronyms) is Uno’s own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else’s.</p>
-
-<p>Turning it on is one <code class="language-plaintext highlighter-rouge">UnoFeatures</code> entry:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoFeatures&gt;</span>SimpleTheme<span class="nt">&lt;/UnoFeatures&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Then merge the theme into your <code class="language-plaintext highlighter-rouge">App.xaml</code>:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Application.Resources&gt;</span>
-    <span class="nt">&lt;ResourceDictionary&gt;</span>
-        <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
-            <span class="c">&lt;!-- other dictionaries omitted for brevity --&gt;</span>
-            <span class="nt">&lt;us:SimpleTheme</span> <span class="na">xmlns:us=</span><span class="s">"using:Uno.Simple"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
-    <span class="nt">&lt;/ResourceDictionary&gt;</span>
-<span class="nt">&lt;/Application.Resources&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Or if you’re starting fresh, the template has you covered:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-o</span> UnoSimpleApp <span class="nt">-theme</span> simple
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Out of the box Simple is intentionally plain. No default seed color, just a neutral grayscale palette that stays grayscale until you give it something to work with. We’ll give it something to work with shortly. :wink:</p>
+<p>That is the problem the Semantic Design Language addresses: your XAML describes the role a style or resource plays, and the active theme supplies its design.</p>
 
 <h2 id="semantic-styles-one-key-any-theme">Semantic Styles: One Key, Any Theme</h2>
 
@@ -81,9 +43,9 @@
 
 <p class="notice--warning">Now, a bit of honesty, because the two design systems don’t have perfectly overlapping vocabularies. A few Material concepts simply don’t exist in Simple. <code class="language-plaintext highlighter-rouge">ElevatedButtonStyle</code> has no shadow-based equivalent, <code class="language-plaintext highlighter-rouge">CommandBarStyle</code> and <code class="language-plaintext highlighter-rouge">MediaTransportControlsStyle</code> aren’t implemented for Simple, and the whole Floating Action Button family maps onto Simple’s icon buttons rather than a true FAB. None of that will crash on you, but if you’re writing genuinely theme-agnostic markup, stick to the keys that exist on both sides. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">semantic styles docs</a> have the complete mapping table, gaps flagged and all.</p>
 
-<h2 id="design-tokens-the-shared-vocabulary">Design Tokens: The Shared Vocabulary</h2>
+<h2 id="semantic-design-tokens-the-shared-vocabulary">Semantic Design Tokens: The Shared Vocabulary</h2>
 
-<p>Semantic styles are the visible tip. The more interesting change is underneath: a shared set of design tokens. These are semantic XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.</p>
+<p>Semantic styles are the visible tip. The more interesting change is underneath: a shared set of Semantic Design Tokens. These are XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.</p>
 
 <p>Spacing is a numeric scale, roughly following a familiar design-token naming convention:</p>
 
@@ -172,9 +134,47 @@
 
 <p>Every control that uses <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> picks it up. That’s the whole point.</p>
 
+<h2 id="simple-and-material-two-takes-on-the-same-language">Simple and Material: Two Takes on the Same Language</h2>
+
+<p>With that shared vocabulary in place, the choice of design system becomes about how you want your app to look. Simple (SDS, if you like acronyms) is Uno’s own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else’s.</p>
+
+<p>Both themes use the semantic styles and tokens above; Simple is a useful starting point for seeing how far those shared resources can take your own design. To try it, add one <code class="language-plaintext highlighter-rouge">UnoFeatures</code> entry:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoFeatures&gt;</span>SimpleTheme<span class="nt">&lt;/UnoFeatures&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Then merge the theme into your <code class="language-plaintext highlighter-rouge">App.xaml</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Application.Resources&gt;</span>
+    <span class="nt">&lt;ResourceDictionary&gt;</span>
+        <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
+            <span class="c">&lt;!-- other dictionaries omitted for brevity --&gt;</span>
+            <span class="nt">&lt;us:SimpleTheme</span> <span class="na">xmlns:us=</span><span class="s">"using:Uno.Simple"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+<span class="nt">&lt;/Application.Resources&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Or if you’re starting fresh, the template has you covered:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-o</span> UnoSimpleApp <span class="nt">-theme</span> simple
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Out of the box Simple is intentionally plain. No default seed color, just a neutral grayscale palette that stays grayscale until you give it something to work with. We’ll give it something to work with shortly. :wink:</p>
+
 <h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
 
-<p>Overriding individual tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code>.</p>
+<p>Overriding individual Semantic Design Tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. Material and Simple expose the same knobs, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code> using either theme.</p>
 
 <p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each generate a full scale from a single base value:</p>
 
@@ -263,7 +263,7 @@
 <span class="nt">&lt;/us:SimpleTheme&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>That’s the “something to work with” I promised Simple earlier. ONE line, and the grayscale gives way to a full, cohesive palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.</p>
+<p>The palette uses the same semantic color roles under either theme. In this Simple example, one seed turns the default grayscale into a full palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.</p>
 
 <p>8.0 also changed <em>what</em> comes out of the generator. The default <code class="language-plaintext highlighter-rouge">SeedColorMode</code> is now <code class="language-plaintext highlighter-rouge">Fidelity</code>: in Light mode your <code class="language-plaintext highlighter-rouge">Primary</code> is the seed color verbatim, <code class="language-plaintext highlighter-rouge">OnPrimary</code> is picked automatically to clear WCAG AA contrast, and the supporting palettes follow your seed’s saturation, so a muted brand color gives you a muted theme instead of Material’s always-vibrant interpretation of it. If you’d rather have the classic M3 recipe, set <code class="language-plaintext highlighter-rouge">SeedColorMode="TonalSpot"</code> on the same <code class="language-plaintext highlighter-rouge">ThemeColors</code> object.</p>
 
@@ -301,7 +301,7 @@
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>The through-line here is simple: your XAML stops caring which design system it renders under. You reference <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code>, <code class="language-plaintext highlighter-rouge">Space400</code>, <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and a <code class="language-plaintext highlighter-rouge">PrimarySeed</code>, and the active theme fills in the specifics. That’s what made the <a href="/uno-general/2026/08/11/alc-super-themes-app.html">three-themes-in-one-app demo</a> possible in the first place, and it’s what makes bringing your own brand to a Simple app a few lines of work instead of a few days.</p>
+<p>The Semantic Design Language gives your app a consistent vocabulary across design systems, and Semantic Design Tokens put the values behind that vocabulary in your hands. You reference <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code>, <code class="language-plaintext highlighter-rouge">Space400</code>, <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and a <code class="language-plaintext highlighter-rouge">PrimarySeed</code>, and the active theme fills in the specifics. Simple and Material show how that vocabulary can produce different looks from the same markup. Whether you start with Simple’s neutral defaults or Material’s established look, the shared tokens give you the same place to shape your app’s spacing, corners, typography, and colors.</p>
 
 <p>There’s a lot more here than one post can hold, especially around lightweight styling and the per-control resource keys, so go poke at the docs below. And if you build something fun by pointing a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> at your brand color, I’d love to see it.</p>
 
@@ -310,15 +310,15 @@
 <h2 id="further-reading">Further Reading</h2>
 
 <ul>
-  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html">Uno Simple: Getting Started</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Styles</a></li>
-  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Design Tokens</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html">Seed Color Palette Generation</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html">Uno Simple: Getting Started</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8">Upgrading to Uno Themes v8</a></li>
   <li><a href="https://github.com/kazo0/ThemeStudio">ThemeStudio on GitHub</a></li>
 </ul>
 
-<p>&lt;/content&gt;</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-themes" /><category term="simple" /><category term="semantic-tokens" /><category term="design-tokens" /><category term="theming" /><category term="material" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something bigger. So here we are.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Extensions: MSAL Auth Across Platforms</title><link href="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="Uno Extensions: MSAL Auth Across Platforms" /><published>2026-09-17T00:00:00+00:00</published><updated>2026-09-17T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html"><![CDATA[<p>Welcome to a brand-new series covering the <a href="https://github.com/unoplatform/uno.extensions">Uno Extensions library</a>! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation, and more).</p>
+<p>&lt;/content&gt;</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-themes" /><category term="simple" /><category term="semantic-tokens" /><category term="design-tokens" /><category term="theming" /><category term="material" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Extensions: MSAL Auth Across Platforms</title><link href="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="Uno Extensions: MSAL Auth Across Platforms" /><published>2026-09-17T00:00:00+00:00</published><updated>2026-09-17T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html"><![CDATA[<p>Welcome to a brand-new series covering the <a href="https://github.com/unoplatform/uno.extensions">Uno Extensions library</a>! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation, and more).</p>
 
 <p>This post focuses on using the MSAL authentication provider within Uno Extensions to handle the cross-platform authentication flow.</p>
 
