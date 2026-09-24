@@ -1,5 +1,5 @@
 ---
-title: "Simple Design and Semantic Tokens in Uno.Themes 8.0"
+title: "Semantic Design Language and Design Tokens in Uno.Themes 8.0"
 category: uno-general
 header:
   teaser: /assets/images/simple-design-semantic-tokens/hero.png
@@ -7,9 +7,9 @@ header:
 tags: [uno-themes, simple, semantic-tokens, design-tokens, theming, material, uno-platform, uno, unoplatform]
 ---
 
-A little while back I wrote about [hosting three Uno apps inside a single Uno app]({% post_url 2026-08-11-alc-super-themes-app %}) so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that's been happening in `Uno.Themes`, and I've been meaning to talk about the something bigger. So here we are.
+A little while back I wrote about [hosting three Uno apps inside a single Uno app]({% post_url 2026-08-11-alc-super-themes-app %}) so you could flip between Material, Cupertino, and Simple live. That demo gets at something I've been meaning to dig into: the Semantic Design Language in `Uno.Themes`. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?
 
-`Uno.Themes` 7.0 landed over the summer with a brand new Simple Design System, and underneath it a whole semantic token layer that finally lets you write theme-agnostic XAML. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you've ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you've been waiting for.
+The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and Semantic Design Tokens to define the values they use. That theme-agnostic layer arrived in `Uno.Themes` 7.0 alongside the new Simple Design System, and it brings a common way to style and customize both Simple and Material. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you've ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you've been waiting for.
 
 Let's dive in.
 
@@ -27,38 +27,7 @@ Here's the thing that's always bugged me a little about styling Uno apps. If you
 
 That works great, right up until the day you want to try a different design system. Now every one of those `Material*` keys is wrong, and you're spelunking through your XAML swapping prefixes and praying you didn't miss one. Your markup is welded to a single design system, and there's no clean way to say "give me a filled button, whatever that means for the theme that's currently active."
 
-That welding is exactly what the new semantic layer melts away.
-
-## Meet the Simple Design System
-
-Before we get to tokens, let's meet the new design system that motivated a lot of this work. Simple (SDS, if you like acronyms) is Uno's own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else's.
-
-Turning it on is one `UnoFeatures` entry:
-
-```xml
-<UnoFeatures>SimpleTheme</UnoFeatures>
-```
-
-Then merge the theme into your `App.xaml`:
-
-```xml
-<Application.Resources>
-    <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <!-- other dictionaries omitted for brevity -->
-            <us:SimpleTheme xmlns:us="using:Uno.Simple" />
-        </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-</Application.Resources>
-```
-
-Or if you're starting fresh, the template has you covered:
-
-```bash
-dotnet new unoapp -o UnoSimpleApp -theme simple
-```
-
-Out of the box Simple is intentionally plain. No default seed color, just a neutral grayscale palette that stays grayscale until you give it something to work with. We'll give it something to work with shortly. :wink:
+That is the problem the Semantic Design Language addresses: your XAML describes the role a style or resource plays, and the active theme supplies its design.
 
 ## Semantic Styles: One Key, Any Theme
 
@@ -81,9 +50,9 @@ Same idea across the board: `OutlinedTextBoxStyle`, `ContentDialogStyle`, `Combo
 Now, a bit of honesty, because the two design systems don't have perfectly overlapping vocabularies. A few Material concepts simply don't exist in Simple. `ElevatedButtonStyle` has no shadow-based equivalent, `CommandBarStyle` and `MediaTransportControlsStyle` aren't implemented for Simple, and the whole Floating Action Button family maps onto Simple's icon buttons rather than a true FAB. None of that will crash on you, but if you're writing genuinely theme-agnostic markup, stick to the keys that exist on both sides. The [semantic styles docs][semantic-styles-docs] have the complete mapping table, gaps flagged and all.
 {: .notice--warning}
 
-## Design Tokens: The Shared Vocabulary
+## Semantic Design Tokens: The Shared Vocabulary
 
-Semantic styles are the visible tip. The more interesting change is underneath: a shared set of design tokens. These are semantic XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.
+Semantic styles are the visible tip. The more interesting change is underneath: a shared set of Semantic Design Tokens. These are XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.
 
 Spacing is a numeric scale, roughly following a familiar design-token naming convention:
 
@@ -116,9 +85,40 @@ Want slightly rounder corners everywhere without touching a single control style
 
 Every control that uses `Radius200CornerRadius` picks it up. That's the whole point.
 
+## Simple and Material: Two Takes on the Same Language
+
+With that shared vocabulary in place, the choice of design system becomes about how you want your app to look. Simple (SDS, if you like acronyms) is Uno's own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else's.
+
+Both themes use the semantic styles and tokens above; Simple is a useful starting point for seeing how far those shared resources can take your own design. To try it, add one `UnoFeatures` entry:
+
+```xml
+<UnoFeatures>SimpleTheme</UnoFeatures>
+```
+
+Then merge the theme into your `App.xaml`:
+
+```xml
+<Application.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <!-- other dictionaries omitted for brevity -->
+            <us:SimpleTheme xmlns:us="using:Uno.Simple" />
+        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+</Application.Resources>
+```
+
+Or if you're starting fresh, the template has you covered:
+
+```bash
+dotnet new unoapp -o UnoSimpleApp -theme simple
+```
+
+Out of the box Simple is intentionally plain. No default seed color, just a neutral grayscale palette that stays grayscale until you give it something to work with. We'll give it something to work with shortly. :wink:
+
 ## Turning the Big Knobs
 
-Overriding individual tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself, so you can reshape an entire app from `App.xaml`.
+Overriding individual Semantic Design Tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. Material and Simple expose the same knobs, so you can reshape an entire app from `App.xaml` using either theme.
 
 `DefaultCornerRadius` and `DefaultSpacing` each generate a full scale from a single base value:
 
@@ -173,7 +173,7 @@ The new seed color generation takes a single color and derives the entire semant
 </us:SimpleTheme>
 ```
 
-That's the "something to work with" I promised Simple earlier. ONE line, and the grayscale gives way to a full, cohesive palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.
+The palette uses the same semantic color roles under either theme. In this Simple example, one seed turns the default grayscale into a full palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.
 
 8.0 also changed *what* comes out of the generator. The default `SeedColorMode` is now `Fidelity`: in Light mode your `Primary` is the seed color verbatim, `OnPrimary` is picked automatically to clear WCAG AA contrast, and the supporting palettes follow your seed's saturation, so a muted brand color gives you a muted theme instead of Material's always-vibrant interpretation of it. If you'd rather have the classic M3 recipe, set `SeedColorMode="TonalSpot"` on the same `ThemeColors` object.
 
@@ -202,7 +202,7 @@ If you're already on Material and this is making you nervous, don't be. Seed gen
 
 ## Conclusion
 
-The through-line here is simple: your XAML stops caring which design system it renders under. You reference `FilledButtonStyle`, `Space400`, `BodyLarge`, and a `PrimarySeed`, and the active theme fills in the specifics. That's what made the [three-themes-in-one-app demo]({% post_url 2026-08-11-alc-super-themes-app %}) possible in the first place, and it's what makes bringing your own brand to a Simple app a few lines of work instead of a few days.
+The Semantic Design Language gives your app a consistent vocabulary across design systems, and Semantic Design Tokens put the values behind that vocabulary in your hands. You reference `FilledButtonStyle`, `Space400`, `BodyLarge`, and a `PrimarySeed`, and the active theme fills in the specifics. Simple and Material show how that vocabulary can produce different looks from the same markup. Whether you start with Simple's neutral defaults or Material's established look, the shared tokens give you the same place to shape your app's spacing, corners, typography, and colors.
 
 There's a lot more here than one post can hold, especially around lightweight styling and the per-control resource keys, so go poke at the docs below. And if you build something fun by pointing a `PrimarySeed` at your brand color, I'd love to see it.
 
@@ -210,10 +210,10 @@ Hope you learned something and I'll catch you in the next one :wave:
 
 ## Further Reading
 
-- [Uno Simple: Getting Started][simple-getting-started-docs]
 - [Semantic Styles][semantic-styles-docs]
-- [Design Tokens][design-tokens-docs]
+- [Semantic Design Tokens][design-tokens-docs]
 - [Seed Color Palette Generation][seed-colors-docs]
+- [Uno Simple: Getting Started][simple-getting-started-docs]
 - [Upgrading to Uno Themes v8][migration-docs]
 - [ThemeStudio on GitHub][theme-studio]
 
