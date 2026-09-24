@@ -161,7 +161,7 @@ var store = [{
         "url": "/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html",
         "teaser": "/previews/pr-44/assets/images/uno-extensions-hero.jpg"
       },{
-        "title": "Simple Design and Semantic Tokens in Uno.Themes 7.0",
+        "title": "Simple Design and Semantic Tokens in Uno.Themes 8.0",
         "excerpt":"A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that’s been happening in Uno.Themes, and I’ve been meaning to talk about the something...","categories": ["uno-general"],
         "tags": ["uno-themes","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html",
