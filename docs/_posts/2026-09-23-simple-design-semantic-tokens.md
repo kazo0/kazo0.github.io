@@ -13,9 +13,9 @@ A little while back I wrote about [hosting three Uno apps inside a single Uno ap
 
 Let's dive in.
 
-<a href="/assets/images/simple-design-semantic-tokens/hero.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/hero.png" alt="The same Forma overview screen rendered side by side under SimpleTheme and MaterialTheme, with identical layout and content but different control shapes and typography"/></a>
+<a href="/assets/images/simple-design-semantic-tokens/hero.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/hero.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography"/></a>
 
-Everything you'll see in this post comes from [ThemeStudio][theme-studio], a small demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, and I promise I didn't touch a single style key between them.
+Everything you'll see in this post comes from [ThemeStudio][theme-studio], a small demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, each theme wearing its out-of-the-box palette, and I promise I didn't touch a single style key between them.
 
 ## The Problem With Theme-Prefixed Styles
 
@@ -193,7 +193,7 @@ SemanticThemeHelper.PrimarySeed = null;
 {% include local-video.html
      src="/assets/images/simple-design-semantic-tokens/seed-runtime.mp4"
      poster="/assets/images/simple-design-semantic-tokens/seed-runtime-poster.png"
-     caption="Sweeping PrimarySeed through the hue wheel at runtime. Every brush in the app follows, no navigation required." %}
+     caption="Starting from Simple's default grayscale, then setting PrimarySeed and sweeping it through the hue wheel at runtime. Every brush in the app follows, no navigation required." %}
 
 Picture a "pick your accent color" setting in your app, wired to one property. That used to be a small project. Now it's a one-liner.
 
