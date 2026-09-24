@@ -1,5 +1,5 @@
 ---
-title: "Simple Design and Semantic Tokens in Uno.Themes 7.0"
+title: "Simple Design and Semantic Tokens in Uno.Themes 8.0"
 category: uno-general
 header:
   teaser: /assets/images/simple-design-semantic-tokens/hero.png
@@ -9,11 +9,13 @@ tags: [uno-themes, simple, semantic-tokens, design-tokens, theming, material, un
 
 A little while back I wrote about [hosting three Uno apps inside a single Uno app]({% post_url 2026-08-11-alc-super-themes-app %}) so you could flip between Material, Cupertino, and Simple live. That post was really a demo wrapper around something bigger that's been happening in `Uno.Themes`, and I've been meaning to talk about the something bigger. So here we are.
 
-`Uno.Themes` just shipped its 7.0 release, and it's a big one. There's a brand new Simple Design System, and underneath it a whole semantic token layer that finally lets you write theme-agnostic XAML. If you've ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you've been waiting for.
+`Uno.Themes` 7.0 landed over the summer with a brand new Simple Design System, and underneath it a whole semantic token layer that finally lets you write theme-agnostic XAML. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you've ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you've been waiting for.
 
 Let's dive in.
 
-<!-- TODO: hero image / side-by-side of the same app under Material vs Simple -> /assets/images/simple-design-semantic-tokens/hero.png -->
+<a href="/assets/images/simple-design-semantic-tokens/hero.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/hero.png" alt="The same Forma overview screen rendered side by side under SimpleTheme and MaterialTheme, with identical layout and content but different control shapes and typography"/></a>
+
+Everything you'll see in this post comes from [ThemeStudio][theme-studio], a small demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, and I promise I didn't touch a single style key between them.
 
 ## The Problem With Theme-Prefixed Styles
 
@@ -121,32 +123,46 @@ Overriding individual tokens is great for surgical tweaks, but the tokens also r
 `DefaultCornerRadius` and `DefaultSpacing` each generate a full scale from a single base value:
 
 ```xml
-<!-- Every Radius* becomes a multiple of 4, every Space* a multiple of 6 -->
-<MaterialTheme DefaultCornerRadius="4" DefaultSpacing="6" />
+<!-- Every Radius* becomes a multiple of 2, every Space* a multiple of 6 -->
+<MaterialTheme xmlns="using:Uno.Material" DefaultCornerRadius="2" DefaultSpacing="6" />
 ```
 
-And my personal favorite, `DefaultDensity`, which dials the padding across your whole app between three presets:
+And my personal favorite, `DefaultDensity`, which dials the padding across your whole app between three presets. Density is a *mode*, not a value: it multiplies the `DefaultSpacing` base unit, so a branded spacing unit and a density preset compose instead of fighting:
 
 ```xml
 <!-- Tighten everything up for a data-dense screen -->
 <SimpleTheme xmlns="using:Uno.Simple" DefaultDensity="Compact" />
+
+<!-- Or a 6px brand unit in comfortable mode (effective base 7.5) -->
+<SimpleTheme xmlns="using:Uno.Simple" DefaultSpacing="6" DefaultDensity="Comfy" />
 ```
 
-| `DefaultDensity` | Base Spacing | Feel |
-| --- | :---: | --- |
-| `Compact` | 3 | Tighter padding for data-dense UIs |
-| `Regular` (default) | 4 | Balanced spacing |
-| `Comfy` | 5 | More generous padding |
+| `DefaultDensity` | Factor | Base at default spacing (4) | Feel |
+| --- | :---: | :---: | --- |
+| `Compact` | ×0.75 | 3 | Tighter padding for data-dense UIs |
+| `Regular` (default) | ×1 | 4 | Balanced spacing |
+| `Comfy` | ×1.25 | 5 | More generous padding |
 
-<!-- TODO: screenshot comparing Compact vs Regular vs Comfy density on the same screen -> /assets/images/simple-design-semantic-tokens/density.png -->
+<a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"/></a>
 
-One property, and every control in the app breathes in or out. The first time I flipped a real screen from `Regular` to `Compact` I genuinely grinned. It's the kind of thing I've hand-tuned control by control more times than I'd like to admit.
+One property, and every control in the app breathes in or out. Control heights and icon sizes stay put, it's only the padding and margins that move. The first time I flipped a real screen from `Regular` to `Compact` I genuinely grinned. It's the kind of thing I've hand-tuned control by control more times than I'd like to admit.
+
+Typography gets the same treatment. `DefaultFontFamily` is the single root the entire type scale derives from, so swapping the font for a whole app is one property instead of nineteen `*FontFamily` overrides:
+
+```xml
+<SimpleTheme xmlns="using:Uno.Simple" DefaultFontFamily="ms-appx:///Fonts/MyFont.ttf#MyFont" />
+```
+
+Point it at a variable font, or one shipping a font manifest, so the per-scale `*FontWeight` tokens still render the way the type scale intends.
+
+All four of these knobs are runtime-settable. Assigning one regenerates the tokens, and anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved when they loaded, because these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Their styles read the tokens through `ThemeResource` though, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back) re-resolves everything in place. That's exactly the trick behind the sliders in ThemeStudio. Colors, as you're about to see, don't even need that much.
+{: .notice--info}
 
 ## Semantic Color From a Single Seed
 
 The last piece, and honestly the flashiest, is color. Historically, theming an app meant defining 30-plus color resources across Light and Dark. That's a lot of hex codes to keep in sync, and I have absolutely shipped a Dark theme with one stubbornly-wrong shade because I fat-fingered a copy-paste. :sweat_smile:
 
-The new seed color generation takes a single color and derives the entire semantic palette for you, using the Material Design 3 HCT (Hue-Chroma-Tone) color space. You set a `PrimarySeed` on a `ThemeColors` object, and out comes `Primary`, `Secondary`, `Tertiary`, `Error`, all the `Surface` and `Outline` roles, for both Light and Dark, at the correct M3 tone levels:
+The new seed color generation takes a single color and derives the entire semantic palette for you, using the Material Design 3 HCT (Hue-Chroma-Tone) color space. You set a `PrimarySeed` on a `ThemeColors` object, and out comes `Primary`, `Secondary`, `Tertiary`, all the `Surface` and `Outline` roles, for both Light and Dark, at the correct M3 tone levels (`Error` stays pinned to its fixed hue, as M3 prescribes):
 
 ```xml
 <us:SimpleTheme xmlns:us="using:Uno.Simple">
@@ -159,7 +175,9 @@ The new seed color generation takes a single color and derives the entire semant
 
 That's the "something to work with" I promised Simple earlier. ONE line, and the grayscale gives way to a full, cohesive palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.
 
-It even works at runtime. The library patches the existing `SolidColorBrush` instances in place, so the UI recolors itself with no page re-navigation:
+8.0 also changed *what* comes out of the generator. The default `SeedColorMode` is now `Fidelity`: in Light mode your `Primary` is the seed color verbatim, `OnPrimary` is picked automatically to clear WCAG AA contrast, and the supporting palettes follow your seed's saturation, so a muted brand color gives you a muted theme instead of Material's always-vibrant interpretation of it. If you'd rather have the classic M3 recipe, set `SeedColorMode="TonalSpot"` on the same `ThemeColors` object.
+
+It even works at runtime. The semantic brushes are long-lived instances whose colors get rewritten in place, so everything already on screen repaints immediately, hover and pressed variants included, with no page re-navigation and no theme toggle:
 
 ```csharp
 using Uno.Themes;
@@ -172,11 +190,14 @@ SemanticThemeHelper.PrimarySeed = Colors.Green;
 SemanticThemeHelper.PrimarySeed = null;
 ```
 
-<!-- TODO: screen recording of runtime seed color change recoloring the app -> /assets/images/simple-design-semantic-tokens/seed-runtime.mp4 -->
+{% include local-video.html
+     src="/assets/images/simple-design-semantic-tokens/seed-runtime.mp4"
+     poster="/assets/images/simple-design-semantic-tokens/seed-runtime-poster.png"
+     caption="Sweeping PrimarySeed through the hue wheel at runtime. Every brush in the app follows, no navigation required." %}
 
 Picture a "pick your accent color" setting in your app, wired to one property. That used to be a small project. Now it's a one-liner.
 
-If you're already on Material and this is making you nervous, don't be. Seed generation is opt-in, off unless you turn it on, and the 7.0 release didn't rename or remove a single color or brush key. Existing apps upgrade with their visuals untouched. You only get the new behavior when you ask for it.
+If you're already on Material and this is making you nervous, don't be. Seed generation is opt-in, off unless you turn it on, and neither 7.0 nor 8.0 renamed or removed a single color or brush key, so an app that never sets a seed renders with exactly the colors it had before. Two things to know if you're upgrading: apps that *do* use a seed will see more vivid palettes in 8.0 (a color-math fix plus the new `Fidelity` default, with `TonalSpot` as the escape hatch), and the short-lived `TypefacePlain` / `TypefaceBrand` font tokens are gone in favor of `DefaultFontFamily`. Both are spelled out in the [migration guide][migration-docs].
 {: .notice--info}
 
 ## Conclusion
@@ -193,10 +214,14 @@ Hope you learned something and I'll catch you in the next one :wave:
 - [Semantic Styles][semantic-styles-docs]
 - [Design Tokens][design-tokens-docs]
 - [Seed Color Palette Generation][seed-colors-docs]
+- [Upgrading to Uno Themes v8][migration-docs]
+- [ThemeStudio on GitHub][theme-studio]
 
 [simple-getting-started-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html
 [semantic-styles-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html
 [design-tokens-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html
 [seed-colors-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html
+[migration-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8
+[theme-studio]: https://github.com/kazo0/ThemeStudio
 {% include links.md %}
 </content>
