@@ -11,7 +11,7 @@ A little while back I wrote about [hosting three Uno apps inside a single Uno ap
 
 The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and [Semantic Design Tokens][design-tokens-docs] define the values those controls use. Uno.Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.
 
-This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like reshaping tokens at runtime, a single root font, and generating a whole color palette from one seed. I'm focusing on Material and Simple throughout. Cupertino rides along on the same library, but that doesn't mean all three themes expose the exact same styles.
+This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like turning those knobs live at runtime, a single root font, and generating a whole color palette from one seed. I'm focusing on Material and Simple throughout. Cupertino rides along on the same library, but that doesn't mean all three themes expose the exact same styles.
 
 Let's dive in.
 
@@ -87,7 +87,39 @@ Want rounder corners for controls in a page that use `Radius200CornerRadius`? Ov
 </Page.Resources>
 ```
 
-Any control that resolves `Radius200CornerRadius` in that scope picks up the override. Just know that it doesn't automatically change `Radius200` or any of the other corner-radius keys. Same goes for spacing: the numeric `Space200` and its `Space200Thickness` companion are separate resources. Override whichever form your style actually consumes. In Part 2 we'll see how to regenerate the whole scale at once from a single property.
+Any control that resolves `Radius200CornerRadius` in that scope picks up the override. Just know that it doesn't automatically change `Radius200` or any of the other corner-radius keys. Same goes for spacing: the numeric `Space200` and its `Space200Thickness` companion are separate resources. Override whichever form your style actually consumes, or reach for the scalar theme properties below to regenerate the whole scale at once.
+
+## Turning the Big Knobs
+
+Overriding tokens one at a time is great for surgical tweaks, but you don't have to work that way. Those scales also roll up into a few scalar properties on the theme itself, so you can reshape a whole app's proportions right from `App.xaml`. Material and Simple both expose them.
+
+`DefaultCornerRadius` and `DefaultSpacing` each set a base unit, and the full scale generates from there as multiples of it:
+
+```xml
+<!-- Base corner radius 2, base spacing 6 -->
+<SimpleTheme xmlns="using:Uno.Simple" DefaultCornerRadius="2" DefaultSpacing="6" />
+```
+
+With a base spacing of 6, `Space100` is 6, `Space200` is 12, and `Space400` is 24, with the matching `Thickness` resources generated right alongside them. `DefaultCornerRadius` does the same thing for the `Radius*` scale. `RadiusFull` stays 9999 no matter what, because a pill is a pill.
+
+And my personal favorite, `DefaultDensity`. It's a named shortcut for that base spacing unit, so you can dial the padding across your whole app without picking a number yourself:
+
+```xml
+<!-- Tighten everything up for a data-dense screen -->
+<SimpleTheme xmlns="using:Uno.Simple" DefaultDensity="Compact" />
+```
+
+| `DefaultDensity` | Base spacing unit | Feel |
+| --- | :---: | --- |
+| `Compact` | 3 | Tighter padding for data-dense UIs |
+| `Regular` (default) | 4 | Balanced spacing |
+| `Comfy` | 5 | More generous padding |
+
+<figure>
+    <a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"/></a>
+</figure>
+
+The `Space*` resources shift with the density, while `ControlHeight*`, `IconSize*`, and `TouchTargetMinSize` keep their fixed values. Padding and margins that pull from the spacing resources follow the new scale, and anything you hard-coded doesn't budge. It's a lot of reach from a single attribute.
 
 ## Simple and Material
 
@@ -126,7 +158,7 @@ Out of the box, Simple is intentionally plain. No seed color, just a neutral gra
 
 That's the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system's specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write `FilledButtonStyle`, `Space400`, and `BodyLarge`, and the active theme fills in the specifics. Swap `MaterialTheme` for `SimpleTheme` and that same markup comes out looking like a completely different app.
 
-The best part is that none of this is hypothetical. It's all shipping in Uno.Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the fun stuff: reshaping an entire app's spacing and type from a couple of properties, and generating a full color palette from a single seed color. See you there.
+The best part is that none of this is hypothetical. It's all shipping in Uno.Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app's font from a single root, and generating a full color palette from one seed color. See you there.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
