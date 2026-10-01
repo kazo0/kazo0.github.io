@@ -11,7 +11,7 @@ A little while back I wrote about [hosting three Uno apps inside a single Uno ap
 
 The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and [Semantic Design Tokens][design-tokens-docs] to define the values they use. Uno.Themes 7.0 introduced that shared layer alongside Simple. The upcoming 8.0 release builds on that foundation with a single root typeface, runtime updates to the shared tokens, and seed colors that preserve your chosen color in the Light palette. Material and Simple use the same vocabulary, so you can customize either without scattering design-system-specific choices through your markup.
 
-**Preview:** This post explores the upcoming Uno.Themes 8.0 release, based on the [`servicing/8.0` branch][themes-8-source] and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno.Themes docs][themes-overview-docs], which may lag behind this preview.
+**Preview:** This post explores the upcoming Uno.Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno.Themes docs][themes-overview-docs], which may lag behind this preview.
 {: .notice--info}
 
 We'll start with the shared vocabulary introduced in 7.x, then look at the current 8.0 implementation. The examples focus on Material and Simple; sharing a library with Cupertino doesn't mean all three expose the same semantic styles.
@@ -252,7 +252,6 @@ Hope you learned something and I'll catch you in the next one :wave:
 - [ThemeStudio on GitHub][theme-studio]
 
 [themes-overview-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html
-[themes-8-source]: https://github.com/unoplatform/uno.themes/tree/servicing/8.0
 [simple-getting-started-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html
 [semantic-styles-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html
 [design-tokens-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html
