@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-45/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-45/" rel="alternate" type="text/html" /><updated>2026-10-01T13:04:31+00:00</updated><id>https://kazo0.dev/previews/pr-45/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno.Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno.Themes - Part 2" /><published>2026-10-01T00:00:00+00:00</published><updated>2026-10-01T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In Part 1 of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-45/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-45/" rel="alternate" type="text/html" /><updated>2026-10-01T18:37:54+00:00</updated><id>https://kazo0.dev/previews/pr-45/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno.Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno.Themes - Part 2" /><published>2026-10-01T00:00:00+00:00</published><updated>2026-10-01T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In Part 1 of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.</p>
 
-<p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We’ll reshape an entire app’s spacing and corners from a couple of properties, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.</p>
+<p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We’ll turn the token knobs from Part 1 live at runtime, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.</p>
 
 <p class="notice--info"><strong>Preview:</strong> This post explores the upcoming Uno.Themes 8.0 release and its development documentation. The 8.0 packages haven’t been released yet, so some APIs and behavior shown here may change before release. Links point to the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html">public Uno.Themes docs</a>, which may lag behind this preview.</p>
 
@@ -12,72 +12,11 @@
 
 <p>If you need the Simple setup itself (the <code class="language-plaintext highlighter-rouge">UnoFeatures</code> entry and the <code class="language-plaintext highlighter-rouge">App.xaml</code> merge), Part 1 walks through it. Just keep in mind that adding Simple on its own won’t opt you into any of the unreleased functionality below. That needs the development packages or your own branch builds.</p>
 
-<h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
+<h2 id="turning-those-knobs-at-runtime">Turning Those Knobs at Runtime</h2>
 
-<p>Overriding the individual Semantic Design Tokens from Part 1 is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. In the current 8.0 implementation, Material and Simple expose the same knobs, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code> using either theme.</p>
+<p>In Part 1 we met the scalar theme properties: <code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code>, <code class="language-plaintext highlighter-rouge">DefaultSpacing</code>, and <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, each regenerating a whole token scale from a single value in <code class="language-plaintext highlighter-rouge">App.xaml</code>. The 8.0 branch takes those same knobs and makes them live. Assign one at runtime and the tokens regenerate on the spot, so anything created afterwards picks up the new scale. That’s the compact-mode toggle you’ve been hand-rolling, reduced to one property.</p>
 
-<p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each generate a full scale from a single base value:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Base radius 2, base spacing 6 at the default Regular density --&gt;</span>
-<span class="nt">&lt;MaterialTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Material"</span> <span class="na">DefaultCornerRadius=</span><span class="s">"2"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Radius200</code> is now 4 and <code class="language-plaintext highlighter-rouge">Space200</code> is 12, and the corresponding <code class="language-plaintext highlighter-rouge">CornerRadius</code> and <code class="language-plaintext highlighter-rouge">Thickness</code> resources get generated too. <code class="language-plaintext highlighter-rouge">RadiusFull</code> stays 9999. Two attributes, and the whole app’s proportions shift.</p>
-
-<p>And my personal favorite, <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, which dials the padding across your whole app between three presets. Density is a MODE, not a value: it multiplies the <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> base unit, so a branded spacing unit and a density preset compose instead of fighting:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Tighten everything up for a data-dense screen --&gt;</span>
-<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultDensity=</span><span class="s">"Compact"</span> <span class="nt">/&gt;</span>
-
-<span class="c">&lt;!-- Or a 6px brand unit in comfortable mode (effective base 7.5) --&gt;</span>
-<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="na">DefaultDensity=</span><span class="s">"Comfy"</span> <span class="nt">/&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<table>
-  <thead>
-    <tr>
-      <th><code class="language-plaintext highlighter-rouge">DefaultDensity</code></th>
-      <th style="text-align: center">Factor</th>
-      <th style="text-align: center">Base at default spacing (4)</th>
-      <th>Feel</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Compact</code></td>
-      <td style="text-align: center">×0.75</td>
-      <td style="text-align: center">3</td>
-      <td>Tighter padding for data-dense UIs</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Regular</code> (default)</td>
-      <td style="text-align: center">×1</td>
-      <td style="text-align: center">4</td>
-      <td>Balanced spacing</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Comfy</code></td>
-      <td style="text-align: center">×1.25</td>
-      <td style="text-align: center">5</td>
-      <td>More generous padding</td>
-    </tr>
-  </tbody>
-</table>
-
-<figure>
-    <a href="/assets/images/uno-themes-8-runtime-seed-colors/density.png" class="image-popup"><img class="align-center" src="/assets/images/uno-themes-8-runtime-seed-colors/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same" /></a>
-</figure>
-
-<p>The <code class="language-plaintext highlighter-rouge">Space*</code> resources change here, while <code class="language-plaintext highlighter-rouge">ControlHeight*</code>, <code class="language-plaintext highlighter-rouge">IconSize*</code>, and <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code> hold their fixed values. Padding and margins that pull from the spacing resources follow the new scale, and anything you hard-coded doesn’t budge. Layout still depends on your content and constraints, so this isn’t a promise that every control ends up exactly the same height.</p>
-
-<p>The release also brings typography under a single root. In the 8.0 branch, <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> is the root for the semantic type scale, so changing the font used by the design system is one property:</p>
+<p>It also adds a fourth knob to the family, and it’s one I’ve wanted for a while: a single root for typography. In the 8.0 branch, <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> is the root for the whole semantic type scale, so swapping the font the design system uses is one property instead of the old <code class="language-plaintext highlighter-rouge">TypefacePlain</code> and <code class="language-plaintext highlighter-rouge">TypefaceBrand</code> pair:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultFontFamily=</span><span class="s">"ms-appx:///Fonts/MyFont.ttf#MyFont"</span> <span class="nt">/&gt;</span>
@@ -87,7 +26,7 @@
 
 <p>One thing to watch: this only applies to text styled by the design system. A plain, unstyled <code class="language-plaintext highlighter-rouge">TextBlock</code> still uses the framework’s default font, and <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> won’t touch that. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">typography guide</a> covers both the property and the <code class="language-plaintext highlighter-rouge">FontOverrideSource</code> route.</p>
 
-<p>In the 8.0 branch, all four of these knobs are runtime-settable. Assign one and the tokens regenerate, so anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved at load time, since these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. Their styles read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code> though, so a theme-change pass (toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back, or just recreate the root content) re-resolves everything in place. Colors, as you’re about to see, work a little differently.</p>
+<p>So what actually happens the moment you assign one of these at runtime? The tokens regenerate, but controls already on screen keep the values they resolved at load time, since these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. Their styles read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code> though, so a theme-change pass (toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back, or just recreate the root content) re-resolves everything in place. Colors, as you’re about to see, work a little differently.</p>
 
 <h2 id="semantic-color-from-a-single-seed">Semantic Color From a Single Seed</h2>
 
