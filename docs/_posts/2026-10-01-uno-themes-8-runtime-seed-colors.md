@@ -9,7 +9,7 @@ tags: [uno-themes, uno-themes-8, simple, semantic-tokens, design-tokens, theming
 
 In Part 1 of this little series I dug into the Semantic Design Language in `Uno.Themes`: semantic styles that let your XAML ask for a ROLE like `FilledButtonStyle` instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.
 
-This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We'll reshape an entire app's spacing and corners from a couple of properties, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.
+This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We'll turn the token knobs from Part 1 live at runtime, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.
 
 **Preview:** This post explores the upcoming Uno.Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno.Themes docs][themes-overview-docs], which may lag behind this preview.
 {: .notice--info}
@@ -22,42 +22,11 @@ If you want something runnable, start with [this ThemeStudio snapshot][theme-stu
 
 If you need the Simple setup itself (the `UnoFeatures` entry and the `App.xaml` merge), Part 1 walks through it. Just keep in mind that adding Simple on its own won't opt you into any of the unreleased functionality below. That needs the development packages or your own branch builds.
 
-## Turning the Big Knobs
+## Turning Those Knobs at Runtime
 
-Overriding the individual Semantic Design Tokens from Part 1 is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. In the current 8.0 implementation, Material and Simple expose the same knobs, so you can reshape an entire app from `App.xaml` using either theme.
+In Part 1 we met the scalar theme properties: `DefaultCornerRadius`, `DefaultSpacing`, and `DefaultDensity`, each regenerating a whole token scale from a single value in `App.xaml`. The 8.0 branch takes those same knobs and makes them live. Assign one at runtime and the tokens regenerate on the spot, so anything created afterwards picks up the new scale. That's the compact-mode toggle you've been hand-rolling, reduced to one property.
 
-`DefaultCornerRadius` and `DefaultSpacing` each generate a full scale from a single base value:
-
-```xml
-<!-- Base radius 2, base spacing 6 at the default Regular density -->
-<MaterialTheme xmlns="using:Uno.Material" DefaultCornerRadius="2" DefaultSpacing="6" />
-```
-
-`Radius200` is now 4 and `Space200` is 12, and the corresponding `CornerRadius` and `Thickness` resources get generated too. `RadiusFull` stays 9999. Two attributes, and the whole app's proportions shift.
-
-And my personal favorite, `DefaultDensity`, which dials the padding across your whole app between three presets. Density is a MODE, not a value: it multiplies the `DefaultSpacing` base unit, so a branded spacing unit and a density preset compose instead of fighting:
-
-```xml
-<!-- Tighten everything up for a data-dense screen -->
-<SimpleTheme xmlns="using:Uno.Simple" DefaultDensity="Compact" />
-
-<!-- Or a 6px brand unit in comfortable mode (effective base 7.5) -->
-<SimpleTheme xmlns="using:Uno.Simple" DefaultSpacing="6" DefaultDensity="Comfy" />
-```
-
-| `DefaultDensity` | Factor | Base at default spacing (4) | Feel |
-| --- | :---: | :---: | --- |
-| `Compact` | ×0.75 | 3 | Tighter padding for data-dense UIs |
-| `Regular` (default) | ×1 | 4 | Balanced spacing |
-| `Comfy` | ×1.25 | 5 | More generous padding |
-
-<figure>
-    <a href="/assets/images/uno-themes-8-runtime-seed-colors/density.png" class="image-popup"><img class="align-center" src="/assets/images/uno-themes-8-runtime-seed-colors/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"/></a>
-</figure>
-
-The `Space*` resources change here, while `ControlHeight*`, `IconSize*`, and `TouchTargetMinSize` hold their fixed values. Padding and margins that pull from the spacing resources follow the new scale, and anything you hard-coded doesn't budge. Layout still depends on your content and constraints, so this isn't a promise that every control ends up exactly the same height.
-
-The release also brings typography under a single root. In the 8.0 branch, `DefaultFontFamily` is the root for the semantic type scale, so changing the font used by the design system is one property:
+It also adds a fourth knob to the family, and it's one I've wanted for a while: a single root for typography. In the 8.0 branch, `DefaultFontFamily` is the root for the whole semantic type scale, so swapping the font the design system uses is one property instead of the old `TypefacePlain` and `TypefaceBrand` pair:
 
 ```xml
 <SimpleTheme xmlns="using:Uno.Simple" DefaultFontFamily="ms-appx:///Fonts/MyFont.ttf#MyFont" />
@@ -67,7 +36,7 @@ Point it at a variable font, or one shipping a font manifest, so the per-scale `
 
 One thing to watch: this only applies to text styled by the design system. A plain, unstyled `TextBlock` still uses the framework's default font, and `DefaultFontFamily` won't touch that. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
 
-In the 8.0 branch, all four of these knobs are runtime-settable. Assign one and the tokens regenerate, so anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved at load time, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Their styles read the tokens through `ThemeResource` though, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content) re-resolves everything in place. Colors, as you're about to see, work a little differently.
+So what actually happens the moment you assign one of these at runtime? The tokens regenerate, but controls already on screen keep the values they resolved at load time, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Their styles read the tokens through `ThemeResource` though, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content) re-resolves everything in place. Colors, as you're about to see, work a little differently.
 
 ## Semantic Color From a Single Seed
 
