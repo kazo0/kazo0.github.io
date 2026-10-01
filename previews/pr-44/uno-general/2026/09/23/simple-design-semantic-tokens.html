@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-44/assets/css/main.css?v=1790859401">
+<link rel="stylesheet" href="/previews/pr-44/assets/css/main.css?v=1790879712">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -318,7 +318,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          6 minute read
+          7 minute read
         
       </span>
     
@@ -338,6 +338,7 @@
 <li><a href="#the-problem-with-theme-prefixed-styles">The Problem With Theme-Prefixed Styles</a></li>
 <li><a href="#semantic-styles">Semantic Styles</a></li>
 <li><a href="#semantic-design-tokens">Semantic Design Tokens</a></li>
+<li><a href="#turning-the-big-knobs">Turning the Big Knobs</a></li>
 <li>
 <a href="#simple-and-material">Simple and Material</a><ul><li><a href="#getting-simple-into-your-app">Getting Simple Into Your App</a></li></ul>
 </li>
@@ -352,7 +353,7 @@
 
 <p>The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a> define the values those controls use. Uno.Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.</p>
 
-<p>This is the first of two posts. Here in Part 1 we’ll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, and how Simple and Material each interpret them. In Part 2 I’ll look at what the upcoming 8.0 release adds on top, like reshaping tokens at runtime, a single root font, and generating a whole color palette from one seed. I’m focusing on Material and Simple throughout. Cupertino rides along on the same library, but that doesn’t mean all three themes expose the exact same styles.</p>
+<p>This is the first of two posts. Here in Part 1 we’ll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I’ll look at what the upcoming 8.0 release adds on top, like turning those knobs live at runtime, a single root font, and generating a whole color palette from one seed. I’m focusing on Material and Simple throughout. Cupertino rides along on the same library, but that doesn’t mean all three themes expose the exact same styles.</p>
 
 <p>Let’s dive in.</p>
 
@@ -497,7 +498,69 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>Any control that resolves <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> in that scope picks up the override. Just know that it doesn’t automatically change <code class="language-plaintext highlighter-rouge">Radius200</code> or any of the other corner-radius keys. Same goes for spacing: the numeric <code class="language-plaintext highlighter-rouge">Space200</code> and its <code class="language-plaintext highlighter-rouge">Space200Thickness</code> companion are separate resources. Override whichever form your style actually consumes. In Part 2 we’ll see how to regenerate the whole scale at once from a single property.</p>
+<p>Any control that resolves <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> in that scope picks up the override. Just know that it doesn’t automatically change <code class="language-plaintext highlighter-rouge">Radius200</code> or any of the other corner-radius keys. Same goes for spacing: the numeric <code class="language-plaintext highlighter-rouge">Space200</code> and its <code class="language-plaintext highlighter-rouge">Space200Thickness</code> companion are separate resources. Override whichever form your style actually consumes, or reach for the scalar theme properties below to regenerate the whole scale at once.</p>
+
+<h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
+
+<p>Overriding tokens one at a time is great for surgical tweaks, but you don’t have to work that way. Those scales also roll up into a few scalar properties on the theme itself, so you can reshape a whole app’s proportions right from <code class="language-plaintext highlighter-rouge">App.xaml</code>. Material and Simple both expose them.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each set a base unit, and the full scale generates from there as multiples of it:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Base corner radius 2, base spacing 6 --&gt;</span>
+<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultCornerRadius=</span><span class="s">"2"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>With a base spacing of 6, <code class="language-plaintext highlighter-rouge">Space100</code> is 6, <code class="language-plaintext highlighter-rouge">Space200</code> is 12, and <code class="language-plaintext highlighter-rouge">Space400</code> is 24, with the matching <code class="language-plaintext highlighter-rouge">Thickness</code> resources generated right alongside them. <code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> does the same thing for the <code class="language-plaintext highlighter-rouge">Radius*</code> scale. <code class="language-plaintext highlighter-rouge">RadiusFull</code> stays 9999 no matter what, because a pill is a pill.</p>
+
+<p>And my personal favorite, <code class="language-plaintext highlighter-rouge">DefaultDensity</code>. It’s a named shortcut for that base spacing unit, so you can dial the padding across your whole app without picking a number yourself:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- Tighten everything up for a data-dense screen --&gt;</span>
+<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultDensity=</span><span class="s">"Compact"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">DefaultDensity</code></th>
+      <th style="text-align: center">Base spacing unit</th>
+      <th>Feel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Compact</code></td>
+      <td style="text-align: center">3</td>
+      <td>Tighter padding for data-dense UIs</td>
+    </tr>
+    <tr>
+      <td>
+<code class="language-plaintext highlighter-rouge">Regular</code> (default)</td>
+      <td style="text-align: center">4</td>
+      <td>Balanced spacing</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Comfy</code></td>
+      <td style="text-align: center">5</td>
+      <td>More generous padding</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure>
+    <a href="/previews/pr-44/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/previews/pr-44/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"></a>
+</figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">Space*</code> resources shift with the density, while <code class="language-plaintext highlighter-rouge">ControlHeight*</code>, <code class="language-plaintext highlighter-rouge">IconSize*</code>, and <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code> keep their fixed values. Padding and margins that pull from the spacing resources follow the new scale, and anything you hard-coded doesn’t budge. It’s a lot of reach from a single attribute.</p>
 
 <h2 id="simple-and-material">Simple and Material</h2>
 
@@ -552,7 +615,7 @@
 
 <p>That’s the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system’s specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code>, <code class="language-plaintext highlighter-rouge">Space400</code>, and <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and the active theme fills in the specifics. Swap <code class="language-plaintext highlighter-rouge">MaterialTheme</code> for <code class="language-plaintext highlighter-rouge">SimpleTheme</code> and that same markup comes out looking like a completely different app.</p>
 
-<p>The best part is that none of this is hypothetical. It’s all shipping in Uno.Themes 7.x today, ready to use. In Part 2 we’ll build on it and get to the fun stuff: reshaping an entire app’s spacing and type from a couple of properties, and generating a full color palette from a single seed color. See you there.</p>
+<p>The best part is that none of this is hypothetical. It’s all shipping in Uno.Themes 7.x today, ready to use. In Part 2 we’ll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app’s font from a single root, and generating a full color palette from one seed color. See you there.</p>
 
 <p>Hope you learned something and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
