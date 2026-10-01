@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-44/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-44/" rel="alternate" type="text/html" /><updated>2026-10-01T00:52:35+00:00</updated><id>https://kazo0.dev/previews/pr-44/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design Language and Design Tokens</title><link href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" rel="alternate" type="text/html" title="Semantic Design Language and Design Tokens" /><published>2026-09-23T00:00:00+00:00</published><updated>2026-09-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html"><![CDATA[<p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-44/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-44/" rel="alternate" type="text/html" /><updated>2026-10-01T02:28:43+00:00</updated><id>https://kazo0.dev/previews/pr-44/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">A Look Ahead at Uno.Themes 8.0: Semantic Styles, Tokens, and Colors</title><link href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" rel="alternate" type="text/html" title="A Look Ahead at Uno.Themes 8.0: Semantic Styles, Tokens, and Colors" /><published>2026-09-23T00:00:00+00:00</published><updated>2026-09-23T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html"><![CDATA[<p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Design Language</a> in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?</p>
 
-<p>The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and Semantic Design Tokens to define the values they use. That theme-agnostic layer arrived in <code class="language-plaintext highlighter-rouge">Uno.Themes</code> 7.0 alongside the new Simple Design System, and it brings a common way to style and customize both Simple and Material. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you’ve ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you’ve been waiting for.</p>
+<p>The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a> to define the values they use. Uno.Themes 7.0 introduced that shared layer alongside Simple. The upcoming 8.0 release builds on that foundation with a single root typeface, runtime updates to the shared tokens, and seed colors that preserve your chosen color in the Light palette. Material and Simple use the same vocabulary, so you can customize either without scattering design-system-specific choices through your markup.</p>
+
+<p class="notice--info"><strong>Preview:</strong> This post explores the upcoming Uno.Themes 8.0 release, based on the <a href="https://github.com/unoplatform/uno.themes/tree/servicing/8.0"><code class="language-plaintext highlighter-rouge">servicing/8.0</code> branch</a> and its development documentation. The 8.0 packages haven’t been released yet, so some APIs and behavior shown here may change before release. Links point to the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html">public Uno.Themes docs</a>, which may lag behind this preview.</p>
+
+<p>We’ll start with the shared vocabulary introduced in 7.x, then look at the current 8.0 implementation. The examples focus on Material and Simple; sharing a library with Cupertino doesn’t mean all three expose the same semantic styles.</p>
+
+<!-- Fact-checked against uno.themes servicing/8.0 at 5a0b9ddb30e40b5d8929f7212b858357497ec0c0 and the live development docs on 2026-09-30. -->
 
 <p>Let’s dive in.</p>
 
@@ -20,9 +26,9 @@
 
 <p>That is the problem the Semantic Design Language addresses: your XAML describes the role a style or resource plays, and the active theme supplies its design.</p>
 
-<h2 id="semantic-styles-one-key-any-theme">Semantic Styles: One Key, Any Theme</h2>
+<h2 id="semantic-styles-one-key-two-design-systems">Semantic Styles: One Key, Two Design Systems</h2>
 
-<p>Now for the good part. Instead of <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>, the new semantic layer gives you a single unprefixed key:</p>
+<p>Now for the good part. Instead of <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>, the semantic layer introduced in 7.x gives you a single unprefixed key:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -41,19 +47,19 @@
 
 <p>Same idea across the board: <code class="language-plaintext highlighter-rouge">OutlinedTextBoxStyle</code>, <code class="language-plaintext highlighter-rouge">ContentDialogStyle</code>, <code class="language-plaintext highlighter-rouge">ComboBoxStyle</code>, the full Material Design 3 typography scale (<code class="language-plaintext highlighter-rouge">HeadlineLarge</code>, <code class="language-plaintext highlighter-rouge">BodyMedium</code>, <code class="language-plaintext highlighter-rouge">LabelSmall</code>, and friends), all of it. Write the semantic key, let the active theme sort out the details.</p>
 
-<p class="notice--warning">Now, a bit of honesty, because the two design systems don’t have perfectly overlapping vocabularies. A few Material concepts simply don’t exist in Simple. <code class="language-plaintext highlighter-rouge">ElevatedButtonStyle</code> has no shadow-based equivalent, <code class="language-plaintext highlighter-rouge">CommandBarStyle</code> and <code class="language-plaintext highlighter-rouge">MediaTransportControlsStyle</code> aren’t implemented for Simple, and the whole Floating Action Button family maps onto Simple’s icon buttons rather than a true FAB. None of that will crash on you, but if you’re writing genuinely theme-agnostic markup, stick to the keys that exist on both sides. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">semantic styles docs</a> have the complete mapping table, gaps flagged and all.</p>
+<p class="notice--warning">The two design systems don’t have perfectly overlapping vocabularies. Simple does not define the <code class="language-plaintext highlighter-rouge">ElevatedButtonStyle</code>, <code class="language-plaintext highlighter-rouge">CommandBarStyle</code>, or <code class="language-plaintext highlighter-rouge">MediaTransportControlsStyle</code> aliases, so don’t reference those keys expecting a Simple equivalent. The Floating Action Button aliases do exist, but map to Simple icon buttons rather than distinct FAB styles. Even a shared key can have a different interpretation: <code class="language-plaintext highlighter-rouge">OutlinedButtonStyle</code> maps to Simple’s tonal button. Check the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">semantic styles mapping table</a> when choosing the keys your app depends on.</p>
 
 <h2 id="semantic-design-tokens-the-shared-vocabulary">Semantic Design Tokens: The Shared Vocabulary</h2>
 
-<p>Semantic styles are the visible tip. The more interesting change is underneath: a shared set of Semantic Design Tokens. These are XAML resources for spacing, shape, density, and typography that every control template now references. Override one token key globally and every control that consumes it moves in lockstep.</p>
+<p>Semantic styles are the visible tip. Underneath is the other part of that shared foundation: Semantic Design Tokens. These are XAML resources for spacing, shape, control sizing, and typography, consumed by the design systems’ styles and templates. An override affects the controls that reference that resource; it does not rewrite a local value you hard-coded on a control.</p>
 
-<p>Spacing is a numeric scale, roughly following a familiar design-token naming convention:</p>
+<p>Spacing is a numeric scale. At the default spacing unit of 4 and <code class="language-plaintext highlighter-rouge">Regular</code> density, a few of the values look like this (in XAML layout units):</p>
 
 <table>
   <thead>
     <tr>
       <th>Key</th>
-      <th>Value (px)</th>
+      <th>Default Value</th>
       <th>Thickness Key</th>
     </tr>
   </thead>
@@ -86,13 +92,13 @@
   </tbody>
 </table>
 
-<p>Shape (corner radius) works the same way, from <code class="language-plaintext highlighter-rouge">Radius0</code> all the way up to <code class="language-plaintext highlighter-rouge">RadiusFull</code> (a 9999px “just make it a pill” value):</p>
+<p>Shape works similarly, with a default corner-radius unit of 4. <code class="language-plaintext highlighter-rouge">RadiusFull</code> is the exception: it stays at 9999 for a pill shape, regardless of the base unit:</p>
 
 <table>
   <thead>
     <tr>
       <th>Key</th>
-      <th>Value (px)</th>
+      <th>Default Value</th>
       <th>CornerRadius Key</th>
     </tr>
   </thead>
@@ -122,7 +128,7 @@
 
 <p>And density covers control heights and icon sizes (<code class="language-plaintext highlighter-rouge">ControlHeightMedium</code>, <code class="language-plaintext highlighter-rouge">IconSizeMedium</code>, <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code>, and so on).</p>
 
-<p>Want slightly rounder corners everywhere without touching a single control style? Override the token:</p>
+<p>Want rounder corners for controls in a page that use <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code>? Override that resource in the page:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -132,13 +138,21 @@
 <span class="nt">&lt;/Page.Resources&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>Every control that uses <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> picks it up. That’s the whole point.</p>
+<p>Controls resolving <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> in that scope can use the override. It doesn’t change <code class="language-plaintext highlighter-rouge">Radius200</code> or other corner-radius keys automatically. Likewise, a numeric <code class="language-plaintext highlighter-rouge">Space200</code> and its <code class="language-plaintext highlighter-rouge">Space200Thickness</code> companion are separate resources: override the form your style consumes, or use the theme properties below to regenerate the whole scale.</p>
 
 <h2 id="simple-and-material-two-takes-on-the-same-language">Simple and Material: Two Takes on the Same Language</h2>
 
-<p>With that shared vocabulary in place, the choice of design system becomes about how you want your app to look. Simple (SDS, if you like acronyms) is Uno’s own low-opinion, neutral design system. Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else’s.</p>
+<p>With that shared vocabulary in place, the choice of design system becomes about how you want your app to look. Uno Simple implements Figma’s Simple Design System (SDS). Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else’s.</p>
 
-<p>Both themes use the semantic styles and tokens above; Simple is a useful starting point for seeing how far those shared resources can take your own design. To try it, add one <code class="language-plaintext highlighter-rouge">UnoFeatures</code> entry:</p>
+<p>Both themes use the semantic styles and tokens above; Simple is a useful starting point for seeing how far those shared resources can take your own design.</p>
+
+<h3 id="trying-the-preview">Trying the Preview</h3>
+
+<p>For a runnable demo, start with <a href="https://github.com/kazo0/ThemeStudio/tree/18687f1448b6138d23ccd972ccef9128913959da">this ThemeStudio snapshot</a>. It pins <code class="language-plaintext highlighter-rouge">Uno.Material.WinUI</code> and <code class="language-plaintext highlighter-rouge">Uno.Simple.WinUI</code> to <code class="language-plaintext highlighter-rouge">9.0.0-dev.2</code>, with <code class="language-plaintext highlighter-rouge">Uno.Themes.WinUI</code> resolving transitively to the same version. Those are development packages, not an 8.0 release. The color-wheel video uses that build with the picker’s <code class="language-plaintext highlighter-rouge">ColorSpectrumShape</code> set to <code class="language-plaintext highlighter-rouge">Ring</code>; the API descriptions in this post are checked against <code class="language-plaintext highlighter-rouge">servicing/8.0</code>. To test the exact branch implementation, build the libraries from that branch and use those builds in your app.</p>
+
+<p>The configuration below shows how to wire up Simple; the later 8.0-specific examples assume library builds with those APIs. Adding <code class="language-plaintext highlighter-rouge">SimpleTheme</code> or running the template command alone does not opt you into the unreleased functionality.</p>
+
+<p>Add <code class="language-plaintext highlighter-rouge">SimpleTheme</code> to your project’s existing <code class="language-plaintext highlighter-rouge">UnoFeatures</code> list. A project using only that feature would have:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoFeatures&gt;</span>SimpleTheme<span class="nt">&lt;/UnoFeatures&gt;</span>
@@ -164,7 +178,7 @@
 <span class="nt">&lt;/Application.Resources&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>Or if you’re starting fresh, the template has you covered:</p>
+<p>If you’re starting fresh, the template can create the Simple setup; you still need to select suitable development packages or source builds for the preview features:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-o</span> UnoSimpleApp <span class="nt">-theme</span> simple
@@ -174,15 +188,17 @@
 
 <h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
 
-<p>Overriding individual Semantic Design Tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. Material and Simple expose the same knobs, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code> using either theme.</p>
+<p>Overriding individual Semantic Design Tokens is great for surgical tweaks, but the tokens also roll up into a few scalar properties on the theme itself. In the current 8.0 implementation, Material and Simple expose the same knobs, so you can reshape an entire app from <code class="language-plaintext highlighter-rouge">App.xaml</code> using either theme.</p>
 
 <p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each generate a full scale from a single base value:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Every Radius* becomes a multiple of 2, every Space* a multiple of 6 --&gt;</span>
+</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Base radius 2; base spacing 6 at the default Regular density --&gt;</span>
 <span class="nt">&lt;MaterialTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Material"</span> <span class="na">DefaultCornerRadius=</span><span class="s">"2"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Radius200</code> is now 4 and <code class="language-plaintext highlighter-rouge">Space200</code> is 12; the corresponding <code class="language-plaintext highlighter-rouge">CornerRadius</code> and <code class="language-plaintext highlighter-rouge">Thickness</code> resources are generated too. <code class="language-plaintext highlighter-rouge">RadiusFull</code> stays 9999.</p>
 
 <p>And my personal favorite, <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, which dials the padding across your whole app between three presets. Density is a <em>mode</em>, not a value: it multiplies the <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> base unit, so a branded spacing unit and a density preset compose instead of fighting:</p>
 
@@ -231,23 +247,25 @@
 
 <p><a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same" /></a></p>
 
-<p>One property, and every control in the app breathes in or out. Control heights and icon sizes stay put, it’s only the padding and margins that move. The first time I flipped a real screen from <code class="language-plaintext highlighter-rouge">Regular</code> to <code class="language-plaintext highlighter-rouge">Compact</code> I genuinely grinned. It’s the kind of thing I’ve hand-tuned control by control more times than I’d like to admit.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Space*</code> resources change, while <code class="language-plaintext highlighter-rouge">ControlHeight*</code>, <code class="language-plaintext highlighter-rouge">IconSize*</code>, and <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code> keep their fixed values. Padding and margins that use the spacing resources follow the new scale; hard-coded spacing doesn’t. Actual layout still depends on content and constraints, so this isn’t a promise that every rendered control keeps exactly the same height.</p>
 
-<p>Typography gets the same treatment. <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> is the single root the entire type scale derives from, so swapping the font for a whole app is one property instead of nineteen <code class="language-plaintext highlighter-rouge">*FontFamily</code> overrides:</p>
+<p>The upcoming release also brings typography under a single root. In the 8.0 branch, <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> is the root for the semantic type scale, so changing the font used by the design system is one property:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 </pre></td><td class="rouge-code"><pre><span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultFontFamily=</span><span class="s">"ms-appx:///Fonts/MyFont.ttf#MyFont"</span> <span class="nt">/&gt;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>Point it at a variable font, or one shipping a font manifest, so the per-scale <code class="language-plaintext highlighter-rouge">*FontWeight</code> tokens still render the way the type scale intends.</p>
+<p>Point it at a variable font, or one shipping a font manifest, so the per-scale <code class="language-plaintext highlighter-rouge">*FontWeight</code> tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys.</p>
 
-<p class="notice--info">All four of these knobs are runtime-settable. Assigning one regenerates the tokens, and anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved when they loaded, because these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. Their styles read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code> though, so a theme-change pass (toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back) re-resolves everything in place. That’s exactly the trick behind the sliders in ThemeStudio. Colors, as you’re about to see, don’t even need that much.</p>
+<p>This applies to text styled by the design system. An unstyled <code class="language-plaintext highlighter-rouge">TextBlock</code> uses the framework’s default font instead; changing <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> doesn’t change that separate default. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">typography guide</a> covers both the property and the <code class="language-plaintext highlighter-rouge">FontOverrideSource</code> route.</p>
+
+<p class="notice--info">In the 8.0 branch, all four of these knobs are runtime-settable. Assigning one regenerates the tokens, and anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved when they loaded, because these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. Their styles read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code> though, so a theme-change pass (toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back) re-resolves everything in place. Recreating the root content is another way to pick up the regenerated resources. Colors, as you’re about to see, use a different update mechanism.</p>
 
 <h2 id="semantic-color-from-a-single-seed">Semantic Color From a Single Seed</h2>
 
 <p>The last piece, and honestly the flashiest, is color. Historically, theming an app meant defining 30-plus color resources across Light and Dark. That’s a lot of hex codes to keep in sync, and I have absolutely shipped a Dark theme with one stubbornly-wrong shade because I fat-fingered a copy-paste. :sweat_smile:</p>
 
-<p>The new seed color generation takes a single color and derives the entire semantic palette for you, using the Material Design 3 HCT (Hue-Chroma-Tone) color space. You set a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> on a <code class="language-plaintext highlighter-rouge">ThemeColors</code> object, and out comes <code class="language-plaintext highlighter-rouge">Primary</code>, <code class="language-plaintext highlighter-rouge">Secondary</code>, <code class="language-plaintext highlighter-rouge">Tertiary</code>, all the <code class="language-plaintext highlighter-rouge">Surface</code> and <code class="language-plaintext highlighter-rouge">Outline</code> roles, for both Light and Dark, at the correct M3 tone levels (<code class="language-plaintext highlighter-rouge">Error</code> stays pinned to its fixed hue, as M3 prescribes):</p>
+<p>Seed color generation uses the Material Design 3 HCT (Hue-Chroma-Tone) color model to build Light and Dark palettes from a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> on <code class="language-plaintext highlighter-rouge">ThemeColors</code>. It supplies primary, secondary, tertiary, surface, and outline roles. The four <code class="language-plaintext highlighter-rouge">Error*</code> colors are excluded from generation and keep their base-palette values unless you explicitly override them:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -265,9 +283,13 @@
 
 <p>The palette uses the same semantic color roles under either theme. In this Simple example, one seed turns the default grayscale into a full palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.</p>
 
-<p>8.0 also changed <em>what</em> comes out of the generator. The default <code class="language-plaintext highlighter-rouge">SeedColorMode</code> is now <code class="language-plaintext highlighter-rouge">Fidelity</code>: in Light mode your <code class="language-plaintext highlighter-rouge">Primary</code> is the seed color verbatim, <code class="language-plaintext highlighter-rouge">OnPrimary</code> is picked automatically to clear WCAG AA contrast, and the supporting palettes follow your seed’s saturation, so a muted brand color gives you a muted theme instead of Material’s always-vibrant interpretation of it. If you’d rather have the classic M3 recipe, set <code class="language-plaintext highlighter-rouge">SeedColorMode="TonalSpot"</code> on the same <code class="language-plaintext highlighter-rouge">ThemeColors</code> object.</p>
+<p>8.0 will also change <em>what</em> comes out of the generator. In the current implementation, the default <code class="language-plaintext highlighter-rouge">SeedColorMode</code> is <code class="language-plaintext highlighter-rouge">Fidelity</code>: in Light mode, the generated <code class="language-plaintext highlighter-rouge">PrimaryColor</code> keeps the seed’s RGB value, with alpha treated as fully opaque. The generator chooses <code class="language-plaintext highlighter-rouge">OnPrimaryColor</code> to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed’s chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, <code class="language-plaintext highlighter-rouge">PrimaryColor</code> uses a lighter tone derived from the seed instead of the exact input color.</p>
 
-<p>It even works at runtime. The semantic brushes are long-lived instances whose colors get rewritten in place, so everything already on screen repaints immediately, hover and pressed variants included, with no page re-navigation and no theme toggle:</p>
+<p>If you’d rather use the Material tonal-spot recipe, set <code class="language-plaintext highlighter-rouge">SeedColorMode="TonalSpot"</code> on the same <code class="language-plaintext highlighter-rouge">ThemeColors</code> object. That recipe applies minimum chroma rather than preserving the seed’s exact Light primary. It does <strong>not</strong> reproduce 7.x colors exactly: the 8.0 branch also contains a color-math fix for washed-out saturated seeds.</p>
+
+<p>Explicit color overrides still win. Values in <code class="language-plaintext highlighter-rouge">ThemeColors.OverrideDictionary</code> or the dictionary loaded through <code class="language-plaintext highlighter-rouge">OverrideSource</code> take precedence over generated colors, which in turn take precedence over the theme’s built-in palette. The contrast guarantee above describes the generated primary pair; replacing either color yourself changes that pairing.</p>
+
+<p>The 8.0 implementation also improves runtime updates. The semantic brushes are long-lived instances whose colors get rewritten in place, so controls using those brushes repaint without page re-navigation or a theme toggle, including hover and pressed variants. A brush you explicitly override still takes precedence. With a theme already merged into <code class="language-plaintext highlighter-rouge">Application.Current.Resources</code>, the helper makes this straightforward:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -283,7 +305,7 @@
 <span class="c1">// Rebrand the whole app on the fly</span>
 <span class="n">SemanticThemeHelper</span><span class="p">.</span><span class="n">PrimarySeed</span> <span class="p">=</span> <span class="n">Colors</span><span class="p">.</span><span class="n">Green</span><span class="p">;</span>
 
-<span class="c1">// Back to the theme's default look</span>
+<span class="c1">// Restore the built-in palette, retaining any explicit color overrides</span>
 <span class="n">SemanticThemeHelper</span><span class="p">.</span><span class="n">PrimarySeed</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
@@ -292,33 +314,45 @@
     <source src="/previews/pr-44/assets/images/simple-design-semantic-tokens/seed-runtime.mp4" type="video/mp4" />
     Your browser doesn't support embedded video. <a href="/previews/pr-44/assets/images/simple-design-semantic-tokens/seed-runtime.mp4">Download the clip</a> instead.
   </video>
-  <figcaption>Starting from Simple's default grayscale, then setting PrimarySeed and sweeping it through the hue wheel at runtime. Every brush in the app follows, no navigation required.</figcaption>
+  <figcaption>Starting from Simple's default grayscale, enabling seed colors, then dragging around the color wheel in the design panel. Controls using the generated semantic brushes update without navigation.</figcaption>
 </figure>
 
-<p>Picture a “pick your accent color” setting in your app, wired to one property. That used to be a small project. Now it’s a one-liner.</p>
+<p>Picture a “pick your accent color” setting in your app, wired to one property. That’s the part I like most about this API.</p>
 
-<p class="notice--info">If you’re already on Material and this is making you nervous, don’t be. Seed generation is opt-in, off unless you turn it on, and neither 7.0 nor 8.0 renamed or removed a single color or brush key, so an app that never sets a seed renders with exactly the colors it had before. Two things to know if you’re upgrading: apps that <em>do</em> use a seed will see more vivid palettes in 8.0 (a color-math fix plus the new <code class="language-plaintext highlighter-rouge">Fidelity</code> default, with <code class="language-plaintext highlighter-rouge">TonalSpot</code> as the escape hatch), and the short-lived <code class="language-plaintext highlighter-rouge">TypefacePlain</code> / <code class="language-plaintext highlighter-rouge">TypefaceBrand</code> font tokens are gone in favor of <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code>. Both are spelled out in the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8">migration guide</a>.</p>
+<p>The helper’s properties throw if no theme is merged into the application’s resources; <code class="language-plaintext highlighter-rouge">SemanticThemeHelper.GetTheme()</code> is the non-throwing option and returns <code class="language-plaintext highlighter-rouge">null</code> when none is found. If you’re hosting multiple applications, use <code class="language-plaintext highlighter-rouge">someApplication.GetTheme()</code> to select the intended application’s theme instead of relying on <code class="language-plaintext highlighter-rouge">Application.Current</code>.</p>
+
+<h2 id="preparing-for-80">Preparing for 8.0</h2>
+
+<p>In the current 8.0 branch, seed generation remains opt-in. An app that never sets <code class="language-plaintext highlighter-rouge">PrimarySeed</code> keeps its built-in color palette, but other style and font customizations need a closer look. Ahead of the release, these are the changes to prepare for; check the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8">migration guide</a> again when the packages ship:</p>
+
+<ul>
+  <li><strong>Seeded colors:</strong> expect different output when moving from 7.x to the upcoming release. <code class="language-plaintext highlighter-rouge">TonalSpot</code> keeps the previous recipe, but the color-math fix still applies.</li>
+  <li><strong>Root fonts:</strong> plan to replace <code class="language-plaintext highlighter-rouge">TypefacePlain</code> and <code class="language-plaintext highlighter-rouge">TypefaceBrand</code> overrides with <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code>. The 8.0 branch removes Simple’s <code class="language-plaintext highlighter-rouge">SimpleFontFamily</code> and its old per-weight family keys too; use the root family and the relevant <code class="language-plaintext highlighter-rouge">*FontWeight</code> tokens.</li>
+  <li><strong>Material fonts:</strong> in the 8.0 branch, overriding <code class="language-plaintext highlighter-rouge">MaterialRegularFontFamily</code>, <code class="language-plaintext highlighter-rouge">MaterialMediumFontFamily</code>, or <code class="language-plaintext highlighter-rouge">MaterialLightFontFamily</code> no longer changes Material v2 typography. Those keys remain for compatibility, and the v1 styles are unchanged. Move v2 font customization to the new root or specific scale keys.</li>
+  <li><strong>Custom theme subclasses:</strong> the 8.0 branch marks <code class="language-plaintext highlighter-rouge">UseHighFidelityColors</code> obsolete. Use <code class="language-plaintext highlighter-rouge">ThemeColors.SeedColorMode</code>; existing overrides still work unless an explicit mode is set on <code class="language-plaintext highlighter-rouge">Colors</code>.</li>
+</ul>
+
+<p>When testing a development build ahead of a 7.x-to-8.0 upgrade, check font overrides as well as seed colors. If you’re coming from an earlier version, also read the guide’s v7 section for the other style and API changes.</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
 <p>The Semantic Design Language gives your app a consistent vocabulary across design systems, and Semantic Design Tokens put the values behind that vocabulary in your hands. You reference <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code>, <code class="language-plaintext highlighter-rouge">Space400</code>, <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and a <code class="language-plaintext highlighter-rouge">PrimarySeed</code>, and the active theme fills in the specifics. Simple and Material show how that vocabulary can produce different looks from the same markup. Whether you start with Simple’s neutral defaults or Material’s established look, the shared tokens give you the same place to shape your app’s spacing, corners, typography, and colors.</p>
 
-<p>There’s a lot more here than one post can hold, especially around lightweight styling and the per-control resource keys, so go poke at the docs below. And if you build something fun by pointing a <code class="language-plaintext highlighter-rouge">PrimarySeed</code> at your brand color, I’d love to see it.</p>
+<p>That shared foundation already exists in 7.x; the work on 8.0 makes it easier to change fonts, adjust tokens at runtime, and generate colors that stay true to your seed. I’m looking forward to getting these refinements into a release. In the meantime, try the development demo, explore the branch, and let me know what you build with it.</p>
 
 <p>Hope you learned something and I’ll catch you in the next one :wave:</p>
 
 <h2 id="further-reading">Further Reading</h2>
 
 <ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html">Uno.Themes Overview</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Styles</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html">Seed Color Palette Generation</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html">Uno Simple: Getting Started</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8">Upgrading to Uno Themes v8</a></li>
   <li><a href="https://github.com/kazo0/ThemeStudio">ThemeStudio on GitHub</a></li>
-</ul>
-
-<p>&lt;/content&gt;</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-themes" /><category term="simple" /><category term="semantic-tokens" /><category term="design-tokens" /><category term="theming" /><category term="material" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Extensions: MSAL Auth Across Platforms</title><link href="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="Uno Extensions: MSAL Auth Across Platforms" /><published>2026-09-17T00:00:00+00:00</published><updated>2026-09-17T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html"><![CDATA[<p>Welcome to a brand-new series covering the <a href="https://github.com/unoplatform/uno.extensions">Uno Extensions library</a>! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation, and more).</p>
+</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-themes" /><category term="simple" /><category term="semantic-tokens" /><category term="design-tokens" /><category term="theming" /><category term="material" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-44/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Uno Extensions: MSAL Auth Across Platforms</title><link href="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="alternate" type="text/html" title="Uno Extensions: MSAL Auth Across Platforms" /><published>2026-09-17T00:00:00+00:00</published><updated>2026-09-17T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth</id><content type="html" xml:base="https://kazo0.dev/previews/pr-44/uno-extensions/2026/09/17/msal-cross-platform-auth.html"><![CDATA[<p>Welcome to a brand-new series covering the <a href="https://github.com/unoplatform/uno.extensions">Uno Extensions library</a>! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation, and more).</p>
 
 <p>This post focuses on using the MSAL authentication provider within Uno Extensions to handle the cross-platform authentication flow.</p>
 
