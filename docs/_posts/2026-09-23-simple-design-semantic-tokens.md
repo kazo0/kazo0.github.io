@@ -14,9 +14,7 @@ The Semantic Design Language gives your XAML a shared vocabulary, with semantic 
 **Preview:** This post explores the upcoming Uno.Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno.Themes docs][themes-overview-docs], which may lag behind this preview.
 {: .notice--info}
 
-We'll start with the shared vocabulary introduced in 7.x, then look at the current 8.0 implementation. The examples focus on Material and Simple; sharing a library with Cupertino doesn't mean all three expose the same semantic styles.
-
-<!-- Fact-checked against uno.themes servicing/8.0 at 5a0b9ddb30e40b5d8929f7212b858357497ec0c0 and the live development docs on 2026-09-30. -->
+We'll start with the shared vocabulary introduced in 7.x, then look at what the current 8.0 implementation adds on top. I'm focusing on Material and Simple here. Cupertino rides along on the same library, but that doesn't mean all three themes expose the exact same styles.
 
 Let's dive in.
 
@@ -34,7 +32,7 @@ Here's the thing that's always bugged me a little about styling Uno apps. If you
 
 That works great, right up until the day you want to try a different design system. Now every one of those `Material*` keys is wrong, and you're spelunking through your XAML swapping prefixes and praying you didn't miss one. Your markup is welded to a single design system, and there's no clean way to say "give me a filled button, whatever that means for the theme that's currently active."
 
-That is the problem the Semantic Design Language addresses: your XAML describes the role a style or resource plays, and the active theme supplies its design.
+That's exactly the problem the Semantic Design Language solves. Your XAML describes the *role* a style or resource plays, and the active theme fills in the design.
 
 ## Semantic Styles: One Key, Two Design Systems
 
@@ -47,7 +45,7 @@ Now for the good part. Instead of `MaterialFilledButtonStyle`, the semantic laye
 
 That exact XAML renders a proper Material filled button under `MaterialTheme` and a proper Simple filled button under `SimpleTheme`. You don't change a thing.
 
-The mechanism is refreshingly boring, which I mean as the highest compliment. Each theme's `_Resources.xaml` defines a `StaticResource` alias that points the semantic key at the theme's concrete style:
+The mechanism behind this is refreshingly boring, and I mean that as a compliment. Each theme's `_Resources.xaml` defines a `StaticResource` alias that points the semantic key at the theme's concrete style:
 
 - Under Material, `FilledButtonStyle` resolves to `MaterialFilledButtonStyle`
 - Under Simple, `FilledButtonStyle` resolves to `SimpleFilledButtonStyle`
@@ -59,7 +57,7 @@ The two design systems don't have perfectly overlapping vocabularies. Simple doe
 
 ## Semantic Design Tokens: The Shared Vocabulary
 
-Semantic styles are the visible tip. Underneath is the other part of that shared foundation: Semantic Design Tokens. These are XAML resources for spacing, shape, control sizing, and typography, consumed by the design systems' styles and templates. An override affects the controls that reference that resource; it does not rewrite a local value you hard-coded on a control.
+Semantic styles are the visible tip of the iceberg. Underneath is the other half of that shared foundation: Semantic Design Tokens. These are just XAML resources for spacing, shape, control sizing, and typography that the design systems' styles and templates consume. Override one and you move every control that references it. A value you hard-coded directly on a control stays exactly where you put it.
 
 Spacing is a numeric scale. At the default spacing unit of 4 and `Regular` density, a few of the values look like this (in XAML layout units):
 
@@ -90,19 +88,17 @@ Want rounder corners for controls in a page that use `Radius200CornerRadius`? Ov
 </Page.Resources>
 ```
 
-Controls resolving `Radius200CornerRadius` in that scope can use the override. It doesn't change `Radius200` or other corner-radius keys automatically. Likewise, a numeric `Space200` and its `Space200Thickness` companion are separate resources: override the form your style consumes, or use the theme properties below to regenerate the whole scale.
+Any control that resolves `Radius200CornerRadius` in that scope picks up the override. Just know that it doesn't automatically change `Radius200` or any of the other corner-radius keys. Same goes for spacing: the numeric `Space200` and its `Space200Thickness` companion are separate resources. Override whichever form your style actually consumes, or reach for the theme properties below to regenerate the whole scale at once.
 
 ## Simple and Material: Two Takes on the Same Language
 
-With that shared vocabulary in place, the choice of design system becomes about how you want your app to look. Uno Simple implements Figma's Simple Design System (SDS). Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way, which makes it a lovely starting point when you want to bring your own brand rather than adopt someone else's.
-
-Both themes use the semantic styles and tokens above; Simple is a useful starting point for seeing how far those shared resources can take your own design.
+With that shared vocabulary in place, picking a design system is really just about how you want your app to look. Uno Simple implements Figma's Simple Design System (SDS). Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way. That makes it a lovely place to start when you want to bring your own brand rather than adopt someone else's, and a great way to see how far those shared tokens can take your own design.
 
 ### Trying the Preview
 
-For a runnable demo, start with [this ThemeStudio snapshot][theme-studio-snapshot]. It pins `Uno.Material.WinUI` and `Uno.Simple.WinUI` to `9.0.0-dev.2`, with `Uno.Themes.WinUI` resolving transitively to the same version. Those are development packages, not an 8.0 release. The color-wheel video uses that build with the picker's `ColorSpectrumShape` set to `Ring`; the API descriptions in this post are checked against `servicing/8.0`. To test the exact branch implementation, build the libraries from that branch and use those builds in your app.
+If you want something runnable, start with [this ThemeStudio snapshot][theme-studio-snapshot]. It pins `Uno.Material.WinUI` and `Uno.Simple.WinUI` to `9.0.0-dev.2`, with `Uno.Themes.WinUI` resolving transitively to the same version. Those are development packages, not an 8.0 release. The color-wheel video uses that build with the picker's `ColorSpectrumShape` set to `Ring`, and the API descriptions throughout this post are checked against `servicing/8.0`. If you want to test the exact branch implementation, build the libraries from that branch and drop those builds into your app.
 
-The configuration below shows how to wire up Simple; the later 8.0-specific examples assume library builds with those APIs. Adding `SimpleTheme` or running the template command alone does not opt you into the unreleased functionality.
+The configuration below shows how to wire up Simple. Just keep in mind the later 8.0-specific examples assume you've actually got library builds with those APIs in hand.
 
 Add `SimpleTheme` to your project's existing `UnoFeatures` list. A project using only that feature would have:
 
@@ -123,7 +119,7 @@ Then merge the theme into your `App.xaml`:
 </Application.Resources>
 ```
 
-If you're starting fresh, the template can create the Simple setup; you still need to select suitable development packages or source builds for the preview features:
+If you're starting fresh, the template can create the Simple setup. You'll still need to select suitable development packages or source builds for the preview features:
 
 ```bash
 dotnet new unoapp -o UnoSimpleApp -theme simple
@@ -142,7 +138,7 @@ Overriding individual Semantic Design Tokens is great for surgical tweaks, but t
 <MaterialTheme xmlns="using:Uno.Material" DefaultCornerRadius="2" DefaultSpacing="6" />
 ```
 
-`Radius200` is now 4 and `Space200` is 12; the corresponding `CornerRadius` and `Thickness` resources are generated too. `RadiusFull` stays 9999.
+`Radius200` is now 4 and `Space200` is 12, and the corresponding `CornerRadius` and `Thickness` resources get generated too. `RadiusFull` stays 9999.
 
 And my personal favorite, `DefaultDensity`, which dials the padding across your whole app between three presets. Density is a *mode*, not a value: it multiplies the `DefaultSpacing` base unit, so a branded spacing unit and a density preset compose instead of fighting:
 
@@ -162,7 +158,7 @@ And my personal favorite, `DefaultDensity`, which dials the padding across your 
 
 <a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"/></a>
 
-The `Space*` resources change, while `ControlHeight*`, `IconSize*`, and `TouchTargetMinSize` keep their fixed values. Padding and margins that use the spacing resources follow the new scale; hard-coded spacing doesn't. Actual layout still depends on content and constraints, so this isn't a promise that every rendered control keeps exactly the same height.
+The `Space*` resources change here, while `ControlHeight*`, `IconSize*`, and `TouchTargetMinSize` hold their fixed values. Padding and margins that pull from the spacing resources follow the new scale, and anything you hard-coded doesn't budge. Keep in mind the final rendered layout still depends on your content and constraints, so don't read this as a promise that every control ends up pixel-identical in height.
 
 The upcoming release also brings typography under a single root. In the 8.0 branch, `DefaultFontFamily` is the root for the semantic type scale, so changing the font used by the design system is one property:
 
@@ -172,14 +168,14 @@ The upcoming release also brings typography under a single root. In the 8.0 bran
 
 Point it at a variable font, or one shipping a font manifest, so the per-scale `*FontWeight` tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys.
 
-This applies to text styled by the design system. An unstyled `TextBlock` uses the framework's default font instead; changing `DefaultFontFamily` doesn't change that separate default. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
+One thing to watch: this only applies to text styled by the design system. A plain, unstyled `TextBlock` still uses the framework's default font, and `DefaultFontFamily` won't touch that. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
 
-In the 8.0 branch, all four of these knobs are runtime-settable. Assigning one regenerates the tokens, and anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved when they loaded, because these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Their styles read the tokens through `ThemeResource` though, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back) re-resolves everything in place. Recreating the root content is another way to pick up the regenerated resources. Colors, as you're about to see, use a different update mechanism.
+In the 8.0 branch, all four of these knobs are runtime-settable. Assign one and the tokens regenerate, so anything created afterwards picks up the new scale. Controls already on screen keep the values they resolved at load time, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Their styles read the tokens through `ThemeResource` though, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content) re-resolves everything in place. Colors, as you're about to see, work a little differently.
 {: .notice--info}
 
 ## Semantic Color From a Single Seed
 
-The last piece, and honestly the flashiest, is color. Historically, theming an app meant defining 30-plus color resources across Light and Dark. That's a lot of hex codes to keep in sync, and I have absolutely shipped a Dark theme with one stubbornly-wrong shade because I fat-fingered a copy-paste. :sweat_smile:
+The last piece, and honestly the flashiest, is color. For the longest time, theming an app meant defining 30-plus color resources across Light and Dark. That's a lot of hex codes to keep in sync, and I have absolutely shipped a Dark theme with one stubbornly-wrong shade because I fat-fingered a copy-paste somewhere. :sweat_smile:
 
 Seed color generation uses the Material Design 3 HCT (Hue-Chroma-Tone) color model to build Light and Dark palettes from a `PrimarySeed` on `ThemeColors`. It supplies primary, secondary, tertiary, surface, and outline roles. The four `Error*` colors are excluded from generation and keep their base-palette values unless you explicitly override them:
 
@@ -192,15 +188,15 @@ Seed color generation uses the Material Design 3 HCT (Hue-Chroma-Tone) color mod
 </us:SimpleTheme>
 ```
 
-The palette uses the same semantic color roles under either theme. In this Simple example, one seed turns the default grayscale into a full palette. Secondary and Tertiary are auto-derived from the primary, though you can pin them explicitly if you want more control.
+The palette uses the same semantic color roles under either theme. In this Simple example, that one seed is all it takes to turn the default grayscale into a full palette. Secondary and Tertiary get auto-derived from the primary, but you can always pin them explicitly if you want more control.
 
 8.0 will also change *what* comes out of the generator. In the current implementation, the default `SeedColorMode` is `Fidelity`: in Light mode, the generated `PrimaryColor` keeps the seed's RGB value, with alpha treated as fully opaque. The generator chooses `OnPrimaryColor` to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed's chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, `PrimaryColor` uses a lighter tone derived from the seed instead of the exact input color.
 
-If you'd rather use the Material tonal-spot recipe, set `SeedColorMode="TonalSpot"` on the same `ThemeColors` object. That recipe applies minimum chroma rather than preserving the seed's exact Light primary. It does **not** reproduce 7.x colors exactly: the 8.0 branch also contains a color-math fix for washed-out saturated seeds.
+If you'd rather use the Material tonal-spot recipe, set `SeedColorMode="TonalSpot"` on the same `ThemeColors` object. That recipe applies minimum chroma rather than preserving the seed's exact Light primary. It does NOT reproduce 7.x colors exactly: the 8.0 branch also contains a color-math fix for washed-out saturated seeds.
 
-Explicit color overrides still win. Values in `ThemeColors.OverrideDictionary` or the dictionary loaded through `OverrideSource` take precedence over generated colors, which in turn take precedence over the theme's built-in palette. The contrast guarantee above describes the generated primary pair; replacing either color yourself changes that pairing.
+Explicit color overrides still win, as you'd hope. Values in `ThemeColors.OverrideDictionary` or the dictionary loaded through `OverrideSource` beat the generated colors, which in turn beat the theme's built-in palette. Just remember that the contrast guarantee above is about the *generated* primary pair. The moment you replace either color yourself, that pairing is on you.
 
-The 8.0 implementation also improves runtime updates. The semantic brushes are long-lived instances whose colors get rewritten in place, so controls using those brushes repaint without page re-navigation or a theme toggle, including hover and pressed variants. A brush you explicitly override still takes precedence. With a theme already merged into `Application.Current.Resources`, the helper makes this straightforward:
+The 8.0 implementation also does something nice with runtime updates. The semantic brushes are long-lived instances whose colors get rewritten in place, so controls using those brushes repaint on the spot. No re-navigation, no theme toggle, and that includes the hover and pressed variants. A brush you explicitly override still takes precedence. With a theme already merged into `Application.Current.Resources`, the helper makes this a one-liner:
 
 ```csharp
 using Uno.Themes;
@@ -220,24 +216,24 @@ SemanticThemeHelper.PrimarySeed = null;
 
 Picture a "pick your accent color" setting in your app, wired to one property. That's the part I like most about this API.
 
-The helper's properties throw if no theme is merged into the application's resources; `SemanticThemeHelper.GetTheme()` is the non-throwing option and returns `null` when none is found. If you're hosting multiple applications, use `someApplication.GetTheme()` to select the intended application's theme instead of relying on `Application.Current`.
+One gotcha: the helper's properties throw if no theme is merged into the application's resources. If you'd rather not risk that, `SemanticThemeHelper.GetTheme()` is the non-throwing option and just returns `null` when it can't find one. And if you're hosting multiple applications in one process, reach for `someApplication.GetTheme()` to grab the theme you actually mean instead of leaning on `Application.Current`.
 
 ## Preparing for 8.0
 
-In the current 8.0 branch, seed generation remains opt-in. An app that never sets `PrimarySeed` keeps its built-in color palette, but other style and font customizations need a closer look. Ahead of the release, these are the changes to prepare for; check the [migration guide][migration-docs] again when the packages ship:
+In the current 8.0 branch, seed generation stays opt-in. An app that never sets `PrimarySeed` keeps its built-in color palette, so you're safe there. It's the other style and font customizations that deserve a closer look. Here are the changes I'd start preparing for now, and definitely circle back to the [migration guide][migration-docs] once the packages actually ship:
 
 - **Seeded colors:** expect different output when moving from 7.x to the upcoming release. `TonalSpot` keeps the previous recipe, but the color-math fix still applies.
-- **Root fonts:** plan to replace `TypefacePlain` and `TypefaceBrand` overrides with `DefaultFontFamily`. The 8.0 branch removes Simple's `SimpleFontFamily` and its old per-weight family keys too; use the root family and the relevant `*FontWeight` tokens.
+- **Root fonts:** plan to replace `TypefacePlain` and `TypefaceBrand` overrides with `DefaultFontFamily`. The 8.0 branch also removes Simple's `SimpleFontFamily` and its old per-weight family keys, so lean on the root family and the relevant `*FontWeight` tokens instead.
 - **Material fonts:** in the 8.0 branch, overriding `MaterialRegularFontFamily`, `MaterialMediumFontFamily`, or `MaterialLightFontFamily` no longer changes Material v2 typography. Those keys remain for compatibility, and the v1 styles are unchanged. Move v2 font customization to the new root or specific scale keys.
-- **Custom theme subclasses:** the 8.0 branch marks `UseHighFidelityColors` obsolete. Use `ThemeColors.SeedColorMode`; existing overrides still work unless an explicit mode is set on `Colors`.
+- **Custom theme subclasses:** the 8.0 branch marks `UseHighFidelityColors` obsolete in favor of `ThemeColors.SeedColorMode`. Your existing overrides still work unless you set an explicit mode on `Colors`.
 
-When testing a development build ahead of a 7.x-to-8.0 upgrade, check font overrides as well as seed colors. If you're coming from an earlier version, also read the guide's v7 section for the other style and API changes.
+And if you're coming from an even earlier version, give the guide's v7 section a read too for the other style and API changes.
 
 ## Conclusion
 
 The Semantic Design Language gives your app a consistent vocabulary across design systems, and Semantic Design Tokens put the values behind that vocabulary in your hands. You reference `FilledButtonStyle`, `Space400`, `BodyLarge`, and a `PrimarySeed`, and the active theme fills in the specifics. Simple and Material show how that vocabulary can produce different looks from the same markup. Whether you start with Simple's neutral defaults or Material's established look, the shared tokens give you the same place to shape your app's spacing, corners, typography, and colors.
 
-That shared foundation already exists in 7.x; the work on 8.0 makes it easier to change fonts, adjust tokens at runtime, and generate colors that stay true to your seed. I'm looking forward to getting these refinements into a release. In the meantime, try the development demo, explore the branch, and let me know what you build with it.
+That shared foundation already exists today in 7.x. The work going into 8.0 just makes it easier to swap fonts, adjust tokens at runtime, and generate colors that stay true to your seed. I'm genuinely looking forward to getting these refinements into a proper release. In the meantime, go try the development demo, poke around the branch, and let me know what you build with it.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
