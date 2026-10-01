@@ -15,7 +15,7 @@
 <meta charset="utf-8">
 
 
-<!-- begin _includes/seo.html --><title>Semantic Design Language and Design Tokens in Uno.Themes 8.0 - dotnet new bald</title>
+<!-- begin _includes/seo.html --><title>Semantic Design Language and Design Tokens - dotnet new bald</title>
 <meta name="description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?">
 
 
@@ -28,7 +28,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="dotnet new bald">
-<meta property="og:title" content="Semantic Design Language and Design Tokens in Uno.Themes 8.0">
+<meta property="og:title" content="Semantic Design Language and Design Tokens">
 <meta property="og:url" content="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html">
 
 
@@ -36,19 +36,19 @@
 
 
 
-  <meta property="og:image" content="https://kazo0.dev/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.png">
+  <meta property="og:image" content="https://kazo0.dev/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.jpg">
   
 
 
 
   <meta name="twitter:site" content="@BiloganSteve">
-  <meta name="twitter:title" content="Semantic Design Language and Design Tokens in Uno.Themes 8.0">
+  <meta name="twitter:title" content="Semantic Design Language and Design Tokens">
   <meta name="twitter:description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?">
   <meta name="twitter:url" content="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html">
 
   
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.png">
+    <meta name="twitter:image" content="https://kazo0.dev/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.jpg">
     
   
 
@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-44/assets/css/main.css?v=1790273440">
+<link rel="stylesheet" href="/previews/pr-44/assets/css/main.css?v=1790815955">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -284,7 +284,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Semantic Design Language and Design Tokens in Uno.Themes 8.0">
+    <meta itemprop="headline" content="Semantic Design Language and Design Tokens">
     <meta itemprop="description" content="A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in Uno.Themes. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?">
     <meta itemprop="datePublished" content="2026-09-23T00:00:00+00:00">
     
@@ -293,7 +293,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" class="u-url" itemprop="url">Semantic Design Language and Design Tokens in Uno.Themes 8.0
+            <a href="https://kazo0.dev/previews/pr-44/uno-general/2026/09/23/simple-design-semantic-tokens.html" class="u-url" itemprop="url">Semantic Design Language and Design Tokens
 </a>
           </h1>
           
@@ -347,14 +347,14 @@
             </nav>
           </aside>
         
-        <img alt="Hero Image" src="/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.png" class="hero-image">
+        <img alt="Hero Image" src="/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.jpg" class="hero-image">
         <p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That demo gets at something I’ve been meaning to dig into: the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>. How do you describe the styles, spacing, typography, and colors your UI needs without tying every choice to one design system?</p>
 
 <p>The Semantic Design Language gives your XAML a shared vocabulary, with semantic styles to describe controls and Semantic Design Tokens to define the values they use. That theme-agnostic layer arrived in <code class="language-plaintext highlighter-rouge">Uno.Themes</code> 7.0 alongside the new Simple Design System, and it brings a common way to style and customize both Simple and Material. The 8.0 release rounds that story out with a real spacing base unit, a single root typeface, tokens you can tweak at runtime, and seed colors that actually match the color you picked. This post covers the whole picture as it stands in 8.0. If you’ve ever wanted to re-skin an entire app from a handful of knobs, or swap design systems without a find-and-replace rampage through your styles, this is the release you’ve been waiting for.</p>
 
 <p>Let’s dive in.</p>
 
-<p><a href="/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.png" class="image-popup"><img class="align-center" src="/previews/pr-44/assets/images/simple-design-semantic-tokens/hero.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography"></a></p>
+<p><a href="/previews/pr-44/assets/images/simple-design-semantic-tokens/simple-vs-material.png" class="image-popup"><img class="align-center" src="/previews/pr-44/assets/images/simple-design-semantic-tokens/simple-vs-material.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography"></a></p>
 
 <p>Everything you’ll see in this post comes from <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a>, a small demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, each theme wearing its out-of-the-box palette, and I promise I didn’t touch a single style key between them.</p>
 
