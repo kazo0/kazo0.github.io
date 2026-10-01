@@ -1,9 +1,9 @@
 ---
-title: "Semantic Design Language and Design Tokens in Uno.Themes 8.0"
+title: "Semantic Design Language and Design Tokens"
 category: uno-general
 header:
-  teaser: /assets/images/simple-design-semantic-tokens/hero.png
-  og_image: /assets/images/simple-design-semantic-tokens/hero.png
+  teaser: /assets/images/simple-design-semantic-tokens/hero.jpg
+  og_image: /assets/images/simple-design-semantic-tokens/hero.jpg
 tags: [uno-themes, simple, semantic-tokens, design-tokens, theming, material, uno-platform, uno, unoplatform]
 ---
 
@@ -13,7 +13,7 @@ The Semantic Design Language gives your XAML a shared vocabulary, with semantic 
 
 Let's dive in.
 
-<a href="/assets/images/simple-design-semantic-tokens/hero.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/hero.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography"/></a>
+<a href="/assets/images/simple-design-semantic-tokens/simple-vs-material.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/simple-vs-material.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography"/></a>
 
 Everything you'll see in this post comes from [ThemeStudio][theme-studio], a small demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, each theme wearing its out-of-the-box palette, and I promise I didn't touch a single style key between them.
 
