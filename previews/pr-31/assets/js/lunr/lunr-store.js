@@ -125,12 +125,6 @@ var store = [{
         "url": "/previews/pr-31/uno-general/2026/02/23/agent-skills-intro.html",
         "teaser": "/previews/pr-31/assets/images/skills-intro/tool-hero.png"
       },{
-        "title": "One Day at a Time: Sobriety, Code, and Rebuilding Daily Reflection",
-        "excerpt":"This one is going to be a little different. I usually write about Uno Platform, controls, and lately a lot about agentic development. Today I want to write about something more personal and then tie it back to the code, because for me the two have always been tangled together....","categories": ["uno-general"],
-        "tags": ["personal","recovery","sobriety","daily-reflection","xamarin","maui","uno-platform","uno","agents","migration"],
-        "url": "/previews/pr-31/uno-general/2026/07/18/daily-reflection-sobriety.html",
-        "teaser": "/previews/pr-31/assets/images/daily-reflection/hero.png"
-      },{
         "title": "Uno Apps Inside of Uno Apps",
         "excerpt":"I posted a fun little experiment the other day and I wanted to follow it up with the real story of how it works. Here’s the tweet: Running your @UnoPlatform apps inside of your @UnoPlatform apps ;) Inspired by the plumbing of Uno Platform Studio, I thought it’d be fun...","categories": ["uno-general"],
         "tags": ["uno-platform","uno","assemblyloadcontext","alc","hot-design","themes","skia","wasm"],
@@ -142,4 +136,34 @@ var store = [{
         "tags": ["uno-toolkit","toolkit","loadingview","loading","iloadable","progressring","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-31/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html",
         "teaser": "/previews/pr-31/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP",
+        "excerpt":"Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platform. These will be quick reads that you can consume in a few minutes and will cover a wide range of topics. Today, we...","categories": ["uno-tidbit"],
+        "tags": ["uno-tidbits","uno-tidbit","tidbit","agents","ai","mcp","app-mcp","runtime","verification","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-31/uno-tidbit/2026/08/19/tidbit-app-mcp.html",
+        "teaser": "/previews/pr-31/assets/images/tidbit-hero.png"
+      },{
+        "title": "Toolkit Tuesdays: ZoomContentControl",
+        "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
+        "tags": ["uno-toolkit","toolkit","zoomcontentcontrol","zoom","pan","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-31/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html",
+        "teaser": "/previews/pr-31/assets/images/uno-toolkit-hero.png"
+      },{
+        "title": "Cerulean: Your Agent Is Not Impressed",
+        "excerpt":"In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right documentation, and it has a much better chance of getting the implementation right. Naturally, my next contribution to this ecosystem was...","categories": ["uno-general"],
+        "tags": ["agents","ai","skills","cerulean","claude-code","codex"],
+        "url": "/previews/pr-31/uno-general/2026/09/13/cerulean-agent-skill.html",
+        "teaser": "/previews/pr-31/assets/images/cerulean/hero.png"
+      },{
+        "title": "Uno Extensions: MSAL Auth Across Platforms",
+        "excerpt":"Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cross-platform applications. The Uno Extensions library offers a variety of reusable, battle-tested components to achieve the most common pieces of functionality in your apps (logging, authentication, navigation,...","categories": ["uno-extensions"],
+        "tags": ["uno-platform","uno","msal","authentication","entra","uno-extensions","security"],
+        "url": "/previews/pr-31/uno-extensions/2026/09/17/msal-cross-platform-auth.html",
+        "teaser": "/previews/pr-31/assets/images/uno-extensions-hero.jpg"
+      },{
+        "title": "One Day at a Time - Rebuilding Daily Reflection",
+        "excerpt":"This one is going to be a little different. I usually write about Uno Platform, controls, and lately a lot about agentic development. Today I want to write about something more personal and then tie it back to the code, because for me the two have always been tangled together....","categories": ["uno-general"],
+        "tags": ["personal","recovery","sobriety","daily-reflection","xamarin","maui","uno-platform","uno","mvux","agents","migration"],
+        "url": "/previews/pr-31/uno-general/2026/10/01/daily-reflection-sobriety.html",
+        "teaser": "/previews/pr-31/assets/images/daily-reflection/hero.png"
       }]
