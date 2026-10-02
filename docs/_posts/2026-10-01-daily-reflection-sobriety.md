@@ -190,7 +190,7 @@ One day at a time. Catch you in the next one :wave:
 - [AA Daily Reflection on the App Store][app-store]
 - [Daily Reflection on Google Play][play-store]
 - [Uno Platform Native AOT][native-aot-docs]
-- [Seed Color Palette Generation][seed-colors-docs]
+- [Seed Color Customization][seed-colors-docs]
 
 [gh-daily-reflection]: https://github.com/kazo0/DailyReflection
 [gh-daily-reflection-ports]: https://github.com/kazo0/DailyReflection-ports
@@ -199,7 +199,7 @@ One day at a time. Catch you in the next one :wave:
 [play-store]: https://play.google.com/store/apps/details?id=com.kazo0.dailyreflection
 [nodatime]: https://nodatime.org/
 [native-aot-docs]: https://platform.uno/docs/articles/features/native-aot.html
-[seed-colors-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html
+[seed-colors-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/material-getting-started.html#seed-color-customization
 [uno-24768]: https://github.com/unoplatform/uno/issues/24768
 [uno-discord]: https://platform.uno/discord
 {% include links.md %}
