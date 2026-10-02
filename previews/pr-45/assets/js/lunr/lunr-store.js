@@ -161,6 +161,12 @@ var store = [{
         "url": "/previews/pr-45/uno-extensions/2026/09/17/msal-cross-platform-auth.html",
         "teaser": "/previews/pr-45/assets/images/uno-extensions-hero.jpg"
       },{
+        "title": "Semantic Design in Uno Themes - Part 1",
+        "excerpt":"A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo got at something I’ve been meaning to dig into properly: the Semantic Design Language in Uno Themes. How do you describe the...","categories": ["uno-general"],
+        "tags": ["uno-themes","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
+        "url": "/previews/pr-45/uno-general/2026/10/01/simple-design-semantic-tokens.html",
+        "teaser": "/previews/pr-45/assets/images/simple-design-semantic-tokens/hero.jpg"
+      },{
         "title": "Semantic Design in Uno.Themes - Part 2",
         "excerpt":"In Part 1 of this little series I dug into the Semantic Design Language in Uno.Themes: semantic styles that let your XAML ask for a ROLE like FilledButtonStyle instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that...","categories": ["uno-general"],
         "tags": ["uno-themes","uno-themes-8","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],

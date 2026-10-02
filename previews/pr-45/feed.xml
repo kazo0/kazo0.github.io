@@ -1,4 +1,230 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-45/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-45/" rel="alternate" type="text/html" /><updated>2026-10-01T18:37:54+00:00</updated><id>https://kazo0.dev/previews/pr-45/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno.Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno.Themes - Part 2" /><published>2026-10-01T00:00:00+00:00</published><updated>2026-10-01T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In Part 1 of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-45/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-45/" rel="alternate" type="text/html" /><updated>2026-10-02T15:34:04+00:00</updated><id>https://kazo0.dev/previews/pr-45/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno Themes - Part 1</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/simple-design-semantic-tokens.html" rel="alternate" type="text/html" title="Semantic Design in Uno Themes - Part 1" /><published>2026-10-01T00:00:00+00:00</published><updated>2026-10-01T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/simple-design-semantic-tokens</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/simple-design-semantic-tokens.html"><![CDATA[<p>A little while back I wrote about <a href="/uno-general/2026/08/11/alc-super-themes-app.html">hosting three Uno apps inside a single Uno app</a> so you could flip between Material, Cupertino, and Simple live. That demo got at something I’ve been meaning to dig into properly: the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Design Language</a> in <code class="language-plaintext highlighter-rouge">Uno Themes</code>. How do you describe the styles, spacing, typography, and colors your UI needs without welding every choice to one design system?</p>
+
+<p>The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a> define the values those controls use. Uno Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.</p>
+
+<p>This is the first of two posts. Here in Part 1 we’ll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I’ll look at what the upcoming 8.0 release adds on top, like turning those knobs live at runtime, a single root font, and generating a whole color palette from one seed. I’m focusing on Material and Simple throughout.</p>
+
+<p>Let’s dive in. :diving_mask:</p>
+
+<figure>
+    <a href="/assets/images/simple-design-semantic-tokens/simple-vs-material.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/simple-vs-material.png" alt="The same Forma overview screen rendered side by side under SimpleTheme, in its default grayscale palette, and MaterialTheme, in its default purple palette, with identical layout and content but different colors, control shapes, and typography" /></a>
+    <figcaption>The same screen under SimpleTheme (left) and MaterialTheme (right), each with its default palette.</figcaption>
+</figure>
+
+<p>Everything you’ll see in this post comes from <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a>, a little demo app I put together that lets you flip design systems, seed colors, and tokens live. Same XAML in both halves of that screenshot, each theme wearing its out-of-the-box palette, and I promise I didn’t touch a single style key between them.</p>
+
+<h2 id="the-problem-with-theme-prefixed-styles">The Problem With Theme-Prefixed Styles</h2>
+
+<p>The problem with theme-prefixed styles is that you need to <i><u>prefix</u></i> the <i><u>theme</u></i> for every <i><u>style</u></i> key… make sense?</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource MaterialFilledButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Save"</span> <span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That works great, right up until the day you want to try a different design system. Now every one of those <code class="language-plaintext highlighter-rouge">Material*</code> keys is wrong, and you’re spelunking through your XAML swapping prefixes and praying you didn’t miss one. Your markup is welded to a single design system, and there’s no clean way to say “give me a filled button, whatever that means for the theme that’s currently active.”</p>
+
+<p>That’s exactly the problem the Semantic Design Language solves. Your XAML describes the ROLE a style or resource plays, and the active theme fills in the design.</p>
+
+<h2 id="semantic-styles">Semantic Styles</h2>
+
+<p>Now for the good part. Instead of <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code>, the semantic layer <i>un-</i>prefixes your prefixed styles so that your prefixed keys are no longer prefixed… I told you it was simple:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Works under both Material and Simple. No edits required. --&gt;</span>
+<span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource FilledButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Save"</span> <span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>That exact XAML renders a proper Material filled button under <code class="language-plaintext highlighter-rouge">MaterialTheme</code> and a proper Simple filled button under <code class="language-plaintext highlighter-rouge">SimpleTheme</code>. You don’t change a thing.</p>
+
+<p>The mechanism behind this is refreshingly boring, and I mean that as a compliment. Internally, each theme defines a set of <code class="language-plaintext highlighter-rouge">StaticResource</code> alias that points the semantic key at the theme’s concrete style:</p>
+
+<ul>
+  <li>Under Material, <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> resolves to <code class="language-plaintext highlighter-rouge">MaterialFilledButtonStyle</code></li>
+  <li>Under Simple, <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> resolves to <code class="language-plaintext highlighter-rouge">SimpleFilledButtonStyle</code></li>
+</ul>
+
+<p>Same idea across the board: <code class="language-plaintext highlighter-rouge">OutlinedTextBoxStyle</code>, <code class="language-plaintext highlighter-rouge">ContentDialogStyle</code>, <code class="language-plaintext highlighter-rouge">ComboBoxStyle</code>, the full Material Design 3 typography scale (<code class="language-plaintext highlighter-rouge">HeadlineLarge</code>, <code class="language-plaintext highlighter-rouge">BodyMedium</code>, <code class="language-plaintext highlighter-rouge">LabelSmall</code>, and friends), all of it. Write the semantic key, let the active theme sort out the details.</p>
+
+<p class="notice--warning">The two design systems don’t have perfectly overlapping vocabularies. Simple does not define the <code class="language-plaintext highlighter-rouge">ElevatedButtonStyle</code>, <code class="language-plaintext highlighter-rouge">CommandBarStyle</code>, or <code class="language-plaintext highlighter-rouge">MediaTransportControlsStyle</code> aliases, so don’t reference those keys expecting a Simple equivalent. The Floating Action Button aliases do exist, but map to Simple icon buttons rather than distinct FAB styles. Even a shared key can have a different interpretation: <code class="language-plaintext highlighter-rouge">OutlinedButtonStyle</code> maps to Simple’s tonal button. Check the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">semantic styles mapping table</a> when choosing the keys your app depends on.</p>
+
+<h2 id="semantic-design-tokens">Semantic Design Tokens</h2>
+
+<p>Semantic styles are the visible tip of the iceberg. Underneath is the other half of that shared foundation: Semantic Design Tokens. These are just XAML resources for spacing, shape, control sizing, and typography that the design systems’ styles and templates consume. Override one and you move every control that references it. A value you hard-coded directly on a control stays exactly where you put it.</p>
+
+<p>Spacing is a numeric scale. At the default spacing unit of 4 and <code class="language-plaintext highlighter-rouge">Regular</code> density, a few of the values look like this (in XAML layout units):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Default Value</th>
+      <th>Thickness Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space100</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">Space100Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space200</code></td>
+      <td>8</td>
+      <td><code class="language-plaintext highlighter-rouge">Space200Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space300</code></td>
+      <td>12</td>
+      <td><code class="language-plaintext highlighter-rouge">Space300Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space400</code></td>
+      <td>16</td>
+      <td><code class="language-plaintext highlighter-rouge">Space400Thickness</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Space600</code></td>
+      <td>24</td>
+      <td><code class="language-plaintext highlighter-rouge">Space600Thickness</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Shape works similarly, with a default corner-radius unit of 4. <code class="language-plaintext highlighter-rouge">RadiusFull</code> is the exception: it stays at 9999 for a pill shape, regardless of the base unit:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Default Value</th>
+      <th>CornerRadius Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius100</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius100CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius200</code></td>
+      <td>8</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Radius400</code></td>
+      <td>16</td>
+      <td><code class="language-plaintext highlighter-rouge">Radius400CornerRadius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RadiusFull</code></td>
+      <td>9999</td>
+      <td><code class="language-plaintext highlighter-rouge">RadiusFullCornerRadius</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And density covers control heights and icon sizes (<code class="language-plaintext highlighter-rouge">ControlHeightMedium</code>, <code class="language-plaintext highlighter-rouge">IconSizeMedium</code>, <code class="language-plaintext highlighter-rouge">TouchTargetMinSize</code>, and so on).</p>
+
+<p>Want rounder corners for controls in a page that use <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code>? Override that resource in the page:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Page.Resources&gt;</span>
+    <span class="nt">&lt;CornerRadius</span> <span class="na">x:Key=</span><span class="s">"Radius200CornerRadius"</span><span class="nt">&gt;</span>10<span class="nt">&lt;/CornerRadius&gt;</span>
+<span class="nt">&lt;/Page.Resources&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Any control that resolves <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code> in that scope picks up the override. Just know that it doesn’t automatically change <code class="language-plaintext highlighter-rouge">Radius200</code> or any of the other corner-radius keys. Same goes for spacing: the numeric <code class="language-plaintext highlighter-rouge">Space200</code> and its <code class="language-plaintext highlighter-rouge">Space200Thickness</code> companion are separate resources. Override whichever form your style actually consumes, or reach for the scalar theme properties below to regenerate the whole scale at once.</p>
+
+<p>I know you may be thinking: “What kind of name is <code class="language-plaintext highlighter-rouge">Radius200CornerRadius</code>? Isn’t that redundant?”</p>
+
+<p>And my response to that is: Yes, but that’s what I decided to name it so you’re stuck with it. Every token is related and generated in C# by <a href="https://github.com/unoplatform/Uno.Themes/blob/e37f7aea988b85d43d04ede7f86e102dc4dc5171/src/library/Uno.Themes/BaseTheme.ScaleGeneration.cs"><code class="language-plaintext highlighter-rouge">BaseTheme</code></a>, more on that <a href="#scaling-with-base-units">next</a>.</p>
+
+<h2 id="turning-the-big-knobs">Turning the Big Knobs</h2>
+
+<p>Overriding tokens one at a time is great for surgical tweaks, but you don’t have to work that way. Those scales also roll up into a few scalar properties on the theme itself, so you can reshape a whole app’s proportions right from <code class="language-plaintext highlighter-rouge">App.xaml</code>. Material and Simple both expose them.</p>
+
+<p><code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code>, <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, and <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> each set a base unit, and the full scale generates from there as multiples of it:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> 
+             <span class="na">DefaultCornerRadius=</span><span class="s">"2"</span> 
+             <span class="na">DefaultDensity=</span><span class="s">"Compact"</span> 
+             <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="nt">/&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="scaling-with-base-units">Scaling with Base Units</h3>
+
+<p>With a base spacing of 6, <code class="language-plaintext highlighter-rouge">Space100</code> is 6, <code class="language-plaintext highlighter-rouge">Space200</code> is 12, and <code class="language-plaintext highlighter-rouge">Space400</code> is 24, with the matching <code class="language-plaintext highlighter-rouge">Thickness</code> resources generated right alongside them. <code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> does the same thing for the <code class="language-plaintext highlighter-rouge">Radius*</code> scale. <code class="language-plaintext highlighter-rouge">RadiusFull</code> stays 9999 no matter what, because a pill is a pill.</p>
+
+<figure>
+    <a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same" /></a>
+    <figcaption>One Simple settings screen at Compact, Regular, and Comfy density.</figcaption>
+</figure>
+
+<h2 id="simple-and-material">Simple and Material</h2>
+
+<p>With that shared vocabulary in place, picking a design system is really just about how you want your app to look. Uno Simple implements Figma’s Simple Design System (SDS). Where Material comes with strong Material Design opinions baked in, Simple ships a clean grayscale palette and gets out of your way. That makes it a lovely place to start when you want to bring your own brand rather than adopt someone else’s, and a great way to see how far those shared tokens can take your own design.</p>
+
+<h3 id="getting-simple-into-your-app">Getting Simple Into Your App</h3>
+
+<p>Pulling Simple in is a matter of opting into the feature and merging the theme. Add <code class="language-plaintext highlighter-rouge">SimpleTheme</code> to your project’s existing <code class="language-plaintext highlighter-rouge">UnoFeatures</code> list. A project using only that feature would have:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;UnoFeatures&gt;</span>SimpleTheme<span class="nt">&lt;/UnoFeatures&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Then merge the theme into your <code class="language-plaintext highlighter-rouge">App.xaml</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="nt">&lt;Application.Resources&gt;</span>
+    <span class="nt">&lt;ResourceDictionary&gt;</span>
+        <span class="nt">&lt;ResourceDictionary.MergedDictionaries&gt;</span>
+            <span class="c">&lt;!-- other dictionaries omitted for brevity --&gt;</span>
+            <span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/ResourceDictionary.MergedDictionaries&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+<span class="nt">&lt;/Application.Resources&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Starting from scratch? The template can scaffold the whole thing for you:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>dotnet new unoapp <span class="nt">-o</span> UnoSimpleApp <span class="nt">-theme</span> simple
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Out of the box, Simple is intentionally plain. No seed color, just a neutral grayscale palette that stays gray until you give it something to work with. Giving it a brand color, and reshaping the spacing, corners, and type while you’re at it, is exactly where Part 2 picks up. :wink:</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That’s the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system’s specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> or <code class="language-plaintext highlighter-rouge">BodyLarge</code>, and the active theme fills in the specifics. Swap <code class="language-plaintext highlighter-rouge">MaterialTheme</code> for <code class="language-plaintext highlighter-rouge">SimpleTheme</code> and that same markup comes out looking like a completely different app.</p>
+
+<p>The best part is that none of this is hypothetical. It’s all shipping in Uno Themes 7.x today, ready to use. In Part 2 we’ll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app’s font from a single root, and generating a full color palette from one seed color. See you there.</p>
+
+<p>Hope you learned something and I’ll catch you in the next one :wave:</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html">Uno Themes Overview</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/semantic-styles.html">Semantic Styles</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/simple-getting-started.html">Uno Simple: Getting Started</a></li>
+  <li><a href="https://github.com/kazo0/ThemeStudio">ThemeStudio on GitHub</a></li>
+</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno-themes" /><category term="simple" /><category term="semantic-tokens" /><category term="design-tokens" /><category term="theming" /><category term="material" /><category term="uno-platform" /><category term="uno" /><category term="unoplatform" /><summary type="html"><![CDATA[A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo got at something I’ve been meaning to dig into properly: the Semantic Design Language in Uno Themes. How do you describe the styles, spacing, typography, and colors your UI needs without welding every choice to one design system?]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Semantic Design in Uno.Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno.Themes - Part 2" /><published>2026-10-01T00:00:00+00:00</published><updated>2026-10-01T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2026/10/01/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In Part 1 of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno.Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.</p>
 
 <p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We’ll turn the token knobs from Part 1 live at runtime, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.</p>
 
@@ -2736,217 +2962,4 @@ This is where you would typically implement your own authentication logic, such 
   <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.Focus.html">InputExtensions Focus Recipe Book</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/InputExtensions.ReturnType.html">InputExtensions Return Type Recipe Book</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.chefs/doc/toolkit/CommandExtensions.html">CommandExtensions Recipe Book</a></li>
-</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno" /><category term="unochefs" /><category term="uno.chefs" /><category term="uno-chefs" /><category term="chefs" /><category term="hot-design" /><category term="uno-platform" /><summary type="html"><![CDATA[Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introducing Uno Chefs (and some other stuff)</title><link href="https://kazo0.dev/previews/pr-45/uno-general/2025/05/25/chefs-intro.html" rel="alternate" type="text/html" title="Introducing Uno Chefs (and some other stuff)" /><published>2025-05-25T00:00:00+00:00</published><updated>2025-05-25T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-45/uno-general/2025/05/25/chefs-intro</id><content type="html" xml:base="https://kazo0.dev/previews/pr-45/uno-general/2025/05/25/chefs-intro.html"><![CDATA[<p>Uno Platform 6.0 has been released!</p>
-
-<p>Be sure to check out the <a href="https://platform.uno/blog/uno-platform-studio-6-0/">release blog</a> as well as the <a href="https://www.youtube.com/live/xV8kIfqhuuA?si=hW4IyliKjTpJr82C">Release Webinar</a> for full details and some really cool demos!</p>
-
-<p>There are some truly amazing features in this release. Biggest of all are the general availability of Hot Design® and the introduction of Skia-based rendering for all platforms. Along with the official release blog, you should also check out <a href="https://nicksnettravelswp.builttoroam.com/uno-platform-6-0/">Nick’s blog post</a> for further coverage of the new features.</p>
-
-<p>What I’ll be focusing on in this post is the release of <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs</a>, our new flagship reference implementation when it comes to building cross-platform apps. You better get used to hearing about Chefs, because there is a boatload of content coming your way over the next few months. This means new <a href="https://www.youtube.com/playlist?list=PLl_OlDcUya9rP_fDcFrHWV3DuP7KhQKRA">Tech Bites</a>, blog posts, and a growing collection of companion documentation articles that we’ve dubbed the <a href="https://aka.platform.uno/chefs-recipebooks">“Recipe Book”</a>.</p>
-
-<h2 id="what-is-uno-chefs">What is Uno Chefs?</h2>
-
-<p>As the <a href="https://aka.platform.uno/chefs-sampleapp">official docs</a> state: Uno Chefs is a modern, responsive, and interactive recipe app built to show what Uno Platform can really do in a real-world, production-ready application. Basically, we took everything we offer in terms of our entire platform and shoved it into a single app. Chefs contains all the bells and whistles you can think of, including:</p>
-
-<ul>
-  <li><strong>Uno Toolkit</strong>: Ranging from complex controls like the <code class="language-plaintext highlighter-rouge">NavigationBar</code> to helpers like the <code class="language-plaintext highlighter-rouge">Responsive</code> Markup Extensions</li>
-  <li><strong>Uno Material</strong>: A complete Material Design implementation</li>
-  <li><strong>Uno Extensions</strong>: DI, MVUX, HTTP (Kiota), Auth, Navigation, and more</li>
-  <li><strong>Media Player</strong>: A fully functional, and free, media player</li>
-  <li><strong>Third-Party Controls</strong>: LiveCharts2, Mapsui</li>
-</ul>
-
-<p>On top of that, the Chefs app is built against the new Unified Skia Rendering Engine from Uno 6.0. Which means that the app is rendered using SkiaSharp for <strong>Every.</strong> <strong>Single.</strong> <strong>Platform.</strong></p>
-
-<p>Let’s dive in and take a tour of the app. I’m going to cover one or two pages per article, depending on the complexity of the page(s). We’ll take a look at the general structure of the pages and work our way up from there. Starting from the XAML all the way through the MVUX presentation layer, the Business layer, and finally the Client layer.</p>
-
-<h2 id="anatomy-of-the-welcome-page">Anatomy of the Welcome Page</h2>
-
-<p>Upon launching the app, you should find yourself on the Welcome Page. This page presents you with a carousel-like experience to demonstrate how you can build a first-launch onboarding experience that you see in many apps today.</p>
-
-<h3 id="wide-layout">Wide Layout</h3>
-
-<figure>
-    <a href="/assets/images/chefs-intro/welcome-wide.png"><img src="/assets/images/chefs-intro/welcome-wide.png" alt="Welcome Page Anatomy" /></a>
-    <figcaption>
-        <ol>
-            <li>Hero Image FlipView</li>
-            <li>WelcomeView FlipView</li>
-            <li>PipsPager</li>
-            <li>Navigation Buttons</li>
-        </ol>
-    </figcaption>
-</figure>
-
-<h3 id="narrow-layout">Narrow Layout</h3>
-
-<figure>
-    <a href="/assets/images/chefs-intro/welcome-narrow.png"><img class="align-center width-half" src="/assets/images/chefs-intro/welcome-narrow.png" alt="Welcome Page Anatomy" /></a>
-    <figcaption>
-        <ol>
-            <li>FlipView with WelcomeView</li>
-            <li>PipsPager</li>
-            <li>Navigation Buttons</li>
-        </ol>
-    </figcaption>
-</figure>
-
-<p>There’s actually a lot going on in this page. We have multiple <code class="language-plaintext highlighter-rouge">FlipView</code> controls here that are automatically kept in sync with each other. As well as the <code class="language-plaintext highlighter-rouge">PipsPager</code> that represents which of the three <code class="language-plaintext highlighter-rouge">FlipView</code> items is currently displayed. Finally, we have the navigation buttons that provide an alternate way of flipping through the items.</p>
-
-<p>We are using multiple <code class="language-plaintext highlighter-rouge">FlipView</code> controls to achieve a seamless transition between the two possible page layouts. This is where developing for multiple platforms can cause some friction. Not only do we need to support narrow layouts for phones, we also need to support wide layouts for tablets, desktops, and browsers. On top of that, certain platforms allow for the window to be resized. So we need an easy way to transition between the two layouts. This is what the end result looks like:</p>
-
-<figure class="video-figure">
-  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
-    <source src="/previews/pr-45/assets/images/chefs-intro/welcome-responsive.mp4" type="video/mp4" />
-    Your browser doesn't support embedded video. <a href="/previews/pr-45/assets/images/chefs-intro/welcome-responsive.mp4">Download the clip</a> instead.
-  </video>
-</figure>
-
-<p>In Chefs, we achieve this with the <code class="language-plaintext highlighter-rouge">Responsive</code> Markup Extension from Uno Toolkit. We’ve actually covered this in a <a href="/toolkit-tuesday/2024/01/30/toolkit-tuesday-responsive.html">previous post</a> so I won’t go into a lot of detail here. But you can expect to find <code class="language-plaintext highlighter-rouge">Responsive</code> markup extensions peppered all throughout the app.</p>
-
-<h2 id="the-xaml">The XAML</h2>
-
-<p>Let’s dive into the XAML for the Welcome Page and see how it’s all wired up. As mentioned above, we have two <code class="language-plaintext highlighter-rouge">FlipView</code> controls. The first one contains the hero images that are displayed in the wide layout:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;FlipView</span> <span class="na">IsEnabled=</span><span class="s">"False"</span>
-          <span class="na">Visibility=</span><span class="s">"{utu:Responsive Normal=Collapsed, Wide=Visible}"</span>
-          <span class="na">utu:AutoLayout.PrimaryAlignment=</span><span class="s">"Stretch"</span>
-          <span class="na">SelectedIndex=</span><span class="s">"{Binding Pages.CurrentIndex}"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;FlipView.Items&gt;</span>
-    <span class="c">&lt;!-- First Splash image --&gt;</span>
-    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/Welcome/Wide/first_splash_screen.jpg"</span>
-           <span class="na">Stretch=</span><span class="s">"UniformToFill"</span> <span class="nt">/&gt;</span>
-
-    <span class="c">&lt;!-- Second Splash image --&gt;</span>
-    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/Welcome/Wide/second_splash_screen.jpg"</span>
-           <span class="na">Stretch=</span><span class="s">"UniformToFill"</span> <span class="nt">/&gt;</span>
-
-    <span class="c">&lt;!-- Third Splash image --&gt;</span>
-    <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"ms-appx:///Assets/Welcome/Wide/third_splash_screen.jpg"</span>
-           <span class="na">Stretch=</span><span class="s">"UniformToFill"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;/FlipView.Items&gt;</span>
-<span class="nt">&lt;/FlipView&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Take note of the <code class="language-plaintext highlighter-rouge">Visibility</code> property on the <code class="language-plaintext highlighter-rouge">FlipView</code>. We only want this <code class="language-plaintext highlighter-rouge">FlipView</code> to be visible when the window is wide enough.</p>
-
-<p>Our second <code class="language-plaintext highlighter-rouge">FlipView</code> contains three instances of a small <code class="language-plaintext highlighter-rouge">UserControl</code> called <a href="https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/Controls/WelcomeView.xaml"><code class="language-plaintext highlighter-rouge">WelcomeView</code></a>. This <code class="language-plaintext highlighter-rouge">FlipView</code> is actually always visible. It serves as the main content to the right of the hero image in the wide layout, and as the main content in the narrow (normal) layout.</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-</pre></td><td class="rouge-code"><pre><span class="nt">&lt;FlipView</span> <span class="na">x:Name=</span><span class="s">"flipView"</span>
-          <span class="na">utu:AutoLayout.PrimaryAlignment=</span><span class="s">"Stretch"</span>
-          <span class="na">Background=</span><span class="s">"Transparent"</span>
-          <span class="na">utu:SelectorExtensions.PipsPager=</span><span class="s">"{Binding ElementName=pipsPager}"</span>
-          <span class="na">SelectedIndex=</span><span class="s">"{Binding Pages.CurrentIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;FlipView.Items&gt;</span>
-    <span class="nt">&lt;ctrl:WelcomeView</span> <span class="na">ImageUrl=</span><span class="s">"ms-appx:///Assets/Welcome/first_splash_screen.png"</span>
-                      <span class="na">Title=</span><span class="s">"Welcome to your App!"</span>
-                      <span class="na">VerticalContentAlignment=</span><span class="s">"Bottom"</span>
-                      <span class="na">Description=</span><span class="s">"Embark on a delightful coding journey as you discover, create, and share awesome script tailored to your app and project preferences."</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;ctrl:WelcomeView</span> <span class="na">ImageUrl=</span><span class="s">"ms-appx:///Assets/Welcome/second_splash_screen.png"</span>
-                      <span class="na">VerticalContentAlignment=</span><span class="s">"Bottom"</span>
-                      <span class="na">Title=</span><span class="s">"Explore Thousands of Recipes"</span>
-                      <span class="na">Description=</span><span class="s">"Find your next culinary adventure or last minute lunch from our vast collection of diverse and mouth-watering recipes."</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;ctrl:WelcomeView</span> <span class="na">ImageUrl=</span><span class="s">"ms-appx:///Assets/Welcome/third_splash_screen.png"</span>
-                      <span class="na">Title=</span><span class="s">"Personalize Your Recipe Journey"</span>
-                      <span class="na">VerticalContentAlignment=</span><span class="s">"Bottom"</span>
-                      <span class="na">Description=</span><span class="s">"Create your own recipe collections, cookbooks, follow other foodies, and share your creations with the Chefs community."</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;/FlipView.Items&gt;</span>
-<span class="nt">&lt;/FlipView&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>You may have noticed an extra property set on this <code class="language-plaintext highlighter-rouge">FlipView</code>. The <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/Selector-extensions.html"><code class="language-plaintext highlighter-rouge">SelectorExtensions.PipsPager</code></a> attached property from Uno Toolkit allows you to connect anything deriving from <code class="language-plaintext highlighter-rouge">Selector</code> (which is the case for <code class="language-plaintext highlighter-rouge">FlipView</code>) and keep its <code class="language-plaintext highlighter-rouge">SelectedIndex</code> in sync with a <code class="language-plaintext highlighter-rouge">PipsPager</code>.</p>
-
-<p>The last pieces of the puzzle are the navigation buttons. We are using the <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/helpers/FlipView-extensions.html"><code class="language-plaintext highlighter-rouge">FlipViewExtensions</code></a> from Uno Toolkit to accomplish this. Given the following XAML, we can move the <code class="language-plaintext highlighter-rouge">FlipView</code> to the next or previous item, if possible:</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="rouge-code"><pre><span class="c">&lt;!-- Some code has been omitted for brevity --&gt;</span>
-
-<span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Previous"</span>
-        <span class="na">utu:FlipViewExtensions.Previous=</span><span class="s">"{Binding ElementName=flipView}"</span><span class="nt">&gt;</span>
-
-<span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Next"</span>
-        <span class="na">utu:FlipViewExtensions.Next=</span><span class="s">"{Binding ElementName=flipView}"</span><span class="nt">/&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Putting it all together, we now have multiple ways to navigate through the <code class="language-plaintext highlighter-rouge">FlipView</code> items. The user can swipe left or right, click the navigation buttons, or use the <code class="language-plaintext highlighter-rouge">PipsPager</code> to jump to a specific item.</p>
-
-<figure class="video-figure width-half">
-  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
-    <source src="/previews/pr-45/assets/images/chefs-intro/welcome-mobile.mp4" type="video/mp4" />
-    Your browser doesn't support embedded video. <a href="/previews/pr-45/assets/images/chefs-intro/welcome-mobile.mp4">Download the clip</a> instead.
-  </video>
-</figure>
-
-<p>Only thing left now is to properly show/hide the Next and Previous buttons depending on the current index of the <code class="language-plaintext highlighter-rouge">FlipView</code>.</p>
-
-<h2 id="the-mvux-model">The MVUX Model</h2>
-
-<p>We could probably achieve this logic in the XAML itself, maybe using something like a Converter. But this way is more fun. Let’s take a look at the entirety of our <code class="language-plaintext highlighter-rouge">WelcomeModel</code>:</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="k">public</span> <span class="k">partial</span> <span class="n">record</span> <span class="nf">WelcomeModel</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="k">public</span> <span class="n">IState</span><span class="p">&lt;</span><span class="n">IntIterator</span><span class="p">&gt;</span> <span class="n">Pages</span> <span class="p">=&gt;</span> <span class="n">State</span><span class="p">&lt;</span><span class="n">IntIterator</span><span class="p">&gt;.</span><span class="nf">Value</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nf">IntIterator</span><span class="p">(</span><span class="n">Enumerable</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">).</span><span class="nf">ToImmutableList</span><span class="p">()));</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>That’s it?!?</p>
-
-<p>Yes, that’s it! We are using MVUX as a presentation framework. MVUX is part of the Uno Extensions family and is designed around the notion of exposing immutable and observable streams data that are compatible with Data Binding. I highly recommend you check out the <a href="https://platform.uno/docs/articles/external/uno.extensions/doc/Learn/Mvux/Overview.html">MVUX documentation</a> for more details on how it works.</p>
-
-<p>The <a href="https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Business/Models/Iterator.cs#L29-L36"><code class="language-plaintext highlighter-rouge">IntIterator</code></a> is a simple immutable <code class="language-plaintext highlighter-rouge">record</code> defined in Chefs that keeps track of the current index within a list of items. In this case, we are using it to keep track of the current index of the <code class="language-plaintext highlighter-rouge">FlipView</code> items. The <code class="language-plaintext highlighter-rouge">Enumerable.Range(0, 3)</code> creates a list of integers from 0 to 2, which corresponds to the three items in our <code class="language-plaintext highlighter-rouge">FlipView</code>.</p>
-
-<p>We are exposing the <code class="language-plaintext highlighter-rouge">IntIterator</code> as an <code class="language-plaintext highlighter-rouge">IState</code>, an observable stream of data that can also store state. Meaning the <code class="language-plaintext highlighter-rouge">IState</code> can be updated from the View via two-way bindings. This allows us to two-way bind the <code class="language-plaintext highlighter-rouge">SelectedIndex</code> of the <code class="language-plaintext highlighter-rouge">FlipView</code> to the <code class="language-plaintext highlighter-rouge">Pages.CurrentIndex</code>, which is the current index of the <code class="language-plaintext highlighter-rouge">IntIterator</code>. You can see <a href="https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/WelcomePage.xaml#L50">where we are doing this</a>. We are also observing the <code class="language-plaintext highlighter-rouge">CanMoveNext</code> and <code class="language-plaintext highlighter-rouge">CanMovePrevious</code> properties of the <code class="language-plaintext highlighter-rouge">IntIterator</code> to determine whether we should show or hide the <a href="https://github.com/unoplatform/uno.chefs/blob/2b5ad5cc8459e4db3565640f3a1ec808e164be8c/Chefs/Views/WelcomePage.xaml#L85-L98">Next and Previous buttons</a>.</p>
-
-<h2 id="next-steps">Next Steps</h2>
-
-<p>In the next article, we will move forward past the Welcome Page and dive into the Login Page and beyond. In the meantime, I encourage you to check out the <a href="https://github.com/unoplatform/uno.chefs">Uno Chefs GitHub repository</a> and explore the code for yourself. There are a lot of interesting patterns and techniques used throughout the app that you can learn from.</p>
-
-<p>Hope you learned something and I’ll catch you in the next one :wave:</p>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="release" /><category term="hotdesign" /><category term="chefs" /><category term="hot-design" /><category term="uno-platform" /><summary type="html"><![CDATA[Uno Platform 6.0 has been released!]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+</ul>]]></content><author><name>Steve Bilogan</name></author><category term="uno-general" /><category term="uno" /><category term="unochefs" /><category term="uno.chefs" /><category term="uno-chefs" /><category term="chefs" /><category term="hot-design" /><category term="uno-platform" /><summary type="html"><![CDATA[Let’s continue our walkthrough of Uno Chefs, our new flagship reference implementation when it comes to building cross-platform apps. This time, we’ll be covering the Login Page. This is the next page after navigating from the Welcome Page, which we covered last time.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" /><media:content medium="image" url="https://kazo0.dev/previews/pr-45/assets/images/profile.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
