@@ -105,7 +105,8 @@ A few things changed along the way that I'm quite happy with.
 **The color palette comes from a single seed.** There's no hand-written Light and Dark color file in this app. Uno Material generates the whole palette from the blue the Xamarin app used:
 
 ```xml
-<MaterialToolkitTheme xmlns="using:Uno.Toolkit.UI.Material">
+<MaterialToolkitTheme xmlns="using:Uno.Toolkit.UI.Material"
+                      xmlns:ut="using:Uno.Themes">
     <MaterialToolkitTheme.Colors>
         <ut:ThemeColors PrimarySeed="#1976D2" />
     </MaterialToolkitTheme.Colors>
