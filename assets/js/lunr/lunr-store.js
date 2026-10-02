@@ -161,8 +161,8 @@ var store = [{
         "url": "/uno-extensions/2026/09/17/msal-cross-platform-auth.html",
         "teaser": "/assets/images/uno-extensions-hero.jpg"
       },{
-        "title": "Semantic Design in Uno.Themes - Part 1",
-        "excerpt":"A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo got at something I’ve been meaning to dig into properly: the Semantic Design Language in Uno.Themes. How do you describe the styles,...","categories": ["uno-general"],
+        "title": "Semantic Design in Uno Themes - Part 1",
+        "excerpt":"A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo got at something I’ve been meaning to dig into properly: the Semantic Design Language in Uno Themes. How do you describe the...","categories": ["uno-general"],
         "tags": ["uno-themes","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
         "url": "/uno-general/2026/10/01/simple-design-semantic-tokens.html",
         "teaser": "/assets/images/simple-design-semantic-tokens/hero.jpg"
