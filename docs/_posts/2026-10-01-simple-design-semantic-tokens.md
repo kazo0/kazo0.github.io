@@ -1,5 +1,5 @@
 ---
-title: "Semantic Design in Uno.Themes - Part 1"
+title: "Semantic Design in Uno Themes - Part 1"
 category: uno-general
 header:
   teaser: /assets/images/simple-design-semantic-tokens/hero.jpg
@@ -7,9 +7,9 @@ header:
 tags: [uno-themes, simple, semantic-tokens, design-tokens, theming, material, uno-platform, uno, unoplatform]
 ---
 
-A little while back I wrote about [hosting three Uno apps inside a single Uno app]({% post_url 2026-08-11-alc-super-themes-app %}) so you could flip between Material, Cupertino, and Simple live. That demo got at something I've been meaning to dig into properly: the [Semantic Design Language][semantic-styles-docs] in `Uno.Themes`. How do you describe the styles, spacing, typography, and colors your UI needs without welding every choice to one design system?
+A little while back I wrote about [hosting three Uno apps inside a single Uno app]({% post_url 2026-08-11-alc-super-themes-app %}) so you could flip between Material, Cupertino, and Simple live. That demo got at something I've been meaning to dig into properly: the [Semantic Design Language][semantic-styles-docs] in `Uno Themes`. How do you describe the styles, spacing, typography, and colors your UI needs without welding every choice to one design system?
 
-The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and [Semantic Design Tokens][design-tokens-docs] define the values those controls use. Uno.Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.
+The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and [Semantic Design Tokens][design-tokens-docs] define the values those controls use. Uno Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.
 
 This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like turning those knobs live at runtime, a single root font, and generating a whole color palette from one seed. I'm focusing on Material and Simple throughout.
 
@@ -153,13 +153,13 @@ Out of the box, Simple is intentionally plain. No seed color, just a neutral gra
 
 That's the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system's specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write `FilledButtonStyle` or `BodyLarge`, and the active theme fills in the specifics. Swap `MaterialTheme` for `SimpleTheme` and that same markup comes out looking like a completely different app.
 
-The best part is that none of this is hypothetical. It's all shipping in Uno.Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app's font from a single root, and generating a full color palette from one seed color. See you there.
+The best part is that none of this is hypothetical. It's all shipping in Uno Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app's font from a single root, and generating a full color palette from one seed color. See you there.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
 ## Further Reading
 
-- [Uno.Themes Overview][themes-overview-docs]
+- [Uno Themes Overview][themes-overview-docs]
 - [Semantic Styles][semantic-styles-docs]
 - [Semantic Design Tokens][design-tokens-docs]
 - [Uno Simple: Getting Started][simple-getting-started-docs]
