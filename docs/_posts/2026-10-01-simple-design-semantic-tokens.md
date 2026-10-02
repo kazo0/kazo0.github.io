@@ -92,7 +92,7 @@ Any control that resolves `Radius200CornerRadius` in that scope picks up the ove
 
 I know you may be thinking: "What kind of name is `Radius200CornerRadius`? Isn't that redundant?"
 
-And my response to that is: Yes, but that's what I decided to name it so you're stuck with it. More importantly, the numeric `Radius200` and its `Radius200CornerRadius` companion are separate resources. Every token is generated in C# by [`BaseTheme`][base-theme-scale-gen-gh], more on that [next](#scaling-with-base-units).
+And my response to that is: Yes, but that's what I decided to name it so you're stuck with it. Every token is related and generated in C# by [`BaseTheme`][base-theme-scale-gen-gh], more on that [next](#scaling-with-base-units).
 
 ## Turning the Big Knobs
 
