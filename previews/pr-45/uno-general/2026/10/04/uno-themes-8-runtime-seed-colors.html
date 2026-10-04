@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-45/assets/css/main.css?v=1791148067">
+<link rel="stylesheet" href="/previews/pr-45/assets/css/main.css?v=1791154064">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -388,7 +388,7 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>Point it at a variable font, or one shipping a font manifest, so the per-scale <code class="language-plaintext highlighter-rouge">*FontWeight</code> tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">typography guide</a> covers both the property and the <code class="language-plaintext highlighter-rouge">FontOverrideSource</code> route.</p>
+<p>Point it at a variable font, or one shipping a font manifest (like those shipped by <a href="https://github.com/unoplatform/uno.fonts">Uno.Fonts</a>), so the per-scale <code class="language-plaintext highlighter-rouge">*FontWeight</code> tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">typography guide</a> covers both the property and the <code class="language-plaintext highlighter-rouge">FontOverrideSource</code> route.</p>
 
 <figure class="video-figure">
   <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-45/assets/images/uno-themes-8-runtime-seed-colors/font-runtime-poster.png">
@@ -484,6 +484,8 @@
 <p>The shared vocabulary from Part 1 isn’t going anywhere. What 8.0 adds is more control behind it, and fewer reasons to hand-roll your own theming code. You still write <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> and <code class="language-plaintext highlighter-rouge">Space400</code> to describe what you want, you just finally get to turn the knobs behind them without touching your markup.</p>
 
 <p>These refinements are heading into a proper release very soon! In the meantime, poke around <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a> and the <a href="https://github.com/unoplatform/Uno.Themes/tree/servicing/8.0"><code class="language-plaintext highlighter-rouge">servicing/8.0</code></a> branch, and let me know what you build with it.</p>
+
+<p>Perhaps next time we can explore what would go into adding a brand new theme to Uno Themes, including defining new seed colors, typography scales, and component styles! But which theme? Who knows<a href="https://github.com/unoplatform/Uno.Themes/tree/dev/sb/omarchy-theme">?!?!</a></p>
 
 <p>Hope you learned something and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
