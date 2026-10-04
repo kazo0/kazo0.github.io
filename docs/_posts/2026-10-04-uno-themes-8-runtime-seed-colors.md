@@ -39,7 +39,7 @@ The other new knob is one I've wanted for a while: a single root for typography.
 <SimpleTheme xmlns="using:Uno.Simple" DefaultFontFamily="ms-appx:///Fonts/MyFont.ttf#MyFont" />
 ```
 
-Point it at a variable font, or one shipping a font manifest, so the per-scale `*FontWeight` tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
+Point it at a variable font, or one shipping a font manifest (like those shipped by [Uno.Fonts][uno-fonts]), so the per-scale `*FontWeight` tokens still render the way the type scale intends. Font overrides take precedence over the generated family keys. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
 
 {% include local-video.html
      src="/assets/images/uno-themes-8-runtime-seed-colors/font-runtime.mp4"
@@ -105,6 +105,8 @@ The shared vocabulary from Part 1 isn't going anywhere. What 8.0 adds is more co
 
 These refinements are heading into a proper release very soon! In the meantime, poke around [ThemeStudio][theme-studio] and the [`servicing/8.0`][themes-8-branch] branch, and let me know what you build with it.
 
+Perhaps next time we can explore what would go into adding a brand new theme to Uno Themes, including defining new seed colors, typography scales, and component styles! But which theme? Who knows[?!?!][omarchy-theme-branch]
+
 Hope you learned something and I'll catch you in the next one :wave:
 
 ## Further Reading
@@ -124,4 +126,6 @@ Hope you learned something and I'll catch you in the next one :wave:
 [migration-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8
 [theme-studio]: https://github.com/kazo0/ThemeStudio
 [material-color-utilities]: https://github.com/material-foundation/material-color-utilities
+[uno-fonts]: https://github.com/unoplatform/uno.fonts
+[omarchy-theme-branch]: https://github.com/unoplatform/Uno.Themes/tree/dev/sb/omarchy-theme
 {% include links.md %}
