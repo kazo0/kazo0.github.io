@@ -1,17 +1,17 @@
 ---
-title: "Semantic Design in Uno.Themes - Part 2"
+title: "Semantic Design in Uno Themes - Part 2"
 category: uno-general
 header:
-  teaser: /assets/images/uno-themes-8-runtime-seed-colors/hero.jpg
-  og_image: /assets/images/uno-themes-8-runtime-seed-colors/hero.jpg
+  teaser: /assets/images/simple-design-semantic-tokens/hero.jpg
+  og_image: /assets/images/simple-design-semantic-tokens/hero.jpg
 tags: [uno-themes, uno-themes-8, simple, semantic-tokens, design-tokens, theming, material, uno-platform, uno, unoplatform]
 ---
 
-In Part 1 of this little series I dug into the Semantic Design Language in `Uno.Themes`: semantic styles that let your XAML ask for a ROLE like `FilledButtonStyle` instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno.Themes 7.x today.
+In [Part 1]({% post_url 2026-10-01-simple-design-semantic-tokens %}) of this little series I dug into the Semantic Design Language in `Uno Themes`: semantic styles that let your XAML ask for a ROLE like `FilledButtonStyle` instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno Themes 7.x today.
 
 This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. We'll turn the token knobs from Part 1 live at runtime, pull typography under a single root font, and generate a full color palette from one seed color. This is the fun part.
 
-**Preview:** This post explores the upcoming Uno.Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno.Themes docs][themes-overview-docs], which may lag behind this preview.
+**Preview:** This post explores the upcoming Uno Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno Themes docs][themes-overview-docs], which may lag behind this preview.
 {: .notice--info}
 
 As in Part 1, everything you'll see comes from [ThemeStudio][theme-studio], my little demo app for flipping design systems, seed colors, and tokens live. Let's dive in.
@@ -20,11 +20,11 @@ As in Part 1, everything you'll see comes from [ThemeStudio][theme-studio], my l
 
 If you want something runnable, start with [this ThemeStudio snapshot][theme-studio-snapshot]. It pins `Uno.Material.WinUI` and `Uno.Simple.WinUI` to `9.0.0-dev.2`, with `Uno.Themes.WinUI` resolving transitively to the same version. Those are development packages, not an 8.0 release. The color-wheel video later in this post uses that build with the picker's `ColorSpectrumShape` set to `Ring`, and the API descriptions throughout are checked against `servicing/8.0`. If you want to test the exact branch implementation, build the libraries from that branch and drop those builds into your app.
 
-If you need the Simple setup itself (the `UnoFeatures` entry and the `App.xaml` merge), Part 1 walks through it. Just keep in mind that adding Simple on its own won't opt you into any of the unreleased functionality below. That needs the development packages or your own branch builds.
+If you need the Simple setup itself (the `UnoFeatures` entry and the `App.xaml` merge), [Part 1]({% post_url 2026-10-01-simple-design-semantic-tokens %}#getting-simple-into-your-app) walks through it. Just keep in mind that adding Simple on its own won't opt you into any of the unreleased functionality below. That needs the development packages or your own branch builds.
 
 ## Turning Those Knobs at Runtime
 
-In Part 1 we met the scalar theme properties: `DefaultCornerRadius`, `DefaultSpacing`, and `DefaultDensity`, each regenerating a whole token scale from a single value in `App.xaml`. The 8.0 branch takes those same knobs and makes them live. Assign one at runtime and the tokens regenerate on the spot, so anything created afterwards picks up the new scale. That's the compact-mode toggle you've been hand-rolling, reduced to one property.
+In Part 1 we met the [scalar theme properties]({% post_url 2026-10-01-simple-design-semantic-tokens %}#turning-the-big-knobs): `DefaultCornerRadius`, `DefaultDensity`, and `DefaultSpacing`, each regenerating a whole token scale from a single value in `App.xaml`. The 8.0 branch takes those same knobs and makes them live. Assign one at runtime and the tokens regenerate on the spot, so anything created afterwards picks up the new scale. That's the compact-mode toggle you've been hand-rolling, reduced to one property.
 
 It also adds a fourth knob to the family, and it's one I've wanted for a while: a single root for typography. In the 8.0 branch, `DefaultFontFamily` is the root for the whole semantic type scale, so swapping the font the design system uses is one property instead of the old `TypefacePlain` and `TypefaceBrand` pair:
 
@@ -45,12 +45,12 @@ The last piece, and honestly the flashiest, is color. For the longest time, them
 Seed color generation uses the Material Design 3 HCT (Hue-Chroma-Tone) color model to build Light and Dark palettes from a `PrimarySeed` on `ThemeColors`. It supplies primary, secondary, tertiary, surface, and outline roles. The four `Error*` colors are excluded from generation and keep their base-palette values unless you explicitly override them:
 
 ```xml
-<us:SimpleTheme xmlns:us="using:Uno.Simple">
-    <us:SimpleTheme.Colors>
-        <ut:ThemeColors xmlns:ut="using:Uno.Themes"
-                        PrimarySeed="#6750A4" />
-    </us:SimpleTheme.Colors>
-</us:SimpleTheme>
+<SimpleTheme xmlns="using:Uno.Simple">
+    <SimpleTheme.Colors>
+        <ThemeColors xmlns="using:Uno.Themes"
+                     PrimarySeed="#6750A4" />
+    </SimpleTheme.Colors>
+</SimpleTheme>
 ```
 
 The palette uses the same semantic color roles under either theme. Remember Simple's default grayscale from Part 1? That one seed is all it takes to turn it into a full palette. Secondary and Tertiary get auto-derived from the primary, but you can always pin them explicitly if you want more control.
@@ -104,7 +104,8 @@ Hope you learned something and I'll catch you in the next one :wave:
 
 ## Further Reading
 
-- [Uno.Themes Overview][themes-overview-docs]
+- [Semantic Design in Uno Themes - Part 1]({% post_url 2026-10-01-simple-design-semantic-tokens %})
+- [Uno Themes Overview][themes-overview-docs]
 - [Semantic Design Tokens][design-tokens-docs]
 - [Seed Color Palette Generation][seed-colors-docs]
 - [Upgrading to Uno Themes v8][migration-docs]
