@@ -41,6 +41,11 @@ One thing to watch: this only applies to text styled by the design system. A pla
 
 So what actually happens the moment you assign one of these at runtime? In 7.x the tokens regenerated, but no control ever saw it, because the control styles read them through `StaticResource`, which snapshots the value when the style is parsed.
 
+{% include local-video.html
+     src="/assets/images/uno-themes-8-runtime-seed-colors/font-runtime.mp4"
+     poster="/assets/images/uno-themes-8-runtime-seed-colors/font-runtime-poster.png"
+     caption="Switching the Typeface in the design panel from Simple's default Inter to Roboto, then to Fraunces. ThemeStudio sets DefaultFontFamily, then runs a theme-change pass so everything on screen picks up the new font." %}
+
 8.0 flips that. The styles now read the tokens through `ThemeResource`, so a theme-change pass re-resolves everything in place. Toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content. Controls already on screen keep the values they resolved at load time until you do, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Colors, as you're about to see, work a little differently.
 
 ## Semantic Color From a Single Seed
