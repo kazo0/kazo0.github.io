@@ -166,4 +166,10 @@ var store = [{
         "tags": ["uno-themes","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
         "url": "/uno-general/2026/10/01/simple-design-semantic-tokens.html",
         "teaser": "/assets/images/simple-design-semantic-tokens/hero.jpg"
+      },{
+        "title": "Semantic Design in Uno Themes - Part 2",
+        "excerpt":"In Part 1 of this little series I dug into the Semantic Design Language in Uno Themes: semantic styles that let your XAML ask for a ROLE like FilledButtonStyle instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of...","categories": ["uno-general"],
+        "tags": ["uno-themes","uno-themes-8","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
+        "url": "/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html",
+        "teaser": "/assets/images/simple-design-semantic-tokens/hero.jpg"
       }]
