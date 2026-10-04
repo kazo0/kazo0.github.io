@@ -9,18 +9,25 @@ tags: [uno-themes, uno-themes-8, simple, semantic-tokens, design-tokens, theming
 
 In [Part 1]({% post_url 2026-10-01-simple-design-semantic-tokens %}) of this little series I dug into the Semantic Design Language in `Uno Themes`: semantic styles that let your XAML ask for a ROLE like `FilledButtonStyle` instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno Themes 7.x today.
 
-This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. The token knobs from Part 1 finally reach your controls at runtime, two new knobs join them for spacing and typography, and the seed color generator that already ships in 7.x gets more faithful to your brand and repaints live. This is the fun part.
+This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. The token knobs from Part 1 finally reach your controls at runtime, and two new ones join the family, one for spacing and one for fonts. The seed color generator that already ships in 7.x gets some love too, so your colors stay true to your brand and repaint live. This is the fun part.
 
 **Preview:** This post explores the upcoming Uno Themes 8.0 release and its development documentation. The 8.0 packages haven't been released yet, so some APIs and behavior shown here may change before release. Links point to the [public Uno Themes docs][themes-overview-docs], which may lag behind this preview.
 {: .notice--info}
 
-As in Part 1, everything you'll see comes from [ThemeStudio][theme-studio], my little demo app for flipping design systems, seed colors, and tokens live. Let's dive in.
+As in Part 1, everything you'll see comes from [ThemeStudio][theme-studio], my little demo app for flipping design systems, seed colors, and tokens live. I'll keep saying "the 8.0 branch" below. That's the [`servicing/8.0`][themes-8-branch] branch of the Uno Themes repo, and it's what the code and behavior in this post are based on. Let's dive in.
 
 ## Turning Those Knobs at Runtime
 
 In Part 1 we met the [scalar theme properties]({% post_url 2026-10-01-simple-design-semantic-tokens %}#turning-the-big-knobs) that regenerate a whole token scale from a single value in `App.xaml`. In 7.x that's `DefaultCornerRadius` and `DefaultDensity`, where the density preset doubles as the base spacing unit: `Compact`, `Regular`, and `Comfy` mean 3, 4, and 5.
 
-The 8.0 branch splits those two ideas apart with a new `DefaultSpacing` knob. It owns the base spacing unit, and `DefaultDensity` becomes a pure mode that scales it (×0.75, ×1, and ×1.25), so the two compose. `DefaultSpacing="6"` at `Compact` gives you a `Space100` of 4.5, and the default base of 4 still produces the familiar 3, 4, and 5. All of these knobs now work at runtime too, which is the compact-mode toggle you've been hand-rolling, reduced to one property. More on what "at runtime" means in a second.
+The 8.0 branch splits those two ideas apart with a new `DefaultSpacing` knob. It owns the base spacing unit, and `DefaultDensity` becomes a pure mode that scales it (×0.75, ×1, and ×1.25), so the two compose:
+
+```xml
+<!-- A 6px brand unit in Compact mode: Space100 is 6 × 0.75 = 4.5 -->
+<SimpleTheme xmlns="using:Uno.Simple" DefaultSpacing="6" DefaultDensity="Compact" />
+```
+
+With the default base of 4 you still get the familiar 3, 4, and 5. All of these knobs now work at runtime too, which is the compact-mode toggle you've been hand-rolling, reduced to one property. More on what "at runtime" means in a second.
 
 The other new knob is one I've wanted for a while: a single root for typography. In the 8.0 branch, `DefaultFontFamily` is the root for the whole semantic type scale, so swapping the font the design system uses is one property instead of the `TypefacePlain` and `TypefaceBrand` pair from 7.1:
 
@@ -32,7 +39,9 @@ Point it at a variable font, or one shipping a font manifest, so the per-scale `
 
 One thing to watch: this only applies to text styled by the design system. A plain, unstyled `TextBlock` still uses the framework's default font, and `DefaultFontFamily` won't touch that. The [typography guide][design-tokens-docs] covers both the property and the `FontOverrideSource` route.
 
-So what actually happens the moment you assign one of these at runtime? 7.x already regenerated the tokens, but no control ever saw it, because the control styles read them through `StaticResource`, which snapshots the value when the style is parsed. In 8.0 the tokens still regenerate, and controls already on screen still keep the values they resolved at load time, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. The difference is that their styles now read the tokens through `ThemeResource`, so a theme-change pass (toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content) re-resolves everything in place. Colors, as you're about to see, work a little differently.
+So what actually happens the moment you assign one of these at runtime? In 7.x the tokens regenerated, but no control ever saw it, because the control styles read them through `StaticResource`, which snapshots the value when the style is parsed.
+
+8.0 flips that. The styles now read the tokens through `ThemeResource`, so a theme-change pass re-resolves everything in place. Toggle the root's `RequestedTheme` away from its `ActualTheme` and back, or just recreate the root content. Controls already on screen keep the values they resolved at load time until you do, since these are plain `Thickness`, `CornerRadius`, and `FontFamily` values rather than live brushes. Colors, as you're about to see, work a little differently.
 
 ## Semantic Color From a Single Seed
 
@@ -51,7 +60,9 @@ This one isn't actually new. Seed color generation shipped back in 7.0, so here'
 
 The palette uses the same semantic color roles under either theme. Remember Simple's default grayscale from Part 1? That one seed is all it takes to turn it into a full palette. Secondary and Tertiary get auto-derived from the primary, but you can always pin them explicitly if you want more control.
 
-What 8.0 changes is WHAT comes out of the generator. In 7.x, Material boosted every seed to the tonal-spot recipe's minimum chroma, while Simple kept the seed's chroma. Either way, the Light `PrimaryColor` was a derived tone rather than the color you actually picked. The 8.0 branch puts both themes on a new default `SeedColorMode`, `Fidelity`: in Light mode, the generated `PrimaryColor` keeps the seed's RGB value, with alpha treated as fully opaque. The generator chooses `OnPrimaryColor` to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed's chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, `PrimaryColor` uses a lighter tone derived from the seed instead of the exact input color.
+What 8.0 changes is WHAT comes out of the generator. In 7.x, Material boosted every seed to the tonal-spot recipe's minimum chroma, while Simple kept the seed's chroma. Either way, the Light `PrimaryColor` was a derived tone rather than the color you actually picked.
+
+The 8.0 branch puts both themes on a new default `SeedColorMode` called `Fidelity`. In Light mode, the generated `PrimaryColor` keeps the seed's RGB value, with alpha treated as fully opaque, and the generator chooses `OnPrimaryColor` to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed's chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, `PrimaryColor` uses a lighter tone derived from the seed instead of the exact input color.
 
 If you'd rather keep the Material tonal-spot recipe, set `SeedColorMode="TonalSpot"` on the same `ThemeColors` object. That recipe applies minimum chroma rather than preserving the seed's exact Light primary. It does NOT reproduce 7.x colors exactly: the 8.0 branch also contains a color-math fix for washed-out saturated seeds.
 
@@ -94,9 +105,9 @@ And if you're coming from an even earlier version, give the guide's v7 section a
 
 ## Conclusion
 
-That shared vocabulary from Part 1 hasn't changed one bit. What 8.0 adds is more reach behind it: new knobs for spacing and fonts, token changes that actually reach your controls at runtime, and seed colors that stay true to your brand and repaint on the spot. You still write `FilledButtonStyle` and `Space400` to describe what you want, you just finally get to turn the knobs behind them without touching your markup.
+The shared vocabulary from Part 1 isn't going anywhere. What 8.0 adds is more control behind it, and fewer reasons to hand-roll your own theming code. You still write `FilledButtonStyle` and `Space400` to describe what you want, you just finally get to turn the knobs behind them without touching your markup.
 
-I'm genuinely looking forward to getting these refinements into a proper release. In the meantime, go try the development demo, poke around the branch, and let me know what you build with it.
+I'm genuinely looking forward to getting these refinements into a proper release. In the meantime, poke around [ThemeStudio][theme-studio] and the [`servicing/8.0`][themes-8-branch] branch, and let me know what you build with it.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
@@ -107,8 +118,10 @@ Hope you learned something and I'll catch you in the next one :wave:
 - [Semantic Design Tokens][design-tokens-docs]
 - [Seed Color Palette Generation][seed-colors-docs]
 - [Upgrading to Uno Themes v8][migration-docs]
+- [Uno Themes 8.0 branch][themes-8-branch]
 - [ThemeStudio on GitHub][theme-studio]
 
+[themes-8-branch]: https://github.com/unoplatform/Uno.Themes/tree/servicing/8.0
 [themes-overview-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html
 [design-tokens-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html
 [seed-colors-docs]: https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html
