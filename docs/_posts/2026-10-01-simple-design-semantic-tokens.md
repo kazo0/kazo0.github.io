@@ -11,7 +11,7 @@ A little while back I wrote about [hosting three Uno apps inside a single Uno ap
 
 The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and [Semantic Design Tokens][design-tokens-docs] define the values those controls use. Uno Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.
 
-This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like turning those knobs live at runtime, a single root font, and generating a whole color palette from one seed. I'm focusing on Material and Simple throughout.
+This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like knobs that reach your controls at runtime, a single root font, and seed colors that stay true to your brand and repaint live. I'm focusing on Material and Simple throughout.
 
 Let's dive in. :diving_mask:
 
@@ -98,18 +98,17 @@ And my response to that is: Yes, but that's what I decided to name it so you're 
 
 Overriding tokens one at a time is great for surgical tweaks, but you don't have to work that way. Those scales also roll up into a few scalar properties on the theme itself, so you can reshape a whole app's proportions right from `App.xaml`. Material and Simple both expose them.
 
-`DefaultCornerRadius`, `DefaultDensity`, and `DefaultSpacing` each set a base unit, and the full scale generates from there as multiples of it:
+`DefaultCornerRadius` and `DefaultDensity` each set a base unit, and the full scale generates from there as multiples of it. `DefaultCornerRadius` is the corner-radius unit, and `DefaultDensity` picks the spacing unit: `Compact`, `Regular`, and `Comfy` mean 3, 4, and 5:
 
 ```xml
-<SimpleTheme xmlns="using:Uno.Simple" 
-             DefaultCornerRadius="2" 
-             DefaultDensity="Compact" 
-             DefaultSpacing="6" />
+<SimpleTheme xmlns="using:Uno.Simple"
+             DefaultCornerRadius="2"
+             DefaultDensity="Compact" />
 ```
 
 ### Scaling with Base Units
 
-With a base spacing of 6, `Space100` is 6, `Space200` is 12, and `Space400` is 24, with the matching `Thickness` resources generated right alongside them. `DefaultCornerRadius` does the same thing for the `Radius*` scale. `RadiusFull` stays 9999 no matter what, because a pill is a pill.
+At `Compact`, the base spacing unit is 3, so `Space100` is 3, `Space200` is 6, and `Space400` is 12, with the matching `Thickness` resources generated right alongside them. Control heights and icon sizes stay put, so only the padding and margins tighten. `DefaultCornerRadius` does the same thing for the `Radius*` scale, so a base of 2 makes `Radius100` 2 and `Radius400` 8. `RadiusFull` stays 9999 no matter what, because a pill is a pill.
 
 <figure>
     <a href="/assets/images/simple-design-semantic-tokens/density.png" class="image-popup"><img class="align-center" src="/assets/images/simple-design-semantic-tokens/density.png" alt="The same Simple settings screen at Compact, Regular, and Comfy density, showing progressively more generous padding inside cards and inputs while control heights stay the same"/></a>
@@ -147,13 +146,13 @@ Starting from scratch? The template can scaffold the whole thing for you:
 dotnet new unoapp -o UnoSimpleApp -theme simple
 ```
 
-Out of the box, Simple is intentionally plain. No seed color, just a neutral grayscale palette that stays gray until you give it something to work with. Giving it a brand color, and reshaping the spacing, corners, and type while you're at it, is exactly where Part 2 picks up. :wink:
+Out of the box, Simple is intentionally plain. No seed color, just a neutral grayscale palette that stays gray until you give it something to work with. A `PrimarySeed` on the theme's `Colors` already turns it into a full brand palette in 7.x, and how 8.0 makes that palette truer to your brand, and live, is exactly where Part 2 picks up. :wink:
 
 ## Conclusion
 
 That's the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system's specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write `FilledButtonStyle` or `BodyLarge`, and the active theme fills in the specifics. Swap `MaterialTheme` for `SimpleTheme` and that same markup comes out looking like a completely different app.
 
-The best part is that none of this is hypothetical. It's all shipping in Uno Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: turning these knobs live at runtime, swapping the whole app's font from a single root, and generating a full color palette from one seed color. See you there.
+The best part is that none of this is hypothetical. It's all shipping in Uno Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: knobs that reach your controls at runtime, swapping the whole app's font from a single root, and seed colors that stay true to your brand and repaint live. See you there.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
