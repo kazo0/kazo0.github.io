@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-45/assets/css/main.css?v=1791143049">
+<link rel="stylesheet" href="/previews/pr-45/assets/css/main.css?v=1791143532">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -347,17 +347,28 @@
         <img alt="Hero Image" src="/assets/images/simple-design-semantic-tokens/hero.jpg" class="hero-image">
         <p>In <a href="/uno-general/2026/10/01/simple-design-semantic-tokens.html">Part 1</a> of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno Themes 7.x today.</p>
 
-<p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. The token knobs from Part 1 finally reach your controls at runtime, two new knobs join them for spacing and typography, and the seed color generator that already ships in 7.x gets more faithful to your brand and repaints live. This is the fun part.</p>
+<p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. The token knobs from Part 1 finally reach your controls at runtime, and two new ones join the family, one for spacing and one for fonts. The seed color generator that already ships in 7.x gets some love too, so your colors stay true to your brand and repaint live. This is the fun part.</p>
 
 <p class="notice--info"><strong>Preview:</strong> This post explores the upcoming Uno Themes 8.0 release and its development documentation. The 8.0 packages haven’t been released yet, so some APIs and behavior shown here may change before release. Links point to the <a href="https://platform.uno/docs/articles/external/uno.themes/doc/themes-overview.html">public Uno Themes docs</a>, which may lag behind this preview.</p>
 
-<p>As in Part 1, everything you’ll see comes from <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a>, my little demo app for flipping design systems, seed colors, and tokens live. Let’s dive in.</p>
+<p>As in Part 1, everything you’ll see comes from <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a>, my little demo app for flipping design systems, seed colors, and tokens live. I’ll keep saying “the 8.0 branch” below. That’s the <a href="https://github.com/unoplatform/Uno.Themes/tree/servicing/8.0"><code class="language-plaintext highlighter-rouge">servicing/8.0</code></a> branch of the Uno Themes repo, and it’s what the code and behavior in this post are based on. Let’s dive in.</p>
 
 <h2 id="turning-those-knobs-at-runtime">Turning Those Knobs at Runtime</h2>
 
 <p>In Part 1 we met the <a href="/uno-general/2026/10/01/simple-design-semantic-tokens.html#turning-the-big-knobs">scalar theme properties</a> that regenerate a whole token scale from a single value in <code class="language-plaintext highlighter-rouge">App.xaml</code>. In 7.x that’s <code class="language-plaintext highlighter-rouge">DefaultCornerRadius</code> and <code class="language-plaintext highlighter-rouge">DefaultDensity</code>, where the density preset doubles as the base spacing unit: <code class="language-plaintext highlighter-rouge">Compact</code>, <code class="language-plaintext highlighter-rouge">Regular</code>, and <code class="language-plaintext highlighter-rouge">Comfy</code> mean 3, 4, and 5.</p>
 
-<p>The 8.0 branch splits those two ideas apart with a new <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> knob. It owns the base spacing unit, and <code class="language-plaintext highlighter-rouge">DefaultDensity</code> becomes a pure mode that scales it (×0.75, ×1, and ×1.25), so the two compose. <code class="language-plaintext highlighter-rouge">DefaultSpacing="6"</code> at <code class="language-plaintext highlighter-rouge">Compact</code> gives you a <code class="language-plaintext highlighter-rouge">Space100</code> of 4.5, and the default base of 4 still produces the familiar 3, 4, and 5. All of these knobs now work at runtime too, which is the compact-mode toggle you’ve been hand-rolling, reduced to one property. More on what “at runtime” means in a second.</p>
+<p>The 8.0 branch splits those two ideas apart with a new <code class="language-plaintext highlighter-rouge">DefaultSpacing</code> knob. It owns the base spacing unit, and <code class="language-plaintext highlighter-rouge">DefaultDensity</code> becomes a pure mode that scales it (×0.75, ×1, and ×1.25), so the two compose:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td>
+<td class="rouge-code"><pre><span class="c">&lt;!-- A 6px brand unit in Compact mode: Space100 is 6 × 0.75 = 4.5 --&gt;</span>
+<span class="nt">&lt;SimpleTheme</span> <span class="na">xmlns=</span><span class="s">"using:Uno.Simple"</span> <span class="na">DefaultSpacing=</span><span class="s">"6"</span> <span class="na">DefaultDensity=</span><span class="s">"Compact"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>With the default base of 4 you still get the familiar 3, 4, and 5. All of these knobs now work at runtime too, which is the compact-mode toggle you’ve been hand-rolling, reduced to one property. More on what “at runtime” means in a second.</p>
 
 <p>The other new knob is one I’ve wanted for a while: a single root for typography. In the 8.0 branch, <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> is the root for the whole semantic type scale, so swapping the font the design system uses is one property instead of the <code class="language-plaintext highlighter-rouge">TypefacePlain</code> and <code class="language-plaintext highlighter-rouge">TypefaceBrand</code> pair from 7.1:</p>
 
@@ -372,7 +383,9 @@
 
 <p>One thing to watch: this only applies to text styled by the design system. A plain, unstyled <code class="language-plaintext highlighter-rouge">TextBlock</code> still uses the framework’s default font, and <code class="language-plaintext highlighter-rouge">DefaultFontFamily</code> won’t touch that. The <a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">typography guide</a> covers both the property and the <code class="language-plaintext highlighter-rouge">FontOverrideSource</code> route.</p>
 
-<p>So what actually happens the moment you assign one of these at runtime? 7.x already regenerated the tokens, but no control ever saw it, because the control styles read them through <code class="language-plaintext highlighter-rouge">StaticResource</code>, which snapshots the value when the style is parsed. In 8.0 the tokens still regenerate, and controls already on screen still keep the values they resolved at load time, since these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. The difference is that their styles now read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code>, so a theme-change pass (toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back, or just recreate the root content) re-resolves everything in place. Colors, as you’re about to see, work a little differently.</p>
+<p>So what actually happens the moment you assign one of these at runtime? In 7.x the tokens regenerated, but no control ever saw it, because the control styles read them through <code class="language-plaintext highlighter-rouge">StaticResource</code>, which snapshots the value when the style is parsed.</p>
+
+<p>8.0 flips that. The styles now read the tokens through <code class="language-plaintext highlighter-rouge">ThemeResource</code>, so a theme-change pass re-resolves everything in place. Toggle the root’s <code class="language-plaintext highlighter-rouge">RequestedTheme</code> away from its <code class="language-plaintext highlighter-rouge">ActualTheme</code> and back, or just recreate the root content. Controls already on screen keep the values they resolved at load time until you do, since these are plain <code class="language-plaintext highlighter-rouge">Thickness</code>, <code class="language-plaintext highlighter-rouge">CornerRadius</code>, and <code class="language-plaintext highlighter-rouge">FontFamily</code> values rather than live brushes. Colors, as you’re about to see, work a little differently.</p>
 
 <h2 id="semantic-color-from-a-single-seed">Semantic Color From a Single Seed</h2>
 
@@ -399,7 +412,9 @@
 
 <p>The palette uses the same semantic color roles under either theme. Remember Simple’s default grayscale from Part 1? That one seed is all it takes to turn it into a full palette. Secondary and Tertiary get auto-derived from the primary, but you can always pin them explicitly if you want more control.</p>
 
-<p>What 8.0 changes is WHAT comes out of the generator. In 7.x, Material boosted every seed to the tonal-spot recipe’s minimum chroma, while Simple kept the seed’s chroma. Either way, the Light <code class="language-plaintext highlighter-rouge">PrimaryColor</code> was a derived tone rather than the color you actually picked. The 8.0 branch puts both themes on a new default <code class="language-plaintext highlighter-rouge">SeedColorMode</code>, <code class="language-plaintext highlighter-rouge">Fidelity</code>: in Light mode, the generated <code class="language-plaintext highlighter-rouge">PrimaryColor</code> keeps the seed’s RGB value, with alpha treated as fully opaque. The generator chooses <code class="language-plaintext highlighter-rouge">OnPrimaryColor</code> to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed’s chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, <code class="language-plaintext highlighter-rouge">PrimaryColor</code> uses a lighter tone derived from the seed instead of the exact input color.</p>
+<p>What 8.0 changes is WHAT comes out of the generator. In 7.x, Material boosted every seed to the tonal-spot recipe’s minimum chroma, while Simple kept the seed’s chroma. Either way, the Light <code class="language-plaintext highlighter-rouge">PrimaryColor</code> was a derived tone rather than the color you actually picked.</p>
+
+<p>The 8.0 branch puts both themes on a new default <code class="language-plaintext highlighter-rouge">SeedColorMode</code> called <code class="language-plaintext highlighter-rouge">Fidelity</code>. In Light mode, the generated <code class="language-plaintext highlighter-rouge">PrimaryColor</code> keeps the seed’s RGB value, with alpha treated as fully opaque, and the generator chooses <code class="language-plaintext highlighter-rouge">OnPrimaryColor</code> to give that pair at least 4.5:1 contrast. Supporting palettes follow the seed’s chroma, so a muted seed produces a muted palette and a gray seed stays neutral. In Dark mode, <code class="language-plaintext highlighter-rouge">PrimaryColor</code> uses a lighter tone derived from the seed instead of the exact input color.</p>
 
 <p>If you’d rather keep the Material tonal-spot recipe, set <code class="language-plaintext highlighter-rouge">SeedColorMode="TonalSpot"</code> on the same <code class="language-plaintext highlighter-rouge">ThemeColors</code> object. That recipe applies minimum chroma rather than preserving the seed’s exact Light primary. It does NOT reproduce 7.x colors exactly: the 8.0 branch also contains a color-math fix for washed-out saturated seeds.</p>
 
@@ -463,9 +478,9 @@
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>That shared vocabulary from Part 1 hasn’t changed one bit. What 8.0 adds is more reach behind it: new knobs for spacing and fonts, token changes that actually reach your controls at runtime, and seed colors that stay true to your brand and repaint on the spot. You still write <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> and <code class="language-plaintext highlighter-rouge">Space400</code> to describe what you want, you just finally get to turn the knobs behind them without touching your markup.</p>
+<p>The shared vocabulary from Part 1 isn’t going anywhere. What 8.0 adds is more control behind it, and fewer reasons to hand-roll your own theming code. You still write <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> and <code class="language-plaintext highlighter-rouge">Space400</code> to describe what you want, you just finally get to turn the knobs behind them without touching your markup.</p>
 
-<p>I’m genuinely looking forward to getting these refinements into a proper release. In the meantime, go try the development demo, poke around the branch, and let me know what you build with it.</p>
+<p>I’m genuinely looking forward to getting these refinements into a proper release. In the meantime, poke around <a href="https://github.com/kazo0/ThemeStudio">ThemeStudio</a> and the <a href="https://github.com/unoplatform/Uno.Themes/tree/servicing/8.0"><code class="language-plaintext highlighter-rouge">servicing/8.0</code></a> branch, and let me know what you build with it.</p>
 
 <p>Hope you learned something and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
@@ -477,6 +492,7 @@
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/design-tokens.html">Semantic Design Tokens</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/seed-colors.html">Seed Color Palette Generation</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.themes/doc/material-migration.html#upgrading-to-uno-themes-v8">Upgrading to Uno Themes v8</a></li>
+  <li><a href="https://github.com/unoplatform/Uno.Themes/tree/servicing/8.0">Uno Themes 8.0 branch</a></li>
   <li><a href="https://github.com/kazo0/ThemeStudio">ThemeStudio on GitHub</a></li>
 </ul>
 
