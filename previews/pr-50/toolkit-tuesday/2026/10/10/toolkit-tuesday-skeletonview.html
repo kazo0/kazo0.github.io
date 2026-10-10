@@ -1,0 +1,1046 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Toolkit Tuesdays: SkeletonView - dotnet new bald</title>
+<meta name="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Toolkit Tuesdays: SkeletonView">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+
+
+  <meta property="og:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Toolkit Tuesdays: SkeletonView">
+  <meta name="twitter:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-toolkit-hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-10-10T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-50/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-50/assets/css/main.css?v=1791654101">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-50/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-50/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-50/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-50/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+          
+            <li><a href="/daily-reflection/" rel="nofollow noopener noreferrer me"><i class="fa-solid fa-fw fa-book-open" aria-hidden="true"></i><span class="label">Daily Reflection App</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Toolkit Tuesdays: SkeletonView">
+    <meta itemprop="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
+    <meta itemprop="datePublished" content="2026-10-10T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html" class="u-url" itemprop="url">Toolkit Tuesdays: SkeletonView
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-10T00:00:00+00:00">October 10, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#the-problem-and-the-solution">The Problem (and The Solution)</a></li>
+<li><a href="#how-it-works">How It Works</a></li>
+<li>
+<a href="#usage">Usage</a><ul>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><a href="#driving-it-from-an-iloadable">Driving It From an ILoadable</a></li>
+<li><a href="#refreshing-content">Refreshing Content</a></li>
+<li><a href="#empty-lists">Empty Lists</a></li>
+<li><a href="#tuning-the-result">Tuning the Result</a></li>
+<li><a href="#styling">Styling</a></li>
+</ul>
+</li>
+<li>
+<a href="#beyond-skeletonview">Beyond SkeletonView</a><ul>
+<li><a href="#skeletonpresenter">SkeletonPresenter</a></li>
+<li><a href="#feedview">FeedView</a></li>
+</ul>
+</li>
+<li><a href="#rough-edges">Rough Edges</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image">
+        <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+
+<p>This week is a little different, because I’m covering something you can’t install yet. It’s <code class="language-plaintext highlighter-rouge">SkeletonView</code>, a brand-new way to show skeleton loading placeholders in your app, and if you caught <a href="https://x.com/BiloganSteve/status/2108651624763986107">my tweet</a> about it, this is the longer version. It’s also a natural follow-up to the <a href="/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><code class="language-plaintext highlighter-rouge">LoadingView</code> post</a>, which mentioned a skeleton view in passing. Now we finally get to look at one.</p>
+
+<p class="notice--info"><strong>Preview:</strong> <code class="language-plaintext highlighter-rouge">SkeletonView</code> lives in an open, draft <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1669">pull request</a> on the Uno Toolkit repo and hasn’t shipped in any release. Names and behavior may change before it does, and the doc links below point at the PR’s branch.</p>
+
+<!-- TODO: embed the skeleton demo video from the tweet (or a fresh screen recording of the SkeletonView sample page) here, with the same style as the LoadingView video include -->
+
+<h2 id="the-problem-and-the-solution">The Problem (and The Solution)</h2>
+
+<p>Every app has a moment where the data isn’t there yet. The usual answer is a spinner, and a spinner works, but it tells the user nothing about what’s coming. Then the data lands and the whole layout jumps around.</p>
+
+<p>The fix everyone reaches for is a skeleton: gray placeholder shapes that look like the content that’s about to show up. The catch is that you normally have to build them by hand. That means a second, fake version of every screen that you have to keep in sync with the real one, and keeping that in sync is MISERABLE. Spoiler: it never stays in sync.</p>
+
+<p>This is where the Uno Toolkit comes to the rescue. With <code class="language-plaintext highlighter-rouge">SkeletonView</code>, you don’t declare a single skeleton shape. You wrap your real content, and while it’s loading, the Toolkit generates the placeholders from the layout that’s actually there.</p>
+
+<h2 id="how-it-works">How It Works</h2>
+
+<p>While <code class="language-plaintext highlighter-rouge">IsLoading</code> is true, <code class="language-plaintext highlighter-rouge">SkeletonView</code> walks your content and drops one placeholder on top of each leaf element at its real position. The rules are short:</p>
+
+<ol>
+  <li>
+<strong>Leaves get one placeholder each.</strong> A leaf is a <code class="language-plaintext highlighter-rouge">TextBlock</code>, an <code class="language-plaintext highlighter-rouge">Image</code>, any <code class="language-plaintext highlighter-rouge">Shape</code>, or a button. A <code class="language-plaintext highlighter-rouge">Button</code> gives you a single button-sized placeholder no matter what’s inside it.</li>
+  <li>
+<strong>Containers contribute their children, not themselves.</strong> Panels and borders get no placeholder of their own, and neither does the chrome of a <code class="language-plaintext highlighter-rouge">ListViewItem</code> or a card.</li>
+  <li>
+<strong>Empty values fall back to their layout slot.</strong> A <code class="language-plaintext highlighter-rouge">TextBlock</code> bound to data that hasn’t arrived measures as almost nothing, so the placeholder uses the space the layout gave it instead.</li>
+  <li>
+<strong>An <code class="language-plaintext highlighter-rouge">Ellipse</code> becomes a circle.</strong> Everything else becomes a rounded rectangle.</li>
+</ol>
+
+<p>Your content stays in the visual tree the whole time, so layout and bindings keep working. Only the elements covered by a placeholder get hidden, and everything else stays visible.</p>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="basic-usage">Basic Usage</h3>
+
+<p>Write your content once, as plain XAML bound to your data, and wrap it in a <code class="language-plaintext highlighter-rouge">SkeletonView</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:SkeletonView</span> <span class="na">IsLoading=</span><span class="s">"{Binding IsBusy}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"12"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span>
+                    <span class="na">Spacing=</span><span class="s">"12"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Ellipse</span> <span class="na">Width=</span><span class="s">"48"</span>
+                     <span class="na">Height=</span><span class="s">"48"</span>
+                     <span class="na">Fill=</span><span class="s">"{ThemeResource SystemControlHighlightAccentBrush}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;StackPanel</span> <span class="na">VerticalAlignment=</span><span class="s">"Center"</span>
+                        <span class="na">Spacing=</span><span class="s">"4"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"{Binding Title}"</span>
+                           <span class="na">Style=</span><span class="s">"{StaticResource SubtitleTextBlockStyle}"</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"{Binding Subtitle}"</span>
+                           <span class="na">Style=</span><span class="s">"{StaticResource CaptionTextBlockStyle}"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/StackPanel&gt;</span>
+        <span class="nt">&lt;/StackPanel&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"{Binding Description}"</span>
+                   <span class="na">TextWrapping=</span><span class="s">"Wrap"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Some action"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/utu:SkeletonView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>That’s it. No skeleton markup anywhere.</p>
+
+<p>While <code class="language-plaintext highlighter-rouge">IsBusy</code> is true, you get a circle for the avatar, two text lines, a full-width line for the description that hasn’t loaded yet, and a button-shaped block. When <code class="language-plaintext highlighter-rouge">IsBusy</code> flips to false, the real content takes over.</p>
+
+<!-- TODO: screenshot of this card in its loading (skeleton) state next to the loaded state -->
+
+<p class="notice--warning"><code class="language-plaintext highlighter-rouge">IsLoading</code> defaults to <code class="language-plaintext highlighter-rouge">true</code>, so a <code class="language-plaintext highlighter-rouge">SkeletonView</code> starts out in its loading state. If your skeleton never goes away, you forgot to bind <code class="language-plaintext highlighter-rouge">IsLoading</code> or set a <code class="language-plaintext highlighter-rouge">Source</code>.</p>
+
+<h3 id="driving-it-from-an-iloadable">Driving It From an <code class="language-plaintext highlighter-rouge">ILoadable</code>
+</h3>
+
+<p>If you’ve read the <code class="language-plaintext highlighter-rouge">LoadingView</code> post, this part will look familiar. Instead of a flag, you can point <code class="language-plaintext highlighter-rouge">Source</code> at any <code class="language-plaintext highlighter-rouge">ILoadable</code>, like an async command, and the <code class="language-plaintext highlighter-rouge">SkeletonView</code> follows its <code class="language-plaintext highlighter-rouge">IsExecuting</code> state:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Reload"</span>
+        <span class="na">Command=</span><span class="s">"{Binding LoadDataCommand}"</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;utu:SkeletonView</span> <span class="na">Source=</span><span class="s">"{Binding LoadDataCommand}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"{Binding Description}"</span>
+               <span class="na">TextWrapping=</span><span class="s">"Wrap"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/utu:SkeletonView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>One command drives the button AND the skeleton. Zero <code class="language-plaintext highlighter-rouge">IsBusy</code> plumbing.</p>
+
+<h3 id="refreshing-content">Refreshing Content</h3>
+
+<p>Here’s my favorite part. The placeholders come from the live layout, so turning <code class="language-plaintext highlighter-rouge">IsLoading</code> back on over content that’s already loaded gives you a skeleton that matches it exactly. Same number of list items, and the text lines match the length of the current text. A spinner would blank out everything the user was just reading, but this keeps the shape of the screen right where it was.</p>
+
+<h3 id="empty-lists">Empty Lists</h3>
+
+<p>There’s one obvious gap. On a first load, a list has no items yet, so there’s nothing to mirror. The fix is the <code class="language-plaintext highlighter-rouge">Skeleton.PlaceholderCount</code> attached property, which you set on the list or on any ancestor:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:SkeletonView</span> <span class="na">Source=</span><span class="s">"{Binding LoadPeopleCommand}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Grid</span> <span class="na">RowSpacing=</span><span class="s">"8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Grid.RowDefinitions&gt;</span>
+            <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"Auto"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"Auto"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;RowDefinition</span> <span class="na">Height=</span><span class="s">"Auto"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Grid.RowDefinitions&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Team"</span>
+                   <span class="na">utu:Skeleton.Ignore=</span><span class="s">"True"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;ListView</span> <span class="na">Grid.Row=</span><span class="s">"1"</span>
+                  <span class="na">utu:Skeleton.PlaceholderCount=</span><span class="s">"3"</span>
+                  <span class="na">ItemsSource=</span><span class="s">"{Binding People}"</span>
+                  <span class="na">ItemTemplate=</span><span class="s">"{StaticResource PersonRowTemplate}"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Button</span> <span class="na">Grid.Row=</span><span class="s">"2"</span>
+                <span class="na">Content=</span><span class="s">"Invite someone"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/Grid&gt;</span>
+<span class="nt">&lt;/utu:SkeletonView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Three rows out of a list with nothing in it. Not bad!</p>
+
+<p>While loading, the empty <code class="language-plaintext highlighter-rouge">ListView</code> gets its placeholder rows built from its own <code class="language-plaintext highlighter-rouge">ItemTemplate</code>, and it reserves the space for them so the button underneath moves down as if the rows were really there. Your <code class="language-plaintext highlighter-rouge">ItemsSource</code> and the list’s place in the tree are never touched, because the rows come from a hidden copy of the list.</p>
+
+<h3 id="tuning-the-result">Tuning the Result</h3>
+
+<p>Did you spot <code class="language-plaintext highlighter-rouge">Skeleton.Ignore</code> on that “Team” header? Most of the time the generated skeleton is what you want. When it isn’t, there are two attached properties for steering it:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:SkeletonView</span> <span class="na">IsLoading=</span><span class="s">"{Binding IsBusy}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Spacing=</span><span class="s">"12"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- static header: stays visible while loading --&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">utu:Skeleton.Ignore=</span><span class="s">"True"</span>
+                   <span class="na">Text=</span><span class="s">"Profile"</span> <span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!-- one circle instead of the image inside --&gt;</span>
+        <span class="nt">&lt;Border</span> <span class="na">utu:Skeleton.Shape=</span><span class="s">"Circle"</span>
+                <span class="na">Width=</span><span class="s">"64"</span>
+                <span class="na">Height=</span><span class="s">"64"</span>
+                <span class="na">CornerRadius=</span><span class="s">"32"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Image</span> <span class="na">Source=</span><span class="s">"{Binding AvatarUrl}"</span>
+                   <span class="na">Stretch=</span><span class="s">"UniformToFill"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Border&gt;</span>
+
+        <span class="c">&lt;!-- one block instead of every chip inside --&gt;</span>
+        <span class="nt">&lt;ItemsControl</span> <span class="na">utu:Skeleton.Shape=</span><span class="s">"Rectangle"</span>
+                      <span class="na">Height=</span><span class="s">"32"</span>
+                      <span class="na">ItemsSource=</span><span class="s">"{Binding Tags}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/utu:SkeletonView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Skeleton.Ignore</code> keeps an element, and everything inside it, visible and out of the generation entirely. It’s perfect for headers and labels that don’t depend on the data. <code class="language-plaintext highlighter-rouge">Skeleton.Shape</code> forces a placeholder shape (<code class="language-plaintext highlighter-rouge">Auto</code>, <code class="language-plaintext highlighter-rouge">Rectangle</code>, or <code class="language-plaintext highlighter-rouge">Circle</code>) and collapses the element into a single placeholder, which is handy for something like an avatar made of an <code class="language-plaintext highlighter-rouge">Image</code> inside a <code class="language-plaintext highlighter-rouge">Border</code>.</p>
+
+<h3 id="styling">Styling</h3>
+
+<p>Three lightweight styling resources control the look, and they apply to everything in this post: <code class="language-plaintext highlighter-rouge">SkeletonViewBackground</code>, <code class="language-plaintext highlighter-rouge">SkeletonViewShimmerBrush</code>, and <code class="language-plaintext highlighter-rouge">SkeletonViewCornerRadius</code>. Override them in your app resources to restyle every skeleton at once:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;ResourceDictionary.ThemeDictionaries&gt;</span>
+    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Light"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"SkeletonViewBackground"</span>
+                         <span class="na">Color=</span><span class="s">"#E8EEF6"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+    <span class="nt">&lt;ResourceDictionary</span> <span class="na">x:Key=</span><span class="s">"Dark"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;SolidColorBrush</span> <span class="na">x:Key=</span><span class="s">"SkeletonViewBackground"</span>
+                         <span class="na">Color=</span><span class="s">"#2B3442"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/ResourceDictionary&gt;</span>
+<span class="nt">&lt;/ResourceDictionary.ThemeDictionaries&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Each <code class="language-plaintext highlighter-rouge">SkeletonView</code> also has per-instance properties like <code class="language-plaintext highlighter-rouge">SkeletonBackground</code>, <code class="language-plaintext highlighter-rouge">PlaceholderCornerRadius</code>, and <code class="language-plaintext highlighter-rouge">ShimmerDuration</code>. If the shimmer is too much for you, set <code class="language-plaintext highlighter-rouge">EnableShimmer="False"</code> for static placeholders, which is a nice option when you want to reduce motion.</p>
+
+<h2 id="beyond-skeletonview">Beyond SkeletonView</h2>
+
+<h3 id="skeletonpresenter">SkeletonPresenter</h3>
+
+<p><code class="language-plaintext highlighter-rouge">SkeletonView</code> assumes your real content is in the tree while it’s loading. Sometimes it isn’t. A <code class="language-plaintext highlighter-rouge">LoadingView</code>’s <code class="language-plaintext highlighter-rouge">LoadingContent</code> is a good example, since that slot is shown INSTEAD of your content. For those cases there’s <code class="language-plaintext highlighter-rouge">SkeletonPresenter</code>, which builds the skeleton from a <code class="language-plaintext highlighter-rouge">DataTemplate</code>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;utu:LoadingView</span> <span class="na">Source=</span><span class="s">"{Binding LoadPeopleCommand}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ListView</span> <span class="na">ItemsSource=</span><span class="s">"{Binding People}"</span>
+              <span class="na">ItemTemplate=</span><span class="s">"{StaticResource PersonRowTemplate}"</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;utu:LoadingView.LoadingContent&gt;</span>
+        <span class="nt">&lt;utu:SkeletonPresenter</span> <span class="na">utu:Skeleton.PlaceholderCount=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;utu:SkeletonPresenter.ContentTemplate&gt;</span>
+                <span class="nt">&lt;DataTemplate&gt;</span>
+                    <span class="nt">&lt;ListView</span> <span class="na">ItemTemplate=</span><span class="s">"{StaticResource PersonRowTemplate}"</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;/DataTemplate&gt;</span>
+            <span class="nt">&lt;/utu:SkeletonPresenter.ContentTemplate&gt;</span>
+        <span class="nt">&lt;/utu:SkeletonPresenter&gt;</span>
+    <span class="nt">&lt;/utu:LoadingView.LoadingContent&gt;</span>
+<span class="nt">&lt;/utu:LoadingView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Look at that <code class="language-plaintext highlighter-rouge">PersonRowTemplate</code>. The loaded list and the skeleton share it, so the skeleton can’t drift away from the real thing.</p>
+
+<p>Behind the scenes, it instantiates a private, data-less copy of the template and generates the placeholders from that, filling any empty lists with rows from their <code class="language-plaintext highlighter-rouge">ItemTemplate</code>. There’s also a <code class="language-plaintext highlighter-rouge">Skeleton.IsEnabled</code> attached property for controls that follow the <code class="language-plaintext highlighter-rouge">ProgressTemplate</code>/<code class="language-plaintext highlighter-rouge">ValueTemplate</code> convention, which injects a skeleton as the loading template for you. The <a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/doc/controls/SkeletonView.md">docs</a> cover that one in detail.</p>
+
+<h3 id="feedview">FeedView</h3>
+
+<p>If you’re using MVUX, you’re probably wondering about <code class="language-plaintext highlighter-rouge">FeedView</code>. Support for it ships separately, as a <code class="language-plaintext highlighter-rouge">SkeletonFeedViewStyle</code> in Uno.Extensions that uses <code class="language-plaintext highlighter-rouge">SkeletonPresenter</code> for the initial load and <code class="language-plaintext highlighter-rouge">SkeletonView</code> for refreshes:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;mvux:FeedView</span> <span class="na">Source=</span><span class="s">"{Binding People}"</span>
+               <span class="na">Style=</span><span class="s">"{StaticResource SkeletonFeedViewStyle}"</span>
+               <span class="na">utu:Skeleton.PlaceholderCount=</span><span class="s">"6"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DataTemplate&gt;</span>
+        <span class="nt">&lt;ListView</span> <span class="na">ItemsSource=</span><span class="s">"{Binding Data}"</span>
+                  <span class="na">ItemTemplate=</span><span class="s">"{StaticResource PersonTemplate}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/DataTemplate&gt;</span>
+<span class="nt">&lt;/mvux:FeedView&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>One <code class="language-plaintext highlighter-rouge">Style</code> and your MVUX pages get the same skeleton. That one is on its own <a href="https://github.com/unoplatform/uno.extensions/blob/cc30a4e800cf7fd0d960181b06955283ee29ef4a/doc/Learn/Mvux/FeedView.md#skeleton-loading">branch</a> and isn’t released either.</p>
+
+<h2 id="rough-edges">Rough Edges</h2>
+
+<p>This is a draft PR, so let’s be honest about where it stands.</p>
+
+<ul>
+  <li>The PR says it has only been tested on macOS desktop so far. The other platforms are still on the checklist.</li>
+  <li>The shimmer visuals aren’t covered by the automated tests. The band structure is asserted, but the sweep itself was checked by eye.</li>
+  <li>Covered elements are hidden by setting their <code class="language-plaintext highlighter-rouge">Opacity</code> to 0 and restoring it afterwards. If you’re animating or binding <code class="language-plaintext highlighter-rouge">Opacity</code> on those elements while loading, the skeleton will win.</li>
+  <li>An empty list needs an <code class="language-plaintext highlighter-rouge">ItemTemplate</code> and a width to get rows, and <code class="language-plaintext highlighter-rouge">ItemTemplateSelector</code> isn’t used for placeholder rows.</li>
+  <li>A list’s <code class="language-plaintext highlighter-rouge">Header</code> and <code class="language-plaintext highlighter-rouge">Footer</code> aren’t mirrored.</li>
+</ul>
+
+<p>None of these are dealbreakers, but they’re worth knowing about before you build on it.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p><code class="language-plaintext highlighter-rouge">SkeletonView</code> is a lot of loading experience for very little XAML. Wrap your content, bind <code class="language-plaintext highlighter-rouge">IsLoading</code>, and you get a skeleton that matches the real layout, including on refresh, without maintaining a second copy of every screen.</p>
+
+<p>The best way to help it land is to try it. The PR’s sample app has a <code class="language-plaintext highlighter-rouge">SkeletonView</code> page with a section for every scenario in this post, and feedback on the PR is very welcome. Jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a>!</p>
+
+<p>I hope you enjoyed this edition of Toolkit Tuesdays, and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1669">SkeletonView Pull Request</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/doc/controls/SkeletonView.md">SkeletonView Docs (PR branch)</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/samples/Uno.Toolkit.Samples/Content/Controls/SkeletonViewSamplePage.xaml">SkeletonView Sample Page (PR branch)</a></li>
+  <li><a href="https://github.com/unoplatform/uno.extensions/blob/cc30a4e800cf7fd0d960181b06955283ee29ef4a/doc/Learn/Mvux/FeedView.md#skeleton-loading">FeedView Skeleton Loading Docs (Uno.Extensions branch)</a></li>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html">LoadingView Docs</a></li>
+  <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-10-10T00:00:00+00:00">October 10, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-50/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" class="pagination--pager" title="Semantic Design in Uno Themes - Part 2">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" rel="permalink">Semantic Design in Uno Themes - Part 2
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-04T00:00:00+00:00">October 4, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In Part 1 of this little series I dug into the Semantic Design Language in Uno Themes: semantic styles that let your XAML ask for a ROLE like FilledButtonSty...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/10/01/simple-design-semantic-tokens.html" rel="permalink">Semantic Design in Uno Themes - Part 1
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-01T00:00:00+00:00">October 1, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo go...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-extensions-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="permalink">Uno Extensions: MSAL Auth Across Platforms
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-17T00:00:00+00:00">September 17, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cro...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/cerulean/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/09/13/cerulean-agent-skill.html" rel="permalink">Cerulean: Your Agent Is Not Impressed
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-13T00:00:00+00:00">September 13, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-50/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-50/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-50/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-50/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-50/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
