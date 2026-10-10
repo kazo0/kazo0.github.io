@@ -11,7 +11,7 @@ A little while back I wrote about [hosting three Uno apps inside a single Uno ap
 
 The Semantic Design Language gives your XAML a shared vocabulary. Semantic styles describe your controls, and [Semantic Design Tokens][design-tokens-docs] define the values those controls use. Uno Themes 7.0 introduced that shared layer alongside the new Simple design system. Material and Simple both speak the same vocabulary, so you can customize either one without scattering design-system-specific keys all through your markup.
 
-This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In Part 2 I'll look at what the upcoming 8.0 release adds on top, like knobs that reach your controls at runtime, a single root font, and seed colors that stay true to your brand and repaint live. I'm focusing on Material and Simple throughout.
+This is the first of two posts. Here in Part 1 we'll wrap our heads around that shared vocabulary as it exists today in 7.x: the semantic styles, the tokens underneath them, the scalar knobs for reshaping those tokens wholesale, and how Simple and Material each interpret them. In [Part 2]({% post_url 2026-10-04-uno-themes-8-runtime-seed-colors %}) I'll look at what the upcoming 8.0 release adds on top, like knobs that reach your controls at runtime, a single root font, and seed colors that stay true to your brand and repaint live. I'm focusing on Material and Simple throughout.
 
 Let's dive in. :diving_mask:
 
@@ -146,18 +146,19 @@ Starting from scratch? The template can scaffold the whole thing for you:
 dotnet new unoapp -o UnoSimpleApp -theme simple
 ```
 
-Out of the box, Simple is intentionally plain. No seed color, just a neutral grayscale palette that stays gray until you give it something to work with. A `PrimarySeed` on the theme's `Colors` already turns it into a full brand palette in 7.x, and how 8.0 makes that palette truer to your brand, and live, is exactly where Part 2 picks up. :wink:
+Out of the box, Simple is intentionally plain. No seed color, just a neutral grayscale palette that stays gray until you give it something to work with. A `PrimarySeed` on the theme's `Colors` already turns it into a full brand palette in 7.x, and how 8.0 makes that palette truer to your brand, and live, is exactly where [Part 2]({% post_url 2026-10-04-uno-themes-8-runtime-seed-colors %}) picks up. :wink:
 
 ## Conclusion
 
 That's the shared foundation. Semantic styles so your XAML asks for a ROLE instead of one design system's specific key, and Semantic Design Tokens so the spacing, shapes, and sizing behind those styles live in one predictable place. You write `FilledButtonStyle` or `BodyLarge`, and the active theme fills in the specifics. Swap `MaterialTheme` for `SimpleTheme` and that same markup comes out looking like a completely different app.
 
-The best part is that none of this is hypothetical. It's all shipping in Uno Themes 7.x today, ready to use. In Part 2 we'll build on it and get to the 8.0 fun stuff: knobs that reach your controls at runtime, swapping the whole app's font from a single root, and seed colors that stay true to your brand and repaint live. See you there.
+The best part is that none of this is hypothetical. It's all shipping in Uno Themes 7.x today, ready to use. In [Part 2]({% post_url 2026-10-04-uno-themes-8-runtime-seed-colors %}) we'll build on it and get to the 8.0 fun stuff: knobs that reach your controls at runtime, swapping the whole app's font from a single root, and seed colors that stay true to your brand and repaint live. See you there.
 
 Hope you learned something and I'll catch you in the next one :wave:
 
 ## Further Reading
 
+- [Semantic Design in Uno Themes - Part 2]({% post_url 2026-10-04-uno-themes-8-runtime-seed-colors %})
 - [Uno Themes Overview][themes-overview-docs]
 - [Semantic Styles][semantic-styles-docs]
 - [Semantic Design Tokens][design-tokens-docs]
