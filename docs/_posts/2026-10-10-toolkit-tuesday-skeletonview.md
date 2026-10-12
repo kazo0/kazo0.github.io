@@ -14,7 +14,7 @@ This week is a little different, because I'm covering something you can't instal
 **Preview:** `SkeletonView` lives in an open, draft [pull request][skeleton-pr] on the Uno Toolkit repo and hasn't shipped in any release. Names and behavior may change before it does, and the doc links below point at the PR's branch.
 {: .notice--info}
 
-<!-- TODO: embed the skeleton demo video from the tweet (or a fresh screen recording of the SkeletonView sample page) here, with the same style as the LoadingView video include -->
+{% include local-video.html src="/assets/images/skeletonview/skeleton-demo.mp4" class="width-half align-center" caption="No skeleton shapes declared anywhere: placeholder rows for the empty lists on first load, then a refresh whose skeleton matches the content it replaces." %}
 
 ## The Problem (and The Solution)
 
@@ -68,7 +68,7 @@ That's it. No skeleton markup anywhere.
 
 While `IsBusy` is true, you get a circle for the avatar, two text lines, a full-width line for the description that hasn't loaded yet, and a button-shaped block. When `IsBusy` flips to false, the real content takes over.
 
-<!-- TODO: screenshot of this card in its loading (skeleton) state next to the loaded state -->
+![The Basic Usage card while loading (left) and once loaded (right)](/assets/images/skeletonview/basic-usage.png)
 
 `IsLoading` defaults to `true`, so a `SkeletonView` starts out in its loading state. If your skeleton never goes away, you forgot to bind `IsLoading` or set a `Source`.
 {: .notice--warning}
