@@ -185,7 +185,7 @@ The new thing is Secular Readings. Flip a switch in Settings and the app reads f
     <a href="/assets/images/daily-reflection/new-screens-sober-settings.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/new-screens-sober-settings.png" alt="The Sober Time tab counting years, months, and days from a sample sober date, and the Settings tab with the daily reminder, the Secular Readings switch, and the sober date"/></a>
 </figure>
 
-<!-- TODO: short phone screen recording (app-walkthrough.mp4): open the app, browse to another day with the date picker, flip Secular Readings, then check the Sober Time tab with a dummy date. Embed it as an MP4 with the local-video include and the width-half class, since it's a portrait capture. -->
+{% include local-video.html src="/assets/images/daily-reflection/app-walkthrough.mp4" poster="/assets/images/daily-reflection/app-walkthrough-poster.png" class="width-half" caption="Version 4 on a Pixel: picking another day, turning on Secular Readings, then the Sober Time tab with a sample date." %}
 
 ## The First Round of Feedback
 
@@ -199,7 +199,7 @@ The fix is in 4.0.42, the next update after launch. The reading is sized from th
     <a href="/assets/images/daily-reflection/text-size.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/text-size.png" alt="The same reading at the Normal and Huge text sizes side by side"/></a>
 </figure>
 
-<!-- TODO: the Settings > Readings Text Size picker open (text-size-picker.png), or a short recording of switching sizes (text-size.mp4, width-half). Needs a phone capture. -->
+{% include local-video.html src="/assets/images/daily-reflection/text-size.mp4" poster="/assets/images/daily-reflection/text-size-poster.png" class="width-half" caption="The new Text Size picker in Settings, switching the reading to Huge, then Large, then back to Normal." %}
 
 <figure>
     <a href="/assets/images/daily-reflection/tab-labels.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/tab-labels.png" alt="The reading at the largest iOS accessibility text size, with the Reflection, Sober Time, and Settings tab labels still clear of each other"/></a>
