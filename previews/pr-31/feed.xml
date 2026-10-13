@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-31/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-31/" rel="alternate" type="text/html" /><updated>2026-10-13T13:33:02+00:00</updated><id>https://kazo0.dev/previews/pr-31/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno Themes - Part 2" /><published>2026-10-04T00:00:00+00:00</published><updated>2026-10-04T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In <a href="/uno-general/2026/10/01/simple-design-semantic-tokens.html">Part 1</a> of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno Themes 7.x today.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-31/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-31/" rel="alternate" type="text/html" /><updated>2026-10-13T14:46:13+00:00</updated><id>https://kazo0.dev/previews/pr-31/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Semantic Design in Uno Themes - Part 2</title><link href="https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" rel="alternate" type="text/html" title="Semantic Design in Uno Themes - Part 2" /><published>2026-10-04T00:00:00+00:00</published><updated>2026-10-04T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors</id><content type="html" xml:base="https://kazo0.dev/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html"><![CDATA[<p>In <a href="/uno-general/2026/10/01/simple-design-semantic-tokens.html">Part 1</a> of this little series I dug into the Semantic Design Language in <code class="language-plaintext highlighter-rouge">Uno Themes</code>: semantic styles that let your XAML ask for a ROLE like <code class="language-plaintext highlighter-rouge">FilledButtonStyle</code> instead of a design-system-specific key, and the Semantic Design Tokens for spacing, shape, and sizing that sit underneath them. All of that ships in Uno Themes 7.x today.</p>
 
 <p>This time I want to look ahead. The upcoming 8.0 release builds on that same foundation and makes it a whole lot more flexible. The token knobs from Part 1 finally reach your controls at runtime, and two new ones join the family, one for spacing and one for fonts. The seed color generator that already ships in 7.x gets some love too, so your colors stay true to your brand and repaint live. This is the fun part.</p>
 
@@ -342,7 +342,13 @@
     <a href="/assets/images/daily-reflection/new-screens-sober-settings.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/new-screens-sober-settings.png" alt="The Sober Time tab counting years, months, and days from a sample sober date, and the Settings tab with the daily reminder, the Secular Readings switch, and the sober date" /></a>
 </figure>
 
-<!-- TODO: short phone screen recording (app-walkthrough.mp4): open the app, browse to another day with the date picker, flip Secular Readings, then check the Sober Time tab with a dummy date. Embed it as an MP4 with the local-video include and the width-half class, since it's a portrait capture. -->
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-31/assets/images/daily-reflection/app-walkthrough-poster.png">
+    <source src="/previews/pr-31/assets/images/daily-reflection/app-walkthrough.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-31/assets/images/daily-reflection/app-walkthrough.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>Version 4 on a Pixel: picking another day, turning on Secular Readings, then the Sober Time tab with a sample date.</figcaption>
+</figure>
 
 <h2 id="the-first-round-of-feedback">The First Round of Feedback</h2>
 
@@ -356,7 +362,13 @@
     <a href="/assets/images/daily-reflection/text-size.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/text-size.png" alt="The same reading at the Normal and Huge text sizes side by side" /></a>
 </figure>
 
-<!-- TODO: the Settings > Readings Text Size picker open (text-size-picker.png), or a short recording of switching sizes (text-size.mp4, width-half). Needs a phone capture. -->
+<figure class="video-figure width-half">
+  <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata" poster="/previews/pr-31/assets/images/daily-reflection/text-size-poster.png">
+    <source src="/previews/pr-31/assets/images/daily-reflection/text-size.mp4" type="video/mp4" />
+    Your browser doesn't support embedded video. <a href="/previews/pr-31/assets/images/daily-reflection/text-size.mp4">Download the clip</a> instead.
+  </video>
+  <figcaption>The new Text Size picker in Settings, switching the reading to Huge, then Large, then back to Normal.</figcaption>
+</figure>
 
 <figure>
     <a href="/assets/images/daily-reflection/tab-labels.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/tab-labels.png" alt="The reading at the largest iOS accessibility text size, with the Reflection, Sober Time, and Settings tab labels still clear of each other" /></a>
