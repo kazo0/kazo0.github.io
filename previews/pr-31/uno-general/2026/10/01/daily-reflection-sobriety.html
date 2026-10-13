@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-31/assets/css/main.css?v=1790903594">
+<link rel="stylesheet" href="/previews/pr-31/assets/css/main.css?v=1791857773">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -318,7 +318,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          13 minute read
+          14 minute read
         
       </span>
     
@@ -343,6 +343,7 @@
 <li><a href="#what-actually-shipped">What Actually Shipped</a></li>
 <li><a href="#getting-it-to-the-stores">Getting It to the Stores</a></li>
 <li><a href="#whats-new-in-version-4">What’s New in Version 4</a></li>
+<li><a href="#the-first-round-of-feedback">The First Round of Feedback</a></li>
 <li><a href="#the-rough-edges">The Rough Edges</a></li>
 <li><a href="#what-recovery-taught-me-about-shipping-software">What Recovery Taught Me About Shipping Software</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
@@ -356,7 +357,7 @@
 
 <p>I usually write about Uno Platform, controls, and lately a lot about agentic development. Today I want to write about something more personal and then tie it back to the code, because for me the two have always been tangled together. I’m in recovery. I’m sober and clean from alcohol and drugs, and that fact sits underneath a lot of who I am, including the developer part.</p>
 
-<p>I’m not going to lay out my whole story here, at least not today. That part is mine to tell in my own time. But a piece of it lives in a public GitHub repo and on two app stores, and it feels right to finally talk about it. It’s a little app called Daily Reflection. I’ve spent the better part of a year rebuilding it, and version 4 is now officially out. So let’s talk about the app, how I built it the first time, and how it got rebuilt on Uno Platform with a lot of help from AI agents.</p>
+<p>I’m not going to lay out my whole story here, at least not today. That part is mine to tell in my own time. But a piece of it lives in a public GitHub repo and on two app stores, and it feels right to finally talk about it. It’s a little app called Daily Reflection. I’ve spent the better part of a year rebuilding it, and version 4 is now live on both the App Store and Google Play. So let’s talk about the app, how I built it the first time, and how it got rebuilt on Uno Platform with a lot of help from AI agents.</p>
 
 <h2 id="the-app-i-never-blog-about">The App I Never Blog About</h2>
 
@@ -529,7 +530,9 @@
 
 <p>The Android and iOS store packages are Native AOT, which landed in Uno Platform 6.6. The <a href="https://platform.uno/docs/articles/features/native-aot.html">Native AOT docs</a> are the place to start if you’re curious.</p>
 
-<p>I’d love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren’t going to the right localization. After that, Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. Each of those was a small fix, but they all had to land before the stable releases could go out. And they’re out now.</p>
+<p>The store listings live in the repo now too. The description, feature graphic, and screenshots sit under <code class="language-plaintext highlighter-rouge">fastlane/</code>, and a separate workflow with its own approval gate uploads them through <a href="https://fastlane.tools/">fastlane</a> without shipping a build. Apple’s side has a catch: the listing text belongs to an app version and can only be edited while one is editable. With none, the upload fails and the new text rides out with the next release.</p>
+
+<p>I’d love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren’t going to the right localization. Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. And because 4.0.37 was still in review when the 4.0.39 release ran, the upload step renamed the version Apple was reviewing, so the pipeline now refuses to start while a submission is pending. Each of those was a small fix, but they all had to land before the stable releases could go out. And they’re out now.</p>
 
 <h2 id="whats-new-in-version-4">What’s New in Version 4</h2>
 
@@ -541,12 +544,23 @@
 
 <p>The new thing is Secular Readings. Flip a switch in Settings and the app reads from <em>Beyond Belief: Agnostic Musings for 12 Step Life</em> instead of Daily Reflections. That’s the second screen above. There are also new date and time pickers, and an About link in Settings.</p>
 
+<h2 id="the-first-round-of-feedback">The First Round of Feedback</h2>
+
+<p>Since the rebuild went out, nearly all of the feedback has been about one thing: the text is too small.</p>
+
+<p>And they’re right. The Xamarin app used the iOS defaults, 17 for the body and 28 for the title. After the port, the reading was quietly using Material’s 14 and 24. A rebuild is a good way to find out which defaults you’d been relying on without realizing it.</p>
+
+<p>The fix is in 4.0.42, the next update after launch. The reading is sized from the old Xamarin numbers again, and Settings has a new Text Size picker: Normal, Large, Extra Large, and Huge. It scales the reading and the Sober Time tab, and your device’s own text size setting still applies on top. Under the hood it’s one <code class="language-plaintext highlighter-rouge">TextScale</code> feed on the model that the XAML multiplies into each of the old base sizes with a tiny converter.</p>
+
+<p>The same release also fixes tab labels running into each other at the biggest accessibility sizes, and italics rendering upright on the Skia heads. The Roboto package the SDK was pinning had no italic faces.</p>
+
 <h2 id="the-rough-edges">The Rough Edges</h2>
 
 <p>I want to be honest about what isn’t finished, because nobody wins by me pretending otherwise.</p>
 
 <ul>
   <li>On Skia desktop, content that changes while its tab is hidden can show stale rendering after you switch back. I tried several workarounds and none of them worked. It’s tracked in <a href="https://github.com/unoplatform/uno/issues/24768">an Uno issue</a>.</li>
+  <li>On Android 16 and up, the Toolkit <code class="language-plaintext highlighter-rouge">NavigationBar</code> stops the Back button from ever leaving the app, because Uno ignores <code class="language-plaintext highlighter-rouge">Handled</code> while anything subscribes to <code class="language-plaintext highlighter-rouge">BackRequested</code>. A callback in <code class="language-plaintext highlighter-rouge">MainActivity</code> works around it until <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/1651">the Toolkit issue</a> is fixed. I wrote <a href="/uno-tidbit/2024/03/28/tidbit-back-button.html">a tidbit</a> on the system back button if you want the background.</li>
   <li>Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.</li>
   <li>Desktop notifications aren’t supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn’t notarized.</li>
 </ul>
@@ -567,7 +581,7 @@
 
 <p>Daily Reflection is a tiny app. It’ll never top a chart and it was never supposed to. But it’s the truest thing I’ve built, because it came straight out of the practice that keeps me well, and rebuilding it has quietly become its own kind of practice.</p>
 
-<p>If you’re a developer sitting on an aging Xamarin app, I’d genuinely encourage you to try driving a migration with an agent and a docs MCP. It’s a great way to learn where these tools shine and where they still need a human. And if you happen to need a daily reading and a day counter in your pocket, version 4 is right there.</p>
+<p>If you’re a developer sitting on an aging Xamarin app, I’d genuinely encourage you to try driving a migration with an agent and a docs MCP. It’s a great way to learn where these tools shine and where they still need a human. And if you happen to need a daily reading and a day counter in your pocket, version 4 is live on both stores now.</p>
 
 <p>If any of the recovery part of this resonated with you, my inbox and the <a href="https://platform.uno/discord">Uno Discord</a> are always open. You’re not alone in it.</p>
 
@@ -614,7 +628,7 @@
       <a href="/previews/pr-31/uno-extensions/2026/09/17/msal-cross-platform-auth.html" class="pagination--pager" title="Uno Extensions: MSAL Auth Across Platforms">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/previews/pr-31/uno-general/2026/10/01/simple-design-semantic-tokens.html" class="pagination--pager" title="Semantic Design in Uno Themes - Part 1">Next</a>
     
   </nav>
 
@@ -629,6 +643,110 @@
     <div class="page__related">
       <h2 class="page__related-title">You may also enjoy</h2>
       <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-31/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" rel="permalink">Semantic Design in Uno Themes - Part 2
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-04T00:00:00+00:00">October 4, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In Part 1 of this little series I dug into the Semantic Design Language in Uno Themes: semantic styles that let your XAML ask for a ROLE like FilledButtonSty...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-31/uno-general/2026/10/01/simple-design-semantic-tokens.html" rel="permalink">Semantic Design in Uno Themes - Part 1
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-01T00:00:00+00:00">October 1, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo go...</p>
+  </article>
+</div>
+
         
           
 
@@ -730,110 +848,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/uno-toolkit-hero.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-31/toolkit-tuesday/2026/08/31/toolkit-tuesday-zoomcontentcontrol.html" rel="permalink">Toolkit Tuesdays: ZoomContentControl
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2026-08-31T00:00:00+00:00">August 31, 2026</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          10 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/tidbit-hero.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-31/uno-tidbit/2026/08/19/tidbit-app-mcp.html" rel="permalink">Uno Tidbit: Giving Your Agent Eyes and Hands with the App MCP
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2026-08-19T00:00:00+00:00">August 19, 2026</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Uno Tidbits! In this series, we will be covering small, bite-sized topics that are useful to know when working with Uno Platfor...</p>
   </article>
 </div>
 
