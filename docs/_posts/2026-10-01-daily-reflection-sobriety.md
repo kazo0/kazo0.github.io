@@ -67,7 +67,9 @@ Xamarin is end of life. The tooling moved on, and a codebase pinned to Xamarin.F
 
 I didn't touch the original repo at first. Instead I set up a [second repository][gh-daily-reflection-ports] as a multi-head monorepo. The four shared libraries moved up to `net10.0` almost unchanged, and on top of them I added a .NET MAUI head, an Uno Platform head, and an Avalonia head that I spun up mostly out of curiosity. The Xamarin app stayed in as a git submodule for reference, and each head got its own bundle ID so I could install them right next to the original on the same phone.
 
-<!-- TODO: diagram of the multi-head monorepo (pilot-architecture.png). The four shared libraries (Core, Data, Services, Presentation) as one stack, with the MAUI, Uno, and Avalonia heads on top and the Xamarin app off to the side as the submodule. Simple boxes are plenty. -->
+<figure>
+    <a href="/assets/images/daily-reflection/pilot-architecture.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/pilot-architecture.png" alt="Diagram of the pilot monorepo: .NET MAUI, Uno Platform, and Avalonia heads on top of one stack of shared libraries (Presentation, Services, Data, Core), with the original Xamarin.Forms app off to the side as a git submodule"/></a>
+</figure>
 
 That repo was never meant to be the product. It was a pilot. Because the same view models drove both the MAUI and Uno heads, it turned into a really honest comparison, and the differences all lived in a thin layer:
 
@@ -96,7 +98,9 @@ I ran the first pass, the mechanical MAUI to Uno migration, with GitHub Copilot 
 
 So for the second pass I brought in Claude Code and gave it a different job: be adversarial. It read all three implementations and wrote a gap analysis with a twenty-item punch list. Version tracking that hadn't carried over. HTML emphasis in the readings getting flattened. A share action with a race condition. The unglamorous drift a mechanical port always leaves behind. Then I had it work that list down, one small spec at a time, eleven of them in all.
 
-<!-- TODO: screenshot of the gap analysis punch list (gap-analysis.png). Open docs/ANALYSIS.md in the DailyReflection-ports repo and capture the top of the twenty-item list. Optionally add a second capture of the two hard rules in prompt.md. -->
+<figure>
+    <a href="/assets/images/daily-reflection/gap-analysis.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/gap-analysis.png" alt="The top of the gap analysis punch list in the pilot repo's ANALYSIS.md, the first ten of twenty items needed to bring the Uno port to parity with the Xamarin app"/></a>
+</figure>
 
 <!-- TODO (optional): screenshot of an agent session working through one of the specs, such as a Claude Code terminal mid-spec (agent-session.png). Crop out anything that isn't the work itself. -->
 
@@ -125,7 +129,9 @@ A few things changed along the way that I'm quite happy with.
 
 That's the [seed color feature][seed-colors-docs] in Uno.Themes doing exactly what it promises. The generated roles sit at Material 3 tone levels, so the primary isn't literally `#1976D2` anymore. If you need an exact value, you override that role.
 
-<!-- TODO: screenshot of the same screen in Light and Dark theme side by side (theme-light-dark.png), to show the whole palette coming from the one seed. Use a dummy sober date on the Sober Time tab if that screen is the one captured. -->
+<figure>
+    <a href="/assets/images/daily-reflection/theme-light-dark.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/theme-light-dark.png" alt="The same reading in the Light and Dark themes side by side, with every color coming from the one seed"/></a>
+</figure>
 
 **The shell is responsive.** The Xamarin app was phone-only, so desktop never needed an answer before. On narrow windows you get the bottom `TabBar`. From 700px up, you get a vertical rail on the left. Both bars live in the visual tree at the same time and the Toolkit's `Responsive` markup extension flips their visibility:
 
@@ -145,7 +151,7 @@ That's the [seed color feature][seed-colors-docs] in Uno.Themes doing exactly wh
 
 I tried `NavigationView` first, since it's the obvious choice, and it fought the Material style. Two `TabBar`s sharing one navigation region won.
 
-<!-- TODO: screen recording of the desktop build being resized across the 700px breakpoint, so the bottom TabBar swaps to the side rail (responsive-shell.mp4). Embed it as an MP4 with the site's local-video include, not a GIF. A still pair works too: narrow and wide side by side (responsive-shell.png). -->
+{% include local-video.html src="/assets/images/daily-reflection/responsive-shell.mp4" poster="/assets/images/daily-reflection/responsive-shell-poster.png" caption="The macOS desktop build narrowing past 700px: the side rail gives way to the bottom tab bar, and back again." %}
 
 <!-- TODO (optional): screenshot of the app running in the browser as the WebAssembly build (wasm-screenshot.png), if you want the "all four targets" line to have a picture. -->
 
@@ -175,7 +181,9 @@ The short version for users is that everything carries over, and there's one new
 
 The new thing is Secular Readings. Flip a switch in Settings and the app reads from *Beyond Belief: Agnostic Musings for 12 Step Life* instead of Daily Reflections. That's the second screen above. There are also new date and time pickers, and an About link in Settings.
 
-<!-- TODO: screenshots of the Sober Time and Settings tabs (new-screens-sober-settings.png), in the same phone-frame style as new-screens.png. Use a DUMMY sober date, since the existing composite deliberately leaves those screens out. The Settings capture should show the Secular Readings switch. -->
+<figure>
+    <a href="/assets/images/daily-reflection/new-screens-sober-settings.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/new-screens-sober-settings.png" alt="The Sober Time tab counting years, months, and days from a sample sober date, and the Settings tab with the daily reminder, the Secular Readings switch, and the sober date"/></a>
+</figure>
 
 <!-- TODO: short phone screen recording (app-walkthrough.mp4): open the app, browse to another day with the date picker, flip Secular Readings, then check the Sober Time tab with a dummy date. Embed it as an MP4 with the local-video include and the width-half class, since it's a portrait capture. -->
 
@@ -187,9 +195,15 @@ And they're right. The Xamarin app used the iOS defaults, 17 for the body and 28
 
 The fix is in 4.0.42, the next update after launch. The reading is sized from the old Xamarin numbers again, and Settings has a new Text Size picker: Normal, Large, Extra Large, and Huge. It scales the reading and the Sober Time tab, and your device's own text size setting still applies on top. Under the hood it's one `TextScale` feed on the model that the XAML multiplies into each of the old base sizes with a tiny converter.
 
-<!-- TODO: screenshot of the same reading at Normal and at Huge text size, side by side (text-size.png), plus the Settings > Readings Text Size picker open (text-size-picker.png). Needs a 4.0.42 build; the current store screenshots all show the smaller pre-4.0.42 text. A short recording of switching sizes (text-size.mp4, width-half) would work even better. -->
+<figure>
+    <a href="/assets/images/daily-reflection/text-size.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/text-size.png" alt="The same reading at the Normal and Huge text sizes side by side"/></a>
+</figure>
 
-<!-- TODO (optional): screenshot of the tab labels at the largest accessibility text size (tab-labels.png), to show the fix. -->
+<!-- TODO: the Settings > Readings Text Size picker open (text-size-picker.png), or a short recording of switching sizes (text-size.mp4, width-half). Needs a phone capture. -->
+
+<figure>
+    <a href="/assets/images/daily-reflection/tab-labels.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/tab-labels.png" alt="The reading at the largest iOS accessibility text size, with the Reflection, Sober Time, and Settings tab labels still clear of each other"/></a>
+</figure>
 
 The same release also fixes tab labels running into each other at the biggest accessibility sizes, and italics rendering upright on the Skia heads. The Roboto package the SDK was pinning had no italic faces.
 
