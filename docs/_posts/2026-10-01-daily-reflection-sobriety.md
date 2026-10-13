@@ -11,7 +11,7 @@ This one is going to be a little different.
 
 I usually write about Uno Platform, controls, and lately a lot about agentic development. Today I want to write about something more personal and then tie it back to the code, because for me the two have always been tangled together. I'm in recovery. I'm sober and clean from alcohol and drugs, and that fact sits underneath a lot of who I am, including the developer part.
 
-I'm not going to lay out my whole story here, at least not today. That part is mine to tell in my own time. But a piece of it lives in a public GitHub repo and on two app stores, and it feels right to finally talk about it. It's a little app called Daily Reflection. I've spent the better part of a year rebuilding it, and version 4 is now officially out. So let's talk about the app, how I built it the first time, and how it got rebuilt on Uno Platform with a lot of help from AI agents.
+I'm not going to lay out my whole story here, at least not today. That part is mine to tell in my own time. But a piece of it lives in a public GitHub repo and on two app stores, and it feels right to finally talk about it. It's a little app called Daily Reflection. I've spent the better part of a year rebuilding it, and version 4 is now live on both the App Store and Google Play. So let's talk about the app, how I built it the first time, and how it got rebuilt on Uno Platform with a lot of help from AI agents.
 
 ## The App I Never Blog About
 
@@ -141,7 +141,9 @@ Azure Pipelines is gone, replaced by GitHub Actions. A push to a `release/*` bra
 
 The Android and iOS store packages are Native AOT, which landed in Uno Platform 6.6. The [Native AOT docs][native-aot-docs] are the place to start if you're curious.
 
-I'd love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren't going to the right localization. After that, Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. Each of those was a small fix, but they all had to land before the stable releases could go out. And they're out now.
+The store listings live in the repo now too. The description, feature graphic, and screenshots sit under `fastlane/`, and a separate workflow with its own approval gate uploads them through [fastlane][fastlane] without shipping a build. Apple's side has a catch: the listing text belongs to an app version and can only be edited while one is editable. With none, the upload fails and the new text rides out with the next release.
+
+I'd love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren't going to the right localization. Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. And because 4.0.37 was still in review when the 4.0.39 release ran, the upload step renamed the version Apple was reviewing, so the pipeline now refuses to start while a submission is pending. Each of those was a small fix, but they all had to land before the stable releases could go out. And they're out now.
 
 ## What's New in Version 4
 
@@ -153,11 +155,22 @@ The short version for users is that everything carries over, and there's one new
 
 The new thing is Secular Readings. Flip a switch in Settings and the app reads from *Beyond Belief: Agnostic Musings for 12 Step Life* instead of Daily Reflections. That's the second screen above. There are also new date and time pickers, and an About link in Settings.
 
+## The First Round of Feedback
+
+Since the rebuild went out, nearly all of the feedback has been about one thing: the text is too small.
+
+And they're right. The Xamarin app used the iOS defaults, 17 for the body and 28 for the title. After the port, the reading was quietly using Material's 14 and 24. A rebuild is a good way to find out which defaults you'd been relying on without realizing it.
+
+The fix is in 4.0.42, the next update after launch. The reading is sized from the old Xamarin numbers again, and Settings has a new Text Size picker: Normal, Large, Extra Large, and Huge. It scales the reading and the Sober Time tab, and your device's own text size setting still applies on top. Under the hood it's one `TextScale` feed on the model that the XAML multiplies into each of the old base sizes with a tiny converter.
+
+The same release also fixes tab labels running into each other at the biggest accessibility sizes, and italics rendering upright on the Skia heads. The Roboto package the SDK was pinning had no italic faces.
+
 ## The Rough Edges
 
 I want to be honest about what isn't finished, because nobody wins by me pretending otherwise.
 
 - On Skia desktop, content that changes while its tab is hidden can show stale rendering after you switch back. I tried several workarounds and none of them worked. It's tracked in [an Uno issue][uno-24768].
+- On Android 16 and up, the Toolkit `NavigationBar` stops the Back button from ever leaving the app, because Uno ignores `Handled` while anything subscribes to `BackRequested`. A callback in `MainActivity` works around it until [the Toolkit issue][toolkit-1651] is fixed. I wrote [a tidbit]({% post_url 2024-03-28-tidbit-back-button %}) on the system back button if you want the background.
 - Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.
 - Desktop notifications aren't supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn't notarized.
 
@@ -177,7 +190,7 @@ And I didn't rebuild this alone. A few years ago I'd have insisted on doing ever
 
 Daily Reflection is a tiny app. It'll never top a chart and it was never supposed to. But it's the truest thing I've built, because it came straight out of the practice that keeps me well, and rebuilding it has quietly become its own kind of practice.
 
-If you're a developer sitting on an aging Xamarin app, I'd genuinely encourage you to try driving a migration with an agent and a docs MCP. It's a great way to learn where these tools shine and where they still need a human. And if you happen to need a daily reading and a day counter in your pocket, version 4 is right there.
+If you're a developer sitting on an aging Xamarin app, I'd genuinely encourage you to try driving a migration with an agent and a docs MCP. It's a great way to learn where these tools shine and where they still need a human. And if you happen to need a daily reading and a day counter in your pocket, version 4 is live on both stores now.
 
 If any of the recovery part of this resonated with you, my inbox and the [Uno Discord][uno-discord] are always open. You're not alone in it.
 
@@ -201,5 +214,7 @@ One day at a time. Catch you in the next one :wave:
 [native-aot-docs]: https://platform.uno/docs/articles/features/native-aot.html
 [seed-colors-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/material-getting-started.html#seed-color-customization
 [uno-24768]: https://github.com/unoplatform/uno/issues/24768
+[toolkit-1651]: https://github.com/unoplatform/uno.toolkit.ui/issues/1651
+[fastlane]: https://fastlane.tools/
 [uno-discord]: https://platform.uno/discord
 {% include links.md %}
