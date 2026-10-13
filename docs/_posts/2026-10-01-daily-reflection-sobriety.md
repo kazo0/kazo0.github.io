@@ -80,7 +80,10 @@ What stayed exactly the same is the part I find most encouraging. The business l
 
 <!-- TODO: screenshot of the MAUI, Uno, and Avalonia pilot heads showing the same Reflection screen side by side (pilot-heads.png). Three captures stitched into one image makes the "same view models, thin UI layer" point at a glance. Use the pilot repo builds, since only the Uno head shipped. -->
 
-<!-- TODO (optional): screenshot of the original 2020 Xamarin app next to the shipped Uno version of the same Reflection screen (before-after.png). Reuse the 2020 capture from original-screens.png if it crops cleanly. -->
+<figure>
+    <a href="/assets/images/daily-reflection/before-after.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/before-after.png" alt="The October 22 reading, True Tolerance, in the 2020 Xamarin app on iOS on the left and in the shipped Uno app on Android on the right"/></a>
+    <figcaption>The same reading, then and now: the 2020 Xamarin app on iOS, and the shipped Uno app on Android.</figcaption>
+</figure>
 
 ## Letting the Agents Do the Migration
 
@@ -216,7 +219,7 @@ I want to be honest about what isn't finished, because nobody wins by me pretend
 - Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.
 - Desktop notifications aren't supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn't notarized.
 
-<!-- TODO: short desktop screen recording of the Skia stale-rendering glitch (skia-stale-render.mp4). Repro: on the desktop build, toggle Secular Readings in Settings, switch back to the Reflection tab, and capture the overlapping text. Ends with resizing the window to make it snap back. Embed it as an MP4 with the local-video include. It would also be a handy attachment for the Uno issue. -->
+{% include local-video.html src="/assets/images/daily-reflection/skia-stale-render.mp4" poster="/assets/images/daily-reflection/skia-stale-render-poster.png" caption="The 4.0.39 macOS build: Secular Readings goes off while the Reflection tab is hidden, the shorter reading comes back with overlapping lines and one missing, and a small window resize snaps it back." %}
 
 The MAUI and Avalonia heads stayed in the pilot repo. They did their job, which was to teach me something.
 
