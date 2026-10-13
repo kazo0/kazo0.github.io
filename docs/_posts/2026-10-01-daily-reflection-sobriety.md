@@ -67,12 +67,18 @@ Xamarin is end of life. The tooling moved on, and a codebase pinned to Xamarin.F
 
 I didn't touch the original repo at first. Instead I set up a [second repository][gh-daily-reflection-ports] as a multi-head monorepo. The four shared libraries moved up to `net10.0` almost unchanged, and on top of them I added a .NET MAUI head, an Uno Platform head, and an Avalonia head that I spun up mostly out of curiosity. The Xamarin app stayed in as a git submodule for reference, and each head got its own bundle ID so I could install them right next to the original on the same phone.
 
+<!-- TODO: diagram of the multi-head monorepo (pilot-architecture.png). The four shared libraries (Core, Data, Services, Presentation) as one stack, with the MAUI, Uno, and Avalonia heads on top and the Xamarin app off to the side as the submodule. Simple boxes are plenty. -->
+
 That repo was never meant to be the product. It was a pilot. Because the same view models drove both the MAUI and Uno heads, it turned into a really honest comparison, and the differences all lived in a thin layer:
 
 - **Navigation.** MAUI leans on Shell. Uno doesn't have it, so the Uno head used Uno.Extensions navigation regions together with the Toolkit `TabBar`.
 - **Rendering the readings.** The reading text has a little HTML in it, italics and line breaks. MAUI renders that natively with `Label TextType="Html"`. Uno's `TextBlock` doesn't do HTML, so the Uno head parses the markup into `Run` and `LineBreak` inlines.
 
 What stayed exactly the same is the part I find most encouraging. The business logic didn't care which UI framework sat on top of it. That's the payoff for having drawn those layers cleanly back in 2020.
+
+<!-- TODO: screenshot of the MAUI, Uno, and Avalonia pilot heads showing the same Reflection screen side by side (pilot-heads.png). Three captures stitched into one image makes the "same view models, thin UI layer" point at a glance. Use the pilot repo builds, since only the Uno head shipped. -->
+
+<!-- TODO (optional): screenshot of the original 2020 Xamarin app next to the shipped Uno version of the same Reflection screen (before-after.png). Reuse the 2020 capture from original-screens.png if it crops cleanly. -->
 
 ## Letting the Agents Do the Migration
 
@@ -89,6 +95,10 @@ Don't guess, look it up, and don't break the thing that already works. It's the 
 I ran the first pass, the mechanical MAUI to Uno migration, with GitHub Copilot driving and the Uno Docs MCP as its source of truth. The full transcript is committed as a `genlog.md`, and it's a fascinating read. That got me a compiling Uno app. But compiling is not the same as correct.
 
 So for the second pass I brought in Claude Code and gave it a different job: be adversarial. It read all three implementations and wrote a gap analysis with a twenty-item punch list. Version tracking that hadn't carried over. HTML emphasis in the readings getting flattened. A share action with a race condition. The unglamorous drift a mechanical port always leaves behind. Then I had it work that list down, one small spec at a time, eleven of them in all.
+
+<!-- TODO: screenshot of the gap analysis punch list (gap-analysis.png). Open docs/ANALYSIS.md in the DailyReflection-ports repo and capture the top of the twenty-item list. Optionally add a second capture of the two hard rules in prompt.md. -->
+
+<!-- TODO (optional): screenshot of an agent session working through one of the specs, such as a Claude Code terminal mid-spec (agent-session.png). Crop out anything that isn't the work itself. -->
 
 In late July the Uno head moved into the original repo, and that was the real turning point. One pull request, 273 files, and the Xamarin heads were gone. It kept the original bundle ID, so the stores see the new app as an update to the old one instead of a brand new listing.
 
@@ -115,6 +125,8 @@ A few things changed along the way that I'm quite happy with.
 
 That's the [seed color feature][seed-colors-docs] in Uno.Themes doing exactly what it promises. The generated roles sit at Material 3 tone levels, so the primary isn't literally `#1976D2` anymore. If you need an exact value, you override that role.
 
+<!-- TODO: screenshot of the same screen in Light and Dark theme side by side (theme-light-dark.png), to show the whole palette coming from the one seed. Use a dummy sober date on the Sober Time tab if that screen is the one captured. -->
+
 **The shell is responsive.** The Xamarin app was phone-only, so desktop never needed an answer before. On narrow windows you get the bottom `TabBar`. From 700px up, you get a vertical rail on the left. Both bars live in the visual tree at the same time and the Toolkit's `Responsive` markup extension flips their visibility:
 
 ```xml
@@ -133,17 +145,25 @@ That's the [seed color feature][seed-colors-docs] in Uno.Themes doing exactly wh
 
 I tried `NavigationView` first, since it's the obvious choice, and it fought the Material style. Two `TabBar`s sharing one navigation region won.
 
+<!-- TODO: screen recording of the desktop build being resized across the 700px breakpoint, so the bottom TabBar swaps to the side rail (responsive-shell.mp4). Embed it as an MP4 with the site's local-video include, not a GIF. A still pair works too: narrow and wide side by side (responsive-shell.png). -->
+
+<!-- TODO (optional): screenshot of the app running in the browser as the WebAssembly build (wasm-screenshot.png), if you want the "all four targets" line to have a picture. -->
+
 **Your sober date survives the upgrade.** This is the one I care about most. On the first launch after updating, the app imports your sober date, notification time, and display preference from the old Xamarin app's storage. The first version of that import was gated on a version number, and the old check parsed `4.0.N` as zero. So it would have quietly never run. It now keys off a flag that only gets set after the import succeeds, and there are tests using the exact version strings the app actually ships.
 
 ## Getting It to the Stores
 
 Azure Pipelines is gone, replaced by GitHub Actions. A push to a `release/*` branch builds signed Android and iOS packages plus desktop zips, then waits for my manual approval. Only after I click the button does it submit to App Store Connect, upload to Google Play, and cut the GitHub release. Every merge to `master` that touches app code also ships a signed build to the Play internal track and TestFlight, with no approval, so problems show up on a device and not in a store submission.
 
+<!-- TODO: screenshot of a release run in GitHub Actions paused at the production approval gate, with the Review deployments prompt showing (release-approval.png). Nothing secret appears on that screen, but check the crop anyway. -->
+
 The Android and iOS store packages are Native AOT, which landed in Uno Platform 6.6. The [Native AOT docs][native-aot-docs] are the place to start if you're curious.
 
 The store listings live in the repo now too. The description, feature graphic, and screenshots sit under `fastlane/`, and a separate workflow with its own approval gate uploads them through [fastlane][fastlane] without shipping a build. Apple's side has a catch: the listing text belongs to an app version and can only be edited while one is editable. With none, the upload fails and the new text rides out with the next release.
 
 I'd love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren't going to the right localization. Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. And because 4.0.37 was still in review when the 4.0.39 release ran, the upload step renamed the version Apple was reviewing, so the pipeline now refuses to start while a submission is pending. Each of those was a small fix, but they all had to land before the stable releases could go out. And they're out now.
+
+<!-- TODO: screenshot of the two live store listings side by side, App Store and Google Play (store-listings.png), as the "it's really out" moment. Capture them once the current listing text and version are showing. -->
 
 ## What's New in Version 4
 
@@ -155,6 +175,10 @@ The short version for users is that everything carries over, and there's one new
 
 The new thing is Secular Readings. Flip a switch in Settings and the app reads from *Beyond Belief: Agnostic Musings for 12 Step Life* instead of Daily Reflections. That's the second screen above. There are also new date and time pickers, and an About link in Settings.
 
+<!-- TODO: screenshots of the Sober Time and Settings tabs (new-screens-sober-settings.png), in the same phone-frame style as new-screens.png. Use a DUMMY sober date, since the existing composite deliberately leaves those screens out. The Settings capture should show the Secular Readings switch. -->
+
+<!-- TODO: short phone screen recording (app-walkthrough.mp4): open the app, browse to another day with the date picker, flip Secular Readings, then check the Sober Time tab with a dummy date. Embed it as an MP4 with the local-video include and the width-half class, since it's a portrait capture. -->
+
 ## The First Round of Feedback
 
 Since the rebuild went out, nearly all of the feedback has been about one thing: the text is too small.
@@ -162,6 +186,10 @@ Since the rebuild went out, nearly all of the feedback has been about one thing:
 And they're right. The Xamarin app used the iOS defaults, 17 for the body and 28 for the title. After the port, the reading was quietly using Material's 14 and 24. A rebuild is a good way to find out which defaults you'd been relying on without realizing it.
 
 The fix is in 4.0.42, the next update after launch. The reading is sized from the old Xamarin numbers again, and Settings has a new Text Size picker: Normal, Large, Extra Large, and Huge. It scales the reading and the Sober Time tab, and your device's own text size setting still applies on top. Under the hood it's one `TextScale` feed on the model that the XAML multiplies into each of the old base sizes with a tiny converter.
+
+<!-- TODO: screenshot of the same reading at Normal and at Huge text size, side by side (text-size.png), plus the Settings > Readings Text Size picker open (text-size-picker.png). Needs a 4.0.42 build; the current store screenshots all show the smaller pre-4.0.42 text. A short recording of switching sizes (text-size.mp4, width-half) would work even better. -->
+
+<!-- TODO (optional): screenshot of the tab labels at the largest accessibility text size (tab-labels.png), to show the fix. -->
 
 The same release also fixes tab labels running into each other at the biggest accessibility sizes, and italics rendering upright on the Skia heads. The Roboto package the SDK was pinning had no italic faces.
 
@@ -173,6 +201,8 @@ I want to be honest about what isn't finished, because nobody wins by me pretend
 - On Android 16 and up, the Toolkit `NavigationBar` stops the Back button from ever leaving the app, because Uno ignores `Handled` while anything subscribes to `BackRequested`. A callback in `MainActivity` works around it until [the Toolkit issue][toolkit-1651] is fixed. I wrote [a tidbit]({% post_url 2024-03-28-tidbit-back-button %}) on the system back button if you want the background.
 - Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.
 - Desktop notifications aren't supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn't notarized.
+
+<!-- TODO: short desktop screen recording of the Skia stale-rendering glitch (skia-stale-render.mp4). Repro: on the desktop build, toggle Secular Readings in Settings, switch back to the Reflection tab, and capture the overlapping text. Ends with resizing the window to make it snap back. Embed it as an MP4 with the local-video include. It would also be a handy attachment for the Uno issue. -->
 
 The MAUI and Avalonia heads stayed in the pilot repo. They did their job, which was to teach me something.
 
