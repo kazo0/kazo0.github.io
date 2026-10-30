@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-31/assets/css/main.css?v=1791905208">
+<link rel="stylesheet" href="/previews/pr-31/assets/css/main.css?v=1793395204">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -626,6 +626,7 @@
   <li>On Android 16 and up, the Toolkit <code class="language-plaintext highlighter-rouge">NavigationBar</code> stops the Back button from ever leaving the app, because Uno ignores <code class="language-plaintext highlighter-rouge">Handled</code> while anything subscribes to <code class="language-plaintext highlighter-rouge">BackRequested</code>. A callback in <code class="language-plaintext highlighter-rouge">MainActivity</code> works around it until <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/1651">the Toolkit issue</a> is fixed. I wrote <a href="/uno-tidbit/2024/03/28/tidbit-back-button.html">a tidbit</a> on the system back button if you want the background.</li>
   <li>Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.</li>
   <li>Desktop notifications aren’t supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn’t notarized.</li>
+  <li>The date picker can be too quick for its own good. Tap a year in the sober date picker and press OK before it finishes scrolling to it, and the date doesn’t update. It’s <a href="https://github.com/kazo0/DailyReflection/issues/78">open on the repo</a> against 4.0.42.</li>
 </ul>
 
 <figure class="video-figure">
