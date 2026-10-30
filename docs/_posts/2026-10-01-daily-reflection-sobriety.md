@@ -218,6 +218,7 @@ I want to be honest about what isn't finished, because nobody wins by me pretend
 - On Android 16 and up, the Toolkit `NavigationBar` stops the Back button from ever leaving the app, because Uno ignores `Handled` while anything subscribes to `BackRequested`. A callback in `MainActivity` works around it until [the Toolkit issue][toolkit-1651] is fixed. I wrote [a tidbit]({% post_url 2024-03-28-tidbit-back-button %}) on the system back button if you want the background.
 - Android Native AOT is still flagged experimental by the .NET for Android SDK. Uno documents it and ships it, and the pipeline has a switch to fall back if I ever need to.
 - Desktop notifications aren't supported on macOS and Linux, and the desktop zips are unsigned. The macOS build isn't notarized.
+- The date picker can be too quick for its own good. Tap a year in the sober date picker and press OK before it finishes scrolling to it, and the date doesn't update. It's [open on the repo][gh-picker-issue] against 4.0.42.
 
 {% include local-video.html src="/assets/images/daily-reflection/skia-stale-render.mp4" poster="/assets/images/daily-reflection/skia-stale-render-poster.png" caption="The 4.0.39 macOS build: Secular Readings goes off while the Reflection tab is hidden, the shorter reading comes back with overlapping lines and one missing, and a small window resize snaps it back." %}
 
@@ -255,6 +256,7 @@ One day at a time. Catch you in the next one :wave:
 [gh-daily-reflection]: https://github.com/kazo0/DailyReflection
 [gh-daily-reflection-ports]: https://github.com/kazo0/DailyReflection-ports
 [gh-prompt]: https://github.com/kazo0/DailyReflection/blob/a6b8e56/prompt.md
+[gh-picker-issue]: https://github.com/kazo0/DailyReflection/issues/78
 [app-store]: https://apps.apple.com/us/app/aa-daily-reflection/id1536494178
 [play-store]: https://play.google.com/store/apps/details?id=com.kazo0.dailyreflection
 [nodatime]: https://nodatime.org/
