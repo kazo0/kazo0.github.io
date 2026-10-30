@@ -78,8 +78,6 @@ That repo was never meant to be the product. It was a pilot. Because the same vi
 
 What stayed exactly the same is the part I find most encouraging. The business logic didn't care which UI framework sat on top of it. That's the payoff for having drawn those layers cleanly back in 2020.
 
-<!-- TODO: screenshot of the MAUI, Uno, and Avalonia pilot heads showing the same Reflection screen side by side (pilot-heads.png). Three captures stitched into one image makes the "same view models, thin UI layer" point at a glance. Use the pilot repo builds, since only the Uno head shipped. -->
-
 <figure>
     <a href="/assets/images/daily-reflection/before-after.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/before-after.png" alt="The October 22 reading, True Tolerance, in the 2020 Xamarin app on iOS on the left and in the shipped Uno app on Android on the right"/></a>
     <figcaption>The same reading, then and now: the 2020 Xamarin app on iOS, and the shipped Uno app on Android.</figcaption>
@@ -104,8 +102,6 @@ So for the second pass I brought in Claude Code and gave it a different job: be 
 <figure>
     <a href="/assets/images/daily-reflection/gap-analysis.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/gap-analysis.png" alt="The top of the gap analysis punch list in the pilot repo's ANALYSIS.md, the first ten of twenty items needed to bring the Uno port to parity with the Xamarin app"/></a>
 </figure>
-
-<!-- TODO (optional): screenshot of an agent session working through one of the specs, such as a Claude Code terminal mid-spec (agent-session.png). Crop out anything that isn't the work itself. -->
 
 In late July the Uno head moved into the original repo, and that was the real turning point. One pull request, 273 files, and the Xamarin heads were gone. It kept the original bundle ID, so the stores see the new app as an update to the old one instead of a brand new listing.
 
@@ -156,7 +152,10 @@ I tried `NavigationView` first, since it's the obvious choice, and it fought the
 
 {% include local-video.html src="/assets/images/daily-reflection/responsive-shell.mp4" poster="/assets/images/daily-reflection/responsive-shell-poster.png" caption="The macOS desktop build narrowing past 700px: the side rail gives way to the bottom tab bar, and back again." %}
 
-<!-- TODO (optional): screenshot of the app running in the browser as the WebAssembly build (wasm-screenshot.png), if you want the "all four targets" line to have a picture. -->
+<figure>
+    <a href="/assets/images/daily-reflection/wasm-screenshot.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/wasm-screenshot.png" alt="The WebAssembly build running in a desktop browser, showing the October 30 reading, Live and Let Live, with the vertical tab rail on the left"/></a>
+    <figcaption>The same app as a WebAssembly build in the browser, wide enough to get the side rail.</figcaption>
+</figure>
 
 **Your sober date survives the upgrade.** This is the one I care about most. On the first launch after updating, the app imports your sober date, notification time, and display preference from the old Xamarin app's storage. The first version of that import was gated on a version number, and the old check parsed `4.0.N` as zero. So it would have quietly never run. It now keys off a flag that only gets set after the import succeeds, and there are tests using the exact version strings the app actually ships.
 
@@ -164,15 +163,15 @@ I tried `NavigationView` first, since it's the obvious choice, and it fought the
 
 Azure Pipelines is gone, replaced by GitHub Actions. A push to a `release/*` branch builds signed Android and iOS packages plus desktop zips, then waits for my manual approval. Only after I click the button does it submit to App Store Connect, upload to Google Play, and cut the GitHub release. Every merge to `master` that touches app code also ships a signed build to the Play internal track and TestFlight, with no approval, so problems show up on a device and not in a store submission.
 
-<!-- TODO: screenshot of a release run in GitHub Actions paused at the production approval gate, with the Review deployments prompt showing (release-approval.png). Nothing secret appears on that screen, but check the crop anyway. -->
-
 The Android and iOS store packages are Native AOT, which landed in Uno Platform 6.6. The [Native AOT docs][native-aot-docs] are the place to start if you're curious.
 
 The store listings live in the repo now too. The description, feature graphic, and screenshots sit under `fastlane/`, and a separate workflow with its own approval gate uploads them through [fastlane][fastlane] without shipping a build. Apple's side has a catch: the listing text belongs to an app version and can only be edited while one is editable. With none, the upload fails and the new text rides out with the next release.
 
 I'd love to tell you the first release went smoothly. It did not. There were a handful of pre-releases first. Then the App Store refused the 4.0.36 submission because the release notes weren't going to the right localization. Google Play flagged 4.0.37 for an unshrunk DEX file, so 4.0.39 turns on R8 and takes the code from roughly 11 MB down to about 4 MB. And because 4.0.37 was still in review when the 4.0.39 release ran, the upload step renamed the version Apple was reviewing, so the pipeline now refuses to start while a submission is pending. Each of those was a small fix, but they all had to land before the stable releases could go out. And they're out now.
 
-<!-- TODO: screenshot of the two live store listings side by side, App Store and Google Play (store-listings.png), as the "it's really out" moment. Capture them once the current listing text and version are showing. -->
+<figure>
+    <a href="/assets/images/daily-reflection/store-listings.png" class="image-popup"><img class="align-center" src="/assets/images/daily-reflection/store-listings.png" alt="The live AA Daily Reflection listings side by side, the App Store on the left and Google Play on the right, both showing the new store screenshots"/></a>
+</figure>
 
 ## What's New in Version 4
 
