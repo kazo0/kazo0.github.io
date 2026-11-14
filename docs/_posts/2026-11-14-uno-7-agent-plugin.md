@@ -1,5 +1,5 @@
 ---
-title: "Uno Platform 7.0 and the uno-dev Agent Plugin"
+title: "Uno Platform 7.0 and the Studio Agent Plugin"
 category: uno-general
 header:
   teaser: /assets/images/uno-7-agent-plugin/hero.png
@@ -7,19 +7,20 @@ header:
 tags: [agents, ai, skills, plugin, claude-code, copilot, codex, uno-platform, uno, unoplatform]
 ---
 
+<figcaption><em>^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe</em></figcaption>
+<br/>
+
 Uno Platform 7.0 is out, and it's a big one. The [release blog][uno-7-blog] has the headline numbers (about 2x faster and 5x smaller than 6.7), plus a pile of platform and rendering work that deserves its own posts.
 
-This one is about a less flashy thing that landed the same week: the Uno Platform Studio agent plugin got its [7.0.0 release][studio-release]. If you read my [Agent Skills post]({% post_url 2026-02-23-agent-skills-intro %}), I wrote a single skill by hand to teach an agent about MVUX selection. The plugin is that same idea at a much bigger scale, and I've been neck deep in that repo for a while now.
+This post is about a companion release that landed the same week: the Uno Platform Studio agent plugin got its [7.0.0 release][studio-release]. If you read my [Agent Skills post]({% post_url 2026-02-23-agent-skills-intro %}), we wrote a single skill to teach an agent about MVUX selection. The plugin is that same idea at a much bigger scale, and I've been neck deep in that repo for a while now.
 
 Let's walk through what's in it, how to install it, and what it will and won't do for you.
-
-<!-- TODO: hero image for the post (hero.png). Something agent-flavored with the Uno logo, a terminal with the uno-dev agent selected would work. -->
 
 ## What's in the Plugin
 
 The plugin is called `uno-platform-studio` and it has three parts:
 
-- **The `uno-dev` agent.** Describe what you want in plain language: a new app from a brief, a feature for an existing app, or a binding, state, or navigation bug. It plans the work, builds and runs the first feature before repeating the pattern, and finishes with a report.
+- **The Studio agent.** Describe what you want in plain language: a new app from a brief, a feature for an existing app, or a binding, state, or navigation bug. It plans the work, builds and runs the first feature before repeating the pattern, and finishes with a report.
 - **Nine skills.** A workflow skill (`uno-build-app`), a router (`uno-platform`), and seven domain skills: `uno-mvux`, `uno-navigation`, `uno-toolkit`, `uno-themes`, `uno-authentication`, `uno-kiota`, and `uno-testing`.
 - **Claude Code hooks.** While your app is running, they keep the agent on Hot Reload instead of rebuilding after every edit.
 
@@ -33,7 +34,28 @@ An agent picks a skill from its name and description alone, and every host caps 
 
 Sound familiar? It's the same problem from my Agent Skills post, just one level up. A skill the agent doesn't pick might as well not exist.
 
-The fix was to fold the 62 into six domain hubs. Each hub has a keyword-rich description, a topic map, and the critical rules. The old per-topic skills didn't go anywhere. Each one became a short reference file inside its hub, and the agent reads it only when the task calls for it. With the six hubs the listing dropped from about 27,000 to about 5,300 characters. The numbers are in the [PR description][studio-pr-157] if you want the details.
+The fix was to fold the 62 into six domain hubs. Each hub has a keyword-rich description, a topic map, and the critical rules. The old per-topic skills didn't go anywhere. Each one became a short reference file inside its hub, and the agent reads it only when the task calls for it. The [PR description][studio-pr-157] has all the details, but these are the numbers that mattered:
+
+<figure class="stat-row">
+    <div class="stat-row__tiles">
+        <div class="stat">
+            <span class="stat__label">Skills in the listing</span>
+            <span class="stat__value">62<span class="stat__arrow">→</span>6</span>
+            <span class="stat__note">Before, 56 of the 62 reached the model as bare names.</span>
+        </div>
+        <div class="stat">
+            <span class="stat__label">Listing text</span>
+            <span class="stat__value">27k<span class="stat__arrow">→</span>5.3k</span>
+            <div class="stat__meter" role="img" aria-label="Listing text fell from about 27,000 characters, well over an 8,000 character budget, to about 5,300, inside it">
+                <span class="stat__bar" style="--w: 100%"></span>
+                <span class="stat__bar stat__bar--after" style="--w: 19.6%"></span>
+                <span class="stat__limit" style="--at: 29.6%"><span>8k budget</span></span>
+            </div>
+            <span class="stat__note">Characters of names and descriptions, against Codex's 8,000-character fallback budget.</span>
+        </div>
+    </div>
+    <figcaption><em>Before and after folding 62 skills into six hubs, from <a href="https://github.com/unoplatform/studio/pull/157">PR #157</a>.</em></figcaption>
+</figure>
 
 The plugin has grown to nine skills since then, with the build workflow, authentication, and Kiota added. There are 94 reference files across them today, and `uno-toolkit` alone has 32.
 
@@ -57,13 +79,16 @@ codex plugin add uno-platform-studio@uno-platform
 
 For Copilot in VS Code, add `unoplatform/studio` to the `chat.plugins.marketplaces` setting and install `uno-platform-studio` from the agent-plugins picker. In Claude Code, run `/reload-plugins` if it asks, then `/skills` to check that they showed up.
 
-<!-- TODO: screenshot of the /skills list in Claude Code after installing, showing the uno-* skills (installed-skills.png). -->
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/installed-skills.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/installed-skills.png" alt="The /skills list in Claude Code filtered to uno, showing the nine uno-platform-studio skills: uno-authentication, uno-build-app, uno-kiota, uno-mvux, uno-navigation, uno-platform, uno-testing, uno-themes and uno-toolkit"/></a>
+    <figcaption><em>The plugin's nine skills in Claude Code's <code>/skills</code> list, filtered to <code>uno</code></em></figcaption>
+</figure>
 
 The plugin doesn't bundle the two MCP servers it leans on, the Uno docs MCP and the Uno App MCP. They come with the Uno tooling. If you need a refresher on the difference between them, I'd start with the [Uno MCP vs App MCP blog post][uno-mcp-vs-app-mcp] and the [setup docs][uno-mcp-setup-docs].
 
-## Meet uno-dev
+## Meet the Studio Agent
 
-Don't start with the skills. Start with the agent:
+Don't start with the skills. Start with the agent, which ships as `uno-dev` today:
 
 ```text
 # Claude Code
@@ -104,19 +129,41 @@ MainWindow.UseStudio(showHotReloadIndicator: false, launchHotDesignOnStart: fals
 
 Otherwise the Hot Reload indicator and the Hot Design button sit on top of the app in every Debug screenshot and under every pointer click. In an existing app it asks you first.
 
-<!-- TODO: screenshot of a uno-dev session in the terminal mid-run, ideally the point where it exercises the app through the App MCP (uno-dev-session.png). -->
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/agent-session.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/agent-session.png" alt="A Studio agent session mid-run on the reading tracker, alternating short notes with batches of UnoApp calls: it restarts the app to check that the goal and a book persisted, adds a title-only book, then starts and finishes Dune and watches the yearly goal move to 1 of 24"/></a>
+    <figcaption><em>The Studio agent mid-run on the reading tracker, checking each step in the running app through the App MCP</em></figcaption>
+</figure>
 
 The end of every run is a report that separates what ran, what failed, and what couldn't run. The closing line is one of three fixed sentences, so the agent can't say "done" when a required check never happened. In my reading tracker test runs it was "Implementation complete; verification incomplete.", followed by the list of checks that hadn't run.
 
-<!-- TODO: screenshot of a completion report with the closing line visible (completion-report.png). -->
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/completion-report.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/completion-report.png" alt="The end of a Studio agent completion report: the last rows of its checks table, with two passed checks and two marked Not run, the two bugs it found and fixed while testing, and the closing line, Implementation complete; verification incomplete"/></a>
+    <figcaption><em>The end of the completion report: what passed, what didn't run, the bugs it fixed, and the closing line</em></figcaption>
+</figure>
 
 ## Is It Worth the Extra Time?
 
-I compared the hubs alone against the hubs driven by `uno-dev` on that reading tracker prompt, three runs each. Both built an app every time. The difference was what happened afterward.
+I compared the hubs alone against the hubs driven by the Studio agent on that reading tracker prompt, three runs each. Both built an app every time. The difference was what happened afterward.
 
-The `uno-dev` runs wrote tests (31, 32, and 24 of them), made 14 to 26 App MCP calls instead of 5 to 6, and found real bugs by actually using the app. A yearly goal that never persisted. Escape deleting a book. A Remove button that did nothing. Then they fixed them.
+<figure class="ab-compare">
+    <table>
+        <thead>
+            <tr><th scope="col"><span class="visually-hidden">Measure</span></th><th scope="col">Hubs alone</th><th scope="col">Studio agent</th></tr>
+        </thead>
+        <tbody>
+            <tr><th scope="row">Tests written</th><td>none</td><td>24 to 32</td></tr>
+            <tr><th scope="row">App MCP responses per run</th><td>5 to 6</td><td>14 to 26</td></tr>
+            <tr><th scope="row">Bugs found by using the app</th><td>none reported</td><td>every run</td></tr>
+            <tr><th scope="row">Median cost</th><td>$2.60</td><td>$7.30</td></tr>
+            <tr><th scope="row">Median time</th><td>5.8 min</td><td>15.6 min</td></tr>
+        </tbody>
+    </table>
+    <figcaption><em>The reading tracker prompt, three runs per side, from <a href="https://github.com/unoplatform/studio/pull/148">PR #148</a>.</em></figcaption>
+</figure>
 
-It isn't free, though. The median `uno-dev` run cost about $7.30 and took 15.6 minutes, against $2.60 and 5.8 minutes for the hubs alone. Three runs a side shows the direction, not a precise size, so treat those as ballparks. The [PR description][studio-pr-148] has the full table.
+The bugs were real ones, found by actually using the app. A yearly goal that never persisted. Escape deleting a book. A Remove button that did nothing. Then the agent fixed them.
+
+It isn't free, though. The agent costs nearly three times as much per run and takes nearly three times as long. Three runs a side shows the direction, not a precise size, so treat those as ballparks. The [PR description][studio-pr-148] has the full table.
 
 ## Stop Rebuilding the App
 
