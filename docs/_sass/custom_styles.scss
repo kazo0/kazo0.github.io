@@ -173,3 +173,162 @@
 		width: auto;
 	}
 }
+
+/* Stat row
+   ========================================================================== */
+
+/* A handful of headline numbers from a post's source (a PR, a benchmark), as
+   tiles instead of a chart. Figures and labels stay in text colours; the only
+   accent is the meter fill. Tiles wrap to one per row on a phone. */
+/* The theme makes every figure a flex row; these lay out their own children. */
+.stat-row,
+.ab-compare {
+	display: block;
+}
+
+.stat-row {
+	margin: 2em 0;
+
+	figcaption {
+		margin-top: 0.75em;
+	}
+}
+
+.stat-row__tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+	gap: 0.75em;
+}
+
+.stat {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35em;
+	padding: 1em 1.1em;
+	border: 1px solid $border-color;
+	border-radius: 10px;
+	background-color: mix($text-color, $background-color, 4%);
+	font-family: $sans-serif;
+}
+
+.stat__label {
+	color: mix($background-color, $text-color, 35%);
+	font-size: $type-size-7;
+	font-weight: bold;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.stat__value {
+	font-size: $type-size-3;
+	font-weight: bold;
+	line-height: 1.1;
+	font-variant-numeric: tabular-nums;
+}
+
+.stat__arrow {
+	margin: 0 0.15em;
+	color: mix($background-color, $text-color, 45%);
+	font-weight: normal;
+}
+
+.stat__note {
+	color: mix($background-color, $text-color, 25%);
+	font-size: $type-size-7;
+	line-height: 1.4;
+}
+
+/* Before/after bars on one 0..max scale, with a dashed tick for a limit.
+   Widths and the tick position come from inline custom properties. */
+.stat__meter {
+	position: relative;
+	display: grid;
+	gap: 4px;
+	margin: 0.35em 0 1.1em;
+}
+
+.stat__bar {
+	width: var(--w);
+	height: 6px;
+	border-radius: 0 3px 3px 0;
+	background-color: mix($background-color, $text-color, 55%);
+
+	&--after {
+		background-color: $link-color;
+	}
+}
+
+.stat__limit {
+	position: absolute;
+	top: -3px;
+	bottom: -3px;
+	left: var(--at);
+	border-left: 2px dashed $text-color;
+
+	span {
+		position: absolute;
+		top: calc(100% + 2px);
+		left: -0.2em;
+		color: mix($background-color, $text-color, 25%);
+		font-size: $type-size-8;
+		white-space: nowrap;
+	}
+}
+
+/* A/B comparison
+   ========================================================================== */
+
+/* Two variants side by side, measure per row. The second column is the one
+   the post is about, so it carries the accent rule and a faint fill. */
+.ab-compare {
+	margin: 2em 0;
+
+	table {
+		display: table;
+		width: 100%;
+		margin: 0;
+		font-size: $type-size-6;
+		font-variant-numeric: tabular-nums;
+	}
+
+	th,
+	td {
+		padding: 0.6em 0.9em;
+		border-bottom: 1px solid $border-color;
+		text-align: left;
+	}
+
+	thead th {
+		color: mix($background-color, $text-color, 25%);
+		font-size: $type-size-7;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		border-bottom-width: 2px;
+	}
+
+	tbody th {
+		font-weight: normal;
+		color: mix($background-color, $text-color, 25%);
+	}
+
+	td {
+		font-weight: bold;
+	}
+
+	tr > :last-child {
+		background-color: mix($link-color, $background-color, 8%);
+	}
+
+	thead tr > :last-child {
+		box-shadow: inset 0 3px 0 $link-color;
+		color: $text-color;
+	}
+
+	tbody tr:last-child > * {
+		border-bottom: 0;
+	}
+
+	figcaption {
+		margin-top: 0.75em;
+	}
+}
