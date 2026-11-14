@@ -172,4 +172,10 @@ var store = [{
         "tags": ["uno-themes","uno-themes-8","simple","semantic-tokens","design-tokens","theming","material","uno-platform","uno","unoplatform"],
         "url": "/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html",
         "teaser": "/assets/images/simple-design-semantic-tokens/hero.jpg"
+      },{
+        "title": "Uno Platform 7.0 and the Studio Agent Plugin",
+        "excerpt":"^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe Uno Platform 7.0 is out, and it’s a big one. The release blog has the headline numbers (about 2x faster and 5x smaller than 6.7), plus...","categories": ["uno-general"],
+        "tags": ["agents","ai","skills","plugin","claude-code","copilot","codex","uno-platform","uno","unoplatform"],
+        "url": "/uno-general/2026/11/14/uno-7-agent-plugin.html",
+        "teaser": "/assets/images/uno-7-agent-plugin/hero.png"
       }]
