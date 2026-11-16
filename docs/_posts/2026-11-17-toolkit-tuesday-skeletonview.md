@@ -11,7 +11,7 @@ Welcome to another edition of Toolkit Tuesdays! In this series, I'll be highligh
 
 This week it's `SkeletonView`, a brand-new way to show skeleton loading placeholders in your app. It shipped in [Uno Toolkit 11][toolkit-release], which landed alongside Uno Platform 7.0, so you can install it today. If you caught [my tweet][tweet] about it back when it was still a pull request, this is the longer version. It's also a natural follow-up to the [`LoadingView` post]({% post_url 2026-08-18-toolkit-tuesday-loadingview %}), which mentioned a skeleton view in passing. Now we finally get to look at one.
 
-Yes, it's November 16 and this is Halloween themed, close enough.
+Yes, it's November 17 and this is Halloween themed, close enough.
 
 {% include local-video.html src="/assets/images/skeletonview/skeleton-demo.mp4" class="width-half align-center" caption="No skeleton shapes declared anywhere: placeholder rows for the empty lists on first load, then a refresh whose skeleton matches the content it replaces." %}
 
