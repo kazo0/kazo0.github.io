@@ -1,0 +1,947 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Uno Platform 7.0 and the Studio Agent Plugin - dotnet new bald</title>
+<meta name="description" content="^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe">
+
+
+  <meta name="author" content="Steve Bilogan">
+  
+  <meta property="article:author" content="Steve Bilogan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="dotnet new bald">
+<meta property="og:title" content="Uno Platform 7.0 and the Studio Agent Plugin">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html">
+
+
+  <meta property="og:description" content="^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe">
+
+
+
+  <meta property="og:image" content="https://kazo0.dev/assets/images/uno-7-agent-plugin/hero.png">
+  
+
+
+
+  <meta name="twitter:site" content="@BiloganSteve">
+  <meta name="twitter:title" content="Uno Platform 7.0 and the Studio Agent Plugin">
+  <meta name="twitter:description" content="^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html">
+
+  
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://kazo0.dev/assets/images/uno-7-agent-plugin/hero.png">
+    
+  
+
+  
+
+
+
+
+
+  <meta property="article:published_time" content="2026-11-14T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://kazo0.dev/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html">
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="TpeQI87UtEWc5hC3Uzt01Cf6RH88ojPL7z6OQL0vp9U" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/previews/pr-50/feed.xml" type="application/atom+xml" rel="alternate" title="dotnet new bald Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/previews/pr-50/assets/css/main.css?v=1794835264">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+  
+    <script src="https://kit.fontawesome.com/7635bcfdad.js"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/previews/pr-50/">
+          dotnet new bald
+          <span class="site-subtitle">A blog about .NET, Uno Platform, and other things I find interesting.</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/previews/pr-50/about/">About</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://kazo0.dev/previews/pr-50/">
+        <img src="/assets/images/profile.png" alt="Steve Bilogan" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://kazo0.dev/previews/pr-50/" itemprop="url">Steve Bilogan</a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Kingston, Ontario</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/kazo0" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-github" aria-hidden="true"></i><span class="label">kazo0</span></a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/BiloganSteve" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-square-x-twitter" aria-hidden="true"></i><span class="label">@BiloganSteve</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/sbilogan" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-brands fa-fw fa-inverse fa-linkedin" aria-hidden="true"></i><span class="label">sbilogan</span></a></li>
+          
+        
+          
+            <li><a href="https://sessionize.com/steve-bilogan/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa-solid fa-fw fa-microphone-lines" aria-hidden="true"></i><span class="label">Sessionize</span></a></li>
+          
+        
+          
+            <li><a href="/daily-reflection/" rel="nofollow noopener noreferrer me"><i class="fa-solid fa-fw fa-book-open" aria-hidden="true"></i><span class="label">Daily Reflection App</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Uno Platform 7.0 and the Studio Agent Plugin">
+    <meta itemprop="description" content="^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe">
+    <meta itemprop="datePublished" content="2026-11-14T00:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://kazo0.dev/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html" class="u-url" itemprop="url">Uno Platform 7.0 and the Studio Agent Plugin
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-11-14T00:00:00+00:00">November 14, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title">
+<i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu">
+<li><a href="#whats-in-the-plugin">What’s in the Plugin</a></li>
+<li><a href="#why-nine-skills-instead-of-sixty-two">Why Nine Skills Instead of Sixty-Two</a></li>
+<li><a href="#installing-it">Installing It</a></li>
+<li><a href="#meet-the-studio-agent">Meet the Studio Agent</a></li>
+<li><a href="#is-it-worth-the-extra-time">Is It Worth the Extra Time?</a></li>
+<li><a href="#stop-rebuilding-the-app">Stop Rebuilding the App</a></li>
+<li><a href="#what-to-know-before-you-try-it">What to Know Before You Try It</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <img alt="Hero Image" src="/assets/images/uno-7-agent-plugin/hero.png" class="hero-image">
+        <figcaption><em>^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe</em></figcaption>
+<p><br></p>
+
+<p>Uno Platform 7.0 is out, and it’s a big one. The <a href="https://platform.uno/blog/uno-platform-7-0/">release blog</a> has the headline numbers (about 2x faster and 5x smaller than 6.7), plus a pile of platform and rendering work that deserves its own posts.</p>
+
+<p>This post is about a companion release that landed the same week: the Uno Platform Studio agent plugin got its <a href="https://github.com/unoplatform/studio/releases/tag/7.0.0">7.0.0 release</a>. If you read my <a href="/uno-general/2026/02/23/agent-skills-intro.html">Agent Skills post</a>, we wrote a single skill to teach an agent about MVUX selection. The plugin is that same idea at a much bigger scale, and I’ve been neck deep in that repo for a while now.</p>
+
+<p>Let’s walk through what’s in it, how to install it, and what it will and won’t do for you.</p>
+
+<h2 id="whats-in-the-plugin">What’s in the Plugin</h2>
+
+<p>The plugin is called <code class="language-plaintext highlighter-rouge">uno-platform-studio</code> and it has three parts:</p>
+
+<ul>
+  <li>
+<strong>The Studio agent.</strong> Describe what you want in plain language: a new app from a brief, a feature for an existing app, or a binding, state, or navigation bug. It plans the work, builds and runs the first feature before repeating the pattern, and finishes with a report.</li>
+  <li>
+<strong>Nine skills.</strong> A workflow skill (<code class="language-plaintext highlighter-rouge">uno-build-app</code>), a router (<code class="language-plaintext highlighter-rouge">uno-platform</code>), and seven domain skills: <code class="language-plaintext highlighter-rouge">uno-mvux</code>, <code class="language-plaintext highlighter-rouge">uno-navigation</code>, <code class="language-plaintext highlighter-rouge">uno-toolkit</code>, <code class="language-plaintext highlighter-rouge">uno-themes</code>, <code class="language-plaintext highlighter-rouge">uno-authentication</code>, <code class="language-plaintext highlighter-rouge">uno-kiota</code>, and <code class="language-plaintext highlighter-rouge">uno-testing</code>.</li>
+  <li>
+<strong>Claude Code hooks.</strong> While your app is running, they keep the agent on Hot Reload instead of rebuilding after every edit.</li>
+</ul>
+
+<p>It installs in Claude Code, GitHub Copilot CLI, GitHub Copilot in VS Code, and OpenAI Codex CLI. Agents without plugin support (Cursor, Gemini CLI, Windsurf, Cline, and others) can copy the same skills from the repo’s <code class="language-plaintext highlighter-rouge">skills/</code> folder.</p>
+
+<h2 id="why-nine-skills-instead-of-sixty-two">Why Nine Skills Instead of Sixty-Two</h2>
+
+<p>The first releases of this plugin shipped one skill per topic. Sixty-two of them. That looked tidy on paper, and then I measured it.</p>
+
+<p>An agent picks a skill from its name and description alone, and every host caps how much room that listing gets. Claude Code budgets roughly 1% of the context window for it and drops the descriptions once it goes over. My 62 skills added up to about 27,000 characters of listing text. In a live session with other plugins installed, 56 of the 62 Uno skills reached the model as bare names with no description. So they never triggered on natural phrasing.</p>
+
+<p>Sound familiar? It’s the same problem from my Agent Skills post, just one level up. A skill the agent doesn’t pick might as well not exist.</p>
+
+<p>The fix was to fold the 62 into six domain hubs. Each hub has a keyword-rich description, a topic map, and the critical rules. The old per-topic skills didn’t go anywhere. Each one became a short reference file inside its hub, and the agent reads it only when the task calls for it. The <a href="https://github.com/unoplatform/studio/pull/157">PR description</a> has all the details, but these are the numbers that mattered:</p>
+
+<figure class="stat-row">
+    <div class="stat-row__tiles">
+        <div class="stat">
+            <span class="stat__label">Skills in the listing</span>
+            <span class="stat__value">62<span class="stat__arrow">→</span>6</span>
+            <span class="stat__note">Before, 56 of the 62 reached the model as bare names.</span>
+        </div>
+        <div class="stat">
+            <span class="stat__label">Listing text</span>
+            <span class="stat__value">27k<span class="stat__arrow">→</span>5.3k</span>
+            <div class="stat__meter" role="img" aria-label="Listing text fell from about 27,000 characters, well over an 8,000 character budget, to about 5,300, inside it">
+                <span class="stat__bar" style="--w: 100%"></span>
+                <span class="stat__bar stat__bar--after" style="--w: 19.6%"></span>
+                <span class="stat__limit" style="--at: 29.6%"><span>8k budget</span></span>
+            </div>
+            <span class="stat__note">Characters of names and descriptions, against Codex's 8,000-character fallback budget.</span>
+        </div>
+    </div>
+    <figcaption><em>Before and after folding 62 skills into six hubs, from <a href="https://github.com/unoplatform/studio/pull/157">PR #157</a>.</em></figcaption>
+</figure>
+
+<p>The plugin has grown to nine skills since then, with the build workflow, authentication, and Kiota added. There are 94 reference files across them today, and <code class="language-plaintext highlighter-rouge">uno-toolkit</code> alone has 32.</p>
+
+<h2 id="installing-it">Installing It</h2>
+
+<p>Installing takes a few commands. Pick your agent:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td>
+<td class="rouge-code"><pre># Claude Code
+/plugin marketplace add unoplatform/studio
+/plugin install uno-platform-studio@uno-platform
+
+# GitHub Copilot CLI
+copilot plugin marketplace add unoplatform/studio
+copilot plugin install uno-platform-studio@uno-platform
+
+# OpenAI Codex CLI
+codex plugin marketplace add unoplatform/studio
+codex plugin add uno-platform-studio@uno-platform
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>For Copilot in VS Code, add <code class="language-plaintext highlighter-rouge">unoplatform/studio</code> to the <code class="language-plaintext highlighter-rouge">chat.plugins.marketplaces</code> setting and install <code class="language-plaintext highlighter-rouge">uno-platform-studio</code> from the agent-plugins picker. In Claude Code, run <code class="language-plaintext highlighter-rouge">/reload-plugins</code> if it asks, then <code class="language-plaintext highlighter-rouge">/skills</code> to check that they showed up.</p>
+
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/installed-skills.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/installed-skills.png" alt="The /skills list in Claude Code filtered to uno, showing the nine uno-platform-studio skills: uno-authentication, uno-build-app, uno-kiota, uno-mvux, uno-navigation, uno-platform, uno-testing, uno-themes and uno-toolkit"></a>
+    <figcaption><em>The plugin's nine skills in Claude Code's <code>/skills</code> list, filtered to <code>uno</code></em></figcaption>
+</figure>
+
+<p>The plugin doesn’t bundle the two MCP servers it leans on, the Uno docs MCP and the Uno App MCP. They come with the Uno tooling. If you need a refresher on the difference between them, I’d start with the <a href="https://platform.uno/blog/uno-mcp-vs-app-mcp/">Uno MCP vs App MCP blog post</a> and the <a href="https://platform.uno/docs/articles/features/using-the-uno-mcps.html#dev-server-mcp-setup-commands">setup docs</a>.</p>
+
+<h2 id="meet-the-studio-agent">Meet the Studio Agent</h2>
+
+<p>Don’t start with the skills. Start with the agent, which ships as <code class="language-plaintext highlighter-rouge">uno-dev</code> today:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td>
+<td class="rouge-code"><pre># Claude Code
+claude --agent uno-platform-studio:uno-dev
+
+# GitHub Copilot CLI
+copilot --agent uno-dev
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Then tell it what you want. The README’s example is “Build me a reading tracker with a yearly goal setting.”</p>
+
+<p>Codex plugins can’t bundle agents yet (<a href="https://github.com/openai/codex/issues/18988">openai/codex#18988</a>), so there you copy <code class="language-plaintext highlighter-rouge">codex/uno-dev.toml</code> into <code class="language-plaintext highlighter-rouge">.codex/agents/</code> yourself. A small chore, but worth knowing about.</p>
+
+<p>The agent itself is thin. It loads the <code class="language-plaintext highlighter-rouge">uno-build-app</code> skill, which owns the process: discover, define a contract for the feature, implement one complete feature, build it, start it, exercise it, and only then repeat the pattern. The skill has a list of rules that do not bend, and these are the ones I’d call out:</p>
+
+<ol>
+  <li>Read the project first. Existing apps keep their architecture, navigation, and theme, so an MVVM app stays MVVM.</li>
+  <li>Exercise the first feature in the running app before copying its pattern.</li>
+  <li>Never claim a check you didn’t run.</li>
+  <li>Every control gets an automation id, written with the element and not as a later pass.</li>
+</ol>
+
+<p>That last one looks like this:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="nt">&lt;Button</span> <span class="na">AutomationProperties.AutomationId=</span><span class="s">"SaveButton"</span>
+        <span class="na">Content=</span><span class="s">"Save"</span>
+        <span class="na">Command=</span><span class="s">"{Binding Save}"</span> <span class="nt">/&gt;</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The testing skill drives the app by <code class="language-plaintext highlighter-rouge">automationId</code> in a single call, with no visual tree snapshot first. A control without one costs the agent a snapshot or a coordinate click every single time.</p>
+
+<p>Then there’s the one that keeps Studio’s own UI out of your screenshots. In an app the agent creates, it adds this to <code class="language-plaintext highlighter-rouge">App.xaml.cs</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td>
+<td class="rouge-code"><pre><span class="cp">#if DEBUG
+</span><span class="n">MainWindow</span><span class="p">.</span><span class="nf">UseStudio</span><span class="p">(</span><span class="n">showHotReloadIndicator</span><span class="p">:</span> <span class="k">false</span><span class="p">,</span> <span class="n">launchHotDesignOnStart</span><span class="p">:</span> <span class="k">false</span><span class="p">);</span>
+<span class="cp">#endif
+</span></pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>Otherwise the Hot Reload indicator and the Hot Design button sit on top of the app in every Debug screenshot and under every pointer click. In an existing app it asks you first.</p>
+
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/agent-session.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/agent-session.png" alt="A Studio agent session mid-run on the reading tracker, alternating short notes with batches of UnoApp calls: it restarts the app to check that the goal and a book persisted, adds a title-only book, then starts and finishes Dune and watches the yearly goal move to 1 of 24"></a>
+    <figcaption><em>The Studio agent mid-run on the reading tracker, checking each step in the running app through the App MCP</em></figcaption>
+</figure>
+
+<p>The end of every run is a report that separates what ran, what failed, and what couldn’t run. The closing line is one of three fixed sentences, so the agent can’t say “done” when a required check never happened. In my reading tracker test runs it was “Implementation complete; verification incomplete.”, followed by the list of checks that hadn’t run.</p>
+
+<figure>
+    <a href="/assets/images/uno-7-agent-plugin/completion-report.png" class="image-popup"><img class="align-center" src="/assets/images/uno-7-agent-plugin/completion-report.png" alt="The end of a Studio agent completion report: the last rows of its checks table, with two passed checks and two marked Not run, the two bugs it found and fixed while testing, and the closing line, Implementation complete; verification incomplete"></a>
+    <figcaption><em>The end of the completion report: what passed, what didn't run, the bugs it fixed, and the closing line</em></figcaption>
+</figure>
+
+<h2 id="is-it-worth-the-extra-time">Is It Worth the Extra Time?</h2>
+
+<p>I compared the hubs alone against the hubs driven by the Studio agent on that reading tracker prompt, three runs each. Both built an app every time. The difference was what happened afterward.</p>
+
+<figure class="ab-compare">
+    <table>
+        <thead>
+            <tr>
+<th scope="col"><span class="visually-hidden">Measure</span></th>
+<th scope="col">Hubs alone</th>
+<th scope="col">Studio agent</th>
+</tr>
+        </thead>
+        <tbody>
+            <tr>
+<th scope="row">Tests written</th>
+<td>none</td>
+<td>24 to 32</td>
+</tr>
+            <tr>
+<th scope="row">App MCP responses per run</th>
+<td>5 to 6</td>
+<td>14 to 26</td>
+</tr>
+            <tr>
+<th scope="row">Bugs found by using the app</th>
+<td>none reported</td>
+<td>every run</td>
+</tr>
+            <tr>
+<th scope="row">Median cost</th>
+<td>$2.60</td>
+<td>$7.30</td>
+</tr>
+            <tr>
+<th scope="row">Median time</th>
+<td>5.8 min</td>
+<td>15.6 min</td>
+</tr>
+        </tbody>
+    </table>
+    <figcaption><em>The reading tracker prompt, three runs per side, from <a href="https://github.com/unoplatform/studio/pull/148">PR #148</a>.</em></figcaption>
+</figure>
+
+<p>The bugs were real ones, found by actually using the app. A yearly goal that never persisted. Escape deleting a book. A Remove button that did nothing. Then the agent fixed them.</p>
+
+<p>It isn’t free, though. The agent costs nearly three times as much per run and takes nearly three times as long. Three runs a side shows the direction, not a precise size, so treat those as ballparks. The <a href="https://github.com/unoplatform/studio/pull/148">PR description</a> has the full table.</p>
+
+<h2 id="stop-rebuilding-the-app">Stop Rebuilding the App</h2>
+
+<p>If you’ve watched an agent work on a UI, you’ve seen the loop: edit XAML, rebuild, relaunch, navigate back to where you were, check, repeat. Every one of those restarts costs real time, and Hot Reload is sitting right there.</p>
+
+<p>The Claude Code hooks push the agent toward it. There are two:</p>
+
+<ul>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">SessionStart</code>.</strong> In an Uno project, it reminds the agent that a running app is edited through Hot Reload and not rebuilt, and to look for a running app before the first build. In any other folder it prints nothing.</li>
+  <li>
+<strong><code class="language-plaintext highlighter-rouge">PostToolUse</code>.</strong> After the agent edits a <code class="language-plaintext highlighter-rouge">.xaml</code> or <code class="language-plaintext highlighter-rouge">.cs</code> file, it asks the DevServer whether the running app picked up the edit and passes the answer along.</li>
+</ul>
+
+<p>That second hook runs a command from the new <code class="language-plaintext highlighter-rouge">uno-devserver app</code> family that the 7.0 release blog mentions for driving running apps from scripts, CI, and agents. The <a href="https://platform.uno/docs/articles/features/devserver-app-commands.html">docs</a> even use it as their example for a hook:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
+<td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td>
+<td class="rouge-code"><pre>uno-devserver app hot-reload-status <span class="nt">--file</span> src/MyApp/MainPage.xaml <span class="nt">--waitForMs</span> 10000 <span class="nt">--no-start</span>
+</pre></td>
+</tr></tbody></table></code></pre></div></div>
+
+<p>The exit code tells the story. Zero means there’s nothing left to do, usually because the edit applied. One means it isn’t running in the app, and the output says why. Three means a rude edit, and only a restart will pick it up. Four means it’s still on its way. So the agent asserts on the change, fixes the compile errors the status reports, or restarts only when it actually has to.</p>
+
+<p>The hook also says nothing before the app exists. Reminding the agent on every scaffolding edit just taught it to skim the reminders. I covered what the App MCP can do once the app is up in <a href="/uno-tidbit/2026/08/19/tidbit-app-mcp.html">the App MCP tidbit</a>.</p>
+
+<!-- TODO (optional): short screen recording of an edit applying through Hot Reload while the agent works, with the hook output visible (hot-reload-hook.mp4). Embed it as an MP4 with the local-video include. -->
+
+<h2 id="what-to-know-before-you-try-it">What to Know Before You Try It</h2>
+
+<p>A few honest caveats:</p>
+
+<ul>
+  <li>
+<strong>The hooks are Claude Code only.</strong> Copilot and Codex don’t load them, so there the same rule rides along as text in the skills.</li>
+  <li>
+<strong>App MCP tools depend on your license.</strong> A Community license lacks <code class="language-plaintext highlighter-rouge">uno_app_element_peer_action</code> and <code class="language-plaintext highlighter-rouge">uno_app_get_element_datacontext</code>, which are Pro or Business. The testing skill has fallbacks (pointer clicks instead of peer actions) and reports DataContext assertions as not run.</li>
+  <li>
+<strong>Release builds can’t be driven by the App MCP.</strong> The testing skill verifies them through the platform accessibility tree on Windows and Android. Everywhere else it falls back to a static review and labels it unverified.</li>
+  <li>
+<strong>The version tracks the SDK.</strong> Plugin 7.0.x targets Uno.Sdk 7.0. Marketplace installs use the release tag, and <code class="language-plaintext highlighter-rouge">main</code> can describe things that only exist in the next SDK.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The skills got the agent to look in the right place. The plugin wraps a process around them: a workflow, a way to check the work against the running app, and a report that has to admit what it couldn’t verify. It’s still young, so if a skill gives you wrong or missing guidance, please <a href="https://github.com/unoplatform/studio/issues/new/choose">open an issue</a>.</p>
+
+<p>Try it on a small app first and let me know what it gets wrong.</p>
+
+<p>Catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-11-14T00:00:00+00:00">November 14, 2026</time></p>
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/previews/pr-50/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" class="pagination--pager" title="Semantic Design in Uno Themes - Part 2">Previous</a>
+    
+    
+      <a href="/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html" class="pagination--pager" title="Toolkit Tuesdays: SkeletonView">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You may also enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-toolkit-hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html" rel="permalink">Toolkit Tuesdays: SkeletonView
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-11-16T00:00:00+00:00">November 16, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" rel="permalink">Semantic Design in Uno Themes - Part 2
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-04T00:00:00+00:00">October 4, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">In Part 1 of this little series I dug into the Semantic Design Language in Uno Themes: semantic styles that let your XAML ask for a ROLE like FilledButtonSty...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/simple-design-semantic-tokens/hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/10/01/simple-design-semantic-tokens.html" rel="permalink">Semantic Design in Uno Themes - Part 1
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-10-01T00:00:00+00:00">October 1, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">A little while back I wrote about hosting three Uno apps inside a single Uno app so you could flip between Material, Cupertino, and Simple live. That demo go...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-extensions-hero.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-extensions/2026/09/17/msal-cross-platform-auth.html" rel="permalink">Uno Extensions: MSAL Auth Across Platforms
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-09-17T00:00:00+00:00">September 17, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cro...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+      
+    </div>
+
+    
+      <div class="search-content">
+        
+<div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/previews/pr-50/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2026 <a href="https://kazo0.dev">dotnet new bald</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/previews/pr-50/assets/js/main.min.js"></script>
+
+
+
+
+
+<script src="/previews/pr-50/assets/js/lunr/lunr.min.js"></script>
+<script src="/previews/pr-50/assets/js/lunr/lunr-store.js"></script>
+<script src="/previews/pr-50/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

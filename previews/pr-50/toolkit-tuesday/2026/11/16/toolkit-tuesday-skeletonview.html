@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="dotnet new bald">
 <meta property="og:title" content="Toolkit Tuesdays: SkeletonView">
-<meta property="og:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+<meta property="og:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html">
 
 
   <meta property="og:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
@@ -44,7 +44,7 @@
   <meta name="twitter:site" content="@BiloganSteve">
   <meta name="twitter:title" content="Toolkit Tuesdays: SkeletonView">
   <meta name="twitter:description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
-  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+  <meta name="twitter:url" content="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html">
 
   
     <meta name="twitter:card" content="summary_large_image">
@@ -58,14 +58,14 @@
 
 
 
-  <meta property="article:published_time" content="2026-10-10T00:00:00+00:00">
+  <meta property="article:published_time" content="2026-11-16T00:00:00+00:00">
 
 
 
 
 
 
-<link rel="canonical" href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html">
+<link rel="canonical" href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html">
 
 
 
@@ -93,7 +93,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="/previews/pr-50/assets/css/main.css?v=1791853191">
+<link rel="stylesheet" href="/previews/pr-50/assets/css/main.css?v=1794835264">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
 
@@ -286,14 +286,14 @@
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Toolkit Tuesdays: SkeletonView">
     <meta itemprop="description" content="Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the [Uno Toolkit][toolkit-homepage] library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with [Uno Platform][uno-homepage]. I hope you find them useful too!">
-    <meta itemprop="datePublished" content="2026-10-10T00:00:00+00:00">
+    <meta itemprop="datePublished" content="2026-11-16T00:00:00+00:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/10/10/toolkit-tuesday-skeletonview.html" class="u-url" itemprop="url">Toolkit Tuesdays: SkeletonView
+            <a href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html" class="u-url" itemprop="url">Toolkit Tuesdays: SkeletonView
 </a>
           </h1>
           
@@ -305,7 +305,7 @@
       <span class="page__meta-date">
         <i class="far fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2026-10-10T00:00:00+00:00">October 10, 2026</time>
+        <time datetime="2026-11-16T00:00:00+00:00">November 16, 2026</time>
       </span>
     
 
@@ -363,9 +363,7 @@
         <img alt="Hero Image" src="/assets/images/uno-toolkit-hero.png" class="hero-image">
         <p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
-<p>This week is a little different, because I’m covering something you can’t install yet. It’s <code class="language-plaintext highlighter-rouge">SkeletonView</code>, a brand-new way to show skeleton loading placeholders in your app, and if you caught <a href="https://x.com/BiloganSteve/status/2108651624763986107">my tweet</a> about it, this is the longer version. It’s also a natural follow-up to the <a href="/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><code class="language-plaintext highlighter-rouge">LoadingView</code> post</a>, which mentioned a skeleton view in passing. Now we finally get to look at one.</p>
-
-<p class="notice--info"><strong>Preview:</strong> <code class="language-plaintext highlighter-rouge">SkeletonView</code> lives in an open, draft <a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1669">pull request</a> on the Uno Toolkit repo and hasn’t shipped in any release. Names and behavior may change before it does, and the doc links below point at the PR’s branch.</p>
+<p>This week it’s <code class="language-plaintext highlighter-rouge">SkeletonView</code>, a brand-new way to show skeleton loading placeholders in your app. It shipped in <a href="https://github.com/unoplatform/uno.toolkit.ui/releases/tag/11.0.1">Uno Toolkit 11</a>, which landed alongside Uno Platform 7.0, so you can install it today. If you caught <a href="https://x.com/BiloganSteve/status/2108651624763986107">my tweet</a> about it back when it was still a pull request, this is the longer version. It’s also a natural follow-up to the <a href="/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><code class="language-plaintext highlighter-rouge">LoadingView</code> post</a>, which mentioned a skeleton view in passing. Now we finally get to look at one.</p>
 
 <figure class="video-figure width-half align-center">
   <video class="video-figure__video" autoplay="" muted="" loop="" controls="" playsinline="" preload="metadata">
@@ -389,7 +387,7 @@
 
 <ol>
   <li>
-<strong>Leaves get one placeholder each.</strong> A leaf is a <code class="language-plaintext highlighter-rouge">TextBlock</code>, an <code class="language-plaintext highlighter-rouge">Image</code>, any <code class="language-plaintext highlighter-rouge">Shape</code>, or a button. A <code class="language-plaintext highlighter-rouge">Button</code> gives you a single button-sized placeholder no matter what’s inside it.</li>
+<strong>Leaves get one placeholder each.</strong> A leaf is a <code class="language-plaintext highlighter-rouge">TextBlock</code>, an <code class="language-plaintext highlighter-rouge">Image</code>, any <code class="language-plaintext highlighter-rouge">Shape</code>, a button, or an input control like a <code class="language-plaintext highlighter-rouge">TextBox</code>, <code class="language-plaintext highlighter-rouge">ComboBox</code>, <code class="language-plaintext highlighter-rouge">Slider</code>, or <code class="language-plaintext highlighter-rouge">ToggleSwitch</code>. A <code class="language-plaintext highlighter-rouge">Button</code> gives you a single button-sized placeholder no matter what’s inside it.</li>
   <li>
 <strong>Containers contribute their children, not themselves.</strong> Panels and borders get no placeholder of their own, and neither does the chrome of a <code class="language-plaintext highlighter-rouge">ListViewItem</code> or a card.</li>
   <li>
@@ -398,7 +396,7 @@
 <strong>An <code class="language-plaintext highlighter-rouge">Ellipse</code> becomes a circle.</strong> Everything else becomes a rounded rectangle.</li>
 </ol>
 
-<p>Your content stays in the visual tree the whole time, so layout and bindings keep working. Only the elements covered by a placeholder get hidden, and everything else stays visible.</p>
+<p>Your content stays in the visual tree the whole time, so layout and bindings keep working. Only the elements covered by a placeholder get hidden, and everything else stays visible. Placeholders are also clipped to what you can actually see, so a row scrolled halfway out of a list gets half a placeholder.</p>
 
 <h2 id="usage">Usage</h2>
 
@@ -484,6 +482,8 @@
 </tr></tbody></table></code></pre></div></div>
 
 <p>One command drives the button AND the skeleton. Zero <code class="language-plaintext highlighter-rouge">IsBusy</code> plumbing.</p>
+
+<p>The one catch is that the <code class="language-plaintext highlighter-rouge">ILoadable</code> has to raise its <code class="language-plaintext highlighter-rouge">IsExecutingChanged</code> on the UI thread. If yours finishes somewhere else, wrap it in a <code class="language-plaintext highlighter-rouge">LoadableSource</code>.</p>
 
 <h3 id="refreshing-content">Refreshing Content</h3>
 
@@ -661,11 +661,11 @@
 
 <p>Look at that <code class="language-plaintext highlighter-rouge">PersonRowTemplate</code>. The loaded list and the skeleton share it, so the skeleton can’t drift away from the real thing.</p>
 
-<p>Behind the scenes, it instantiates a private, data-less copy of the template and generates the placeholders from that, filling any empty lists with rows from their <code class="language-plaintext highlighter-rouge">ItemTemplate</code>. There’s also a <code class="language-plaintext highlighter-rouge">Skeleton.IsEnabled</code> attached property for controls that follow the <code class="language-plaintext highlighter-rouge">ProgressTemplate</code>/<code class="language-plaintext highlighter-rouge">ValueTemplate</code> convention, which injects a skeleton as the loading template for you. The <a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/doc/controls/SkeletonView.md">docs</a> cover that one in detail.</p>
+<p>Behind the scenes, it instantiates a private, data-less copy of the template and generates the placeholders from that, filling any empty lists with rows from their <code class="language-plaintext highlighter-rouge">ItemTemplate</code>. And since a <code class="language-plaintext highlighter-rouge">LoadingView</code> keeps its <code class="language-plaintext highlighter-rouge">LoadingContent</code> around once it’s done, the presenter stops its shimmer when the <code class="language-plaintext highlighter-rouge">LoadingView</code> finishes, so nothing keeps animating out of sight. The <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SkeletonView.html">docs</a> also show how to use it inside your own control template.</p>
 
 <h3 id="feedview">FeedView</h3>
 
-<p>If you’re using MVUX, you’re probably wondering about <code class="language-plaintext highlighter-rouge">FeedView</code>. Support for it ships separately, as a <code class="language-plaintext highlighter-rouge">SkeletonFeedViewStyle</code> in Uno.Extensions that uses <code class="language-plaintext highlighter-rouge">SkeletonPresenter</code> for the initial load and <code class="language-plaintext highlighter-rouge">SkeletonView</code> for refreshes:</p>
+<p>If you’re using MVUX, you’re probably wondering about <code class="language-plaintext highlighter-rouge">FeedView</code>. Support for it is coming separately, as a <code class="language-plaintext highlighter-rouge">SkeletonFeedViewStyle</code> in Uno.Extensions that uses <code class="language-plaintext highlighter-rouge">SkeletonPresenter</code> for the initial load and <code class="language-plaintext highlighter-rouge">SkeletonView</code> for refreshes. It’s still <a href="https://github.com/unoplatform/uno.extensions/pull/3269">in review</a> at the time of writing, but here’s what it’ll look like:</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr>
 <td class="rouge-gutter gl"><pre class="lineno">1
@@ -688,18 +688,19 @@
 </pre></td>
 </tr></tbody></table></code></pre></div></div>
 
-<p>One <code class="language-plaintext highlighter-rouge">Style</code> and your MVUX pages get the same skeleton. That one is on its own <a href="https://github.com/unoplatform/uno.extensions/blob/cc30a4e800cf7fd0d960181b06955283ee29ef4a/doc/Learn/Mvux/FeedView.md#skeleton-loading">branch</a> and isn’t released either.</p>
+<p>Once it lands, one <code class="language-plaintext highlighter-rouge">Style</code> and your MVUX pages get the same skeleton <img class="emoji" title=":crossed_fingers:" alt=":crossed_fingers:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f91e.png" height="20" width="20"></p>
 
 <h2 id="rough-edges">Rough Edges</h2>
 
-<p>This is a draft PR, so let’s be honest about where it stands.</p>
+<p>It’s shipped, but let’s still be honest about where it stands.</p>
 
 <ul>
-  <li>The PR says it has only been tested on macOS desktop so far. The other platforms are still on the checklist.</li>
+  <li>When the PR merged, macOS desktop was the only platform ticked on its test checklist. If something looks off on another platform, please <a href="https://github.com/unoplatform/uno.toolkit.ui/issues/new/choose">open an issue</a>.</li>
   <li>The shimmer visuals aren’t covered by the automated tests. The band structure is asserted, but the sweep itself was checked by eye.</li>
   <li>Covered elements are hidden by setting their <code class="language-plaintext highlighter-rouge">Opacity</code> to 0 and restoring it afterwards. If you’re animating or binding <code class="language-plaintext highlighter-rouge">Opacity</code> on those elements while loading, the skeleton will win.</li>
   <li>An empty list needs an <code class="language-plaintext highlighter-rouge">ItemTemplate</code> and a width to get rows, and <code class="language-plaintext highlighter-rouge">ItemTemplateSelector</code> isn’t used for placeholder rows.</li>
   <li>A list’s <code class="language-plaintext highlighter-rouge">Header</code> and <code class="language-plaintext highlighter-rouge">Footer</code> aren’t mirrored.</li>
+  <li>Covered controls aren’t hit-testable while loading, but <code class="language-plaintext highlighter-rouge">Tab</code> can still reach them. Bind their <code class="language-plaintext highlighter-rouge">IsEnabled</code> to your loading flag if that matters for your screen.</li>
 </ul>
 
 <p>None of these are dealbreakers, but they’re worth knowing about before you build on it.</p>
@@ -708,17 +709,18 @@
 
 <p><code class="language-plaintext highlighter-rouge">SkeletonView</code> is a lot of loading experience for very little XAML. Wrap your content, bind <code class="language-plaintext highlighter-rouge">IsLoading</code>, and you get a skeleton that matches the real layout, including on refresh, without maintaining a second copy of every screen.</p>
 
-<p>The best way to help it land is to try it. The PR’s sample app has a <code class="language-plaintext highlighter-rouge">SkeletonView</code> page with a section for every scenario in this post, and feedback on the PR is very welcome. Jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a>!</p>
+<p>Grab Uno Toolkit 11 and give it a spin. The Toolkit samples app has a <a href="https://github.com/unoplatform/uno.toolkit.ui/blob/main/samples/Uno.Toolkit.Samples/Content/Controls/SkeletonViewSamplePage.xaml"><code class="language-plaintext highlighter-rouge">SkeletonView</code> page</a> with a section for every scenario in this post, and if you hit something weird, issues and feedback are very welcome. Jump into the fun on the <a href="https://github.com/unoplatform/Uno.Toolkit.UI">Uno Toolkit GitHub repo</a>!</p>
 
 <p>I hope you enjoyed this edition of Toolkit Tuesdays, and I’ll catch you in the next one <img class="emoji" title=":wave:" alt=":wave:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png" height="20" width="20"></p>
 
 <h2 id="further-reading">Further Reading</h2>
 
 <ul>
+  <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SkeletonView.html">SkeletonView Docs</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/blob/main/samples/Uno.Toolkit.Samples/Content/Controls/SkeletonViewSamplePage.xaml">SkeletonView Sample Page</a></li>
+  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/releases/tag/11.0.1">Uno Toolkit 11.0.1 Release</a></li>
   <li><a href="https://github.com/unoplatform/uno.toolkit.ui/pull/1669">SkeletonView Pull Request</a></li>
-  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/doc/controls/SkeletonView.md">SkeletonView Docs (PR branch)</a></li>
-  <li><a href="https://github.com/unoplatform/uno.toolkit.ui/blob/2afb30ab95ca03342c868a69a7c5098aa19d258f/samples/Uno.Toolkit.Samples/Content/Controls/SkeletonViewSamplePage.xaml">SkeletonView Sample Page (PR branch)</a></li>
-  <li><a href="https://github.com/unoplatform/uno.extensions/blob/cc30a4e800cf7fd0d960181b06955283ee29ef4a/doc/Learn/Mvux/FeedView.md#skeleton-loading">FeedView Skeleton Loading Docs (Uno.Extensions branch)</a></li>
+  <li><a href="https://github.com/unoplatform/uno.extensions/pull/3269">FeedView Skeleton Loading (Uno.Extensions PR, not yet released)</a></li>
   <li><a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html">LoadingView Docs</a></li>
   <li><a href="https://aka.platform.uno/uno-toolkit">Uno Toolkit Docs</a></li>
 </ul>
@@ -739,7 +741,7 @@
         
 
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-10-10T00:00:00+00:00">October 10, 2026</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-11-16T00:00:00+00:00">November 16, 2026</time></p>
 
 
       </footer>
@@ -750,7 +752,7 @@
 
   <nav class="pagination" aria-label="Post pagination">
     
-      <a href="/previews/pr-50/uno-general/2026/10/04/uno-themes-8-runtime-seed-colors.html" class="pagination--pager" title="Semantic Design in Uno Themes - Part 2">Previous</a>
+      <a href="/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html" class="pagination--pager" title="Uno Platform 7.0 and the Studio Agent Plugin">Previous</a>
     
     
       <a href="#" class="pagination--pager disabled">Next</a>
@@ -768,6 +770,61 @@
     <div class="page__related">
       <h2 class="page__related-title">You may also enjoy</h2>
       <div class="grid__wrapper">
+        
+          
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/uno-7-agent-plugin/hero.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html" rel="permalink">Uno Platform 7.0 and the Studio Agent Plugin
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2026-11-14T00:00:00+00:00">November 14, 2026</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">^ I asked Claude to crop the hero image above with the terminal window and it gave itself a Canadian South Park character vibe
+
+
+</p>
+  </article>
+</div>
+
         
           
 
@@ -921,58 +978,6 @@
 
 
     <p class="archive__item-excerpt p-summary" itemprop="description">Welcome to a brand-new series covering the Uno Extensions library! We’ll be exploring the many different features and capabilities it offers for building cro...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/cerulean/hero.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
-      
-        <a class="u-url" href="/previews/pr-50/uno-general/2026/09/13/cerulean-agent-skill.html" rel="permalink">Cerulean: Your Agent Is Not Impressed
-</a>
-      
-    </h2>
-    
-
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2026-09-13T00:00:00+00:00">September 13, 2026</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          6 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt p-summary" itemprop="description">In my Agent Skills post, I looked at using skills to help agents write better Uno Platform code. Give the agent the right instructions, point it at the right...</p>
   </article>
 </div>
 
