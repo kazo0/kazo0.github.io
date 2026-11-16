@@ -13,6 +13,8 @@ This week it's `SkeletonView`, a brand-new way to show skeleton loading placehol
 
 {% include local-video.html src="/assets/images/skeletonview/skeleton-demo.mp4" class="width-half align-center" caption="No skeleton shapes declared anywhere: placeholder rows for the empty lists on first load, then a refresh whose skeleton matches the content it replaces." %}
 
+<!-- TODO: re-record skeleton-demo.mp4 against Uno Toolkit 11.0.1. It was captured from the draft PR, before the new default shimmer palette landed (spec Phase 12, Oct 27), so the colors may not match what people get today. Keep the same filename so the embed above keeps working. -->
+
 ## The Problem (and The Solution)
 
 Every app has a moment where the data isn't there yet. The usual answer is a spinner, and a spinner works, but it tells the user nothing about what's coming. Then the data lands and the whole layout jumps around.
@@ -31,6 +33,10 @@ While `IsLoading` is true, `SkeletonView` walks your content and drops one place
 4. **An `Ellipse` becomes a circle.** Everything else becomes a rounded rectangle.
 
 Your content stays in the visual tree the whole time, so layout and bindings keep working. Only the elements covered by a placeholder get hidden, and everything else stays visible. Placeholders are also clipped to what you can actually see, so a row scrolled halfway out of a list gets half a placeholder.
+
+<!-- TODO: annotated diagram of the generation rules (how-it-works.png). A small card in its loaded state on the left and its skeleton on the right, with callouts for: a TextBlock leaf, the Ellipse becoming a circle, the Button becoming one block, a TextBox as an input-control leaf, and the card's Border keeping its frame with no placeholder of its own. -->
+
+<!-- TODO (optional): screenshot of a list scrolled partway while loading, showing a half-height placeholder on the clipped row (clipping.png). -->
 
 ## Usage
 
@@ -67,6 +73,8 @@ While `IsBusy` is true, you get a circle for the avatar, two text lines, a full-
 
 ![The Basic Usage card while loading (left) and once loaded (right)](/assets/images/skeletonview/basic-usage.png)
 
+<!-- TODO: re-capture basic-usage.png against Toolkit 11.0.1 for the same palette reason as the demo video. Same filename, same loading-left / loaded-right layout. -->
+
 `IsLoading` defaults to `true`, so a `SkeletonView` starts out in its loading state. If your skeleton never goes away, you forgot to bind `IsLoading` or set a `Source`.
 {: .notice--warning}
 
@@ -88,9 +96,13 @@ One command drives the button AND the skeleton. Zero `IsBusy` plumbing.
 
 The one catch is that the `ILoadable` has to raise its `IsExecutingChanged` on the UI thread. If yours finishes somewhere else, wrap it in a `LoadableSource`.
 
+<!-- TODO: short recording of the Reload button driving the skeleton through the command (loadable-command.mp4). Click Reload, skeleton appears, data lands. Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
+
 ### Refreshing Content
 
 Here's my favorite part. The placeholders come from the live layout, so turning `IsLoading` back on over content that's already loaded gives you a skeleton that matches it exactly. Same number of list items, and the text lines match the length of the current text. A spinner would blank out everything the user was just reading, but this keeps the shape of the screen right where it was.
+
+<!-- TODO: side-by-side of the same loaded list and its refresh skeleton (refresh-match.png), so the matching item count and text line lengths are obvious. A short recording (refresh.mp4) works too if the demo video doesn't already make the point. -->
 
 ### Empty Lists
 
@@ -119,6 +131,8 @@ There's one obvious gap. On a first load, a list has no items yet, so there's no
 Three rows out of a list with nothing in it. Not bad!
 
 While loading, the empty `ListView` gets its placeholder rows built from its own `ItemTemplate`, and it reserves the space for them so the button underneath moves down as if the rows were really there. Your `ItemsSource` and the list's place in the tree are never touched, because the rows come from a hidden copy of the list.
+
+<!-- TODO: screenshot of the Empty Lists sample while loading (empty-list.png): the visible Team header (Skeleton.Ignore), three placeholder rows from PersonRowTemplate, and the Invite someone button pushed down below them. Optionally a second frame once loaded. -->
 
 ### Tuning the Result
 
@@ -150,6 +164,8 @@ Did you spot `Skeleton.Ignore` on that "Team" header? Most of the time the gener
 
 `Skeleton.Ignore` keeps an element, and everything inside it, visible and out of the generation entirely. It's perfect for headers and labels that don't depend on the data. `Skeleton.Shape` forces a placeholder shape (`Auto`, `Rectangle`, or `Circle`) and collapses the element into a single placeholder, which is handy for something like an avatar made of an `Image` inside a `Border`.
 
+<!-- TODO: before/after screenshot of the Tuning sample (overrides.png). Left: default generation, with a placeholder per chip and the Profile header hidden. Right: with Skeleton.Ignore and Skeleton.Shape applied, so the header stays, the avatar is one circle and the tags are one block. -->
+
 ### Styling
 
 Three lightweight styling resources control the look, and they apply to everything in this post: `SkeletonViewBackground`, `SkeletonViewShimmerBrush`, and `SkeletonViewCornerRadius`. Override them in your app resources to restyle every skeleton at once:
@@ -168,6 +184,10 @@ Three lightweight styling resources control the look, and they apply to everythi
 ```
 
 Each `SkeletonView` also has per-instance properties like `SkeletonBackground`, `PlaceholderCornerRadius`, and `ShimmerDuration`. If the shimmer is too much for you, set `EnableShimmer="False"` for static placeholders, which is a nice option when you want to reduce motion.
+
+<!-- TODO: screenshot of the custom SkeletonViewBackground from the snippet above in Light and Dark theme side by side (styling-light-dark.png). -->
+
+<!-- TODO (optional): short clip comparing the default shimmer with EnableShimmer set to False (shimmer-off.mp4). Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
 
 ## Beyond SkeletonView
 
@@ -196,6 +216,8 @@ Look at that `PersonRowTemplate`. The loaded list and the skeleton share it, so 
 
 Behind the scenes, it instantiates a private, data-less copy of the template and generates the placeholders from that, filling any empty lists with rows from their `ItemTemplate`. And since a `LoadingView` keeps its `LoadingContent` around once it's done, the presenter stops its shimmer when the `LoadingView` finishes, so nothing keeps animating out of sight. The [docs][skeleton-docs] also show how to use it inside your own control template.
 
+<!-- TODO: recording of the LoadingView plus SkeletonPresenter sample (presenter-loadingview.mp4): the template-built skeleton rows, then the real list replacing them. Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
+
 ### FeedView
 
 If you're using MVUX, you're probably wondering about `FeedView`. Support for it is coming separately, as a `SkeletonFeedViewStyle` in Uno.Extensions that uses `SkeletonPresenter` for the initial load and `SkeletonView` for refreshes. It's still [in review][feedview-skeleton-pr] at the time of writing, but here's what it'll look like:
@@ -212,6 +234,8 @@ If you're using MVUX, you're probably wondering about `FeedView`. Support for it
 ```
 
 Once it lands, one `Style` and your MVUX pages get the same skeleton :crossed_fingers:
+
+<!-- TODO (once uno.extensions#3269 ships): recording of an MVUX FeedView with SkeletonFeedViewStyle, showing the initial load and then a refresh (feedview-skeleton.mp4). Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. Then reword this section from in review to released and repoint the link to the published FeedView docs. -->
 
 ## Rough Edges
 
