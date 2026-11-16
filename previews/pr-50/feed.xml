@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-50/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-50/" rel="alternate" type="text/html" /><updated>2026-11-16T13:21:04+00:00</updated><id>https://kazo0.dev/previews/pr-50/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Toolkit Tuesdays: SkeletonView</title><link href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: SkeletonView" /><published>2026-11-16T00:00:00+00:00</published><updated>2026-11-16T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://kazo0.dev/previews/pr-50/feed.xml" rel="self" type="application/atom+xml" /><link href="https://kazo0.dev/previews/pr-50/" rel="alternate" type="text/html" /><updated>2026-11-16T13:25:58+00:00</updated><id>https://kazo0.dev/previews/pr-50/feed.xml</id><title type="html">dotnet new bald</title><subtitle>I&apos;m Steve Bilogan, a Senior Engineer and one of the core maintainers of the open-source Uno Platform project. When not at my computer, I&apos;m either watching the Montreal Canadiens lose or asleep on the couch with my wonderful wife, Michele, and our little monster, Penny.</subtitle><author><name>Steve Bilogan</name></author><entry><title type="html">Toolkit Tuesdays: SkeletonView</title><link href="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html" rel="alternate" type="text/html" title="Toolkit Tuesdays: SkeletonView" /><published>2026-11-16T00:00:00+00:00</published><updated>2026-11-16T00:00:00+00:00</updated><id>https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview</id><content type="html" xml:base="https://kazo0.dev/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html"><![CDATA[<p>Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the <a href="https://platform.uno/posts/toolkit">Uno Toolkit</a> library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with <a href="https://platform.uno/posts/uno">Uno Platform</a>. I hope you find them useful too!</p>
 
 <p>This week it’s <code class="language-plaintext highlighter-rouge">SkeletonView</code>, a brand-new way to show skeleton loading placeholders in your app. It shipped in <a href="https://github.com/unoplatform/uno.toolkit.ui/releases/tag/11.0.1">Uno Toolkit 11</a>, which landed alongside Uno Platform 7.0, so you can install it today. If you caught <a href="https://x.com/BiloganSteve/status/2108651624763986107">my tweet</a> about it back when it was still a pull request, this is the longer version. It’s also a natural follow-up to the <a href="/toolkit-tuesday/2026/08/18/toolkit-tuesday-loadingview.html"><code class="language-plaintext highlighter-rouge">LoadingView</code> post</a>, which mentioned a skeleton view in passing. Now we finally get to look at one.</p>
 
@@ -9,6 +9,8 @@
   </video>
   <figcaption>No skeleton shapes declared anywhere: placeholder rows for the empty lists on first load, then a refresh whose skeleton matches the content it replaces.</figcaption>
 </figure>
+
+<!-- TODO: re-record skeleton-demo.mp4 against Uno Toolkit 11.0.1. It was captured from the draft PR, before the new default shimmer palette landed (spec Phase 12, Oct 27), so the colors may not match what people get today. Keep the same filename so the embed above keeps working. -->
 
 <h2 id="the-problem-and-the-solution">The Problem (and The Solution)</h2>
 
@@ -30,6 +32,10 @@
 </ol>
 
 <p>Your content stays in the visual tree the whole time, so layout and bindings keep working. Only the elements covered by a placeholder get hidden, and everything else stays visible. Placeholders are also clipped to what you can actually see, so a row scrolled halfway out of a list gets half a placeholder.</p>
+
+<!-- TODO: annotated diagram of the generation rules (how-it-works.png). A small card in its loaded state on the left and its skeleton on the right, with callouts for: a TextBlock leaf, the Ellipse becoming a circle, the Button becoming one block, a TextBox as an input-control leaf, and the card's Border keeping its frame with no placeholder of its own. -->
+
+<!-- TODO (optional): screenshot of a list scrolled partway while loading, showing a half-height placeholder on the clipped row (clipping.png). -->
 
 <h2 id="usage">Usage</h2>
 
@@ -85,6 +91,8 @@
 
 <p><img src="/assets/images/skeletonview/basic-usage.png" alt="The Basic Usage card while loading (left) and once loaded (right)" /></p>
 
+<!-- TODO: re-capture basic-usage.png against Toolkit 11.0.1 for the same palette reason as the demo video. Same filename, same loading-left / loaded-right layout. -->
+
 <p class="notice--warning"><code class="language-plaintext highlighter-rouge">IsLoading</code> defaults to <code class="language-plaintext highlighter-rouge">true</code>, so a <code class="language-plaintext highlighter-rouge">SkeletonView</code> starts out in its loading state. If your skeleton never goes away, you forgot to bind <code class="language-plaintext highlighter-rouge">IsLoading</code> or set a <code class="language-plaintext highlighter-rouge">Source</code>.</p>
 
 <h3 id="driving-it-from-an-iloadable">Driving It From an <code class="language-plaintext highlighter-rouge">ILoadable</code></h3>
@@ -111,9 +119,13 @@
 
 <p>The one catch is that the <code class="language-plaintext highlighter-rouge">ILoadable</code> has to raise its <code class="language-plaintext highlighter-rouge">IsExecutingChanged</code> on the UI thread. If yours finishes somewhere else, wrap it in a <code class="language-plaintext highlighter-rouge">LoadableSource</code>.</p>
 
+<!-- TODO: short recording of the Reload button driving the skeleton through the command (loadable-command.mp4). Click Reload, skeleton appears, data lands. Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
+
 <h3 id="refreshing-content">Refreshing Content</h3>
 
 <p>Here’s my favorite part. The placeholders come from the live layout, so turning <code class="language-plaintext highlighter-rouge">IsLoading</code> back on over content that’s already loaded gives you a skeleton that matches it exactly. Same number of list items, and the text lines match the length of the current text. A spinner would blank out everything the user was just reading, but this keeps the shape of the screen right where it was.</p>
+
+<!-- TODO: side-by-side of the same loaded list and its refresh skeleton (refresh-match.png), so the matching item count and text line lengths are obvious. A short recording (refresh.mp4) works too if the demo video doesn't already make the point. -->
 
 <h3 id="empty-lists">Empty Lists</h3>
 
@@ -158,6 +170,8 @@
 <p>Three rows out of a list with nothing in it. Not bad!</p>
 
 <p>While loading, the empty <code class="language-plaintext highlighter-rouge">ListView</code> gets its placeholder rows built from its own <code class="language-plaintext highlighter-rouge">ItemTemplate</code>, and it reserves the space for them so the button underneath moves down as if the rows were really there. Your <code class="language-plaintext highlighter-rouge">ItemsSource</code> and the list’s place in the tree are never touched, because the rows come from a hidden copy of the list.</p>
+
+<!-- TODO: screenshot of the Empty Lists sample while loading (empty-list.png): the visible Team header (Skeleton.Ignore), three placeholder rows from PersonRowTemplate, and the Invite someone button pushed down below them. Optionally a second frame once loaded. -->
 
 <h3 id="tuning-the-result">Tuning the Result</h3>
 
@@ -209,6 +223,8 @@
 
 <p><code class="language-plaintext highlighter-rouge">Skeleton.Ignore</code> keeps an element, and everything inside it, visible and out of the generation entirely. It’s perfect for headers and labels that don’t depend on the data. <code class="language-plaintext highlighter-rouge">Skeleton.Shape</code> forces a placeholder shape (<code class="language-plaintext highlighter-rouge">Auto</code>, <code class="language-plaintext highlighter-rouge">Rectangle</code>, or <code class="language-plaintext highlighter-rouge">Circle</code>) and collapses the element into a single placeholder, which is handy for something like an avatar made of an <code class="language-plaintext highlighter-rouge">Image</code> inside a <code class="language-plaintext highlighter-rouge">Border</code>.</p>
 
+<!-- TODO: before/after screenshot of the Tuning sample (overrides.png). Left: default generation, with a placeholder per chip and the Profile header hidden. Right: with Skeleton.Ignore and Skeleton.Shape applied, so the header stays, the avatar is one circle and the tags are one block. -->
+
 <h3 id="styling">Styling</h3>
 
 <p>Three lightweight styling resources control the look, and they apply to everything in this post: <code class="language-plaintext highlighter-rouge">SkeletonViewBackground</code>, <code class="language-plaintext highlighter-rouge">SkeletonViewShimmerBrush</code>, and <code class="language-plaintext highlighter-rouge">SkeletonViewCornerRadius</code>. Override them in your app resources to restyle every skeleton at once:</p>
@@ -236,6 +252,10 @@
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>Each <code class="language-plaintext highlighter-rouge">SkeletonView</code> also has per-instance properties like <code class="language-plaintext highlighter-rouge">SkeletonBackground</code>, <code class="language-plaintext highlighter-rouge">PlaceholderCornerRadius</code>, and <code class="language-plaintext highlighter-rouge">ShimmerDuration</code>. If the shimmer is too much for you, set <code class="language-plaintext highlighter-rouge">EnableShimmer="False"</code> for static placeholders, which is a nice option when you want to reduce motion.</p>
+
+<!-- TODO: screenshot of the custom SkeletonViewBackground from the snippet above in Light and Dark theme side by side (styling-light-dark.png). -->
+
+<!-- TODO (optional): short clip comparing the default shimmer with EnableShimmer set to False (shimmer-off.mp4). Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
 
 <h2 id="beyond-skeletonview">Beyond SkeletonView</h2>
 
@@ -277,6 +297,8 @@
 
 <p>Behind the scenes, it instantiates a private, data-less copy of the template and generates the placeholders from that, filling any empty lists with rows from their <code class="language-plaintext highlighter-rouge">ItemTemplate</code>. And since a <code class="language-plaintext highlighter-rouge">LoadingView</code> keeps its <code class="language-plaintext highlighter-rouge">LoadingContent</code> around once it’s done, the presenter stops its shimmer when the <code class="language-plaintext highlighter-rouge">LoadingView</code> finishes, so nothing keeps animating out of sight. The <a href="https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SkeletonView.html">docs</a> also show how to use it inside your own control template.</p>
 
+<!-- TODO: recording of the LoadingView plus SkeletonPresenter sample (presenter-loadingview.mp4): the template-built skeleton rows, then the real list replacing them. Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. -->
+
 <h3 id="feedview">FeedView</h3>
 
 <p>If you’re using MVUX, you’re probably wondering about <code class="language-plaintext highlighter-rouge">FeedView</code>. Support for it is coming separately, as a <code class="language-plaintext highlighter-rouge">SkeletonFeedViewStyle</code> in Uno.Extensions that uses <code class="language-plaintext highlighter-rouge">SkeletonPresenter</code> for the initial load and <code class="language-plaintext highlighter-rouge">SkeletonView</code> for refreshes. It’s still <a href="https://github.com/unoplatform/uno.extensions/pull/3269">in review</a> at the time of writing, but here’s what it’ll look like:</p>
@@ -300,6 +322,8 @@
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>Once it lands, one <code class="language-plaintext highlighter-rouge">Style</code> and your MVUX pages get the same skeleton :crossed_fingers:</p>
+
+<!-- TODO (once uno.extensions#3269 ships): recording of an MVUX FeedView with SkeletonFeedViewStyle, showing the initial load and then a refresh (feedview-skeleton.mp4). Embed it as an MP4 with the local-video include, with the width-half class for a portrait capture. Then reword this section from in review to released and repoint the link to the published FeedView docs. -->
 
 <h2 id="rough-edges">Rough Edges</h2>
 
