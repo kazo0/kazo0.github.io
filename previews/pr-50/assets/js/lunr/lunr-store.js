@@ -178,10 +178,4 @@ var store = [{
         "tags": ["agents","ai","skills","plugin","claude-code","copilot","codex","uno-platform","uno","unoplatform"],
         "url": "/previews/pr-50/uno-general/2026/11/14/uno-7-agent-plugin.html",
         "teaser": "/previews/pr-50/assets/images/uno-7-agent-plugin/hero.png"
-      },{
-        "title": "Toolkit Tuesdays: SkeletonView",
-        "excerpt":"Welcome to another edition of Toolkit Tuesdays! In this series, I’ll be highlighting some of the controls and helpers in the Uno Toolkit library. This library is a collection of controls and helpers that we’ve created to make life easier when building apps with Uno Platform. I hope you find...","categories": ["toolkit-tuesday"],
-        "tags": ["uno-toolkit","toolkit","skeletonview","skeletonpresenter","skeleton","loading","shimmer","uno-platform","uno","unoplatform"],
-        "url": "/previews/pr-50/toolkit-tuesday/2026/11/16/toolkit-tuesday-skeletonview.html",
-        "teaser": "/previews/pr-50/assets/images/uno-toolkit-hero.png"
       }]
