@@ -270,7 +270,6 @@ I hope you enjoyed this edition of Toolkit Tuesdays, and I'll catch you in the n
 [skeleton-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/SkeletonView.html
 [skeleton-sample]: https://github.com/unoplatform/uno.toolkit.ui/blob/main/samples/Uno.Toolkit.Samples/Content/Controls/SkeletonViewSamplePage.xaml
 [toolkit-release]: https://github.com/unoplatform/uno.toolkit.ui/releases/tag/11.0.1
-[toolkit-issues]: https://github.com/unoplatform/uno.toolkit.ui/issues/new/choose
 [feedview-skeleton-pr]: https://github.com/unoplatform/uno.extensions/pull/3269
 [loadingview-docs]: https://platform.uno/docs/articles/external/uno.toolkit.ui/doc/controls/LoadingView.html
 {% include links.md %}
